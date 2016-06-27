@@ -1,5 +1,5 @@
 /******************************************************************************
- * $Id: tactics_pi.h, v1.0 2010/08/05 SethDart Exp $
+ * $Id: tactics_pi.h, v1.0 2016/06/27 tom_BigSpeedy Exp $
  *
  * Project:  OpenCPN
  * Purpose:  Tactics Plugin
@@ -260,7 +260,7 @@ public:
       void OnAWSAWACorrectionUpdated(wxCommandEvent& event);
       void OnManualHeelUpdate(wxCommandEvent& event);
       void OnAlphaCurrDirSliderUpdated(wxCommandEvent& event);
-      void TacticsPreferencesDialog::ApplyPrefs(wxCommandEvent& event);
+      void ApplyPrefs(wxCommandEvent& event);
 	  void SaveTacticsConfig();
 
       wxArrayOfTactics            m_Config;
