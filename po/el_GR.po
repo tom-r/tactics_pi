@@ -1,0 +1,377 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: dashboard_pi 2.2.1207\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-24 23:40-0500\n"
+"PO-Revision-Date: 2010-12-20 18:31+0200\n"
+"Last-Translator: ΓΙΑΝΝΗΣ <ogog1@otenet.gr>\n"
+"Language-Team:  <ogog1@otenet.gr>\n"
+"Language: el_GR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+#
+msgid " mag"
+msgstr ""
+#
+msgid " true"
+msgstr ""
+#
+msgid "Add"
+msgstr "Προσθήκη"
+#
+msgid "Add instrument"
+msgstr "Πρόσθεσε Όργανο"
+#
+#, fuzzy
+msgid "Air Temp."
+msgstr "Θερμοκρασία"
+#
+#, fuzzy
+msgid "App. Wind Angle"
+msgstr "Γωνία Ανέμου"
+#
+msgid "App. Wind Angle & Speed"
+msgstr ""
+#
+#, fuzzy
+msgid "App. Wind Speed"
+msgstr "Ταχύτητα Ανέμου"
+#
+msgid "Appearance"
+msgstr ""
+#
+msgid "Barometric history"
+msgstr ""
+#
+msgid "Barometric pressure"
+msgstr ""
+#
+msgid "Boat speed units:"
+msgstr ""
+#
+msgid "COG"
+msgstr "COG(Πορεία επί Εδάφους)"
+#
+msgid "Caption:"
+msgstr ""
+#
+msgid "Centimeters"
+msgstr ""
+#
+msgid "Clock"
+msgstr ""
+#
+msgid "Cursor"
+msgstr ""
+#
+msgid "Dashboard"
+msgstr "Πίνακας Οργάνων"
+#
+msgid "Dashboard PlugIn for OpenCPN"
+msgstr "Πίνακας Οργάνων, επιπρόσθετο για το OpenCPN"
+#
+msgid ""
+"Dashboard PlugIn for OpenCPN\n"
+"Provides navigation instrument display from NMEA source."
+msgstr ""
+"Πρόσθετος Πίνακας Οργάνων για το OpenCPN\n"
+"Παρέχει ενδείξεις οργάνων ναυσιπλο'ί'ας από κώδικα ΝΜΕΑ"
+#
+msgid "Dashboard preferences"
+msgstr "Ιδιότητες Πίνακα Οργάνων"
+#
+msgid "Data:"
+msgstr "Στοιχεία:"
+#
+msgid "Delete"
+msgstr "Διαγραφή"
+#
+msgid "Depth"
+msgstr "Βάθος"
+#
+msgid "Depth units:"
+msgstr ""
+#
+msgid "Distance units:"
+msgstr ""
+#
+msgid "Down"
+msgstr "Κάτω"
+#
+msgid "E"
+msgstr "Α (E)"
+#
+#, fuzzy
+msgid "ENE"
+msgstr "ΒΑ (NE)"
+#
+#, fuzzy
+msgid "ESE"
+msgstr "ΝΑ (SE)"
+#
+msgid "Fathoms"
+msgstr ""
+#
+msgid "Feet"
+msgstr ""
+#
+msgid "Fonts"
+msgstr "Γραμματοσειρές"
+#
+msgid "From Ownship"
+msgstr ""
+#
+#, fuzzy
+msgid "GPS Compass"
+msgstr "Πυξίδα"
+#
+#, fuzzy
+msgid "GPS Status"
+msgstr "Κατάσταση GPS"
+#
+#, fuzzy
+msgid "GPS in View"
+msgstr "Ορατό GPS"
+#
+msgid "Honor OpenCPN settings"
+msgstr ""
+#
+msgid "Horizontal"
+msgstr ""
+#
+msgid "Inches"
+msgstr ""
+#
+msgid "Instruments"
+msgstr "Όργανα"
+#
+msgid "Kilometers"
+msgstr ""
+#
+msgid "Kts"
+msgstr ""
+#
+msgid "Label:"
+msgstr "Ετικέτα:"
+#
+msgid "Mag COG"
+msgstr ""
+#
+msgid "Mag HDG"
+msgstr ""
+#
+#, c-format
+msgid "Max %.1f since %02d:%02d  Overall %.1f"
+msgstr ""
+#
+msgid "Meters"
+msgstr ""
+#
+msgid "Moon phase"
+msgstr ""
+#
+msgid "N"
+msgstr "Β (N)"
+#
+msgid "NE"
+msgstr "ΒΑ (NE)"
+#
+#, fuzzy
+msgid "NNE"
+msgstr "ΒΑ (NE)"
+#
+#, fuzzy
+msgid "NNW"
+msgstr "ΒΔ (NW)"
+#
+msgid "NW"
+msgstr "ΒΔ (NW)"
+#
+msgid "Nautical miles"
+msgstr ""
+#
+msgid "Orientation:"
+msgstr ""
+#
+msgid "Position"
+msgstr "Θέση (Συντεταγμένες)"
+#
+msgid "Preferences..."
+msgstr ""
+#
+#, fuzzy
+msgid "Rudder Angle"
+msgstr "Γωνία Πηδαλίου"
+#
+msgid "S"
+msgstr "Ν (S)"
+#
+msgid "SE"
+msgstr "ΝΑ (SE)"
+#
+msgid "SOG"
+msgstr "SOG(Ταχύτητα επί Εδάφους)"
+#
+#, fuzzy
+msgid "SSE"
+msgstr "ΝΑ (SE)"
+#
+#, fuzzy
+msgid "SSW"
+msgstr "ΝΔ (SW)"
+#
+msgid "STW"
+msgstr "STW(Ταχύτητα επί Ύδατος)"
+#
+msgid "SW"
+msgstr "ΝΔ (SW)"
+#
+msgid "Select instrument to add:"
+msgstr "Επέλεξε Όργανο για Προσθήκη:"
+#
+msgid "Small:"
+msgstr "Στενό:"
+#
+msgid "Speedometer"
+msgstr "Ταχύμετρο"
+#
+#, fuzzy
+msgid "Speedometer max value:"
+msgstr "Ταχύμετρο"
+#
+msgid "Statute miles"
+msgstr ""
+#
+msgid "Sum Log"
+msgstr ""
+#
+msgid "Sunrise/Sunset"
+msgstr ""
+#
+msgid "Title:"
+msgstr "Τίτλος:"
+#
+msgid "Trip Log"
+msgstr ""
+#
+#, fuzzy
+msgid "True Compass"
+msgstr "Πυξίδα"
+#
+msgid "True HDG"
+msgstr ""
+#
+#, fuzzy
+msgid "True Wind Angle"
+msgstr "Γωνία Ανέμου"
+#
+msgid "True Wind Angle & Speed"
+msgstr ""
+#
+msgid "True Wind Dir. & Speed"
+msgstr ""
+#
+msgid "True Wind Direction"
+msgstr ""
+#
+#, fuzzy
+msgid "True Wind Speed"
+msgstr "Ταχύτητα Ανέμου"
+#
+msgid "Units, Ranges, Formats"
+msgstr ""
+#
+msgid "Up"
+msgstr "Επάνω"
+#
+msgid "VMG"
+msgstr "VMG(Η επίκαιρη ταχύτητα του σκάφους)"
+#
+msgid "Vertical"
+msgstr ""
+#
+msgid "W"
+msgstr "Δ (W)"
+#
+#, fuzzy
+msgid "WNW"
+msgstr "ΒΔ (NW)"
+#
+#, fuzzy
+msgid "WSW"
+msgstr "ΝΔ (SW)"
+#
+msgid "Water Temp."
+msgstr ""
+#
+msgid "Wind history"
+msgstr ""
+#
+#, fuzzy
+msgid "Wind speed units:"
+msgstr "Ταχύτητα Ανέμου"
+#
+msgid "km/h"
+msgstr ""
+#
+msgid "m/s"
+msgstr ""
+#
+msgid "mph"
+msgstr ""
+#
+msgid "show this dashboard"
+msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#~ msgid "Apparent wind"
+#~ msgstr "Φαινομενικός Άνεμος"
+#
+#
+#
+#
+#
+#
+#
+#~ msgid "Edit"
+#~ msgstr "Επεξεργασία"
+#
+#
+#
+#
+#
+#
+#
+#~ msgid "HDG"
+#~ msgstr "HDG(heading:κατεύθυνση)"
+#
+#
+#
+#
+#
+#
+#
+#~ msgid "Instrument width:"
+#~ msgstr "Πλάτος Οργάνων:"
+#
+#
+#
+#
+#
+#
+#
+#~ msgid "True wind"
+#~ msgstr "Αληθής Άνεμος"

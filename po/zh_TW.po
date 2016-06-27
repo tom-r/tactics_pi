@@ -1,0 +1,316 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dashboard_pi 3.3.814\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-24 23:40-0500\n"
+"PO-Revision-Date: 2013-09-25 15:52+0800\n"
+"Last-Translator: Eddie Pai <eddie.pai@gmail.com>\n"
+"Language-Team: Eddie Pai <eddie.pai@gmail.com>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.7\n"
+#
+msgid " mag"
+msgstr "磁"
+#
+msgid " true"
+msgstr "真"
+#
+msgid "Add"
+msgstr "新增"
+#
+msgid "Add instrument"
+msgstr "增加航儀"
+#
+msgid "Air Temp."
+msgstr "氣溫"
+#
+msgid "App. Wind Angle"
+msgstr "迎風角"
+#
+msgid "App. Wind Angle & Speed"
+msgstr "迎風角與風速"
+#
+msgid "App. Wind Speed"
+msgstr "相對風速"
+#
+msgid "Appearance"
+msgstr "外觀"
+#
+#, fuzzy
+msgid "Barometric history"
+msgstr "風向歷史記錄"
+#
+msgid "Barometric pressure"
+msgstr ""
+#
+msgid "Boat speed units:"
+msgstr ""
+#
+msgid "COG"
+msgstr "COG"
+#
+msgid "Caption:"
+msgstr "標題:"
+#
+msgid "Centimeters"
+msgstr ""
+#
+msgid "Clock"
+msgstr "時鐘"
+#
+msgid "Cursor"
+msgstr "游標"
+#
+msgid "Dashboard"
+msgstr "儀表板"
+#
+msgid "Dashboard PlugIn for OpenCPN"
+msgstr "OpenCPN 儀表板插件"
+#
+msgid ""
+"Dashboard PlugIn for OpenCPN\n"
+"Provides navigation instrument display from NMEA source."
+msgstr ""
+"OpenCPN 儀表板插件\n"
+"提供來自航儀 NMEA 資訊顯示."
+#
+msgid "Dashboard preferences"
+msgstr "儀表板偏好設定"
+#
+msgid "Data:"
+msgstr "資料:"
+#
+msgid "Delete"
+msgstr "刪除"
+#
+msgid "Depth"
+msgstr "水深"
+#
+msgid "Depth units:"
+msgstr ""
+#
+msgid "Distance units:"
+msgstr ""
+#
+msgid "Down"
+msgstr "下移"
+#
+msgid "E"
+msgstr "E"
+#
+msgid "ENE"
+msgstr "ENE"
+#
+msgid "ESE"
+msgstr "ESE"
+#
+msgid "Fathoms"
+msgstr ""
+#
+msgid "Feet"
+msgstr ""
+#
+msgid "Fonts"
+msgstr "字型"
+#
+msgid "From Ownship"
+msgstr ""
+#
+msgid "GPS Compass"
+msgstr "GPS 羅盤"
+#
+msgid "GPS Status"
+msgstr "GPS 狀態"
+#
+msgid "GPS in View"
+msgstr "可接收GPS"
+#
+msgid "Honor OpenCPN settings"
+msgstr ""
+#
+msgid "Horizontal"
+msgstr "水平"
+#
+msgid "Inches"
+msgstr ""
+#
+msgid "Instruments"
+msgstr "航儀"
+#
+msgid "Kilometers"
+msgstr ""
+#
+msgid "Kts"
+msgstr ""
+#
+msgid "Label:"
+msgstr "標籤:"
+#
+#, fuzzy
+msgid "Mag COG"
+msgstr "Mag HDG"
+#
+msgid "Mag HDG"
+msgstr "Mag HDG"
+#
+#, c-format
+msgid "Max %.1f since %02d:%02d  Overall %.1f"
+msgstr "最大 %.1f 自從 %02d:%02d  整體 %.1f"
+#
+msgid "Meters"
+msgstr ""
+#
+msgid "Moon phase"
+msgstr "月相"
+#
+msgid "N"
+msgstr "N"
+#
+msgid "NE"
+msgstr "NE"
+#
+msgid "NNE"
+msgstr "NNE"
+#
+msgid "NNW"
+msgstr "NNW"
+#
+msgid "NW"
+msgstr "NW"
+#
+msgid "Nautical miles"
+msgstr ""
+#
+msgid "Orientation:"
+msgstr "方向:"
+#
+msgid "Position"
+msgstr "位置"
+#
+msgid "Preferences..."
+msgstr "偏好設定..."
+#
+msgid "Rudder Angle"
+msgstr "舵角"
+#
+msgid "S"
+msgstr "S"
+#
+msgid "SE"
+msgstr "SE"
+#
+msgid "SOG"
+msgstr "SOG"
+#
+msgid "SSE"
+msgstr "SSE"
+#
+msgid "SSW"
+msgstr "SSW"
+#
+msgid "STW"
+msgstr "STW"
+#
+msgid "SW"
+msgstr "SW"
+#
+msgid "Select instrument to add:"
+msgstr "選擇新增航儀:"
+#
+msgid "Small:"
+msgstr "小字體:"
+#
+msgid "Speedometer"
+msgstr "速度計"
+#
+#, fuzzy
+msgid "Speedometer max value:"
+msgstr "速度計"
+#
+msgid "Statute miles"
+msgstr ""
+#
+msgid "Sum Log"
+msgstr ""
+#
+msgid "Sunrise/Sunset"
+msgstr "日升/日落"
+#
+msgid "Title:"
+msgstr "標題:"
+#
+msgid "Trip Log"
+msgstr ""
+#
+#, fuzzy
+msgid "True Compass"
+msgstr "羅盤"
+#
+msgid "True HDG"
+msgstr "True HDG"
+#
+msgid "True Wind Angle"
+msgstr "真風角"
+#
+msgid "True Wind Angle & Speed"
+msgstr "真風角與風速"
+#
+msgid "True Wind Dir. & Speed"
+msgstr "真風向與速度"
+#
+msgid "True Wind Direction"
+msgstr "真風向"
+#
+msgid "True Wind Speed"
+msgstr "真風速"
+#
+msgid "Units, Ranges, Formats"
+msgstr ""
+#
+msgid "Up"
+msgstr "上移"
+#
+msgid "VMG"
+msgstr "VMG"
+#
+msgid "Vertical"
+msgstr "垂直"
+#
+msgid "W"
+msgstr "W"
+#
+msgid "WNW"
+msgstr "WNW"
+#
+msgid "WSW"
+msgstr "WSW"
+#
+msgid "Water Temp."
+msgstr "水溫"
+#
+msgid "Wind history"
+msgstr "風向歷史記錄"
+#
+msgid "Wind speed units:"
+msgstr ""
+#
+msgid "km/h"
+msgstr ""
+#
+msgid "m/s"
+msgstr ""
+#
+msgid "mph"
+msgstr ""
+#
+msgid "show this dashboard"
+msgstr "顯示這個儀表板"

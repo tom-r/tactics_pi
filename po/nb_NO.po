@@ -1,0 +1,315 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenCPN 3.3.1006\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-24 23:40-0500\n"
+"PO-Revision-Date: 2013-10-15 00:32+0100\n"
+"Last-Translator: Frode Lynum <post@opencpn.kb-h.com>\n"
+"Language-Team: OpenCPN Norge <post@opencpn.kb-h.com>\n"
+"Language: nb_NO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+#
+msgid " mag"
+msgstr " mag"
+#
+msgid " true"
+msgstr " virkelig"
+#
+msgid "Add"
+msgstr "Legg til"
+#
+msgid "Add instrument"
+msgstr "Legg til instrument"
+#
+msgid "Air Temp."
+msgstr "Luft temp."
+#
+msgid "App. Wind Angle"
+msgstr "Tils. Vindretning"
+#
+msgid "App. Wind Angle & Speed"
+msgstr "Tils. vindretn. & fart"
+#
+msgid "App. Wind Speed"
+msgstr "Tils. Vindhastighet"
+#
+msgid "Appearance"
+msgstr "Utseende"
+#
+#, fuzzy
+msgid "Barometric history"
+msgstr "Vindhistogram"
+#
+msgid "Barometric pressure"
+msgstr ""
+#
+msgid "Boat speed units:"
+msgstr ""
+#
+msgid "COG"
+msgstr "COG"
+#
+msgid "Caption:"
+msgstr "Overskrift:"
+#
+msgid "Centimeters"
+msgstr ""
+#
+msgid "Clock"
+msgstr "Klokke"
+#
+msgid "Cursor"
+msgstr "Kursor"
+#
+msgid "Dashboard"
+msgstr "Instrumentpanel"
+#
+msgid "Dashboard PlugIn for OpenCPN"
+msgstr "Instrumentutvidelse for OpenCPN"
+#
+msgid ""
+"Dashboard PlugIn for OpenCPN\n"
+"Provides navigation instrument display from NMEA source."
+msgstr ""
+"Instrument utvidelse for OpenCPN\n"
+"Tilfører navigasjons instrument visning fra NMEA kilder."
+#
+msgid "Dashboard preferences"
+msgstr "Egenskaper for instrumentpanel"
+#
+msgid "Data:"
+msgstr "Data:"
+#
+msgid "Delete"
+msgstr "Slett"
+#
+msgid "Depth"
+msgstr "Dybde"
+#
+msgid "Depth units:"
+msgstr ""
+#
+msgid "Distance units:"
+msgstr ""
+#
+msgid "Down"
+msgstr "Ned"
+#
+msgid "E"
+msgstr "Ø"
+#
+msgid "ENE"
+msgstr "ØNØ"
+#
+msgid "ESE"
+msgstr "ØSØ"
+#
+msgid "Fathoms"
+msgstr ""
+#
+msgid "Feet"
+msgstr ""
+#
+msgid "Fonts"
+msgstr "Skrift"
+#
+msgid "From Ownship"
+msgstr ""
+#
+msgid "GPS Compass"
+msgstr "GPS Kompass"
+#
+msgid "GPS Status"
+msgstr "GPS status"
+#
+msgid "GPS in View"
+msgstr "GPS visning"
+#
+msgid "Honor OpenCPN settings"
+msgstr ""
+#
+msgid "Horizontal"
+msgstr "Horisontal"
+#
+msgid "Inches"
+msgstr ""
+#
+msgid "Instruments"
+msgstr "Instrumenter"
+#
+msgid "Kilometers"
+msgstr ""
+#
+msgid "Kts"
+msgstr ""
+#
+msgid "Label:"
+msgstr "Etikett:"
+#
+#, fuzzy
+msgid "Mag COG"
+msgstr "Mag HDG"
+#
+msgid "Mag HDG"
+msgstr "Mag HDG"
+#
+#, c-format
+msgid "Max %.1f since %02d:%02d  Overall %.1f"
+msgstr "Maks. %.1f siden %02d:%02d  Totalt %.1f"
+#
+msgid "Meters"
+msgstr ""
+#
+msgid "Moon phase"
+msgstr "Månefase"
+#
+msgid "N"
+msgstr "N"
+#
+msgid "NE"
+msgstr "NØ"
+#
+msgid "NNE"
+msgstr "NNØ"
+#
+msgid "NNW"
+msgstr "NNV"
+#
+msgid "NW"
+msgstr "NV"
+#
+msgid "Nautical miles"
+msgstr ""
+#
+msgid "Orientation:"
+msgstr "Retning:"
+#
+msgid "Position"
+msgstr "Posisjon"
+#
+msgid "Preferences..."
+msgstr "Egenskaper..."
+#
+msgid "Rudder Angle"
+msgstr "Rorvinkel"
+#
+msgid "S"
+msgstr "S"
+#
+msgid "SE"
+msgstr "SØ"
+#
+msgid "SOG"
+msgstr "SOG"
+#
+msgid "SSE"
+msgstr "SSØ"
+#
+msgid "SSW"
+msgstr "SSV"
+#
+msgid "STW"
+msgstr "STW"
+#
+msgid "SW"
+msgstr "SV"
+#
+msgid "Select instrument to add:"
+msgstr "Velg instrument som skal legges til:"
+#
+msgid "Small:"
+msgstr "Liten:"
+#
+msgid "Speedometer"
+msgstr "Speedometer"
+#
+#, fuzzy
+msgid "Speedometer max value:"
+msgstr "Speedometer"
+#
+msgid "Statute miles"
+msgstr ""
+#
+msgid "Sum Log"
+msgstr ""
+#
+msgid "Sunrise/Sunset"
+msgstr "Sol opp/ned"
+#
+msgid "Title:"
+msgstr "Tittel:"
+#
+msgid "Trip Log"
+msgstr ""
+#
+#, fuzzy
+msgid "True Compass"
+msgstr "Kompass"
+#
+msgid "True HDG"
+msgstr "Virkelig HDG"
+#
+msgid "True Wind Angle"
+msgstr "Virk. Vindretning"
+#
+msgid "True Wind Angle & Speed"
+msgstr "Virk. Vindretning & fart"
+#
+msgid "True Wind Dir. & Speed"
+msgstr "Virk. Vindretn. & fart"
+#
+msgid "True Wind Direction"
+msgstr "Virk. Vindretning"
+#
+msgid "True Wind Speed"
+msgstr "Virk. Vindhastighet"
+#
+msgid "Units, Ranges, Formats"
+msgstr ""
+#
+msgid "Up"
+msgstr "Opp"
+#
+msgid "VMG"
+msgstr "VMG"
+#
+msgid "Vertical"
+msgstr "Vertikal"
+#
+msgid "W"
+msgstr "V"
+#
+msgid "WNW"
+msgstr "VNV"
+#
+msgid "WSW"
+msgstr "VSV"
+#
+msgid "Water Temp."
+msgstr "Vann temp."
+#
+msgid "Wind history"
+msgstr "Vindhistogram"
+#
+msgid "Wind speed units:"
+msgstr ""
+#
+msgid "km/h"
+msgstr ""
+#
+msgid "m/s"
+msgstr ""
+#
+msgid "mph"
+msgstr ""
+#
+msgid "show this dashboard"
+msgstr "vis dette instrumentpanelet"
