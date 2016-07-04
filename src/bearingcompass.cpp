@@ -65,14 +65,13 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 	m_CurrDir = -1;
 	m_CurrSpeed = -1;
 	m_ExtraValueDTW = 0;
-	m_ExtraValueDCV = 0;
 	m_Leeway = 0;
 	m_AngleStart = 0;
 	mExpSmDegRange = new ExpSmooth(g_dalphaDeltCoG);
 	m_Cog = -999;
 	m_Hdt = -999;
 	m_diffCogHdt = 0;
-	m_predictedSog = 0;
+	m_predictedSog = 0.0;
 	m_TWA = NAN;
 	m_AWA = -999;
 	m_TWS = NAN;
@@ -80,10 +79,6 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 	m_ExpSmoothDiffCogHdt = 0;
 	m_oldExpSmoothDiffCogHdt = 0;
 	for (int i = 0; i < COGRANGE; i++) m_COGRange[i] = 0;
-
-
-
-
 }
 /***************************************************************************************
 ****************************************************************************************/

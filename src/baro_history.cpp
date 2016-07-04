@@ -323,11 +323,11 @@ void TacticsInstrument_BaroHistory::DrawForeground(wxGCDC* dc)
   pen.SetWidth(2);
   dc->SetPen( pen );
   pointSpeed_old.x=m_LeftLegend+3;
-  pointSpeed_old.y = m_TopLineHeight+m_DrawAreaRect.height - m_ExpSmoothArrayWindSpd[0] * ratioH;
+  pointSpeed_old.y = m_TopLineHeight+m_DrawAreaRect.height - m_ExpSmoothArrayPercentSpd[0] * ratioH;
 
   for (int idx = 1; idx < BARO_RECORD_COUNT; idx++) {
     pointsSpd[idx].x = idx * m_ratioW + 3 + m_LeftLegend;
-    pointsSpd[idx].y = m_ExpSmoothArrayWindSpd[idx] * ratioH;
+    pointsSpd[idx].y = m_ExpSmoothArrayPercentSpd[idx] * ratioH;
     if(BARO_RECORD_COUNT-m_SampleCount <= idx && pointsSpd[idx].y > m_TopLineHeight && pointSpeed_old.y > m_TopLineHeight && pointsSpd[idx].y <=m_TopLineHeight+m_DrawAreaRect.height && pointSpeed_old.y<=m_TopLineHeight+m_DrawAreaRect.height)
       dc->DrawLine( pointSpeed_old.x, pointSpeed_old.y, pointsSpd[idx].x,pointsSpd[idx].y );
     pointSpeed_old.x=pointsSpd[idx].x;

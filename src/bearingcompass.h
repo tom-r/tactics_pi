@@ -67,12 +67,12 @@ class TacticsInstrument_BearingCompass : public TacticsInstrument_Dial
 
             void SetData(int, double, wxString);
 			bool SaveConfig(void);
-			double m_Bearing,  m_ExtraValueDTW, m_ExtraValueDCV,  m_CurrDir, m_CurrSpeed, m_currAngleStart, m_TWA, m_AWA,m_TWS, m_Hdt, m_Leeway;
+			double m_Bearing,  m_ExtraValueDTW, m_CurrDir, m_CurrSpeed, m_currAngleStart, m_TWA, m_AWA,m_TWS, m_Hdt, m_Leeway;
             //double m_RMBlat, m_RMBlon;
 			double m_diffCogHdt;
 			double m_lat, m_lon,m_StW,m_predictedSog;
 			//double m_AngleStart;
-            wxString m_BearingUnit, m_ExtraValueDTWUnit, m_ExtraValueDCVUnit, m_ToWpt, m_CurrDirUnit, m_CurrSpeedUnit, m_curTack, m_targetTack, m_LeewayUnit;
+            wxString m_BearingUnit, m_ExtraValueDTWUnit,  m_ToWpt, m_CurrDirUnit, m_CurrSpeedUnit, m_curTack, m_targetTack, m_LeewayUnit;
 			//double m_ExpSmoothDegRange, m_oldExpSmoothDegRange, m_alphaDeltaCog, alpha_diffCogHdt ;
 			double m_ExpSmoothDegRange, alpha_diffCogHdt;
 			//double m_LaylineDegRange, m_minLaylineDegRange, m_maxLaylineDegRange, m_COGRange[COGRANGE], m_Cog;

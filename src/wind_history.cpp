@@ -1,5 +1,5 @@
 /******************************************************************************
-* $Id: wind_history.cpp, v1.0 2010/08/30 tom-r Exp $
+* $Id: wind_history.cpp, v1.0 2010/08/30 tom_BigSpeedy Exp $
 *
 * Project:  OpenCPN
 * Purpose:  Dashboard Plugin

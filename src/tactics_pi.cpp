@@ -69,8 +69,8 @@ wxFont *g_pFontSmall;
 int g_iDashSpeedMax;
 int g_iDashSpeedUnit;
 int g_iDashDepthUnit;
-int g_iDashDistanceUnit;
-int g_iDashWindSpeedUnit;
+int g_iDashDistanceUnit;  //0="Nautical miles", 1="Statute miles", 2="Kilometers", 3="Meters"
+int g_iDashWindSpeedUnit; //0="Kts", 1="mph", 2="km/h", 3="m/s"
 //TR
 double g_dalphaDeltCoG;
 double g_dLeewayFactor;
@@ -4306,6 +4306,10 @@ Calculate Current with DES
  based on actual position, we calculate lat/lon of the endpoints of both vectors  (COG/HDT = direction, SOG/STW = length)
  then we take lat/lon from the endpoints of these vectors and calculate current between them with length (=speed) and direction
  return the endpoint of SOG,COG
+
+ ToDo :
+ we're already calculating in "user speed data", but the exp. smoothing is done on the value itself.
+ On unit-change, the smoothed data values need to be converted from "old" to "new"
 **********************************************************************************/
 void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
 {

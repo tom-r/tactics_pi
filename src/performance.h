@@ -217,22 +217,24 @@ private:
 
 protected:
   double alpha;
-  double m_ArrayWindSpdHistory[DATA_RECORD_COUNT];
-  double m_ExpSmoothArrayWindSpd[DATA_RECORD_COUNT];
+  double m_ArrayPercentSpdHistory[DATA_RECORD_COUNT];
+  double m_ArrayBoatSpdHistory[DATA_RECORD_COUNT];
+  double m_ExpSmoothArrayBoatSpd[DATA_RECORD_COUNT];
+  double m_ExpSmoothArrayPercentSpd[DATA_RECORD_COUNT];
   wxDateTime m_ArrayRecTime[DATA_RECORD_COUNT];
 
-  //double m_MaxWindDir;
-  //double m_MinWindDir;
-  //double m_WindDirRange;
+  double m_MaxBoatSpd;
+  double m_MinBoatSpd;
+  double m_BoatSpeedRange;
   double m_MaxPercent;  //...in array
-  double m_TotalMaxBoatSpd; // since O is started
+  double m_TotalMaxSpdPercent; // since O is started
   double m_TWA, m_TWS, m_STW, m_PolarSpeedPercent, m_PolarSpeed;
-  double m_MaxPercentScale;
+  double m_MaxPercentScale, m_MaxBoatSpdScale;
   double m_ratioW;
   //double m_oldDirVal;
   bool m_IsRunning;
   int m_SampleCount;
-  wxString m_STWUnit;
+  wxString m_STWUnit, m_PercentUnit;
 
   wxRect m_WindowRect;
   wxRect m_DrawAreaRect; //the coordinates of the real darwing area
@@ -248,5 +250,6 @@ protected:
   void SetMinMaxWindScale();
   //void DrawWindDirScale(wxGCDC* dc);
   void DrawBoatSpeedScale(wxGCDC* dc);
+  void DrawPercentSpeedScale(wxGCDC* dc);
   //wxString GetWindDirStr(wxString WindDir);
 };
