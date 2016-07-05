@@ -150,7 +150,7 @@ void TacticsInstrument_BearingCompass::SetData(int st, double data, wxString uni
 				m_ExtraValueDTWUnit = getUsrDistanceUnit_Plugin(g_iDashDistanceUnit);
 			}
 		}
-		m_BearingUnit = _("\u00B0");
+		m_BearingUnit = _T("\u00B0");
 	}
 
 	CalculateLaylineDegreeRange();

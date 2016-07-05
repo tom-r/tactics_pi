@@ -1049,8 +1049,8 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_STW | OCPN_DBP_STC_TWA | OCPN_
   m_MaxPercent = 0;
   m_MinBoatSpd = 0;
   m_MaxBoatSpd = 0;
-  m_STWUnit = _("--");
-  m_PercentUnit = _("%");
+  m_STWUnit = _T("--");
+  m_PercentUnit = _T("%");
   m_TotalMaxSpdPercent = 0;
   m_TopLineHeight = 30;
   m_SpdStartVal = -1;
@@ -1192,7 +1192,7 @@ void  TacticsInstrument_PolarPerformance::DrawBoatSpeedScale(wxGCDC* dc)
   dc->SetTextForeground(cl);
   dc->SetFont(*g_pFontSmall);
   if (!m_IsRunning) {
-    label1.Printf(_("--- %s"), m_STWUnit);
+    label1.Printf(_T("--- %s"), m_STWUnit);
     label2 = label1;
     label3 = label1;
     label4 = label1;
@@ -1259,7 +1259,7 @@ void  TacticsInstrument_PolarPerformance::DrawPercentSpeedScale(wxGCDC* dc)
   int tmpval = (int)(m_MaxPercent + 10) % 10;
   m_MaxPercentScale = (int)(m_MaxPercent + 10 - tmpval);
   if (!m_IsRunning) {
-    label1.Printf(_("--- %s"), m_PercentUnit);
+    label1.Printf(_T("--- %s"), m_PercentUnit);
     label2 = label1;
     label3 = label1;
     label4 = label1;
@@ -1448,7 +1448,12 @@ void TacticsInstrument_PolarPerformance::DrawForeground(wxGCDC* dc)
     min = m_ArrayRecTime[i].GetMinute();
     hour = m_ArrayRecTime[i].GetHour();
   }
-  dc->DrawText(wxString::Format(_("Max %.1f %s since %02d:%02d  Overall %.1f %s"), m_MaxPercent, m_PercentUnit, hour, min, m_TotalMaxSpdPercent, m_PercentUnit), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
+  // Single text var to facilitate correct translations:
+  wxString s_Max = _("Max");
+  wxString s_Since = _("since");
+  wxString s_OMax = _("Overall");
+  dc->DrawText(wxString::Format(_T("%s %.1f %s %s %02d:%02d  %s %.1f %s"), s_Max, m_MaxPercent, m_PercentUnit, s_Since, hour, min, s_OMax, m_TotalMaxSpdPercent, m_PercentUnit), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
+  //dc->DrawText(wxString::Format(_("Max %.1f %s since %02d:%02d  Overall %.1f %s"), m_MaxPercent, m_PercentUnit, hour, min, m_TotalMaxSpdPercent, m_PercentUnit), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
   pen.SetStyle(wxPENSTYLE_SOLID);
   pen.SetColour(wxColour(61, 61, 204, 96)); //blue, transparent
   pen.SetWidth(1);

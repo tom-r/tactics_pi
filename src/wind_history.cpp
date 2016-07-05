@@ -54,7 +54,7 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_TWD | OCPN_DBP_STC_TWS)
   m_WindDir = -1;
   m_WindDirRange = 90;
   m_MaxWindSpd = 0;
-  m_WindSpeedUnit = _("--");
+  m_WindSpeedUnit = _T("--");
   m_TotalMaxWindSpd = 0;
   m_WindSpd = 0;
   m_TopLineHeight = 30;
@@ -330,7 +330,7 @@ void  TacticsInstrument_WindDirHistory::DrawWindSpeedScale(wxGCDC* dc)
   //round maxWindSpd up to the next full knot; nicer view ...
   m_MaxWindSpdScale = (int)m_MaxWindSpd + 1;
   if (!m_IsRunning) {
-    label1.Printf(_("--- %s"), m_WindSpeedUnit.c_str());
+    label1.Printf(_T("--- %s"), m_WindSpeedUnit.c_str());
     label2 = label1;
     label3 = label1;
     label4 = label1;
@@ -578,7 +578,12 @@ void TacticsInstrument_WindDirHistory::DrawForeground(wxGCDC* dc)
     min = m_ArrayRecTime[i].GetMinute();
     hour = m_ArrayRecTime[i].GetHour();
   }
-  dc->DrawText(wxString::Format(_("Max %.1f %s since %02d:%02d  Overall %.1f %s"), m_MaxWindSpd, m_WindSpeedUnit.c_str(), hour, min, m_TotalMaxWindSpd, m_WindSpeedUnit.c_str()), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
+  //Single text var to facilitate correc translations:
+  wxString s_Max = _("Max");
+  wxString s_Since = _("since");
+  wxString s_OMax = _("Overall");
+  dc->DrawText(wxString::Format(_T("%s %.1f %s %s %02d:%02d  %s %.1f %s"), s_Max, m_MaxWindSpd, s_Since, m_WindSpeedUnit.c_str(), hour, min, s_OMax, m_TotalMaxWindSpd, m_WindSpeedUnit.c_str()), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
+  //dc->DrawText(wxString::Format(_("Max %.1f %s since %02d:%02d  Overall %.1f %s"), m_MaxWindSpd, m_WindSpeedUnit.c_str(), hour, min, m_TotalMaxWindSpd, m_WindSpeedUnit.c_str()), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
   pen.SetStyle(wxPENSTYLE_SOLID);
   pen.SetColour(wxColour(61, 61, 204, 96)); //blue, transparent
   pen.SetWidth(1);
