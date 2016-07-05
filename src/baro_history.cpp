@@ -284,7 +284,13 @@ void TacticsInstrument_BaroHistory::DrawForeground(wxGCDC* dc)
   m_ratioW = double(m_DrawAreaRect.width) / (BARO_RECORD_COUNT-1);
  // dc->DrawText(wxString::Format(_(" Max %.1f Min %.1f since %02d:%02d  Overall Max %.1f Min %.1f "),m_MaxPress,m_MinPress,hour,min,m_TotalMaxPress,m_TotalMinPress), m_LeftLegend+3+2+degw, m_TopLineHeight-degh+5);
  // Cant get the min sice to work...
- dc->DrawText(wxString::Format(_(" Max %.1f since %02d:%02d  Overall Max %.1f Min %.1f "),m_MaxPress,hour,min,m_TotalMaxPress,m_TotalMinPress), m_LeftLegend+3+2+degw, m_TopLineHeight-degh+5);
+ // Single text var to facilitate correct translations:
+ wxString s_Max = _("Max");
+ wxString s_Since = _("since");
+ wxString s_OMax = _("Overall Max");
+ wxString s_Min = _("Min");
+ dc->DrawText(wxString::Format(_T(" %s %.1f %s %02d:%02d  %s %.1f %s %.1f "), s_Max, m_MaxPress, s_Since, hour, min, s_OMax, m_TotalMaxPress, s_Min, m_TotalMinPress), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
+ //dc->DrawText(wxString::Format(_(" Max %.1f since %02d:%02d  Overall Max %.1f Min %.1f "),m_MaxPress,hour,min,m_TotalMaxPress,m_TotalMinPress), m_LeftLegend+3+2+degw, m_TopLineHeight-degh+5);
   pen.SetStyle(wxPENSTYLE_SOLID);
   pen.SetColour(wxColour(61,61,204,96)); //blue, transparent
   pen.SetWidth(1);
