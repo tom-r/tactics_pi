@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenCPN 3.3.1006\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-24 23:40-0500\n"
+"POT-Creation-Date: 2016-07-05 09:24+0200\n"
 "PO-Revision-Date: 2013-10-15 00:32+0100\n"
 "Last-Translator: Frode Lynum <post@opencpn.kb-h.com>\n"
 "Language-Team: OpenCPN Norge <post@opencpn.kb-h.com>\n"
@@ -17,11 +17,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 #
+msgid " 45°"
+msgstr ""
+#
+msgid " 90°"
+msgstr ""
+#
 msgid " mag"
 msgstr " mag"
 #
 msgid " true"
 msgstr " virkelig"
+#
+msgid "--"
+msgstr ""
+#
+msgid "10 kn"
+msgstr ""
+#
+msgid "135°"
+msgstr ""
+#
+msgid "15 kn"
+msgstr ""
+#
+msgid "20 kn"
+msgstr ""
+#
+msgid "25 kn"
+msgstr ""
+#
+msgid "5 kn"
+msgstr ""
+#
+msgid "Actual CMG"
+msgstr ""
+#
+msgid "Actual VMG"
+msgstr ""
 #
 msgid "Add"
 msgstr "Legg til"
@@ -31,6 +64,10 @@ msgstr "Legg til instrument"
 #
 msgid "Air Temp."
 msgstr "Luft temp."
+#
+#, fuzzy
+msgid "App & True Wind Angle"
+msgstr "Virk. Vindretning"
 #
 msgid "App. Wind Angle"
 msgstr "Tils. Vindretning"
@@ -51,7 +88,14 @@ msgstr "Vindhistogram"
 msgid "Barometric pressure"
 msgstr ""
 #
+#, fuzzy
+msgid "Bearing Compass"
+msgstr "Kompass"
+#
 msgid "Boat speed units:"
+msgstr ""
+#
+msgid "Boat's Leeway factor [0-20]:  "
 msgstr ""
 #
 msgid "COG"
@@ -66,24 +110,25 @@ msgstr ""
 msgid "Clock"
 msgstr "Klokke"
 #
-msgid "Cursor"
-msgstr "Kursor"
-#
-msgid "Dashboard"
-msgstr "Instrumentpanel"
-#
-msgid "Dashboard PlugIn for OpenCPN"
-msgstr "Instrumentutvidelse for OpenCPN"
-#
-msgid ""
-"Dashboard PlugIn for OpenCPN\n"
-"Provides navigation instrument display from NMEA source."
+msgid "Correct AWS/AWA with Heel"
 msgstr ""
-"Instrument utvidelse for OpenCPN\n"
-"Tilfører navigasjons instrument visning fra NMEA kilder."
 #
-msgid "Dashboard preferences"
-msgstr "Egenskaper for instrumentpanel"
+msgid "Correct STW with Leeway"
+msgstr ""
+#
+msgid "Current"
+msgstr ""
+#
+#, fuzzy
+msgid "Current Direction"
+msgstr "Virk. Vindretning"
+#
+#, fuzzy
+msgid "Current Speed"
+msgstr "Virk. Vindhastighet"
+#
+msgid "Current damping factor [1-400]:  "
+msgstr ""
 #
 msgid "Data:"
 msgstr "Data:"
@@ -95,6 +140,9 @@ msgid "Depth"
 msgstr "Dybde"
 #
 msgid "Depth units:"
+msgstr ""
+#
+msgid "Display Current on Chart (OpenGL)"
 msgstr ""
 #
 msgid "Distance units:"
@@ -121,17 +169,21 @@ msgstr ""
 msgid "Fonts"
 msgstr "Skrift"
 #
+#, fuzzy
+msgid "Force True Wind Calculation"
+msgstr "Virk. Vindretning"
+#
+msgid "Format in this file not recognised"
+msgstr ""
+#
 msgid "From Ownship"
 msgstr ""
 #
 msgid "GPS Compass"
 msgstr "GPS Kompass"
 #
-msgid "GPS Status"
-msgstr "GPS status"
-#
-msgid "GPS in View"
-msgstr "GPS visning"
+msgid "Heel"
+msgstr ""
 #
 msgid "Honor OpenCPN settings"
 msgstr ""
@@ -151,8 +203,26 @@ msgstr ""
 msgid "Kts"
 msgstr ""
 #
+msgid "L"
+msgstr ""
+#
 msgid "Label:"
 msgstr "Etikett:"
+#
+msgid "Layline length on Chart [nm]:  "
+msgstr ""
+#
+msgid "Layline width damping factor [0.025-1]:  "
+msgstr ""
+#
+msgid "Laylines"
+msgstr ""
+#
+msgid "Leeway"
+msgstr ""
+#
+msgid "Load"
+msgstr ""
 #
 #, fuzzy
 msgid "Mag COG"
@@ -161,15 +231,20 @@ msgstr "Mag HDG"
 msgid "Mag HDG"
 msgstr "Mag HDG"
 #
-#, c-format
-msgid "Max %.1f since %02d:%02d  Overall %.1f"
-msgstr "Maks. %.1f siden %02d:%02d  Totalt %.1f"
+msgid "Max"
+msgstr ""
+#
+msgid "Max. Layline Width [°]:"
+msgstr ""
 #
 msgid "Meters"
 msgstr ""
 #
-msgid "Moon phase"
-msgstr "Månefase"
+msgid "Min"
+msgstr ""
+#
+msgid "Min. Layline Width [°]:"
+msgstr ""
 #
 msgid "N"
 msgstr "N"
@@ -192,14 +267,38 @@ msgstr ""
 msgid "Orientation:"
 msgstr "Retning:"
 #
+msgid "Overall"
+msgstr ""
+#
+msgid "Overall Max"
+msgstr ""
+#
+msgid "Performance Parameters"
+msgstr ""
+#
+msgid "Pitch"
+msgstr ""
+#
+msgid "Polar"
+msgstr ""
+#
+msgid "Polar :"
+msgstr ""
+#
+msgid "Polar performance"
+msgstr ""
+#
+msgid "Polarspeed"
+msgstr ""
+#
 msgid "Position"
 msgstr "Posisjon"
 #
 msgid "Preferences..."
 msgstr "Egenskaper..."
 #
-msgid "Rudder Angle"
-msgstr "Rorvinkel"
+msgid "R"
+msgstr ""
 #
 msgid "S"
 msgstr "S"
@@ -222,8 +321,17 @@ msgstr "STW"
 msgid "SW"
 msgstr "SV"
 #
+msgid "Select a Polar-File"
+msgstr ""
+#
 msgid "Select instrument to add:"
 msgstr "Velg instrument som skal legges til:"
+#
+msgid "Show Laylines"
+msgstr ""
+#
+msgid "Show Wind Barb on Chart (OpenGL)"
+msgstr ""
 #
 msgid "Small:"
 msgstr "Liten:"
@@ -238,17 +346,49 @@ msgstr "Speedometer"
 msgid "Statute miles"
 msgstr ""
 #
-msgid "Sum Log"
-msgstr ""
-#
 msgid "Sunrise/Sunset"
 msgstr "Sol opp/ned"
 #
+msgid "TWA to Waypoint"
+msgstr ""
+#
+msgid "TWS/TWA "
+msgstr ""
+#
+msgid "Tactics"
+msgstr ""
+#
+#, fuzzy
+msgid "Tactics PlugIn for OpenCPN"
+msgstr "Instrumentutvidelse for OpenCPN"
+#
+#, fuzzy
+msgid ""
+"Tactics PlugIn for OpenCPN\n"
+"Provides performance data & instrument display from NMEA source and polar "
+"file."
+msgstr ""
+"Instrument utvidelse for OpenCPN\n"
+"Tilfører navigasjons instrument visning fra NMEA kilder."
+#
+#, fuzzy
+msgid "Tactics preferences"
+msgstr "Egenskaper for instrumentpanel"
+#
+msgid "Target CMG"
+msgstr ""
+#
+msgid "Target CMG-Angle"
+msgstr ""
+#
+msgid "Target VMG"
+msgstr ""
+#
+msgid "Target VMG-Angle"
+msgstr ""
+#
 msgid "Title:"
 msgstr "Tittel:"
-#
-msgid "Trip Log"
-msgstr ""
 #
 #, fuzzy
 msgid "True Compass"
@@ -256,6 +396,10 @@ msgstr "Kompass"
 #
 msgid "True HDG"
 msgstr "Virkelig HDG"
+#
+#, fuzzy
+msgid "True Wind"
+msgstr "Virk. Vindretning"
 #
 msgid "True Wind Angle"
 msgstr "Virk. Vindretning"
@@ -277,6 +421,12 @@ msgstr ""
 #
 msgid "Up"
 msgstr "Opp"
+#
+msgid "Use Heel Sensor"
+msgstr ""
+#
+msgid "Use SOG instead of STW for True Wind Calc."
+msgstr ""
 #
 msgid "VMG"
 msgstr "VMG"
@@ -302,14 +452,58 @@ msgstr "Vindhistogram"
 msgid "Wind speed units:"
 msgstr ""
 #
+msgid "You have to turn on OpenGL to use chart overlay "
+msgstr ""
+#
+msgid "fixed/max Leeway [°]:"
+msgstr ""
+#
 msgid "km/h"
 msgstr ""
 #
 msgid "m/s"
 msgstr ""
 #
+msgid "manual Heel input:"
+msgstr ""
+#
 msgid "mph"
 msgstr ""
 #
-msgid "show this dashboard"
+#, fuzzy
+msgid "show this tactics"
 msgstr "vis dette instrumentpanelet"
+#
+msgid "since"
+msgstr ""
+#
+msgid "tactics_pi: Select a Polar-File"
+msgstr ""
+#
+#
+#~ msgid "Cursor"
+#~ msgstr "Kursor"
+#
+#
+#~ msgid "Dashboard"
+#~ msgstr "Instrumentpanel"
+#
+#
+#~ msgid "GPS Status"
+#~ msgstr "GPS status"
+#
+#
+#~ msgid "GPS in View"
+#~ msgstr "GPS visning"
+#
+#
+#~ msgid "Max %.1f since %02d:%02d  Overall %.1f"
+#~ msgstr "Maks. %.1f siden %02d:%02d  Totalt %.1f"
+#
+#
+#~ msgid "Moon phase"
+#~ msgstr "Månefase"
+#
+#
+#~ msgid "Rudder Angle"
+#~ msgstr "Rorvinkel"

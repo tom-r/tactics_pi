@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn 2.2.1110\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-24 23:40-0500\n"
+"POT-Creation-Date: 2016-07-05 09:24+0200\n"
 "PO-Revision-Date: 2010-11-24 22:54-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,10 +16,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 #
+msgid " 45°"
+msgstr ""
+#
+msgid " 90°"
+msgstr ""
+#
 msgid " mag"
 msgstr ""
 #
 msgid " true"
+msgstr ""
+#
+msgid "--"
+msgstr ""
+#
+msgid "10 kn"
+msgstr ""
+#
+msgid "135°"
+msgstr ""
+#
+msgid "15 kn"
+msgstr ""
+#
+msgid "20 kn"
+msgstr ""
+#
+msgid "25 kn"
+msgstr ""
+#
+msgid "5 kn"
+msgstr ""
+#
+msgid "Actual CMG"
+msgstr ""
+#
+msgid "Actual VMG"
 msgstr ""
 #
 #
@@ -31,6 +64,9 @@ msgid "Add instrument"
 msgstr ""
 #
 msgid "Air Temp."
+msgstr ""
+#
+msgid "App & True Wind Angle"
 msgstr ""
 #
 msgid "App. Wind Angle"
@@ -51,7 +87,13 @@ msgstr ""
 msgid "Barometric pressure"
 msgstr ""
 #
+msgid "Bearing Compass"
+msgstr ""
+#
 msgid "Boat speed units:"
+msgstr ""
+#
+msgid "Boat's Leeway factor [0-20]:  "
 msgstr ""
 #
 #
@@ -67,25 +109,22 @@ msgstr ""
 msgid "Clock"
 msgstr ""
 #
-msgid "Cursor"
+msgid "Correct AWS/AWA with Heel"
 msgstr ""
 #
-#
-msgid "Dashboard"
+msgid "Correct STW with Leeway"
 msgstr ""
 #
-#
-msgid "Dashboard PlugIn for OpenCPN"
+msgid "Current"
 msgstr ""
 #
-#
-msgid ""
-"Dashboard PlugIn for OpenCPN\n"
-"Provides navigation instrument display from NMEA source."
+msgid "Current Direction"
 msgstr ""
 #
+msgid "Current Speed"
+msgstr ""
 #
-msgid "Dashboard preferences"
+msgid "Current damping factor [1-400]:  "
 msgstr ""
 #
 msgid "Data:"
@@ -100,6 +139,9 @@ msgid "Depth"
 msgstr ""
 #
 msgid "Depth units:"
+msgstr ""
+#
+msgid "Display Current on Chart (OpenGL)"
 msgstr ""
 #
 msgid "Distance units:"
@@ -128,16 +170,19 @@ msgstr ""
 msgid "Fonts"
 msgstr ""
 #
+msgid "Force True Wind Calculation"
+msgstr ""
+#
+msgid "Format in this file not recognised"
+msgstr ""
+#
 msgid "From Ownship"
 msgstr ""
 #
 msgid "GPS Compass"
 msgstr ""
 #
-msgid "GPS Status"
-msgstr ""
-#
-msgid "GPS in View"
+msgid "Heel"
 msgstr ""
 #
 msgid "Honor OpenCPN settings"
@@ -159,7 +204,25 @@ msgstr ""
 msgid "Kts"
 msgstr ""
 #
+msgid "L"
+msgstr ""
+#
 msgid "Label:"
+msgstr ""
+#
+msgid "Layline length on Chart [nm]:  "
+msgstr ""
+#
+msgid "Layline width damping factor [0.025-1]:  "
+msgstr ""
+#
+msgid "Laylines"
+msgstr ""
+#
+msgid "Leeway"
+msgstr ""
+#
+msgid "Load"
 msgstr ""
 #
 msgid "Mag COG"
@@ -168,14 +231,19 @@ msgstr ""
 msgid "Mag HDG"
 msgstr ""
 #
-#, c-format
-msgid "Max %.1f since %02d:%02d  Overall %.1f"
+msgid "Max"
+msgstr ""
+#
+msgid "Max. Layline Width [°]:"
 msgstr ""
 #
 msgid "Meters"
 msgstr ""
 #
-msgid "Moon phase"
+msgid "Min"
+msgstr ""
+#
+msgid "Min. Layline Width [°]:"
 msgstr ""
 #
 #
@@ -202,6 +270,30 @@ msgstr ""
 msgid "Orientation:"
 msgstr ""
 #
+msgid "Overall"
+msgstr ""
+#
+msgid "Overall Max"
+msgstr ""
+#
+msgid "Performance Parameters"
+msgstr ""
+#
+msgid "Pitch"
+msgstr ""
+#
+msgid "Polar"
+msgstr ""
+#
+msgid "Polar :"
+msgstr ""
+#
+msgid "Polar performance"
+msgstr ""
+#
+msgid "Polarspeed"
+msgstr ""
+#
 #
 msgid "Position"
 msgstr ""
@@ -209,7 +301,7 @@ msgstr ""
 msgid "Preferences..."
 msgstr ""
 #
-msgid "Rudder Angle"
+msgid "R"
 msgstr ""
 #
 #
@@ -238,8 +330,17 @@ msgstr ""
 msgid "SW"
 msgstr ""
 #
+msgid "Select a Polar-File"
+msgstr ""
+#
 #
 msgid "Select instrument to add:"
+msgstr ""
+#
+msgid "Show Laylines"
+msgstr ""
+#
+msgid "Show Wind Barb on Chart (OpenGL)"
 msgstr ""
 #
 msgid "Small:"
@@ -255,22 +356,52 @@ msgstr ""
 msgid "Statute miles"
 msgstr ""
 #
-msgid "Sum Log"
-msgstr ""
-#
 msgid "Sunrise/Sunset"
 msgstr ""
 #
-msgid "Title:"
+msgid "TWA to Waypoint"
 msgstr ""
 #
-msgid "Trip Log"
+msgid "TWS/TWA "
+msgstr ""
+#
+msgid "Tactics"
+msgstr ""
+#
+msgid "Tactics PlugIn for OpenCPN"
+msgstr ""
+#
+msgid ""
+"Tactics PlugIn for OpenCPN\n"
+"Provides performance data & instrument display from NMEA source and polar "
+"file."
+msgstr ""
+#
+msgid "Tactics preferences"
+msgstr ""
+#
+msgid "Target CMG"
+msgstr ""
+#
+msgid "Target CMG-Angle"
+msgstr ""
+#
+msgid "Target VMG"
+msgstr ""
+#
+msgid "Target VMG-Angle"
+msgstr ""
+#
+msgid "Title:"
 msgstr ""
 #
 msgid "True Compass"
 msgstr ""
 #
 msgid "True HDG"
+msgstr ""
+#
+msgid "True Wind"
 msgstr ""
 #
 msgid "True Wind Angle"
@@ -293,6 +424,12 @@ msgstr ""
 #
 #
 msgid "Up"
+msgstr ""
+#
+msgid "Use Heel Sensor"
+msgstr ""
+#
+msgid "Use SOG instead of STW for True Wind Calc."
 msgstr ""
 #
 #
@@ -321,14 +458,29 @@ msgstr ""
 msgid "Wind speed units:"
 msgstr ""
 #
+msgid "You have to turn on OpenGL to use chart overlay "
+msgstr ""
+#
+msgid "fixed/max Leeway [°]:"
+msgstr ""
+#
 msgid "km/h"
 msgstr ""
 #
 msgid "m/s"
 msgstr ""
 #
+msgid "manual Heel input:"
+msgstr ""
+#
 msgid "mph"
 msgstr ""
 #
-msgid "show this dashboard"
+msgid "show this tactics"
+msgstr ""
+#
+msgid "since"
+msgstr ""
+#
+msgid "tactics_pi: Select a Polar-File"
 msgstr ""

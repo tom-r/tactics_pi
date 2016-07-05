@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dashboard_pi 3.3.814\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-24 23:40-0500\n"
+"POT-Creation-Date: 2016-07-05 09:24+0200\n"
 "PO-Revision-Date: 2013-09-25 15:52+0800\n"
 "Last-Translator: Eddie Pai <eddie.pai@gmail.com>\n"
 "Language-Team: Eddie Pai <eddie.pai@gmail.com>\n"
@@ -18,11 +18,44 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.5.7\n"
 #
+msgid " 45°"
+msgstr ""
+#
+msgid " 90°"
+msgstr ""
+#
 msgid " mag"
 msgstr "磁"
 #
 msgid " true"
 msgstr "真"
+#
+msgid "--"
+msgstr ""
+#
+msgid "10 kn"
+msgstr ""
+#
+msgid "135°"
+msgstr ""
+#
+msgid "15 kn"
+msgstr ""
+#
+msgid "20 kn"
+msgstr ""
+#
+msgid "25 kn"
+msgstr ""
+#
+msgid "5 kn"
+msgstr ""
+#
+msgid "Actual CMG"
+msgstr ""
+#
+msgid "Actual VMG"
+msgstr ""
 #
 msgid "Add"
 msgstr "新增"
@@ -32,6 +65,10 @@ msgstr "增加航儀"
 #
 msgid "Air Temp."
 msgstr "氣溫"
+#
+#, fuzzy
+msgid "App & True Wind Angle"
+msgstr "真風角"
 #
 msgid "App. Wind Angle"
 msgstr "迎風角"
@@ -52,7 +89,14 @@ msgstr "風向歷史記錄"
 msgid "Barometric pressure"
 msgstr ""
 #
+#, fuzzy
+msgid "Bearing Compass"
+msgstr "羅盤"
+#
 msgid "Boat speed units:"
+msgstr ""
+#
+msgid "Boat's Leeway factor [0-20]:  "
 msgstr ""
 #
 msgid "COG"
@@ -67,24 +111,25 @@ msgstr ""
 msgid "Clock"
 msgstr "時鐘"
 #
-msgid "Cursor"
-msgstr "游標"
-#
-msgid "Dashboard"
-msgstr "儀表板"
-#
-msgid "Dashboard PlugIn for OpenCPN"
-msgstr "OpenCPN 儀表板插件"
-#
-msgid ""
-"Dashboard PlugIn for OpenCPN\n"
-"Provides navigation instrument display from NMEA source."
+msgid "Correct AWS/AWA with Heel"
 msgstr ""
-"OpenCPN 儀表板插件\n"
-"提供來自航儀 NMEA 資訊顯示."
 #
-msgid "Dashboard preferences"
-msgstr "儀表板偏好設定"
+msgid "Correct STW with Leeway"
+msgstr ""
+#
+msgid "Current"
+msgstr ""
+#
+#, fuzzy
+msgid "Current Direction"
+msgstr "真風向"
+#
+#, fuzzy
+msgid "Current Speed"
+msgstr "真風速"
+#
+msgid "Current damping factor [1-400]:  "
+msgstr ""
 #
 msgid "Data:"
 msgstr "資料:"
@@ -96,6 +141,9 @@ msgid "Depth"
 msgstr "水深"
 #
 msgid "Depth units:"
+msgstr ""
+#
+msgid "Display Current on Chart (OpenGL)"
 msgstr ""
 #
 msgid "Distance units:"
@@ -122,17 +170,21 @@ msgstr ""
 msgid "Fonts"
 msgstr "字型"
 #
+#, fuzzy
+msgid "Force True Wind Calculation"
+msgstr "真風向"
+#
+msgid "Format in this file not recognised"
+msgstr ""
+#
 msgid "From Ownship"
 msgstr ""
 #
 msgid "GPS Compass"
 msgstr "GPS 羅盤"
 #
-msgid "GPS Status"
-msgstr "GPS 狀態"
-#
-msgid "GPS in View"
-msgstr "可接收GPS"
+msgid "Heel"
+msgstr ""
 #
 msgid "Honor OpenCPN settings"
 msgstr ""
@@ -152,8 +204,26 @@ msgstr ""
 msgid "Kts"
 msgstr ""
 #
+msgid "L"
+msgstr ""
+#
 msgid "Label:"
 msgstr "標籤:"
+#
+msgid "Layline length on Chart [nm]:  "
+msgstr ""
+#
+msgid "Layline width damping factor [0.025-1]:  "
+msgstr ""
+#
+msgid "Laylines"
+msgstr ""
+#
+msgid "Leeway"
+msgstr ""
+#
+msgid "Load"
+msgstr ""
 #
 #, fuzzy
 msgid "Mag COG"
@@ -162,15 +232,20 @@ msgstr "Mag HDG"
 msgid "Mag HDG"
 msgstr "Mag HDG"
 #
-#, c-format
-msgid "Max %.1f since %02d:%02d  Overall %.1f"
-msgstr "最大 %.1f 自從 %02d:%02d  整體 %.1f"
+msgid "Max"
+msgstr ""
+#
+msgid "Max. Layline Width [°]:"
+msgstr ""
 #
 msgid "Meters"
 msgstr ""
 #
-msgid "Moon phase"
-msgstr "月相"
+msgid "Min"
+msgstr ""
+#
+msgid "Min. Layline Width [°]:"
+msgstr ""
 #
 msgid "N"
 msgstr "N"
@@ -193,14 +268,38 @@ msgstr ""
 msgid "Orientation:"
 msgstr "方向:"
 #
+msgid "Overall"
+msgstr ""
+#
+msgid "Overall Max"
+msgstr ""
+#
+msgid "Performance Parameters"
+msgstr ""
+#
+msgid "Pitch"
+msgstr ""
+#
+msgid "Polar"
+msgstr ""
+#
+msgid "Polar :"
+msgstr ""
+#
+msgid "Polar performance"
+msgstr ""
+#
+msgid "Polarspeed"
+msgstr ""
+#
 msgid "Position"
 msgstr "位置"
 #
 msgid "Preferences..."
 msgstr "偏好設定..."
 #
-msgid "Rudder Angle"
-msgstr "舵角"
+msgid "R"
+msgstr ""
 #
 msgid "S"
 msgstr "S"
@@ -223,8 +322,17 @@ msgstr "STW"
 msgid "SW"
 msgstr "SW"
 #
+msgid "Select a Polar-File"
+msgstr ""
+#
 msgid "Select instrument to add:"
 msgstr "選擇新增航儀:"
+#
+msgid "Show Laylines"
+msgstr ""
+#
+msgid "Show Wind Barb on Chart (OpenGL)"
+msgstr ""
 #
 msgid "Small:"
 msgstr "小字體:"
@@ -239,17 +347,49 @@ msgstr "速度計"
 msgid "Statute miles"
 msgstr ""
 #
-msgid "Sum Log"
-msgstr ""
-#
 msgid "Sunrise/Sunset"
 msgstr "日升/日落"
 #
+msgid "TWA to Waypoint"
+msgstr ""
+#
+msgid "TWS/TWA "
+msgstr ""
+#
+msgid "Tactics"
+msgstr ""
+#
+#, fuzzy
+msgid "Tactics PlugIn for OpenCPN"
+msgstr "OpenCPN 儀表板插件"
+#
+#, fuzzy
+msgid ""
+"Tactics PlugIn for OpenCPN\n"
+"Provides performance data & instrument display from NMEA source and polar "
+"file."
+msgstr ""
+"OpenCPN 儀表板插件\n"
+"提供來自航儀 NMEA 資訊顯示."
+#
+#, fuzzy
+msgid "Tactics preferences"
+msgstr "儀表板偏好設定"
+#
+msgid "Target CMG"
+msgstr ""
+#
+msgid "Target CMG-Angle"
+msgstr ""
+#
+msgid "Target VMG"
+msgstr ""
+#
+msgid "Target VMG-Angle"
+msgstr ""
+#
 msgid "Title:"
 msgstr "標題:"
-#
-msgid "Trip Log"
-msgstr ""
 #
 #, fuzzy
 msgid "True Compass"
@@ -257,6 +397,10 @@ msgstr "羅盤"
 #
 msgid "True HDG"
 msgstr "True HDG"
+#
+#, fuzzy
+msgid "True Wind"
+msgstr "真風角"
 #
 msgid "True Wind Angle"
 msgstr "真風角"
@@ -278,6 +422,12 @@ msgstr ""
 #
 msgid "Up"
 msgstr "上移"
+#
+msgid "Use Heel Sensor"
+msgstr ""
+#
+msgid "Use SOG instead of STW for True Wind Calc."
+msgstr ""
 #
 msgid "VMG"
 msgstr "VMG"
@@ -303,14 +453,58 @@ msgstr "風向歷史記錄"
 msgid "Wind speed units:"
 msgstr ""
 #
+msgid "You have to turn on OpenGL to use chart overlay "
+msgstr ""
+#
+msgid "fixed/max Leeway [°]:"
+msgstr ""
+#
 msgid "km/h"
 msgstr ""
 #
 msgid "m/s"
 msgstr ""
 #
+msgid "manual Heel input:"
+msgstr ""
+#
 msgid "mph"
 msgstr ""
 #
-msgid "show this dashboard"
+#, fuzzy
+msgid "show this tactics"
 msgstr "顯示這個儀表板"
+#
+msgid "since"
+msgstr ""
+#
+msgid "tactics_pi: Select a Polar-File"
+msgstr ""
+#
+#
+#~ msgid "Cursor"
+#~ msgstr "游標"
+#
+#
+#~ msgid "Dashboard"
+#~ msgstr "儀表板"
+#
+#
+#~ msgid "GPS Status"
+#~ msgstr "GPS 狀態"
+#
+#
+#~ msgid "GPS in View"
+#~ msgstr "可接收GPS"
+#
+#
+#~ msgid "Max %.1f since %02d:%02d  Overall %.1f"
+#~ msgstr "最大 %.1f 自從 %02d:%02d  整體 %.1f"
+#
+#
+#~ msgid "Moon phase"
+#~ msgstr "月相"
+#
+#
+#~ msgid "Rudder Angle"
+#~ msgstr "舵角"

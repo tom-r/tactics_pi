@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dashboard_pi 2.2.1207\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-24 23:40-0500\n"
+"POT-Creation-Date: 2016-07-05 09:24+0200\n"
 "PO-Revision-Date: 2012-12-29 13:06+0100\n"
 "Last-Translator: Szabolcs SZIGETI <szigi@ik.bme.hu>\n"
 "Language-Team: SZIGETI Szabolcs <szigi@ik.bme.hu>\n"
@@ -17,11 +17,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
 #
+msgid " 45°"
+msgstr ""
+#
+msgid " 90°"
+msgstr ""
+#
 msgid " mag"
 msgstr "mágneses"
 #
 msgid " true"
 msgstr "valós"
+#
+msgid "--"
+msgstr ""
+#
+msgid "10 kn"
+msgstr ""
+#
+msgid "135°"
+msgstr ""
+#
+msgid "15 kn"
+msgstr ""
+#
+msgid "20 kn"
+msgstr ""
+#
+msgid "25 kn"
+msgstr ""
+#
+msgid "5 kn"
+msgstr ""
+#
+msgid "Actual CMG"
+msgstr ""
+#
+msgid "Actual VMG"
+msgstr ""
 #
 msgid "Add"
 msgstr "Hozzáadás"
@@ -31,6 +64,10 @@ msgstr "Műszer hozzáadása"
 #
 msgid "Air Temp."
 msgstr "Levegő hőmérséklet"
+#
+#, fuzzy
+msgid "App & True Wind Angle"
+msgstr "Valós szél irány"
 #
 msgid "App. Wind Angle"
 msgstr "Látszólagos szél irány"
@@ -50,7 +87,14 @@ msgstr ""
 msgid "Barometric pressure"
 msgstr ""
 #
+#, fuzzy
+msgid "Bearing Compass"
+msgstr "Kompassz"
+#
 msgid "Boat speed units:"
+msgstr ""
+#
+msgid "Boat's Leeway factor [0-20]:  "
 msgstr ""
 #
 msgid "COG"
@@ -65,24 +109,25 @@ msgstr ""
 msgid "Clock"
 msgstr "Óra"
 #
-msgid "Cursor"
-msgstr "Kurzor"
-#
-msgid "Dashboard"
-msgstr "Műszerfal"
-#
-msgid "Dashboard PlugIn for OpenCPN"
-msgstr "OpenCPN műszerfal plugin"
-#
-msgid ""
-"Dashboard PlugIn for OpenCPN\n"
-"Provides navigation instrument display from NMEA source."
+msgid "Correct AWS/AWA with Heel"
 msgstr ""
-"OpenCPN Műszerfal plugin\n"
-"Navigációs műszerfalon NMEA adatokat jelenít meg."
 #
-msgid "Dashboard preferences"
-msgstr "Műszerfal beállítások"
+msgid "Correct STW with Leeway"
+msgstr ""
+#
+msgid "Current"
+msgstr ""
+#
+#, fuzzy
+msgid "Current Direction"
+msgstr "Valós szél irány"
+#
+#, fuzzy
+msgid "Current Speed"
+msgstr "Valós szél sebesség"
+#
+msgid "Current damping factor [1-400]:  "
+msgstr ""
 #
 msgid "Data:"
 msgstr "Adat:"
@@ -94,6 +139,9 @@ msgid "Depth"
 msgstr "Mélység"
 #
 msgid "Depth units:"
+msgstr ""
+#
+msgid "Display Current on Chart (OpenGL)"
 msgstr ""
 #
 msgid "Distance units:"
@@ -122,17 +170,21 @@ msgstr ""
 msgid "Fonts"
 msgstr "Betűtípusok"
 #
+#, fuzzy
+msgid "Force True Wind Calculation"
+msgstr "Valós szél irány"
+#
+msgid "Format in this file not recognised"
+msgstr ""
+#
 msgid "From Ownship"
 msgstr ""
 #
 msgid "GPS Compass"
 msgstr "GPS Kompassz"
 #
-msgid "GPS Status"
-msgstr "GPS állapot"
-#
-msgid "GPS in View"
-msgstr "Látható GPS műholdak"
+msgid "Heel"
+msgstr ""
 #
 msgid "Honor OpenCPN settings"
 msgstr ""
@@ -152,8 +204,26 @@ msgstr ""
 msgid "Kts"
 msgstr "Csomó"
 #
+msgid "L"
+msgstr ""
+#
 msgid "Label:"
 msgstr "Címke:"
+#
+msgid "Layline length on Chart [nm]:  "
+msgstr ""
+#
+msgid "Layline width damping factor [0.025-1]:  "
+msgstr ""
+#
+msgid "Laylines"
+msgstr ""
+#
+msgid "Leeway"
+msgstr ""
+#
+msgid "Load"
+msgstr ""
 #
 #, fuzzy
 msgid "Mag COG"
@@ -162,15 +232,20 @@ msgstr "Mágneses HDG"
 msgid "Mag HDG"
 msgstr "Mágneses HDG"
 #
-#, c-format
-msgid "Max %.1f since %02d:%02d  Overall %.1f"
+msgid "Max"
+msgstr ""
+#
+msgid "Max. Layline Width [°]:"
 msgstr ""
 #
 msgid "Meters"
 msgstr ""
 #
-msgid "Moon phase"
-msgstr "Holdfázis"
+msgid "Min"
+msgstr ""
+#
+msgid "Min. Layline Width [°]:"
+msgstr ""
 #
 msgid "N"
 msgstr "É"
@@ -195,14 +270,38 @@ msgstr ""
 msgid "Orientation:"
 msgstr "Orientáció:"
 #
+msgid "Overall"
+msgstr ""
+#
+msgid "Overall Max"
+msgstr ""
+#
+msgid "Performance Parameters"
+msgstr ""
+#
+msgid "Pitch"
+msgstr ""
+#
+msgid "Polar"
+msgstr ""
+#
+msgid "Polar :"
+msgstr ""
+#
+msgid "Polar performance"
+msgstr ""
+#
+msgid "Polarspeed"
+msgstr ""
+#
 msgid "Position"
 msgstr "Pozíció"
 #
 msgid "Preferences..."
 msgstr "Beállítások"
 #
-msgid "Rudder Angle"
-msgstr "Kormánylapát szög"
+msgid "R"
+msgstr ""
 #
 msgid "S"
 msgstr "D"
@@ -227,8 +326,17 @@ msgstr "STW"
 msgid "SW"
 msgstr "DNy"
 #
+msgid "Select a Polar-File"
+msgstr ""
+#
 msgid "Select instrument to add:"
 msgstr "Hozzáadandó műszer kiválasztása:"
+#
+msgid "Show Laylines"
+msgstr ""
+#
+msgid "Show Wind Barb on Chart (OpenGL)"
+msgstr ""
 #
 msgid "Small:"
 msgstr "Kicsi:"
@@ -243,17 +351,49 @@ msgstr "Sebesség"
 msgid "Statute miles"
 msgstr ""
 #
-msgid "Sum Log"
-msgstr ""
-#
 msgid "Sunrise/Sunset"
 msgstr "Napkelte/napnyugta"
 #
+msgid "TWA to Waypoint"
+msgstr ""
+#
+msgid "TWS/TWA "
+msgstr ""
+#
+msgid "Tactics"
+msgstr ""
+#
+#, fuzzy
+msgid "Tactics PlugIn for OpenCPN"
+msgstr "OpenCPN műszerfal plugin"
+#
+#, fuzzy
+msgid ""
+"Tactics PlugIn for OpenCPN\n"
+"Provides performance data & instrument display from NMEA source and polar "
+"file."
+msgstr ""
+"OpenCPN Műszerfal plugin\n"
+"Navigációs műszerfalon NMEA adatokat jelenít meg."
+#
+#, fuzzy
+msgid "Tactics preferences"
+msgstr "Műszerfal beállítások"
+#
+msgid "Target CMG"
+msgstr ""
+#
+msgid "Target CMG-Angle"
+msgstr ""
+#
+msgid "Target VMG"
+msgstr ""
+#
+msgid "Target VMG-Angle"
+msgstr ""
+#
 msgid "Title:"
 msgstr "Cím:"
-#
-msgid "Trip Log"
-msgstr ""
 #
 #, fuzzy
 msgid "True Compass"
@@ -261,6 +401,10 @@ msgstr "Kompassz"
 #
 msgid "True HDG"
 msgstr "Valós HDG"
+#
+#, fuzzy
+msgid "True Wind"
+msgstr "Valós szél irány"
 #
 msgid "True Wind Angle"
 msgstr "Valós szél irány"
@@ -282,6 +426,12 @@ msgstr ""
 #
 msgid "Up"
 msgstr "Fel"
+#
+msgid "Use Heel Sensor"
+msgstr ""
+#
+msgid "Use SOG instead of STW for True Wind Calc."
+msgstr ""
 #
 msgid "VMG"
 msgstr "VMG"
@@ -309,17 +459,34 @@ msgstr ""
 msgid "Wind speed units:"
 msgstr ""
 #
+msgid "You have to turn on OpenGL to use chart overlay "
+msgstr ""
+#
+msgid "fixed/max Leeway [°]:"
+msgstr ""
+#
 msgid "km/h"
 msgstr ""
 #
 msgid "m/s"
 msgstr ""
 #
+msgid "manual Heel input:"
+msgstr ""
+#
 msgid "mph"
 msgstr ""
 #
-msgid "show this dashboard"
+#, fuzzy
+msgid "show this tactics"
 msgstr "mutassa ezt a műszerfalat"
+#
+msgid "since"
+msgstr ""
+#
+msgid "tactics_pi: Select a Polar-File"
+msgstr ""
+#
 #
 #
 #
@@ -331,6 +498,15 @@ msgstr "mutassa ezt a műszerfalat"
 #~ msgstr "COG + HDG Kompassz"
 #
 #
+#~ msgid "Cursor"
+#~ msgstr "Kurzor"
+#
+#
+#~ msgid "Dashboard"
+#~ msgstr "Műszerfal"
+#
+#
+#
 #
 #
 #
@@ -338,3 +514,19 @@ msgstr "mutassa ezt a műszerfalat"
 #
 #~ msgid "Edit"
 #~ msgstr "Szerkeszt"
+#
+#
+#~ msgid "GPS Status"
+#~ msgstr "GPS állapot"
+#
+#
+#~ msgid "GPS in View"
+#~ msgstr "Látható GPS műholdak"
+#
+#
+#~ msgid "Moon phase"
+#~ msgstr "Holdfázis"
+#
+#
+#~ msgid "Rudder Angle"
+#~ msgstr "Kormánylapát szög"
