@@ -1,22 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: dashboard_pi 2.2.1207\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2010-12-20 18:31+0200\n"
-"Last-Translator: ΓΙΑΝΝΗΣ <ogog1@otenet.gr>\n"
-"Language-Team:  <ogog1@otenet.gr>\n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Greek\n"
 "Language: el_GR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Greek\n"
-"X-Poedit-Country: GREECE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Language: el\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
 msgstr ""
@@ -63,24 +61,20 @@ msgstr "Προσθήκη"
 msgid "Add instrument"
 msgstr "Πρόσθεσε Όργανο"
 #
-#, fuzzy
 msgid "Air Temp."
-msgstr "Θερμοκρασία"
+msgstr ""
 #
-#, fuzzy
 msgid "App & True Wind Angle"
-msgstr "Γωνία Ανέμου"
+msgstr ""
 #
-#, fuzzy
 msgid "App. Wind Angle"
-msgstr "Γωνία Ανέμου"
+msgstr ""
 #
 msgid "App. Wind Angle & Speed"
 msgstr ""
 #
-#, fuzzy
 msgid "App. Wind Speed"
-msgstr "Ταχύτητα Ανέμου"
+msgstr ""
 #
 msgid "Appearance"
 msgstr ""
@@ -91,9 +85,8 @@ msgstr ""
 msgid "Barometric pressure"
 msgstr ""
 #
-#, fuzzy
 msgid "Bearing Compass"
-msgstr "Πυξίδα"
+msgstr ""
 #
 msgid "Boat speed units:"
 msgstr ""
@@ -125,9 +118,8 @@ msgstr ""
 msgid "Current Direction"
 msgstr ""
 #
-#, fuzzy
 msgid "Current Speed"
-msgstr "Ταχύτητα Ανέμου"
+msgstr ""
 #
 msgid "Current damping factor [1-400]:  "
 msgstr ""
@@ -156,13 +148,11 @@ msgstr "Κάτω"
 msgid "E"
 msgstr "Α (E)"
 #
-#, fuzzy
 msgid "ENE"
-msgstr "ΒΑ (NE)"
+msgstr ""
 #
-#, fuzzy
 msgid "ESE"
-msgstr "ΝΑ (SE)"
+msgstr ""
 #
 msgid "Fathoms"
 msgstr ""
@@ -182,9 +172,8 @@ msgstr ""
 msgid "From Ownship"
 msgstr ""
 #
-#, fuzzy
 msgid "GPS Compass"
-msgstr "Πυξίδα"
+msgstr ""
 #
 msgid "Heel"
 msgstr ""
@@ -255,13 +244,11 @@ msgstr "Β (N)"
 msgid "NE"
 msgstr "ΒΑ (NE)"
 #
-#, fuzzy
 msgid "NNE"
-msgstr "ΒΑ (NE)"
+msgstr ""
 #
-#, fuzzy
 msgid "NNW"
-msgstr "ΒΔ (NW)"
+msgstr ""
 #
 msgid "NW"
 msgstr "ΒΔ (NW)"
@@ -314,13 +301,11 @@ msgstr "ΝΑ (SE)"
 msgid "SOG"
 msgstr "SOG(Ταχύτητα επί Εδάφους)"
 #
-#, fuzzy
 msgid "SSE"
-msgstr "ΝΑ (SE)"
+msgstr ""
 #
-#, fuzzy
 msgid "SSW"
-msgstr "ΝΔ (SW)"
+msgstr ""
 #
 msgid "STW"
 msgstr "STW(Ταχύτητα επί Ύδατος)"
@@ -346,9 +331,8 @@ msgstr "Στενό:"
 msgid "Speedometer"
 msgstr "Ταχύμετρο"
 #
-#, fuzzy
 msgid "Speedometer max value:"
-msgstr "Ταχύμετρο"
+msgstr ""
 #
 msgid "Statute miles"
 msgstr ""
@@ -365,22 +349,17 @@ msgstr ""
 msgid "Tactics"
 msgstr ""
 #
-#, fuzzy
 msgid "Tactics PlugIn for OpenCPN"
-msgstr "Πίνακας Οργάνων, επιπρόσθετο για το OpenCPN"
+msgstr ""
 #
-#, fuzzy
 msgid ""
 "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar "
 "file."
 msgstr ""
-"Πρόσθετος Πίνακας Οργάνων για το OpenCPN\n"
-"Παρέχει ενδείξεις οργάνων ναυσιπλο'ί'ας από κώδικα ΝΜΕΑ"
 #
-#, fuzzy
 msgid "Tactics preferences"
-msgstr "Ιδιότητες Πίνακα Οργάνων"
+msgstr ""
 #
 msgid "Target CMG"
 msgstr ""
@@ -397,26 +376,17 @@ msgstr ""
 msgid "Title:"
 msgstr "Τίτλος:"
 #
-#, fuzzy
 msgid "True Compass"
-msgstr "Πυξίδα"
+msgstr ""
 #
 msgid "True HDG"
 msgstr ""
 #
-#
-#
-#
-#
-#
-#
-#, fuzzy
 msgid "True Wind"
-msgstr "Αληθής Άνεμος"
+msgstr ""
 #
-#, fuzzy
 msgid "True Wind Angle"
-msgstr "Γωνία Ανέμου"
+msgstr ""
 #
 msgid "True Wind Angle & Speed"
 msgstr ""
@@ -427,9 +397,8 @@ msgstr ""
 msgid "True Wind Direction"
 msgstr ""
 #
-#, fuzzy
 msgid "True Wind Speed"
-msgstr "Ταχύτητα Ανέμου"
+msgstr ""
 #
 msgid "Units, Ranges, Formats"
 msgstr ""
@@ -452,13 +421,11 @@ msgstr ""
 msgid "W"
 msgstr "Δ (W)"
 #
-#, fuzzy
 msgid "WNW"
-msgstr "ΒΔ (NW)"
+msgstr ""
 #
-#, fuzzy
 msgid "WSW"
-msgstr "ΝΔ (SW)"
+msgstr ""
 #
 msgid "Water Temp."
 msgstr ""
@@ -466,9 +433,8 @@ msgstr ""
 msgid "Wind history"
 msgstr ""
 #
-#, fuzzy
 msgid "Wind speed units:"
-msgstr "Ταχύτητα Ανέμου"
+msgstr ""
 #
 msgid "You have to turn on OpenGL to use chart overlay "
 msgstr ""
@@ -496,62 +462,3 @@ msgstr ""
 #
 msgid "tactics_pi: Select a Polar-File"
 msgstr ""
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Apparent wind"
-#~ msgstr "Φαινομενικός Άνεμος"
-#
-#
-#~ msgid "Dashboard"
-#~ msgstr "Πίνακας Οργάνων"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Edit"
-#~ msgstr "Επεξεργασία"
-#
-#
-#, fuzzy
-#~ msgid "GPS Status"
-#~ msgstr "Κατάσταση GPS"
-#
-#
-#, fuzzy
-#~ msgid "GPS in View"
-#~ msgstr "Ορατό GPS"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "HDG"
-#~ msgstr "HDG(heading:κατεύθυνση)"
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Instrument width:"
-#~ msgstr "Πλάτος Οργάνων:"
-#
-#
-#, fuzzy
-#~ msgid "Rudder Angle"
-#~ msgstr "Γωνία Πηδαλίου"

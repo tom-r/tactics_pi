@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2016-01-25 19:59-0500\n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: et\n"
-"X-Crowdin-File: /plugins/dashboard_pi/po/dashboard_pi.pot\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
-msgstr ""
+msgstr " 45°"
 #
 msgid " 90°"
-msgstr ""
+msgstr " 90°"
 #
 msgid " mag"
 msgstr "magn."
@@ -32,28 +32,28 @@ msgid "--"
 msgstr "--"
 #
 msgid "10 kn"
-msgstr ""
+msgstr "10 kn"
 #
 msgid "135°"
-msgstr ""
+msgstr "135°"
 #
 msgid "15 kn"
-msgstr ""
+msgstr "15 kn"
 #
 msgid "20 kn"
-msgstr ""
+msgstr "20 kn"
 #
 msgid "25 kn"
-msgstr ""
+msgstr "25 kn"
 #
 msgid "5 kn"
-msgstr ""
+msgstr "5 kn"
 #
 msgid "Actual CMG"
-msgstr ""
+msgstr "Tegelik CMG"
 #
 msgid "Actual VMG"
-msgstr ""
+msgstr "Tegelik VMG"
 #
 msgid "Add"
 msgstr "Lisa"
@@ -85,15 +85,14 @@ msgstr "Õhurõhu logi"
 msgid "Barometric pressure"
 msgstr "Õhurõhk"
 #
-#, fuzzy
 msgid "Bearing Compass"
-msgstr "Tõeline kompass"
+msgstr "Kompassikurss"
 #
 msgid "Boat speed units:"
 msgstr "kaatri kiiruse ühikud:"
 #
 msgid "Boat's Leeway factor [0-20]:  "
-msgstr ""
+msgstr "Paadi triivi tegur [0-20]:  "
 #
 msgid "COG"
 msgstr "COG"
@@ -108,21 +107,19 @@ msgid "Clock"
 msgstr "Kell"
 #
 msgid "Correct AWS/AWA with Heel"
-msgstr ""
+msgstr "Paranda AWS/AWA kreenile"
 #
 msgid "Correct STW with Leeway"
-msgstr ""
+msgstr "Õienda STW"
 #
 msgid "Current"
-msgstr ""
+msgstr "Hoovus"
 #
-#, fuzzy
 msgid "Current Direction"
-msgstr "Tõeline tuule suund"
+msgstr "Praegune suund"
 #
-#, fuzzy
 msgid "Current Speed"
-msgstr "Tõeline tuule kiirus"
+msgstr "Praegune kiirus"
 #
 msgid "Current damping factor [1-400]:  "
 msgstr ""
@@ -140,7 +137,7 @@ msgid "Depth units:"
 msgstr "sügavuse ühikud:"
 #
 msgid "Display Current on Chart (OpenGL)"
-msgstr ""
+msgstr "Kuva hoovus kaardil (OpenGL)"
 #
 msgid "Distance units:"
 msgstr "vahemaa ühikud:"
@@ -166,12 +163,11 @@ msgstr "Jalad"
 msgid "Fonts"
 msgstr "Kirjamärgid"
 #
-#, fuzzy
 msgid "Force True Wind Calculation"
-msgstr "Tõeline tuule suund"
+msgstr "Sunni teg. tuule arvutamine"
 #
 msgid "Format in this file not recognised"
-msgstr ""
+msgstr "Selles failis olev formaat ei ole tuvastatud"
 #
 msgid "From Ownship"
 msgstr "Omalt laevalt"
@@ -201,7 +197,7 @@ msgid "Kts"
 msgstr "slm"
 #
 msgid "L"
-msgstr ""
+msgstr "V"
 #
 msgid "Label:"
 msgstr "silt:"
@@ -216,10 +212,10 @@ msgid "Laylines"
 msgstr ""
 #
 msgid "Leeway"
-msgstr ""
+msgstr "Aju"
 #
 msgid "Load"
-msgstr ""
+msgstr "Lae"
 #
 msgid "Mag COG"
 msgstr "Magn. COG"
@@ -228,7 +224,7 @@ msgid "Mag HDG"
 msgstr "Magn. HDG"
 #
 msgid "Max"
-msgstr ""
+msgstr "max"
 #
 msgid "Max. Layline Width [°]:"
 msgstr ""
@@ -237,7 +233,7 @@ msgid "Meters"
 msgstr "Meetrid"
 #
 msgid "Min"
-msgstr ""
+msgstr "min."
 #
 msgid "Min. Layline Width [°]:"
 msgstr ""
@@ -264,28 +260,28 @@ msgid "Orientation:"
 msgstr "Orientatsioon:"
 #
 msgid "Overall"
-msgstr ""
+msgstr "Üldine"
 #
 msgid "Overall Max"
-msgstr ""
+msgstr "Üldine max"
 #
 msgid "Performance Parameters"
-msgstr ""
+msgstr "Soorituse parameetrid"
 #
 msgid "Pitch"
 msgstr "Pikiõõtsumine"
 #
 msgid "Polar"
-msgstr ""
+msgstr "Polar"
 #
 msgid "Polar :"
-msgstr ""
+msgstr "Polar:"
 #
 msgid "Polar performance"
-msgstr ""
+msgstr "Polar-sooritus"
 #
 msgid "Polarspeed"
-msgstr ""
+msgstr "Polar-kiirus"
 #
 msgid "Position"
 msgstr "Asukoht"
@@ -294,7 +290,7 @@ msgid "Preferences..."
 msgstr "Eelistused..."
 #
 msgid "R"
-msgstr ""
+msgstr "P"
 #
 msgid "S"
 msgstr "S"
@@ -318,7 +314,7 @@ msgid "SW"
 msgstr "SW"
 #
 msgid "Select a Polar-File"
-msgstr ""
+msgstr "Vali Polar-fail"
 #
 msgid "Select instrument to add:"
 msgstr "Vali seade lisamiseks:"
@@ -327,7 +323,7 @@ msgid "Show Laylines"
 msgstr ""
 #
 msgid "Show Wind Barb on Chart (OpenGL)"
-msgstr ""
+msgstr "Kuva tuulenooli kaardil (OpenGL)"
 #
 msgid "Small:"
 msgstr "Väike:"
@@ -345,42 +341,39 @@ msgid "Sunrise/Sunset"
 msgstr "Päikesetõus/-loojang"
 #
 msgid "TWA to Waypoint"
-msgstr ""
+msgstr "TWA teepunkti"
 #
 msgid "TWS/TWA "
-msgstr ""
+msgstr "TWS/TWA "
 #
 msgid "Tactics"
-msgstr ""
+msgstr "Taktika"
 #
-#, fuzzy
 msgid "Tactics PlugIn for OpenCPN"
-msgstr "Näidikupaneeli plugin OpenCPN'le"
+msgstr "Taktika plugIn OpenCPN'i jaoks"
 #
-#, fuzzy
 msgid ""
 "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar "
 "file."
 msgstr ""
-"Näidikupaneeli plugin OpenCPN'le\n"
-"Võimaldab navigatsiooniseadme kuvamise NMEA-allikast"
+"Taktika plugIn OpenCPN'i jaoks\n"
+"Tagab soorituse andmete & instrumendi kuvamise NMEA-allikast ja polar-failist."
 #
-#, fuzzy
 msgid "Tactics preferences"
-msgstr "Näidikupaneeli eelistused"
+msgstr "Taktika eelistused"
 #
 msgid "Target CMG"
-msgstr ""
+msgstr "Planeeritud CMG"
 #
 msgid "Target CMG-Angle"
-msgstr ""
+msgstr "Planeeritud CMG-nurk"
 #
 msgid "Target VMG"
-msgstr ""
+msgstr "Planeeritud VMG"
 #
 msgid "Target VMG-Angle"
-msgstr ""
+msgstr "Planeeritud VMG-nurk"
 #
 msgid "Title:"
 msgstr "tiitel:"
@@ -391,9 +384,8 @@ msgstr "Tõeline kompass"
 msgid "True HDG"
 msgstr "Tõeline HDG"
 #
-#, fuzzy
 msgid "True Wind"
-msgstr "Tõeline tuule nurk"
+msgstr "Teg. tuul"
 #
 msgid "True Wind Angle"
 msgstr "Tõeline tuule nurk"
@@ -417,10 +409,10 @@ msgid "Up"
 msgstr "Üles"
 #
 msgid "Use Heel Sensor"
-msgstr ""
+msgstr "Kasuta kreeniandurit"
 #
 msgid "Use SOG instead of STW for True Wind Calc."
-msgstr ""
+msgstr "Kasuta SOG STW asemel teg. tuule arvutamisel"
 #
 msgid "VMG"
 msgstr "VMG"
@@ -447,10 +439,10 @@ msgid "Wind speed units:"
 msgstr "tuulekiiruse ühikud:"
 #
 msgid "You have to turn on OpenGL to use chart overlay "
-msgstr ""
+msgstr "Pead OpenGL sisse lülitama kaardi ülekatte kasutamiseks "
 #
 msgid "fixed/max Leeway [°]:"
-msgstr ""
+msgstr "kinnitatud/max aju [°]:"
 #
 msgid "km/h"
 msgstr "km/h"
@@ -459,47 +451,16 @@ msgid "m/s"
 msgstr "m/s"
 #
 msgid "manual Heel input:"
-msgstr ""
+msgstr "käsitsi kreeni sisestamine:"
 #
 msgid "mph"
 msgstr "mp/h"
 #
-#, fuzzy
 msgid "show this tactics"
-msgstr "kuva seda näidikupaneeli"
+msgstr "kuva see taktika"
 #
 msgid "since"
-msgstr ""
+msgstr "alates"
 #
 msgid "tactics_pi: Select a Polar-File"
-msgstr ""
-#
-#~ msgid "--- %s"
-#~ msgstr "---%s"
-#
-#~ msgid "Cursor"
-#~ msgstr "Kursor"
-#
-#~ msgid "Dashboard"
-#~ msgstr "Näidikupaneel"
-#
-#~ msgid "GPS Status"
-#~ msgstr "GPS olek"
-#
-#~ msgid "GPS in View"
-#~ msgstr "Nähtavad satelliidid"
-#
-#~ msgid "Max %.1f %s since %02d:%02d  Overall %.1f %s"
-#~ msgstr "Max %.1f %s alates %02d:%02d Üldine %.1f %s"
-#
-#~ msgid "Moon phase"
-#~ msgstr "Kuufaas"
-#
-#~ msgid "Rudder Angle"
-#~ msgstr "Roolinurk"
-#
-#~ msgid "Sum Log"
-#~ msgstr "Kogu logi"
-#
-#~ msgid "Trip Log"
-#~ msgstr "Reisi logi"
+msgstr "tactics_pi: valige polar-fail"

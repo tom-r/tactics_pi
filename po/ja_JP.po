@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2016-01-06 09:11-0500\n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /plugins/dashboard_pi/po/dashboard_pi.pot\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
 msgstr ""
@@ -85,9 +85,8 @@ msgstr "気圧の記録"
 msgid "Barometric pressure"
 msgstr "気圧"
 #
-#, fuzzy
 msgid "Bearing Compass"
-msgstr "GPS コンパス"
+msgstr ""
 #
 msgid "Boat speed units:"
 msgstr "船の速度の単位:"
@@ -116,13 +115,11 @@ msgstr ""
 msgid "Current"
 msgstr ""
 #
-#, fuzzy
 msgid "Current Direction"
-msgstr "真の風向"
+msgstr ""
 #
-#, fuzzy
 msgid "Current Speed"
-msgstr "真の風速"
+msgstr ""
 #
 msgid "Current damping factor [1-400]:  "
 msgstr ""
@@ -149,13 +146,13 @@ msgid "Down"
 msgstr "下へ"
 #
 msgid "E"
-msgstr "E"
+msgstr ""
 #
 msgid "ENE"
-msgstr "ENE"
+msgstr ""
 #
 msgid "ESE"
-msgstr "ESE"
+msgstr ""
 #
 msgid "Fathoms"
 msgstr ""
@@ -166,9 +163,8 @@ msgstr "フィート"
 msgid "Fonts"
 msgstr "フォント"
 #
-#, fuzzy
 msgid "Force True Wind Calculation"
-msgstr "真の風向"
+msgstr ""
 #
 msgid "Format in this file not recognised"
 msgstr ""
@@ -198,7 +194,7 @@ msgid "Kilometers"
 msgstr "キロメートル"
 #
 msgid "Kts"
-msgstr "Kts"
+msgstr ""
 #
 msgid "L"
 msgstr ""
@@ -243,19 +239,19 @@ msgid "Min. Layline Width [°]:"
 msgstr ""
 #
 msgid "N"
-msgstr "N"
+msgstr ""
 #
 msgid "NE"
-msgstr "NE"
+msgstr ""
 #
 msgid "NNE"
-msgstr "NNE"
+msgstr ""
 #
 msgid "NNW"
-msgstr "NNW"
+msgstr ""
 #
 msgid "NW"
-msgstr "NW"
+msgstr ""
 #
 msgid "Nautical miles"
 msgstr "海里"
@@ -297,25 +293,25 @@ msgid "R"
 msgstr ""
 #
 msgid "S"
-msgstr "S"
+msgstr ""
 #
 msgid "SE"
-msgstr "SE"
+msgstr ""
 #
 msgid "SOG"
-msgstr "SOG"
+msgstr ""
 #
 msgid "SSE"
-msgstr "SSE"
+msgstr ""
 #
 msgid "SSW"
-msgstr "SSW"
+msgstr ""
 #
 msgid "STW"
 msgstr ""
 #
 msgid "SW"
-msgstr "SW"
+msgstr ""
 #
 msgid "Select a Polar-File"
 msgstr ""
@@ -330,7 +326,7 @@ msgid "Show Wind Barb on Chart (OpenGL)"
 msgstr ""
 #
 msgid "Small:"
-msgstr "Small:"
+msgstr ""
 #
 msgid "Speedometer"
 msgstr "スピード メーター"
@@ -353,22 +349,17 @@ msgstr ""
 msgid "Tactics"
 msgstr ""
 #
-#, fuzzy
 msgid "Tactics PlugIn for OpenCPN"
-msgstr "OpenCPN 用ダッシュ ボードプラグイン"
+msgstr ""
 #
-#, fuzzy
 msgid ""
 "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar "
 "file."
 msgstr ""
-"OpenCPN 用ダッシュ ボードプラグイン\n"
-"装置の表示はNMEAソースから表示します。"
 #
-#, fuzzy
 msgid "Tactics preferences"
-msgstr "ダッシュ ボード設定"
+msgstr ""
 #
 msgid "Target CMG"
 msgstr ""
@@ -391,9 +382,8 @@ msgstr ""
 msgid "True HDG"
 msgstr ""
 #
-#, fuzzy
 msgid "True Wind"
-msgstr "真の風の角度"
+msgstr ""
 #
 msgid "True Wind Angle"
 msgstr "真の風の角度"
@@ -429,13 +419,13 @@ msgid "Vertical"
 msgstr "縦"
 #
 msgid "W"
-msgstr "W"
+msgstr ""
 #
 msgid "WNW"
-msgstr "WNW"
+msgstr ""
 #
 msgid "WSW"
-msgstr "WSW"
+msgstr ""
 #
 msgid "Water Temp."
 msgstr "水温"
@@ -453,35 +443,22 @@ msgid "fixed/max Leeway [°]:"
 msgstr ""
 #
 msgid "km/h"
-msgstr "km/h"
+msgstr ""
 #
 msgid "m/s"
-msgstr "m/s"
+msgstr ""
 #
 msgid "manual Heel input:"
 msgstr ""
 #
 msgid "mph"
-msgstr "mph"
+msgstr ""
 #
-#, fuzzy
 msgid "show this tactics"
-msgstr "このダッシュ ボードを表示"
+msgstr ""
 #
 msgid "since"
 msgstr ""
 #
 msgid "tactics_pi: Select a Polar-File"
 msgstr ""
-#
-#~ msgid "Dashboard"
-#~ msgstr "ダッシュボード"
-#
-#~ msgid "GPS Status"
-#~ msgstr "GPSの状態"
-#
-#~ msgid "Moon phase"
-#~ msgstr "月齢"
-#
-#~ msgid "Rudder Angle"
-#~ msgstr "舵角"

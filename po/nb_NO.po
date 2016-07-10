@@ -1,21 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenCPN 3.3.1006\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2013-10-15 00:32+0100\n"
-"Last-Translator: Frode Lynum <post@opencpn.kb-h.com>\n"
-"Language-Team: OpenCPN Norge <post@opencpn.kb-h.com>\n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Language: nb\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
 msgstr ""
@@ -24,7 +23,7 @@ msgid " 90°"
 msgstr ""
 #
 msgid " mag"
-msgstr " mag"
+msgstr ""
 #
 msgid " true"
 msgstr " virkelig"
@@ -65,9 +64,8 @@ msgstr "Legg til instrument"
 msgid "Air Temp."
 msgstr "Luft temp."
 #
-#, fuzzy
 msgid "App & True Wind Angle"
-msgstr "Virk. Vindretning"
+msgstr ""
 #
 msgid "App. Wind Angle"
 msgstr "Tils. Vindretning"
@@ -81,16 +79,14 @@ msgstr "Tils. Vindhastighet"
 msgid "Appearance"
 msgstr "Utseende"
 #
-#, fuzzy
 msgid "Barometric history"
-msgstr "Vindhistogram"
+msgstr ""
 #
 msgid "Barometric pressure"
 msgstr ""
 #
-#, fuzzy
 msgid "Bearing Compass"
-msgstr "Kompass"
+msgstr ""
 #
 msgid "Boat speed units:"
 msgstr ""
@@ -99,7 +95,7 @@ msgid "Boat's Leeway factor [0-20]:  "
 msgstr ""
 #
 msgid "COG"
-msgstr "COG"
+msgstr ""
 #
 msgid "Caption:"
 msgstr "Overskrift:"
@@ -119,19 +115,17 @@ msgstr ""
 msgid "Current"
 msgstr ""
 #
-#, fuzzy
 msgid "Current Direction"
-msgstr "Virk. Vindretning"
+msgstr ""
 #
-#, fuzzy
 msgid "Current Speed"
-msgstr "Virk. Vindhastighet"
+msgstr ""
 #
 msgid "Current damping factor [1-400]:  "
 msgstr ""
 #
 msgid "Data:"
-msgstr "Data:"
+msgstr ""
 #
 msgid "Delete"
 msgstr "Slett"
@@ -169,9 +163,8 @@ msgstr ""
 msgid "Fonts"
 msgstr "Skrift"
 #
-#, fuzzy
 msgid "Force True Wind Calculation"
-msgstr "Virk. Vindretning"
+msgstr ""
 #
 msgid "Format in this file not recognised"
 msgstr ""
@@ -224,12 +217,11 @@ msgstr ""
 msgid "Load"
 msgstr ""
 #
-#, fuzzy
 msgid "Mag COG"
-msgstr "Mag HDG"
+msgstr ""
 #
 msgid "Mag HDG"
-msgstr "Mag HDG"
+msgstr ""
 #
 msgid "Max"
 msgstr ""
@@ -247,7 +239,7 @@ msgid "Min. Layline Width [°]:"
 msgstr ""
 #
 msgid "N"
-msgstr "N"
+msgstr ""
 #
 msgid "NE"
 msgstr "NØ"
@@ -301,13 +293,13 @@ msgid "R"
 msgstr ""
 #
 msgid "S"
-msgstr "S"
+msgstr ""
 #
 msgid "SE"
 msgstr "SØ"
 #
 msgid "SOG"
-msgstr "SOG"
+msgstr ""
 #
 msgid "SSE"
 msgstr "SSØ"
@@ -316,7 +308,7 @@ msgid "SSW"
 msgstr "SSV"
 #
 msgid "STW"
-msgstr "STW"
+msgstr ""
 #
 msgid "SW"
 msgstr "SV"
@@ -337,11 +329,10 @@ msgid "Small:"
 msgstr "Liten:"
 #
 msgid "Speedometer"
-msgstr "Speedometer"
+msgstr ""
 #
-#, fuzzy
 msgid "Speedometer max value:"
-msgstr "Speedometer"
+msgstr ""
 #
 msgid "Statute miles"
 msgstr ""
@@ -358,22 +349,17 @@ msgstr ""
 msgid "Tactics"
 msgstr ""
 #
-#, fuzzy
 msgid "Tactics PlugIn for OpenCPN"
-msgstr "Instrumentutvidelse for OpenCPN"
+msgstr ""
 #
-#, fuzzy
 msgid ""
 "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar "
 "file."
 msgstr ""
-"Instrument utvidelse for OpenCPN\n"
-"Tilfører navigasjons instrument visning fra NMEA kilder."
 #
-#, fuzzy
 msgid "Tactics preferences"
-msgstr "Egenskaper for instrumentpanel"
+msgstr ""
 #
 msgid "Target CMG"
 msgstr ""
@@ -390,16 +376,14 @@ msgstr ""
 msgid "Title:"
 msgstr "Tittel:"
 #
-#, fuzzy
 msgid "True Compass"
-msgstr "Kompass"
+msgstr ""
 #
 msgid "True HDG"
 msgstr "Virkelig HDG"
 #
-#, fuzzy
 msgid "True Wind"
-msgstr "Virk. Vindretning"
+msgstr ""
 #
 msgid "True Wind Angle"
 msgstr "Virk. Vindretning"
@@ -429,7 +413,7 @@ msgid "Use SOG instead of STW for True Wind Calc."
 msgstr ""
 #
 msgid "VMG"
-msgstr "VMG"
+msgstr ""
 #
 msgid "Vertical"
 msgstr "Vertikal"
@@ -470,40 +454,11 @@ msgstr ""
 msgid "mph"
 msgstr ""
 #
-#, fuzzy
 msgid "show this tactics"
-msgstr "vis dette instrumentpanelet"
+msgstr ""
 #
 msgid "since"
 msgstr ""
 #
 msgid "tactics_pi: Select a Polar-File"
 msgstr ""
-#
-#
-#~ msgid "Cursor"
-#~ msgstr "Kursor"
-#
-#
-#~ msgid "Dashboard"
-#~ msgstr "Instrumentpanel"
-#
-#
-#~ msgid "GPS Status"
-#~ msgstr "GPS status"
-#
-#
-#~ msgid "GPS in View"
-#~ msgstr "GPS visning"
-#
-#
-#~ msgid "Max %.1f since %02d:%02d  Overall %.1f"
-#~ msgstr "Maks. %.1f siden %02d:%02d  Totalt %.1f"
-#
-#
-#~ msgid "Moon phase"
-#~ msgstr "Månefase"
-#
-#
-#~ msgid "Rudder Angle"
-#~ msgstr "Rorvinkel"

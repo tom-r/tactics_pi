@@ -1,20 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: opencpn 2.2.1110\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2010-11-24 22:54-0500\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Portuguese\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Language: pt-PT\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
 msgstr ""
@@ -55,10 +55,8 @@ msgstr ""
 msgid "Actual VMG"
 msgstr ""
 #
-#
 msgid "Add"
 msgstr ""
-#
 #
 msgid "Add instrument"
 msgstr ""
@@ -96,7 +94,6 @@ msgstr ""
 msgid "Boat's Leeway factor [0-20]:  "
 msgstr ""
 #
-#
 msgid "COG"
 msgstr ""
 #
@@ -130,10 +127,8 @@ msgstr ""
 msgid "Data:"
 msgstr ""
 #
-#
 msgid "Delete"
 msgstr ""
-#
 #
 msgid "Depth"
 msgstr ""
@@ -147,10 +142,8 @@ msgstr ""
 msgid "Distance units:"
 msgstr ""
 #
-#
 msgid "Down"
 msgstr ""
-#
 #
 msgid "E"
 msgstr ""
@@ -193,7 +186,6 @@ msgstr ""
 #
 msgid "Inches"
 msgstr ""
-#
 #
 msgid "Instruments"
 msgstr ""
@@ -246,10 +238,8 @@ msgstr ""
 msgid "Min. Layline Width [°]:"
 msgstr ""
 #
-#
 msgid "N"
 msgstr ""
-#
 #
 msgid "NE"
 msgstr ""
@@ -259,7 +249,6 @@ msgstr ""
 #
 msgid "NNW"
 msgstr ""
-#
 #
 msgid "NW"
 msgstr ""
@@ -294,7 +283,6 @@ msgstr ""
 msgid "Polarspeed"
 msgstr ""
 #
-#
 msgid "Position"
 msgstr ""
 #
@@ -304,14 +292,11 @@ msgstr ""
 msgid "R"
 msgstr ""
 #
-#
 msgid "S"
 msgstr ""
 #
-#
 msgid "SE"
 msgstr ""
-#
 #
 msgid "SOG"
 msgstr ""
@@ -322,17 +307,14 @@ msgstr ""
 msgid "SSW"
 msgstr ""
 #
-#
 msgid "STW"
 msgstr ""
-#
 #
 msgid "SW"
 msgstr ""
 #
 msgid "Select a Polar-File"
 msgstr ""
-#
 #
 msgid "Select instrument to add:"
 msgstr ""
@@ -345,7 +327,6 @@ msgstr ""
 #
 msgid "Small:"
 msgstr ""
-#
 #
 msgid "Speedometer"
 msgstr ""
@@ -422,7 +403,6 @@ msgstr ""
 msgid "Units, Ranges, Formats"
 msgstr ""
 #
-#
 msgid "Up"
 msgstr ""
 #
@@ -432,13 +412,11 @@ msgstr ""
 msgid "Use SOG instead of STW for True Wind Calc."
 msgstr ""
 #
-#
 msgid "VMG"
 msgstr ""
 #
 msgid "Vertical"
 msgstr ""
-#
 #
 msgid "W"
 msgstr ""

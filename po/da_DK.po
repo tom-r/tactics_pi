@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2016-01-16 20:59-0500\n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: da\n"
-"X-Crowdin-File: /plugins/dashboard_pi/po/dashboard_pi.pot\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
 msgstr ""
@@ -23,7 +23,7 @@ msgid " 90°"
 msgstr ""
 #
 msgid " mag"
-msgstr " mag"
+msgstr ""
 #
 msgid " true"
 msgstr "Sand"
@@ -85,9 +85,8 @@ msgstr "Barometer-historik"
 msgid "Barometric pressure"
 msgstr "Barometerstand"
 #
-#, fuzzy
 msgid "Bearing Compass"
-msgstr "Retvisende Kompas"
+msgstr ""
 #
 msgid "Boat speed units:"
 msgstr "Enheder for bådhastighed:"
@@ -116,19 +115,17 @@ msgstr ""
 msgid "Current"
 msgstr ""
 #
-#, fuzzy
 msgid "Current Direction"
-msgstr "Sand vindretning"
+msgstr ""
 #
-#, fuzzy
 msgid "Current Speed"
-msgstr "Sand Vindhastighed"
+msgstr ""
 #
 msgid "Current damping factor [1-400]:  "
 msgstr ""
 #
 msgid "Data:"
-msgstr "Data:"
+msgstr ""
 #
 msgid "Delete"
 msgstr "Slet"
@@ -149,26 +146,25 @@ msgid "Down"
 msgstr "Ned"
 #
 msgid "E"
-msgstr "E"
+msgstr ""
 #
 msgid "ENE"
-msgstr "ENE"
+msgstr ""
 #
 msgid "ESE"
-msgstr "ESE"
+msgstr ""
 #
 msgid "Fathoms"
 msgstr "Favne"
 #
 msgid "Feet"
-msgstr "Feet"
+msgstr ""
 #
 msgid "Fonts"
 msgstr "Fonte"
 #
-#, fuzzy
 msgid "Force True Wind Calculation"
-msgstr "Sand vindretning"
+msgstr ""
 #
 msgid "Format in this file not recognised"
 msgstr ""
@@ -189,7 +185,7 @@ msgid "Horizontal"
 msgstr "Horisontal"
 #
 msgid "Inches"
-msgstr "Inches"
+msgstr ""
 #
 msgid "Instruments"
 msgstr "Instrumenter"
@@ -243,19 +239,19 @@ msgid "Min. Layline Width [°]:"
 msgstr ""
 #
 msgid "N"
-msgstr "N"
+msgstr ""
 #
 msgid "NE"
-msgstr "NE"
+msgstr ""
 #
 msgid "NNE"
-msgstr "NNE"
+msgstr ""
 #
 msgid "NNW"
-msgstr "NNW"
+msgstr ""
 #
 msgid "NW"
-msgstr "NW"
+msgstr ""
 #
 msgid "Nautical miles"
 msgstr "Sømil"
@@ -288,7 +284,7 @@ msgid "Polarspeed"
 msgstr ""
 #
 msgid "Position"
-msgstr "Position"
+msgstr ""
 #
 msgid "Preferences..."
 msgstr "Foretrukne..."
@@ -297,25 +293,25 @@ msgid "R"
 msgstr ""
 #
 msgid "S"
-msgstr "S"
+msgstr ""
 #
 msgid "SE"
-msgstr "SE"
+msgstr ""
 #
 msgid "SOG"
 msgstr "Fart over grunden"
 #
 msgid "SSE"
-msgstr "SSE"
+msgstr ""
 #
 msgid "SSW"
-msgstr "SSW"
+msgstr ""
 #
 msgid "STW"
-msgstr "STW"
+msgstr ""
 #
 msgid "SW"
-msgstr "SW"
+msgstr ""
 #
 msgid "Select a Polar-File"
 msgstr ""
@@ -333,13 +329,13 @@ msgid "Small:"
 msgstr "Lille:"
 #
 msgid "Speedometer"
-msgstr "Speedometer"
+msgstr ""
 #
 msgid "Speedometer max value:"
 msgstr "Speedometer max. værdi:"
 #
 msgid "Statute miles"
-msgstr "Statute miles"
+msgstr ""
 #
 msgid "Sunrise/Sunset"
 msgstr "Solopgang/nedgang"
@@ -353,21 +349,17 @@ msgstr ""
 msgid "Tactics"
 msgstr ""
 #
-#, fuzzy
 msgid "Tactics PlugIn for OpenCPN"
-msgstr "Instrumentpanel plugin for OpenCPN"
+msgstr ""
 #
-#, fuzzy
 msgid ""
 "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar "
 "file."
 msgstr ""
-"Instrumentpanel plugin for OpenCPN giver  instrumentvisninger fra NMEA kilde"
 #
-#, fuzzy
 msgid "Tactics preferences"
-msgstr "Instrumentpanel foretrukne"
+msgstr ""
 #
 msgid "Target CMG"
 msgstr ""
@@ -390,9 +382,8 @@ msgstr "Retvisende Kompas"
 msgid "True HDG"
 msgstr "Retvisende kurs"
 #
-#, fuzzy
 msgid "True Wind"
-msgstr "Sand vindvinkel"
+msgstr ""
 #
 msgid "True Wind Angle"
 msgstr "Sand vindvinkel"
@@ -422,19 +413,19 @@ msgid "Use SOG instead of STW for True Wind Calc."
 msgstr ""
 #
 msgid "VMG"
-msgstr "VMG"
+msgstr ""
 #
 msgid "Vertical"
 msgstr "Lodret"
 #
 msgid "W"
-msgstr "W"
+msgstr ""
 #
 msgid "WNW"
-msgstr "WNW"
+msgstr ""
 #
 msgid "WSW"
-msgstr "WSW"
+msgstr ""
 #
 msgid "Water Temp."
 msgstr "Vandtemperatur"
@@ -452,47 +443,22 @@ msgid "fixed/max Leeway [°]:"
 msgstr ""
 #
 msgid "km/h"
-msgstr "km/h"
+msgstr ""
 #
 msgid "m/s"
-msgstr "m/s"
+msgstr ""
 #
 msgid "manual Heel input:"
 msgstr ""
 #
 msgid "mph"
-msgstr "mph"
+msgstr ""
 #
-#, fuzzy
 msgid "show this tactics"
-msgstr "Vis dette instrumentpanel"
+msgstr ""
 #
 msgid "since"
 msgstr ""
 #
 msgid "tactics_pi: Select a Polar-File"
 msgstr ""
-#
-#~ msgid "Cursor"
-#~ msgstr "Cursor"
-#
-#~ msgid "Dashboard"
-#~ msgstr "Instrumentpanel"
-#
-#~ msgid "GPS Status"
-#~ msgstr "GPS Status"
-#
-#~ msgid "GPS in View"
-#~ msgstr "GPS synlig"
-#
-#~ msgid "Moon phase"
-#~ msgstr "Månefase"
-#
-#~ msgid "Rudder Angle"
-#~ msgstr "Rorvinkel"
-#
-#~ msgid "Sum Log"
-#~ msgstr "Sum log"
-#
-#~ msgid "Trip Log"
-#~ msgstr "Trip log"

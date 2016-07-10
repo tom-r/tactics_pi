@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2015-12-31 15:36-0500\n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: ca\n"
-"X-Crowdin-File: /plugins/dashboard_pi/po/dashboard_pi.pot\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
 msgstr ""
@@ -23,7 +23,7 @@ msgid " 90°"
 msgstr ""
 #
 msgid " mag"
-msgstr " mag"
+msgstr ""
 #
 msgid " true"
 msgstr " real"
@@ -85,9 +85,8 @@ msgstr "Històric de pressió"
 msgid "Barometric pressure"
 msgstr "Pressió baromètrica"
 #
-#, fuzzy
 msgid "Bearing Compass"
-msgstr "Compàs V"
+msgstr ""
 #
 msgid "Boat speed units:"
 msgstr "Unitats velocitat vaixell:"
@@ -96,7 +95,7 @@ msgid "Boat's Leeway factor [0-20]:  "
 msgstr ""
 #
 msgid "COG"
-msgstr "COG"
+msgstr ""
 #
 msgid "Caption:"
 msgstr "Nom:"
@@ -116,13 +115,11 @@ msgstr ""
 msgid "Current"
 msgstr ""
 #
-#, fuzzy
 msgid "Current Direction"
-msgstr "Dir. Vent real"
+msgstr ""
 #
-#, fuzzy
 msgid "Current Speed"
-msgstr "Velocitat Vent real"
+msgstr ""
 #
 msgid "Current damping factor [1-400]:  "
 msgstr ""
@@ -149,13 +146,13 @@ msgid "Down"
 msgstr "Avall"
 #
 msgid "E"
-msgstr "E"
+msgstr ""
 #
 msgid "ENE"
-msgstr "ENE"
+msgstr ""
 #
 msgid "ESE"
-msgstr "ESE"
+msgstr ""
 #
 msgid "Fathoms"
 msgstr "Braces"
@@ -164,11 +161,10 @@ msgid "Feet"
 msgstr "Peus"
 #
 msgid "Fonts"
-msgstr "Fonts"
+msgstr ""
 #
-#, fuzzy
 msgid "Force True Wind Calculation"
-msgstr "Dir. Vent real"
+msgstr ""
 #
 msgid "Format in this file not recognised"
 msgstr ""
@@ -186,19 +182,19 @@ msgid "Honor OpenCPN settings"
 msgstr "Seleccionada a OpenCPN"
 #
 msgid "Horizontal"
-msgstr "Horizontal"
+msgstr ""
 #
 msgid "Inches"
 msgstr "Polzades"
 #
 msgid "Instruments"
-msgstr "Instruments"
+msgstr ""
 #
 msgid "Kilometers"
 msgstr "Kilòmetres"
 #
 msgid "Kts"
-msgstr "Kts"
+msgstr ""
 #
 msgid "L"
 msgstr ""
@@ -243,19 +239,19 @@ msgid "Min. Layline Width [°]:"
 msgstr ""
 #
 msgid "N"
-msgstr "N"
+msgstr ""
 #
 msgid "NE"
-msgstr "NE"
+msgstr ""
 #
 msgid "NNE"
-msgstr "NNE"
+msgstr ""
 #
 msgid "NNW"
-msgstr "NNW"
+msgstr ""
 #
 msgid "NW"
-msgstr "NW"
+msgstr ""
 #
 msgid "Nautical miles"
 msgstr "Milles nàutiques"
@@ -273,7 +269,7 @@ msgid "Performance Parameters"
 msgstr ""
 #
 msgid "Pitch"
-msgstr "Pitch"
+msgstr ""
 #
 msgid "Polar"
 msgstr ""
@@ -297,25 +293,25 @@ msgid "R"
 msgstr ""
 #
 msgid "S"
-msgstr "S"
+msgstr ""
 #
 msgid "SE"
-msgstr "SE"
+msgstr ""
 #
 msgid "SOG"
-msgstr "SOG"
+msgstr ""
 #
 msgid "SSE"
-msgstr "SSE"
+msgstr ""
 #
 msgid "SSW"
-msgstr "SSW"
+msgstr ""
 #
 msgid "STW"
-msgstr "STW"
+msgstr ""
 #
 msgid "SW"
-msgstr "SW"
+msgstr ""
 #
 msgid "Select a Polar-File"
 msgstr ""
@@ -353,22 +349,17 @@ msgstr ""
 msgid "Tactics"
 msgstr ""
 #
-#, fuzzy
 msgid "Tactics PlugIn for OpenCPN"
-msgstr "Connector Tauler d'instruments per a OpenCPN"
+msgstr ""
 #
-#, fuzzy
 msgid ""
 "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar "
 "file."
 msgstr ""
-"El Connector Tauler d'instruments per a OpenCPN\n"
-"Mostra un panel d'instruments de navegació des d'una font NMEA."
 #
-#, fuzzy
 msgid "Tactics preferences"
-msgstr "Preferències Tauler"
+msgstr ""
 #
 msgid "Target CMG"
 msgstr ""
@@ -391,9 +382,8 @@ msgstr "Compàs V"
 msgid "True HDG"
 msgstr "Rumb Verd."
 #
-#, fuzzy
 msgid "True Wind"
-msgstr "Angle Vent real"
+msgstr ""
 #
 msgid "True Wind Angle"
 msgstr "Angle Vent real"
@@ -423,19 +413,19 @@ msgid "Use SOG instead of STW for True Wind Calc."
 msgstr ""
 #
 msgid "VMG"
-msgstr "VMG"
+msgstr ""
 #
 msgid "Vertical"
-msgstr "Vertical"
+msgstr ""
 #
 msgid "W"
-msgstr "W"
+msgstr ""
 #
 msgid "WNW"
-msgstr "WNW"
+msgstr ""
 #
 msgid "WSW"
-msgstr "WSW"
+msgstr ""
 #
 msgid "Water Temp."
 msgstr "Temperatura de l'aigua"
@@ -453,50 +443,22 @@ msgid "fixed/max Leeway [°]:"
 msgstr ""
 #
 msgid "km/h"
-msgstr "km/h"
+msgstr ""
 #
 msgid "m/s"
-msgstr "m/s"
+msgstr ""
 #
 msgid "manual Heel input:"
 msgstr ""
 #
 msgid "mph"
-msgstr "mph"
+msgstr ""
 #
-#, fuzzy
 msgid "show this tactics"
-msgstr "mostra aquest tauler"
+msgstr ""
 #
 msgid "since"
 msgstr ""
 #
 msgid "tactics_pi: Select a Polar-File"
 msgstr ""
-#
-#~ msgid "Cursor"
-#~ msgstr "Cursor"
-#
-#~ msgid "Dashboard"
-#~ msgstr "Tauler d'instruments"
-#
-#~ msgid "GPS Status"
-#~ msgstr "Estat GPS"
-#
-#~ msgid "GPS in View"
-#~ msgstr "GPS visibles"
-#
-#~ msgid "Max %.1f %s since %02d:%02d  Overall %.1f %s"
-#~ msgstr "Max %.1f %s des de %02d:%02d total %.1f %s"
-#
-#~ msgid "Moon phase"
-#~ msgstr "Fase lunar"
-#
-#~ msgid "Rudder Angle"
-#~ msgstr "Angle timó"
-#
-#~ msgid "Sum Log"
-#~ msgstr "Log Total"
-#
-#~ msgid "Trip Log"
-#~ msgstr "Log de viatge"

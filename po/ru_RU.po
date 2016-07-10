@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2016-01-25 19:58-0500\n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: ru\n"
-"X-Crowdin-File: /plugins/dashboard_pi/po/dashboard_pi.pot\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
 msgstr ""
@@ -86,9 +86,8 @@ msgstr "История давления"
 msgid "Barometric pressure"
 msgstr "Атмосферное давление"
 #
-#, fuzzy
 msgid "Bearing Compass"
-msgstr "Истинный компас"
+msgstr ""
 #
 msgid "Boat speed units:"
 msgstr "Единицы скорости судна:"
@@ -117,13 +116,11 @@ msgstr ""
 msgid "Current"
 msgstr ""
 #
-#, fuzzy
 msgid "Current Direction"
-msgstr "Ист. направл. ветра"
+msgstr ""
 #
-#, fuzzy
 msgid "Current Speed"
-msgstr "Ист. скорость ветра"
+msgstr ""
 #
 msgid "Current damping factor [1-400]:  "
 msgstr ""
@@ -167,9 +164,8 @@ msgstr "фут"
 msgid "Fonts"
 msgstr "Шрифты"
 #
-#, fuzzy
 msgid "Force True Wind Calculation"
-msgstr "Ист. направл. ветра"
+msgstr ""
 #
 msgid "Format in this file not recognised"
 msgstr ""
@@ -354,22 +350,17 @@ msgstr ""
 msgid "Tactics"
 msgstr ""
 #
-#, fuzzy
 msgid "Tactics PlugIn for OpenCPN"
-msgstr "Модуль «Приборная панель» для OpenCPN"
+msgstr ""
 #
-#, fuzzy
 msgid ""
 "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar "
 "file."
 msgstr ""
-"Модуль «Приборная панель» для OpenCPN\n"
-"Отображает показания навигационных инструментов NMEA."
 #
-#, fuzzy
 msgid "Tactics preferences"
-msgstr "Настройки приборной панели"
+msgstr ""
 #
 msgid "Target CMG"
 msgstr ""
@@ -392,9 +383,8 @@ msgstr "Истинный компас"
 msgid "True HDG"
 msgstr "Ист. путевой угол"
 #
-#, fuzzy
 msgid "True Wind"
-msgstr "Ист. угол ветра"
+msgstr ""
 #
 msgid "True Wind Angle"
 msgstr "Ист. угол ветра"
@@ -465,36 +455,11 @@ msgstr ""
 msgid "mph"
 msgstr "миль/ч"
 #
-#, fuzzy
 msgid "show this tactics"
-msgstr "Показать эту панель"
+msgstr ""
 #
 msgid "since"
 msgstr ""
 #
 msgid "tactics_pi: Select a Polar-File"
 msgstr ""
-#
-#~ msgid "Cursor"
-#~ msgstr "Курсор"
-#
-#~ msgid "Dashboard"
-#~ msgstr "Приборная панель"
-#
-#~ msgid "GPS Status"
-#~ msgstr "Состояние ГНСС"
-#
-#~ msgid "GPS in View"
-#~ msgstr "Число видимых спутников"
-#
-#~ msgid "Moon phase"
-#~ msgstr "Фаза луны"
-#
-#~ msgid "Rudder Angle"
-#~ msgstr "Угол перекладки руля"
-#
-#~ msgid "Sum Log"
-#~ msgstr "Итоговый журнал"
-#
-#~ msgid "Trip Log"
-#~ msgstr "Журнал плавания"

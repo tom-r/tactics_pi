@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2016-01-16 20:59-0500\n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: cs\n"
-"X-Crowdin-File: /plugins/dashboard_pi/po/dashboard_pi.pot\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
 msgstr ""
@@ -23,7 +23,7 @@ msgid " 90°"
 msgstr ""
 #
 msgid " mag"
-msgstr " mag"
+msgstr ""
 #
 msgid " true"
 msgstr " skutečný"
@@ -85,9 +85,8 @@ msgstr "Historie tlaku"
 msgid "Barometric pressure"
 msgstr "Barometrický tlak"
 #
-#, fuzzy
 msgid "Bearing Compass"
-msgstr "Kompas"
+msgstr ""
 #
 msgid "Boat speed units:"
 msgstr "Jednotka rychlosti lodi:"
@@ -96,7 +95,7 @@ msgid "Boat's Leeway factor [0-20]:  "
 msgstr ""
 #
 msgid "COG"
-msgstr "COG"
+msgstr ""
 #
 msgid "Caption:"
 msgstr "Popis:"
@@ -116,19 +115,17 @@ msgstr ""
 msgid "Current"
 msgstr ""
 #
-#, fuzzy
 msgid "Current Direction"
-msgstr "Skutečný směr větru"
+msgstr ""
 #
-#, fuzzy
 msgid "Current Speed"
-msgstr "Rychlost větru"
+msgstr ""
 #
 msgid "Current damping factor [1-400]:  "
 msgstr ""
 #
 msgid "Data:"
-msgstr "Data:"
+msgstr ""
 #
 msgid "Delete"
 msgstr "Smazat"
@@ -166,9 +163,8 @@ msgstr "Stopy"
 msgid "Fonts"
 msgstr "Písma"
 #
-#, fuzzy
 msgid "Force True Wind Calculation"
-msgstr "Skutečný směr větru"
+msgstr ""
 #
 msgid "Format in this file not recognised"
 msgstr ""
@@ -198,7 +194,7 @@ msgid "Kilometers"
 msgstr "Kilometery"
 #
 msgid "Kts"
-msgstr "Kts"
+msgstr ""
 #
 msgid "L"
 msgstr ""
@@ -222,10 +218,10 @@ msgid "Load"
 msgstr ""
 #
 msgid "Mag COG"
-msgstr "Mag COG"
+msgstr ""
 #
 msgid "Mag HDG"
-msgstr "Mag HDG"
+msgstr ""
 #
 msgid "Max"
 msgstr ""
@@ -303,7 +299,7 @@ msgid "SE"
 msgstr "JV"
 #
 msgid "SOG"
-msgstr "SOG"
+msgstr ""
 #
 msgid "SSE"
 msgstr "JV"
@@ -312,7 +308,7 @@ msgid "SSW"
 msgstr "JZ"
 #
 msgid "STW"
-msgstr "STW"
+msgstr ""
 #
 msgid "SW"
 msgstr "JZ"
@@ -353,23 +349,17 @@ msgstr ""
 msgid "Tactics"
 msgstr ""
 #
-#, fuzzy
 msgid "Tactics PlugIn for OpenCPN"
-msgstr "Doplněk Palubní deska pro OpenCPN"
+msgstr ""
 #
-#, fuzzy
 msgid ""
 "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar "
 "file."
 msgstr ""
-"Doplněk Palubní deska pro OpenCPN\n"
-"Poskytuje zobrazení navigačních přístrojů Provides navigation instrumz NMEA "
-"zdroje."
 #
-#, fuzzy
 msgid "Tactics preferences"
-msgstr "Možnosti palubní desky"
+msgstr ""
 #
 msgid "Target CMG"
 msgstr ""
@@ -392,9 +382,8 @@ msgstr "Kompas"
 msgid "True HDG"
 msgstr "Skutečný HDG"
 #
-#, fuzzy
 msgid "True Wind"
-msgstr "Úhel větru"
+msgstr ""
 #
 msgid "True Wind Angle"
 msgstr "Úhel větru"
@@ -424,7 +413,7 @@ msgid "Use SOG instead of STW for True Wind Calc."
 msgstr ""
 #
 msgid "VMG"
-msgstr "VMG"
+msgstr ""
 #
 msgid "Vertical"
 msgstr "Vertikální"
@@ -454,50 +443,22 @@ msgid "fixed/max Leeway [°]:"
 msgstr ""
 #
 msgid "km/h"
-msgstr "km/h"
+msgstr ""
 #
 msgid "m/s"
-msgstr "m/s"
+msgstr ""
 #
 msgid "manual Heel input:"
 msgstr ""
 #
 msgid "mph"
-msgstr "mph"
+msgstr ""
 #
-#, fuzzy
 msgid "show this tactics"
-msgstr "zobrazit tuto palubní desku"
+msgstr ""
 #
 msgid "since"
 msgstr ""
 #
 msgid "tactics_pi: Select a Polar-File"
 msgstr ""
-#
-#~ msgid "Cursor"
-#~ msgstr "Kurzor"
-#
-#~ msgid "Dashboard"
-#~ msgstr "Palubní deska"
-#
-#~ msgid "GPS Status"
-#~ msgstr "Stav GPS"
-#
-#~ msgid "GPS in View"
-#~ msgstr "GPS v dohledu"
-#
-#~ msgid "Max %.1f %s since %02d:%02d  Overall %.1f %s"
-#~ msgstr "Max %.1f %s od %02d:%02d Celkově %.1f %s"
-#
-#~ msgid "Moon phase"
-#~ msgstr "Fáze měsíce"
-#
-#~ msgid "Rudder Angle"
-#~ msgstr "Výchylka kormidla"
-#
-#~ msgid "Sum Log"
-#~ msgstr "Celkový log"
-#
-#~ msgid "Trip Log"
-#~ msgstr "Trip Log"

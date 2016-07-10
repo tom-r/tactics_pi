@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2016-01-25 19:56-0500\n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /plugins/dashboard_pi/po/dashboard_pi.pot\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
 msgstr ""
@@ -29,7 +29,7 @@ msgid " true"
 msgstr " vrai"
 #
 msgid "--"
-msgstr "--"
+msgstr ""
 #
 msgid "10 kn"
 msgstr ""
@@ -50,10 +50,10 @@ msgid "5 kn"
 msgstr ""
 #
 msgid "Actual CMG"
-msgstr ""
+msgstr "CMG actuelle"
 #
 msgid "Actual VMG"
-msgstr ""
+msgstr "VMG actuelle"
 #
 msgid "Add"
 msgstr "Ajouter"
@@ -85,9 +85,8 @@ msgstr "Historique de la pression"
 msgid "Barometric pressure"
 msgstr "Pression"
 #
-#, fuzzy
 msgid "Bearing Compass"
-msgstr "Compas vrai"
+msgstr "Cap compas"
 #
 msgid "Boat speed units:"
 msgstr "Unité de vitesse du bateau :"
@@ -116,13 +115,11 @@ msgstr ""
 msgid "Current"
 msgstr ""
 #
-#, fuzzy
 msgid "Current Direction"
-msgstr "V. vrai : Direction"
+msgstr "Direction du courant"
 #
-#, fuzzy
 msgid "Current Speed"
-msgstr "V. vrai : Vitesse"
+msgstr "Vitesse du courant"
 #
 msgid "Current damping factor [1-400]:  "
 msgstr ""
@@ -152,10 +149,10 @@ msgid "E"
 msgstr "E"
 #
 msgid "ENE"
-msgstr "ENE"
+msgstr ""
 #
 msgid "ESE"
-msgstr "ESE"
+msgstr ""
 #
 msgid "Fathoms"
 msgstr "Brasses"
@@ -166,12 +163,11 @@ msgstr "Pieds"
 msgid "Fonts"
 msgstr "Polices"
 #
-#, fuzzy
 msgid "Force True Wind Calculation"
-msgstr "V. vrai : Direction"
+msgstr ""
 #
 msgid "Format in this file not recognised"
-msgstr ""
+msgstr "Format du fichier non reconnu"
 #
 msgid "From Ownship"
 msgstr "Depuis votre bateau"
@@ -201,19 +197,19 @@ msgid "Kts"
 msgstr "Kts"
 #
 msgid "L"
-msgstr ""
+msgstr "L"
 #
 msgid "Label:"
 msgstr "Contenu :"
 #
 msgid "Layline length on Chart [nm]:  "
-msgstr ""
+msgstr "Longueur de la layline sur la carte [nm] :  "
 #
 msgid "Layline width damping factor [0.025-1]:  "
-msgstr ""
+msgstr "Layline avec facteur de damping [0.025-1]:  "
 #
 msgid "Laylines"
-msgstr ""
+msgstr "Laylines"
 #
 msgid "Leeway"
 msgstr ""
@@ -228,7 +224,7 @@ msgid "Mag HDG"
 msgstr "Cap compas"
 #
 msgid "Max"
-msgstr ""
+msgstr "Max"
 #
 msgid "Max. Layline Width [°]:"
 msgstr ""
@@ -237,7 +233,7 @@ msgid "Meters"
 msgstr "Mètres"
 #
 msgid "Min"
-msgstr ""
+msgstr "Min"
 #
 msgid "Min. Layline Width [°]:"
 msgstr ""
@@ -249,7 +245,7 @@ msgid "NE"
 msgstr "NE"
 #
 msgid "NNE"
-msgstr "NNE"
+msgstr ""
 #
 msgid "NNW"
 msgstr "NNNO"
@@ -264,16 +260,16 @@ msgid "Orientation:"
 msgstr "Orientation :"
 #
 msgid "Overall"
-msgstr ""
+msgstr "Absolu"
 #
 msgid "Overall Max"
-msgstr ""
+msgstr "Max absolu"
 #
 msgid "Performance Parameters"
-msgstr ""
+msgstr "Paramètres de performance"
 #
 msgid "Pitch"
-msgstr "Pitch"
+msgstr ""
 #
 msgid "Polar"
 msgstr ""
@@ -282,10 +278,10 @@ msgid "Polar :"
 msgstr ""
 #
 msgid "Polar performance"
-msgstr ""
+msgstr "Performance de la polaire"
 #
 msgid "Polarspeed"
-msgstr ""
+msgstr "Vitesse lu sur la polaire"
 #
 msgid "Position"
 msgstr "Position"
@@ -294,7 +290,7 @@ msgid "Preferences..."
 msgstr "Préférences ..."
 #
 msgid "R"
-msgstr ""
+msgstr "R"
 #
 msgid "S"
 msgstr "S"
@@ -306,7 +302,7 @@ msgid "SOG"
 msgstr "SOG"
 #
 msgid "SSE"
-msgstr "SSE"
+msgstr ""
 #
 msgid "SSW"
 msgstr "SSO"
@@ -345,42 +341,37 @@ msgid "Sunrise/Sunset"
 msgstr "Soleil : Lever/Coucher"
 #
 msgid "TWA to Waypoint"
-msgstr ""
+msgstr "TWA jusqu'au point"
 #
 msgid "TWS/TWA "
 msgstr ""
 #
 msgid "Tactics"
+msgstr "Tactiques"
+#
+msgid "Tactics PlugIn for OpenCPN"
 msgstr ""
 #
-#, fuzzy
-msgid "Tactics PlugIn for OpenCPN"
-msgstr "Complément \"Tableau de bord\" pour OpenCPN"
-#
-#, fuzzy
 msgid ""
 "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar "
 "file."
 msgstr ""
-"Complément \"Tableau de bord\" pour OpenCPN\n"
-"Fournit des instruments de navigation qui exploitent les données NMEA."
 #
-#, fuzzy
 msgid "Tactics preferences"
-msgstr "Préférences du tableau de bord"
+msgstr "Préférences de \"Tactiques\""
 #
 msgid "Target CMG"
-msgstr ""
+msgstr "CMG attendue"
 #
 msgid "Target CMG-Angle"
-msgstr ""
+msgstr "Angle attendu de CMG"
 #
 msgid "Target VMG"
-msgstr ""
+msgstr "VMG attendue"
 #
 msgid "Target VMG-Angle"
-msgstr ""
+msgstr "Angle de VMG attendu"
 #
 msgid "Title:"
 msgstr "Titre :"
@@ -391,9 +382,8 @@ msgstr "Compas vrai"
 msgid "True HDG"
 msgstr "Cap vrai"
 #
-#, fuzzy
 msgid "True Wind"
-msgstr "V. vrai : Angle"
+msgstr ""
 #
 msgid "True Wind Angle"
 msgstr "V. vrai : Angle"
@@ -447,7 +437,7 @@ msgid "Wind speed units:"
 msgstr "Unités de vitesse du vent :"
 #
 msgid "You have to turn on OpenGL to use chart overlay "
-msgstr ""
+msgstr "Vous devez utiliser OpenGL ON pour utiliser la superposition de carte"
 #
 msgid "fixed/max Leeway [°]:"
 msgstr ""
@@ -464,42 +454,11 @@ msgstr ""
 msgid "mph"
 msgstr "mph"
 #
-#, fuzzy
 msgid "show this tactics"
-msgstr "Montrer ce tableau de bord"
+msgstr "montrer cette tactique"
 #
 msgid "since"
-msgstr ""
+msgstr "depuis"
 #
 msgid "tactics_pi: Select a Polar-File"
-msgstr ""
-#
-#~ msgid "--- %s"
-#~ msgstr "--- %s"
-#
-#~ msgid "Cursor"
-#~ msgstr "Curseur"
-#
-#~ msgid "Dashboard"
-#~ msgstr "TABLEAU DE BORD"
-#
-#~ msgid "GPS Status"
-#~ msgstr "Etat du GPS"
-#
-#~ msgid "GPS in View"
-#~ msgstr "Satellites visibles"
-#
-#~ msgid "Max %.1f %s since %02d:%02d  Overall %.1f %s"
-#~ msgstr "Max %.1f %s depuis %02d:%02d  Ensemble %.1f %s"
-#
-#~ msgid "Moon phase"
-#~ msgstr "Phase de lune"
-#
-#~ msgid "Rudder Angle"
-#~ msgstr "Angle de barre"
-#
-#~ msgid "Sum Log"
-#~ msgstr "Distance cumulée"
-#
-#~ msgid "Trip Log"
-#~ msgstr "Log du voyage"
+msgstr "Tactics_pi : Selectionner un fichier de polaire"

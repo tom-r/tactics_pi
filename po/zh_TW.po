@@ -1,22 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: dashboard_pi 3.3.814\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2013-09-25 15:52+0800\n"
-"Last-Translator: Eddie Pai <eddie.pai@gmail.com>\n"
-"Language-Team: Eddie Pai <eddie.pai@gmail.com>\n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Language: zh-TW\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 #
 msgid " 45°"
 msgstr ""
@@ -66,9 +64,8 @@ msgstr "增加航儀"
 msgid "Air Temp."
 msgstr "氣溫"
 #
-#, fuzzy
 msgid "App & True Wind Angle"
-msgstr "真風角"
+msgstr ""
 #
 msgid "App. Wind Angle"
 msgstr "迎風角"
@@ -82,16 +79,14 @@ msgstr "相對風速"
 msgid "Appearance"
 msgstr "外觀"
 #
-#, fuzzy
 msgid "Barometric history"
-msgstr "風向歷史記錄"
+msgstr ""
 #
 msgid "Barometric pressure"
 msgstr ""
 #
-#, fuzzy
 msgid "Bearing Compass"
-msgstr "羅盤"
+msgstr ""
 #
 msgid "Boat speed units:"
 msgstr ""
@@ -100,7 +95,7 @@ msgid "Boat's Leeway factor [0-20]:  "
 msgstr ""
 #
 msgid "COG"
-msgstr "COG"
+msgstr ""
 #
 msgid "Caption:"
 msgstr "標題:"
@@ -120,13 +115,11 @@ msgstr ""
 msgid "Current"
 msgstr ""
 #
-#, fuzzy
 msgid "Current Direction"
-msgstr "真風向"
+msgstr ""
 #
-#, fuzzy
 msgid "Current Speed"
-msgstr "真風速"
+msgstr ""
 #
 msgid "Current damping factor [1-400]:  "
 msgstr ""
@@ -153,13 +146,13 @@ msgid "Down"
 msgstr "下移"
 #
 msgid "E"
-msgstr "E"
+msgstr ""
 #
 msgid "ENE"
-msgstr "ENE"
+msgstr ""
 #
 msgid "ESE"
-msgstr "ESE"
+msgstr ""
 #
 msgid "Fathoms"
 msgstr ""
@@ -170,9 +163,8 @@ msgstr ""
 msgid "Fonts"
 msgstr "字型"
 #
-#, fuzzy
 msgid "Force True Wind Calculation"
-msgstr "真風向"
+msgstr ""
 #
 msgid "Format in this file not recognised"
 msgstr ""
@@ -225,12 +217,11 @@ msgstr ""
 msgid "Load"
 msgstr ""
 #
-#, fuzzy
 msgid "Mag COG"
-msgstr "Mag HDG"
+msgstr ""
 #
 msgid "Mag HDG"
-msgstr "Mag HDG"
+msgstr ""
 #
 msgid "Max"
 msgstr ""
@@ -248,19 +239,19 @@ msgid "Min. Layline Width [°]:"
 msgstr ""
 #
 msgid "N"
-msgstr "N"
+msgstr ""
 #
 msgid "NE"
-msgstr "NE"
+msgstr ""
 #
 msgid "NNE"
-msgstr "NNE"
+msgstr ""
 #
 msgid "NNW"
-msgstr "NNW"
+msgstr ""
 #
 msgid "NW"
-msgstr "NW"
+msgstr ""
 #
 msgid "Nautical miles"
 msgstr ""
@@ -302,25 +293,25 @@ msgid "R"
 msgstr ""
 #
 msgid "S"
-msgstr "S"
+msgstr ""
 #
 msgid "SE"
-msgstr "SE"
+msgstr ""
 #
 msgid "SOG"
-msgstr "SOG"
+msgstr ""
 #
 msgid "SSE"
-msgstr "SSE"
+msgstr ""
 #
 msgid "SSW"
-msgstr "SSW"
+msgstr ""
 #
 msgid "STW"
-msgstr "STW"
+msgstr ""
 #
 msgid "SW"
-msgstr "SW"
+msgstr ""
 #
 msgid "Select a Polar-File"
 msgstr ""
@@ -340,9 +331,8 @@ msgstr "小字體:"
 msgid "Speedometer"
 msgstr "速度計"
 #
-#, fuzzy
 msgid "Speedometer max value:"
-msgstr "速度計"
+msgstr ""
 #
 msgid "Statute miles"
 msgstr ""
@@ -359,22 +349,17 @@ msgstr ""
 msgid "Tactics"
 msgstr ""
 #
-#, fuzzy
 msgid "Tactics PlugIn for OpenCPN"
-msgstr "OpenCPN 儀表板插件"
+msgstr ""
 #
-#, fuzzy
 msgid ""
 "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar "
 "file."
 msgstr ""
-"OpenCPN 儀表板插件\n"
-"提供來自航儀 NMEA 資訊顯示."
 #
-#, fuzzy
 msgid "Tactics preferences"
-msgstr "儀表板偏好設定"
+msgstr ""
 #
 msgid "Target CMG"
 msgstr ""
@@ -391,16 +376,14 @@ msgstr ""
 msgid "Title:"
 msgstr "標題:"
 #
-#, fuzzy
 msgid "True Compass"
-msgstr "羅盤"
+msgstr ""
 #
 msgid "True HDG"
-msgstr "True HDG"
+msgstr ""
 #
-#, fuzzy
 msgid "True Wind"
-msgstr "真風角"
+msgstr ""
 #
 msgid "True Wind Angle"
 msgstr "真風角"
@@ -430,19 +413,19 @@ msgid "Use SOG instead of STW for True Wind Calc."
 msgstr ""
 #
 msgid "VMG"
-msgstr "VMG"
+msgstr ""
 #
 msgid "Vertical"
 msgstr "垂直"
 #
 msgid "W"
-msgstr "W"
+msgstr ""
 #
 msgid "WNW"
-msgstr "WNW"
+msgstr ""
 #
 msgid "WSW"
-msgstr "WSW"
+msgstr ""
 #
 msgid "Water Temp."
 msgstr "水溫"
@@ -471,40 +454,11 @@ msgstr ""
 msgid "mph"
 msgstr ""
 #
-#, fuzzy
 msgid "show this tactics"
-msgstr "顯示這個儀表板"
+msgstr ""
 #
 msgid "since"
 msgstr ""
 #
 msgid "tactics_pi: Select a Polar-File"
 msgstr ""
-#
-#
-#~ msgid "Cursor"
-#~ msgstr "游標"
-#
-#
-#~ msgid "Dashboard"
-#~ msgstr "儀表板"
-#
-#
-#~ msgid "GPS Status"
-#~ msgstr "GPS 狀態"
-#
-#
-#~ msgid "GPS in View"
-#~ msgstr "可接收GPS"
-#
-#
-#~ msgid "Max %.1f since %02d:%02d  Overall %.1f"
-#~ msgstr "最大 %.1f 自從 %02d:%02d  整體 %.1f"
-#
-#
-#~ msgid "Moon phase"
-#~ msgstr "月相"
-#
-#
-#~ msgid "Rudder Angle"
-#~ msgstr "舵角"
