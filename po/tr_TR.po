@@ -1,27 +1,60 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: opencpn 3.1.1224\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-24 23:40-0500\n"
-"PO-Revision-Date: 2013-12-02 17:22+0200\n"
-"Last-Translator: Hasan Çetin <boraxtr@yahoo.com>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2016-07-10 22:39+0200\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Turkish\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Basepath: C:\\GIT\\opencpn2\\opencpn\\plugins\\dashboard_pi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Language: tr\n"
+"X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
+#
+msgid " 45°"
+msgstr ""
+#
+msgid " 90°"
+msgstr ""
 #
 msgid " mag"
 msgstr "Manyetik"
 #
 msgid " true"
 msgstr "Gerçek"
+#
+msgid "--"
+msgstr ""
+#
+msgid "10 kn"
+msgstr ""
+#
+msgid "135°"
+msgstr ""
+#
+msgid "15 kn"
+msgstr ""
+#
+msgid "20 kn"
+msgstr ""
+#
+msgid "25 kn"
+msgstr ""
+#
+msgid "5 kn"
+msgstr ""
+#
+msgid "Actual CMG"
+msgstr ""
+#
+msgid "Actual VMG"
+msgstr ""
 #
 msgid "Add"
 msgstr "Ekle"
@@ -31,6 +64,9 @@ msgstr "Araç Ekle"
 #
 msgid "Air Temp."
 msgstr "Hava Sıcaklığı"
+#
+msgid "App & True Wind Angle"
+msgstr ""
 #
 msgid "App. Wind Angle"
 msgstr "Görünen Rüzgar Açısı"
@@ -44,47 +80,50 @@ msgstr "Görünen Rüzgar Hızı"
 msgid "Appearance"
 msgstr "Görünüm"
 #
-#, fuzzy
 msgid "Barometric history"
-msgstr "Rüzgar Gemişi"
+msgstr ""
 #
 msgid "Barometric pressure"
+msgstr ""
+#
+msgid "Bearing Compass"
 msgstr ""
 #
 msgid "Boat speed units:"
 msgstr "Tekne hız birimleri:"
 #
+msgid "Boat's Leeway factor [0-20]:  "
+msgstr ""
+#
 msgid "COG"
-msgstr "COG"
+msgstr ""
 #
 msgid "Caption:"
 msgstr "Başlık:"
 #
-#, fuzzy
 msgid "Centimeters"
-msgstr "Kilometre"
+msgstr ""
 #
 msgid "Clock"
 msgstr "Saat"
 #
-msgid "Cursor"
-msgstr "Fare"
-#
-msgid "Dashboard"
-msgstr "Gösterge Paneli"
-#
-msgid "Dashboard PlugIn for OpenCPN"
-msgstr "OpenCPN Gösterge Paneli Eklentisi"
-#
-msgid ""
-"Dashboard PlugIn for OpenCPN\n"
-"Provides navigation instrument display from NMEA source."
+msgid "Correct AWS/AWA with Heel"
 msgstr ""
-"OpenCPN Göstege Paneli Eklentisi\n"
-" NMEA kaynaklı seyir araçlarını gösterir."
 #
-msgid "Dashboard preferences"
-msgstr "Gösterge Paneli Ayarları"
+msgid "Correct STW with Leeway"
+msgstr ""
+#
+msgid "Current"
+msgstr ""
+#
+msgid "Current Direction"
+msgstr ""
+#
+msgid "Current Speed"
+msgstr ""
+#
+msgid "Current damping factor [1-400]:  "
+msgstr ""
 #
 msgid "Data:"
 msgstr "Veri:"
@@ -95,9 +134,11 @@ msgstr "Sil"
 msgid "Depth"
 msgstr "Derinlik"
 #
-#, fuzzy
 msgid "Depth units:"
-msgstr "Uzaklık birimleri:"
+msgstr ""
+#
+msgid "Display Current on Chart (OpenGL)"
+msgstr ""
 #
 msgid "Distance units:"
 msgstr "Uzaklık birimleri:"
@@ -123,17 +164,20 @@ msgstr ""
 msgid "Fonts"
 msgstr "Yazım şekli"
 #
+msgid "Force True Wind Calculation"
+msgstr ""
+#
+msgid "Format in this file not recognised"
+msgstr ""
+#
 msgid "From Ownship"
 msgstr ""
 #
 msgid "GPS Compass"
 msgstr "GPS Pusula"
 #
-msgid "GPS Status"
-msgstr "GPS Durumu"
-#
-msgid "GPS in View"
-msgstr "GPS Görünümü"
+msgid "Heel"
+msgstr ""
 #
 msgid "Honor OpenCPN settings"
 msgstr "OpenCPN'de belirlenen ayarlar"
@@ -153,25 +197,47 @@ msgstr "Kilometre"
 msgid "Kts"
 msgstr "Knot"
 #
+msgid "L"
+msgstr ""
+#
 msgid "Label:"
 msgstr "Etiket:"
 #
-#, fuzzy
+msgid "Layline length on Chart [nm]:  "
+msgstr ""
+#
+msgid "Layline width damping factor [0.025-1]:  "
+msgstr ""
+#
+msgid "Laylines"
+msgstr ""
+#
+msgid "Leeway"
+msgstr ""
+#
+msgid "Load"
+msgstr ""
+#
 msgid "Mag COG"
-msgstr "Manyetik Pruva"
+msgstr ""
 #
 msgid "Mag HDG"
 msgstr "Manyetik Pruva"
 #
-#, c-format
-msgid "Max %.1f since %02d:%02d  Overall %.1f"
-msgstr "Ençok %.1f %02d:%02d den beri Toplam %.1f"
+msgid "Max"
+msgstr ""
+#
+msgid "Max. Layline Width [°]:"
+msgstr ""
 #
 msgid "Meters"
 msgstr "Metre"
 #
-msgid "Moon phase"
-msgstr "Ay Dönemi"
+msgid "Min"
+msgstr ""
+#
+msgid "Min. Layline Width [°]:"
+msgstr ""
 #
 msgid "N"
 msgstr "K"
@@ -194,14 +260,38 @@ msgstr "Deniz mili"
 msgid "Orientation:"
 msgstr "Görünüş:"
 #
+msgid "Overall"
+msgstr ""
+#
+msgid "Overall Max"
+msgstr ""
+#
+msgid "Performance Parameters"
+msgstr ""
+#
+msgid "Pitch"
+msgstr ""
+#
+msgid "Polar"
+msgstr ""
+#
+msgid "Polar :"
+msgstr ""
+#
+msgid "Polar performance"
+msgstr ""
+#
+msgid "Polarspeed"
+msgstr ""
+#
 msgid "Position"
 msgstr "Mevki"
 #
 msgid "Preferences..."
 msgstr "Ayarlar"
 #
-msgid "Rudder Angle"
-msgstr "Dümen Açısı"
+msgid "R"
+msgstr ""
 #
 msgid "S"
 msgstr "G"
@@ -210,7 +300,7 @@ msgid "SE"
 msgstr "GD"
 #
 msgid "SOG"
-msgstr "SOG"
+msgstr ""
 #
 msgid "SSE"
 msgstr "GGD"
@@ -219,13 +309,22 @@ msgid "SSW"
 msgstr "GGB"
 #
 msgid "STW"
-msgstr "STW"
+msgstr ""
 #
 msgid "SW"
 msgstr "GB"
 #
+msgid "Select a Polar-File"
+msgstr ""
+#
 msgid "Select instrument to add:"
 msgstr "Eklemek İçin Araç Seç:"
+#
+msgid "Show Laylines"
+msgstr ""
+#
+msgid "Show Wind Barb on Chart (OpenGL)"
+msgstr ""
 #
 msgid "Small:"
 msgstr "Küçük:"
@@ -239,24 +338,53 @@ msgstr "Hızölçerin en yüksek değeri:"
 msgid "Statute miles"
 msgstr "Kara mili"
 #
-msgid "Sum Log"
-msgstr "Toplam kütük"
-#
 msgid "Sunrise/Sunset"
 msgstr "Gündoğumu/Günbatımı"
+#
+msgid "TWA to Waypoint"
+msgstr ""
+#
+msgid "TWS/TWA "
+msgstr ""
+#
+msgid "Tactics"
+msgstr ""
+#
+msgid "Tactics PlugIn for OpenCPN"
+msgstr ""
+#
+msgid ""
+"Tactics PlugIn for OpenCPN\n"
+"Provides performance data & instrument display from NMEA source and polar "
+"file."
+msgstr ""
+#
+msgid "Tactics preferences"
+msgstr ""
+#
+msgid "Target CMG"
+msgstr ""
+#
+msgid "Target CMG-Angle"
+msgstr ""
+#
+msgid "Target VMG"
+msgstr ""
+#
+msgid "Target VMG-Angle"
+msgstr ""
 #
 msgid "Title:"
 msgstr "Adı:"
 #
-msgid "Trip Log"
-msgstr "Yol kütüğü"
-#
-#, fuzzy
 msgid "True Compass"
-msgstr "Pusula"
+msgstr ""
 #
 msgid "True HDG"
 msgstr "Gerçek Pruva"
+#
+msgid "True Wind"
+msgstr ""
 #
 msgid "True Wind Angle"
 msgstr "Gerçek Rüzgar Açısı"
@@ -279,8 +407,14 @@ msgstr "Birimler, aralıklar, yazım şekilleri"
 msgid "Up"
 msgstr "Yukarı"
 #
+msgid "Use Heel Sensor"
+msgstr ""
+#
+msgid "Use SOG instead of STW for True Wind Calc."
+msgstr ""
+#
 msgid "VMG"
-msgstr "VMG"
+msgstr ""
 #
 msgid "Vertical"
 msgstr "Dikey"
@@ -303,14 +437,29 @@ msgstr "Rüzgar Gemişi"
 msgid "Wind speed units:"
 msgstr "Rüzgar hız birimleri:"
 #
+msgid "You have to turn on OpenGL to use chart overlay "
+msgstr ""
+#
+msgid "fixed/max Leeway [°]:"
+msgstr ""
+#
 msgid "km/h"
 msgstr "km/saat"
 #
 msgid "m/s"
 msgstr "metre/saniye"
 #
+msgid "manual Heel input:"
+msgstr ""
+#
 msgid "mph"
 msgstr "mil/saat"
 #
-msgid "show this dashboard"
-msgstr "Bu Paneli Göster"
+msgid "show this tactics"
+msgstr ""
+#
+msgid "since"
+msgstr ""
+#
+msgid "tactics_pi: Select a Polar-File"
+msgstr ""
