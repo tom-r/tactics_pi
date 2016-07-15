@@ -41,7 +41,7 @@
 #include <wx/wx.h>
 #endif
 
-
+extern int g_iDashWindSpeedUnit;
 //************************************************************************************************************************
 // History of wind direction
 //************************************************************************************************************************
@@ -104,8 +104,11 @@ void TacticsInstrument_WindDirHistory::SetData(int st, double data, wxString uni
     }
     if (st == OCPN_DBP_STC_TWS && data < 200.0) {
       m_WindSpd = data;
+      //convert to knots first
+      m_WindSpd = fromUsrSpeed_Plugin(data, g_iDashWindSpeedUnit);
+
       // if unit changes, reset everything ...
-      if (unit != m_WindSpeedUnit && m_WindSpeedUnit != _("--")) {
+     /* if (unit != m_WindSpeedUnit && m_WindSpeedUnit != _("--")) {
         m_MaxWindDir = -1;
         m_WindDir = -1;
         m_WindDirRange = 90;
@@ -128,20 +131,20 @@ void TacticsInstrument_WindDirHistory::SetData(int st, double data, wxString uni
           m_ArrayRecTime[idx] = wxDateTime::Now();
           m_ArrayRecTime[idx].SetYear(999);
         }
-      }
+      }*/
       m_WindSpeedUnit = unit;
-      if (m_SpdRecCnt <= 5){
+      if (m_SpdRecCnt <= 3){
         m_SpdStartVal += data;
         m_SpdRecCnt++;
       }
     }
-    if (m_SpdRecCnt == 5 && m_DirRecCnt == 5) {
-      m_WindSpd = m_SpdStartVal / 5;
-      m_WindDir = m_DirStartVal / 5;
+    if (m_SpdRecCnt == 3 && m_DirRecCnt == 3) {
+      m_WindSpd = m_SpdStartVal / 3;
+      m_WindDir = m_DirStartVal / 3;
       m_oldDirVal = m_WindDir; // make sure we don't get a diff > or <180 in the initial run
     }
     //start working after we collected 5 records each, as start values for the smoothed curves
-    if (m_SpdRecCnt > 5 && m_DirRecCnt > 5) {
+    if (m_SpdRecCnt > 3 && m_DirRecCnt > 3) {
       m_IsRunning = true;
       m_SampleCount = m_SampleCount<WIND_RECORD_COUNT ? m_SampleCount + 1 : WIND_RECORD_COUNT;
       m_MaxWindDir = 0;
@@ -343,35 +346,35 @@ void  TacticsInstrument_WindDirHistory::DrawWindSpeedScale(wxGCDC* dc)
     The goal is to draw the legend with decimals only, if we really have them !
     */
     // top legend for max wind
-    label1.Printf(_T("%.0f %s"), m_MaxWindSpdScale, m_WindSpeedUnit.c_str());
+      label1.Printf(_T("%.0f %s"), toUsrSpeed_Plugin(m_MaxWindSpdScale, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str());
     // 3/4 legend
     WindSpdScale = m_MaxWindSpdScale*3. / 4.;
     // do we need a decimal ?
     val1 = (int)((WindSpdScale - (int)WindSpdScale) * 100);
     if (val1 == 25 || val1 == 75)  // it's a .25 or a .75
-      label2.Printf(_T("%.2f %s"), WindSpdScale, m_WindSpeedUnit.c_str());
+      label2.Printf(_T("%.2f %s"), toUsrSpeed_Plugin(WindSpdScale, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str());
     else if (val1 == 50)
-      label2.Printf(_T("%.1f %s"), WindSpdScale, m_WindSpeedUnit.c_str());
+      label2.Printf(_T("%.1f %s"), toUsrSpeed_Plugin(WindSpdScale, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str());
     else
-      label2.Printf(_T("%.0f %s"), WindSpdScale, m_WindSpeedUnit.c_str());
+      label2.Printf(_T("%.0f %s"), toUsrSpeed_Plugin(WindSpdScale, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str());
     // center legend
     WindSpdScale = m_MaxWindSpdScale / 2.;
     // center line can either have a .0 or .5 value !
     if ((int)(WindSpdScale * 10) % 10 == 5)
-      label3.Printf(_T("%.1f %s"), WindSpdScale, m_WindSpeedUnit.c_str());
+      label3.Printf(_T("%.1f %s"), toUsrSpeed_Plugin(WindSpdScale, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str());
     else
-      label3.Printf(_T("%.0f %s"), WindSpdScale, m_WindSpeedUnit.c_str());
+      label3.Printf(_T("%.0f %s"), toUsrSpeed_Plugin(WindSpdScale, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str());
 
     // 1/4 legend
     WindSpdScale = m_MaxWindSpdScale / 4.;
     // do we need a decimal ?
     val1 = (int)((WindSpdScale - (int)WindSpdScale) * 100);
     if (val1 == 25 || val1 == 75)
-      label4.Printf(_T("%.2f %s"), WindSpdScale, m_WindSpeedUnit.c_str());
+      label4.Printf(_T("%.2f %s"), toUsrSpeed_Plugin(WindSpdScale, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str());
     else if (val1 == 50)
-      label4.Printf(_T("%.1f %s"), WindSpdScale, m_WindSpeedUnit.c_str());
+      label4.Printf(_T("%.1f %s"), toUsrSpeed_Plugin(WindSpdScale, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str());
     else
-      label4.Printf(_T("%.0f %s"), WindSpdScale, m_WindSpeedUnit.c_str());
+      label4.Printf(_T("%.0f %s"), toUsrSpeed_Plugin(WindSpdScale, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str());
 
     //bottom legend for min wind, always 0
     label5.Printf(_T("%.0f %s"), 0.0, m_WindSpeedUnit.c_str());
@@ -563,7 +566,7 @@ void TacticsInstrument_WindDirHistory::DrawForeground(wxGCDC* dc)
   col = wxColour(61, 61, 204, 255); //blue, opaque
   dc->SetFont(*g_pFontData);
   dc->SetTextForeground(col);
-  WindSpeed = wxString::Format(_T("TWS %3.1f %s "), m_WindSpd, m_WindSpeedUnit.c_str());
+  WindSpeed = wxString::Format(_T("TWS %3.1f %s "), toUsrSpeed_Plugin(m_WindSpd, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str());
   dc->GetTextExtent(WindSpeed, &degw, &degh, 0, 0, g_pFontData);
   dc->DrawText(WindSpeed, m_LeftLegend + 3, m_TopLineHeight - degh);
   dc->SetFont(*g_pFontLabel);
@@ -582,7 +585,7 @@ void TacticsInstrument_WindDirHistory::DrawForeground(wxGCDC* dc)
   wxString s_Max = _("Max");
   wxString s_Since = _("since");
   wxString s_OMax = _("Overall");
-  dc->DrawText(wxString::Format(_T("%s %.1f %s %s %02d:%02d  %s %.1f %s"), s_Max, m_MaxWindSpd, s_Since, m_WindSpeedUnit.c_str(), hour, min, s_OMax, m_TotalMaxWindSpd, m_WindSpeedUnit.c_str()), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
+  dc->DrawText(wxString::Format(_T("%s %.1f %s %s %02d:%02d  %s %.1f %s"), s_Max, toUsrSpeed_Plugin(m_MaxWindSpd, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str(), s_Since, hour, min, s_OMax, toUsrSpeed_Plugin(m_TotalMaxWindSpd, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str()), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
   //dc->DrawText(wxString::Format(_("Max %.1f %s since %02d:%02d  Overall %.1f %s"), m_MaxWindSpd, m_WindSpeedUnit.c_str(), hour, min, m_TotalMaxWindSpd, m_WindSpeedUnit.c_str()), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
   pen.SetStyle(wxPENSTYLE_SOLID);
   pen.SetColour(wxColour(61, 61, 204, 96)); //blue, transparent

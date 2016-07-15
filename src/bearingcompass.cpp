@@ -46,6 +46,8 @@ extern int g_iMaxLaylineWidth;
 extern Polar* BoatPolar;
 extern PlugIn_Waypoint *m_pMark;
 extern int g_iDashDistanceUnit;
+extern int g_iDashSpeedUnit;
+
 extern double g_dalphaDeltCoG;
 extern double  getDegRange(double max, double min);
 /***************************************************************************************
@@ -190,7 +192,8 @@ void TacticsInstrument_BearingCompass::Draw(wxGCDC* bdc)
 	DrawLaylines(bdc);
 	DrawData(bdc, m_MainValue, m_MainValueUnit, _T("%.0f"), DIAL_POSITION_TOPINSIDE);
 
-	DrawData(bdc, m_predictedSog, _T("kn "), _T("pred.SOG: ~%.1f"), DIAL_POSITION_BOTTOMRIGHT);
+//	DrawData(bdc, m_predictedSog, _T("kn "), _T("prd.SOG: ~%.1f"), DIAL_POSITION_BOTTOMRIGHT);
+    DrawData(bdc, m_predictedSog, getUsrSpeedUnit_Plugin(g_iDashSpeedUnit), _T("prd.SOG: ~%.1f"), DIAL_POSITION_BOTTOMRIGHT);
 
 
 }

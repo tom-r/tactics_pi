@@ -141,18 +141,23 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
 {
 
 			if (st == OCPN_DBP_STC_STW){
-				mSTW = data;
-				stwunit = unit;
+
+              //mSTW = data;
+              //convert to knots first
+              mSTW = fromUsrSpeed_Plugin(data, g_iDashSpeedUnit);
+			  stwunit = unit;
 			}
 			else if (st == OCPN_DBP_STC_TWA){
 				mTWA = data;
 			}
             else if (st == OCPN_DBP_STC_COG){
-				mCOG = data;
+              mCOG = data;
 			}
 			else if (st == OCPN_DBP_STC_SOG){
-				mSOG = data;
-			}
+              //convert to knots first
+              //mSOG = data;
+              mSOG = fromUsrSpeed_Plugin(data, g_iDashSpeedUnit);
+            }
             else if (st == OCPN_DBP_STC_LAT) {
               m_lat = data;
             }
@@ -177,7 +182,9 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
               }
             }
 			else if (st == OCPN_DBP_STC_TWS){
-				mTWS = data;
+              //mTWS = data;
+              //convert to knots
+              mTWS = fromUsrSpeed_Plugin(data, g_iDashWindSpeedUnit);
 			}
 			else if (st == OCPN_DBP_STC_HDT){
 				mHDT = data;
@@ -189,34 +196,30 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
 			if (!wxIsNaN(mSTW) && !wxIsNaN(mTWA) && !wxIsNaN(mTWS)){
 
 				if (m_displaytype == POLARSPEED){
-                  //polar is based on kts, convert TWS to kts first before retrieving data from polar array
-                  //double targetspeed = BoatPolar->GetPolarSpeed(wxRound(mTWA), wxRound(mTWS));
-                  double tws_kts = fromUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
-                  double targetspeed = toUsrSpeed_Plugin(BoatPolar->GetPolarSpeed(wxRound(mTWA), wxRound(tws_kts)), g_iDashSpeedUnit);
+                  double targetspeed = BoatPolar->GetPolarSpeed(wxRound(mTWA), wxRound(mTWS));
 
 					if (wxIsNaN(targetspeed) || mSTW == 0)
 						m_data = _T("no polar data");
 					else {
-                        //wxLogMessage("STW=%f, targetspeed=%f, percent=%f", bs, targetspeed,percent);
                         double percent = mSTW / targetspeed * 100;
-                        //data = percent;
-                        m_data = wxString::Format("%d", wxRound(percent)) + _T(" % / ") + wxString::Format("%.2f", targetspeed) + _T(" ") + stwunit;
+                        double user_targetSpeed = toUsrSpeed_Plugin(targetspeed, g_iDashSpeedUnit);
+                        m_data = wxString::Format("%d", wxRound(percent)) + _T(" % / ") + wxString::Format("%.2f", user_targetSpeed) + _T(" ") + stwunit;
                     }
 				}
 				else if (m_displaytype == POLARVMG){
 					double VMG = BoatPolar->Calc_VMG(mTWA,mSTW);
-					m_data = wxString::Format("%.2f", VMG) + _T(" ") + stwunit;
+                    double user_VMG = toUsrSpeed_Plugin(VMG, g_iDashSpeedUnit);
+
+					m_data = wxString::Format("%.2f", user_VMG) + _T(" ") + stwunit;
 
 				}
 				else if (m_displaytype == POLARTARGETVMG){
-                  //polar is based on kts, convert TWS to kts first before retrieving data from polar array
-                  //TargetxMG targetVMG = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
-                  double tws_kts = fromUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
-                  TargetxMG targetVMG = BoatPolar->Calc_TargetVMG(mTWA, tws_kts);
-                  targetVMG.TargetSpeed = toUsrSpeed_Plugin(targetVMG.TargetSpeed, g_iDashSpeedUnit);
+                  TargetxMG targetVMG = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
 					if (targetVMG.TargetSpeed > 0) {
 						double VMG = BoatPolar->Calc_VMG(mTWA, mSTW);
 						double percent = fabs(VMG / targetVMG.TargetSpeed * 100.);
+                        targetVMG.TargetSpeed = toUsrSpeed_Plugin(targetVMG.TargetSpeed, g_iDashSpeedUnit);
+
 						m_data = wxString::Format("%d", wxRound(percent)) + _T(" % / ") + wxString::Format("%.2f", targetVMG.TargetSpeed) + _T(" ") + stwunit;
 					}
 					else
@@ -237,24 +240,22 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
 			if (m_displaytype == POLARCMG){
 				if (!wxIsNaN(mSOG) && !wxIsNaN(mCOG) && !wxIsNaN(mBRG)) {
 				  mCMG = BoatPolar->Calc_CMG(mCOG, mSOG, mBRG);
-				   m_data = wxString::Format("%.2f", mCMG) + _T(" ") + stwunit;
+                  double user_CMG = toUsrSpeed_Plugin(mCMG, g_iDashSpeedUnit);
+				   m_data = wxString::Format("%.2f", user_CMG) + _T(" ") + stwunit;
 				}
 				else
 				   m_data = _T("no bearing");
 
 			}
 			else if (m_displaytype == POLARTARGETCMG){
-              //TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
-              //polar is based on kts, convert TWS to kts first before retrieving data from polar array
-              double tws_kts = fromUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
-              TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(tws_kts, mTWD, mBRG);
-              targetCMG.TargetSpeed = toUsrSpeed_Plugin(targetCMG.TargetSpeed, g_iDashSpeedUnit);
-                if (!wxIsNaN(targetCMG.TargetSpeed) && targetCMG.TargetSpeed > 0) {
+              TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
+              if (!wxIsNaN(targetCMG.TargetSpeed) && targetCMG.TargetSpeed > 0) {
 					double cmg = BoatPolar->Calc_CMG(mHDT, mSTW, mBRG);
                     if (!wxIsNaN(cmg) )//&& cmg >=0)
                     {
                       //double percent = fabs(cmg / targetCMG.TargetSpeed * 100.);
                       double percent = cmg / targetCMG.TargetSpeed * 100.;
+                      targetCMG.TargetSpeed = toUsrSpeed_Plugin(targetCMG.TargetSpeed, g_iDashSpeedUnit);
                       m_data = wxString::Format("%d", wxRound(percent)) + _T(" % / ") + wxString::Format("%.2f", targetCMG.TargetSpeed) + _T(" ") + stwunit;
                     }
                     else
@@ -269,13 +270,8 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
               /*if (cmg < 0)
                 m_data = _T("moving away");
               else{*/
-              //TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
-              //polar is based on kts, convert TWS to kts first before retrieving data from polar array
-              double tws_kts = fromUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
-
-              TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(tws_kts, mTWD, mBRG);
-
-                if (!wxIsNaN(targetCMG.TargetAngle))
+              TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
+              if (!wxIsNaN(targetCMG.TargetAngle))
                     m_data = wxString::Format("%.0f", targetCMG.TargetAngle) + _T("\u00B0");
                 else
                   m_data = _T("no polar data");
@@ -284,7 +280,6 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
             else if (m_displaytype == TWAMARK){
               if (!wxIsNaN(mBRG) && !wxIsNaN(mTWD)) {
                 double markBrG = getDegRange(mBRG, mTWD);
-                //wxLogMessage("mBRG=%.1f, mTWD=%.1f", mBRG, mTWD);
                 m_data = wxString::Format("%.0f",(double) markBrG) + _T("\u00B0");
               }
               else
@@ -318,7 +313,7 @@ Polar::Polar(TacticsInstrument_PerformanceSingle* parent)
 	stdPath += s + _T("opencpn");
 #endif
 
-	wxString basePath = stdPath + s + _T("plugins") + s + _T("logbook") + s + _T("data") + s;
+	wxString basePath = stdPath + s + _T("plugins") + s + _T("tactics_pi") + s + _T("data") + s;
 	logbookDataPath = basePath;
 
 	reset();
@@ -347,7 +342,7 @@ Polar::Polar(tactics_pi* parent)
   stdPath += s + _T("opencpn");
 #endif
 
-  wxString basePath = stdPath + s + _T("plugins") + s + _T("logbook") + s + _T("data") + s;
+  wxString basePath = stdPath + s + _T("plugins") + s + _T("tactics_pi") + s + _T("data") + s;
   logbookDataPath = basePath;
 
   reset();
@@ -1089,11 +1084,16 @@ void TacticsInstrument_PolarPerformance::SetData(int st, double data, wxString u
       m_TWA = data;
     }
     if (st == OCPN_DBP_STC_TWS) {
-      m_TWS = data;
+      //m_TWS = data;
+      //convert to knots first
+      m_TWS = fromUsrSpeed_Plugin(data, g_iDashWindSpeedUnit);
     }
 
     if (st == OCPN_DBP_STC_STW) {
-      m_STW = data;
+      //m_STW = data;
+      //convert to knots first
+      m_STW = fromUsrSpeed_Plugin(data, g_iDashSpeedUnit);
+
       if (!wxIsNaN(m_STW) && !wxIsNaN(m_TWA) && !wxIsNaN(m_TWS)){
         double m_PolarSpeed = BoatPolar->GetPolarSpeed(wxRound(m_TWA), wxRound(m_TWS));
 
@@ -1105,28 +1105,6 @@ void TacticsInstrument_PolarPerformance::SetData(int st, double data, wxString u
           m_PolarSpeedPercent = m_STW / m_PolarSpeed * 100;
           m_PercentUnit = _T("%");
         }
-        //wxLogMessage("mSTW=%f, mTWA=%f, mTWS=%f, PolarSpeed=%f, PolarSpeedPercent=%f\n", m_STW, m_TWA, m_TWS, m_PolarSpeed, m_PolarSpeedPercent);
-        // if unit changes, reset everything ...
-        if (unit != m_STWUnit ){ //&& m_STWUnit != _("no polar data") && m_STWUnit != _("--")) {
-          m_MinBoatSpd = 0;
-          m_MaxBoatSpd = 0;
-          m_TotalMaxSpdPercent = 0;
-          //m_PolarSpeedPercent = 0;
-          m_SpdStartVal = -1;
-          m_IsRunning = false;
-          m_SampleCount = 0;
-          m_LeftLegend = 3;
-          m_RightLegend = 3;
-          for (int idx = 0; idx < DATA_RECORD_COUNT; idx++) {
-            m_ArrayPercentSpdHistory[idx] = -1;
-            m_ArrayBoatSpdHistory[idx] = -1;
-            m_ExpSmoothArrayPercentSpd[idx] = -1;
-            m_ExpSmoothArrayBoatSpd[idx] = -1;
-            m_ArrayRecTime[idx] = wxDateTime::Now();
-            m_ArrayRecTime[idx].SetYear(999);
-          }
-        }
-        //}
         m_STWUnit = unit;
         m_IsRunning = true;
         m_SampleCount = m_SampleCount < DATA_RECORD_COUNT ? m_SampleCount + 1 : DATA_RECORD_COUNT;
@@ -1205,18 +1183,18 @@ void  TacticsInstrument_PolarPerformance::DrawBoatSpeedScale(wxGCDC* dc)
     The goal is to draw the legend with decimals only, if we really have them !
     */
     // label 1 : legend for bottom line. By definition always w/o decimals
-    label1.Printf(_T("%.0f %s"), m_MinBoatSpd, m_STWUnit.c_str());
+    label1.Printf(_T("%.0f %s"), toUsrSpeed_Plugin(m_MinBoatSpd, g_iDashSpeedUnit), m_STWUnit.c_str());
     // label 2 : 1/4
     BoatSpdScale = m_MaxBoatSpdScale / 4.;
-    label2.Printf(_T("%.1f %s"), BoatSpdScale, m_STWUnit.c_str());
+    label2.Printf(_T("%.1f %s"), toUsrSpeed_Plugin(BoatSpdScale, g_iDashSpeedUnit), m_STWUnit.c_str());
     // label 3 : legend for center line
     BoatSpdScale = m_MaxBoatSpdScale / 2.;
-    label3.Printf(_T("%.0f %s"), BoatSpdScale, m_STWUnit.c_str());
+    label3.Printf(_T("%.0f %s"), toUsrSpeed_Plugin(BoatSpdScale, g_iDashSpeedUnit), m_STWUnit.c_str());
     // label 4 :  3/4
     BoatSpdScale = m_MaxBoatSpdScale*3. / 4.;
-    label4.Printf(_T("%.1f %s"), BoatSpdScale, m_STWUnit.c_str());
+    label4.Printf(_T("%.1f %s"), toUsrSpeed_Plugin(BoatSpdScale, g_iDashSpeedUnit), m_STWUnit.c_str());
     // label 5 : legend for top line
-    label5.Printf(_T("%.0f %s"), m_MaxBoatSpdScale, m_STWUnit.c_str());
+    label5.Printf(_T("%.0f %s"), toUsrSpeed_Plugin(m_MaxBoatSpdScale, g_iDashSpeedUnit), m_STWUnit.c_str());
   }
   //draw the legend with the labels; find the widest string and store it in m_RightLegend.
   // m_RightLegend is the basis for the horizontal lines !
@@ -1378,7 +1356,7 @@ void TacticsInstrument_PolarPerformance::DrawForeground(wxGCDC* dc)
   if (!m_IsRunning)
     BoatSpeed = _T("STW ---");
   else {
-    BoatSpeed = wxString::Format(_T("STW %3.2f %s"), m_STW,m_STWUnit.c_str());
+    BoatSpeed = wxString::Format(_T("STW %3.2f %s"), toUsrSpeed_Plugin(m_STW, g_iDashSpeedUnit), m_STWUnit.c_str());
   }
   dc->GetTextExtent(BoatSpeed, &degw, &degh, 0, 0, g_pFontData);
   dc->DrawText(BoatSpeed, m_WindowRect.width - degw - m_RightLegend - 3, m_TopLineHeight - degh);

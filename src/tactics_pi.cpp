@@ -4218,19 +4218,22 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
       spdval = (g_bUseSOGforTWCalc) ? mSOG : mStW ;
       // only start calculating if we have a full set of data
       if ((!m_bTrueWind_available || g_bForceTrueWindCalculation) && mAWA >= 0 && mAWS >= 0 && spdval >= 0 && mAWAUnit != _("")) {
+        //we have to do the calculation in knots
+        double aws_kts = fromUsrSpeed_Plugin(mAWS, g_iDashWindSpeedUnit);
+        spdval = fromUsrSpeed_Plugin(spdval, g_iDashSpeedUnit);
+
         mTWA = 0;
         mTWD = 0.;
         if (mAWA < 180.) {
-          mTWA = 90. - (180. / M_PI*atan((mAWS*cos(mAWA*M_PI / 180.) - spdval) / (mAWS*sin(mAWA*M_PI / 180.))));
+          mTWA = 90. - (180. / M_PI*atan((aws_kts*cos(mAWA*M_PI / 180.) - spdval) / (aws_kts*sin(mAWA*M_PI / 180.))));
         }
         else if (mAWA > 180.) {
-          mTWA = 360. - (90. - (180. / M_PI*atan((mAWS*cos((180. - (mAWA - 180.))*M_PI / 180.) - spdval) / (mAWS*sin((180. - (mAWA - 180.))*M_PI / 180.)))));
+          mTWA = 360. - (90. - (180. / M_PI*atan((aws_kts*cos((180. - (mAWA - 180.))*M_PI / 180.) - spdval) / (aws_kts*sin((180. - (mAWA - 180.))*M_PI / 180.)))));
         }
         else {
           mTWA = 180.;
         }
-        mTWS = sqrt(pow((mAWS*cos(mAWA*M_PI / 180.)) - spdval, 2) + pow(mAWS*sin(mAWA*M_PI / 180.), 2));
-        //wxLogMessage(_T("TrueWindCalc mTWS=%.2f"), mTWS);
+        mTWS = sqrt(pow((aws_kts*cos(mAWA*M_PI / 180.)) - spdval, 2) + pow(aws_kts*sin(mAWA*M_PI / 180.), 2));
         if (!wxIsNaN(mLeeway) && g_bUseHeelSensor) { //correct TWD with Leeway if heel is available. Makes only sense with heel sensor
           mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA + mLeeway : mHdt - mTWA + mLeeway;
         }
@@ -4239,7 +4242,8 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
 
         if (mTWD >= 360) mTWD -= 360;
         if (mTWD < 0) mTWD += 360;
-        //wxLogMessage(_T("TrueWindCalc TWA==%f, mAWAUnit=%s,TWS=%f,TWD=%f,TWA=%f,Leeway=%f\n"), mTWA, mAWAUnit, mTWS, mTWD,mTWA,mLeeway);
+        //convert mTWS back to user wind speed settings
+        mTWS = toUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
         m_calcTWS = mTWS;
         m_calcTWD = mTWD;
         m_calcTWA = mTWA;
@@ -4321,9 +4325,12 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
     if (!wxIsNaN(mheel) && m_LeewayOK && !wxIsNaN(mCOG) && !wxIsNaN(mSOG) && !wxIsNaN(mStW) && !wxIsNaN(mHdt) && !wxIsNaN(mlat) && !wxIsNaN(mlon)) {
 
       double COGlon, COGlat;
-
+      //we have to do the calculation in knots ...
+      double sog_kts, stw_kts;
+      sog_kts = fromUsrSpeed_Plugin(mSOG, g_iDashSpeedUnit);
+      stw_kts = fromUsrSpeed_Plugin(mStW, g_iDashSpeedUnit);
       //calculate endpoint of COG/SOG
-      PositionBearingDistanceMercator_Plugin(mlat, mlon, mCOG, mSOG, &COGlat, &COGlon);
+      PositionBearingDistanceMercator_Plugin(mlat, mlon, mCOG, sog_kts, &COGlat, &COGlon);
 
       //------------------------------------ 
       //correct HDT with Leeway
@@ -4350,9 +4357,9 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
       double stw_corr;
       //correct only if not already done before via preference setting
       if (g_bCorrectSTWwithLeeway == true && g_bUseHeelSensor && !wxIsNaN(mLeeway) && !wxIsNaN(mheel)) //in this case STW is already corrected !!!
-        stw_corr = mStW;
+        stw_corr = stw_kts;
       else
-        stw_corr= mStW / cos(mLeeway *M_PI / 180.0); //we have to correct StW for CRS as well.
+        stw_corr= stw_kts / cos(mLeeway *M_PI / 180.0); //we have to correct StW for CRS as well.
       PositionBearingDistanceMercator_Plugin(mlat, mlon, CourseThroughWater, stw_corr, &CRSlat, &CRSlon);
 
       //calculate the Current vector with brg & speed from the 2 endpoints above
@@ -4387,7 +4394,7 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
         TacticsWindow *tactics_window = m_ArrayOfTacticsWindow.Item(i)->m_pTacticsWindow;
         if (tactics_window){
           tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_CURRDIR, m_CurrentDirection, _T("\u00B0"));
-          tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_CURRSPD, m_ExpSmoothCurrSpd, getUsrSpeedUnit_Plugin(g_iDashSpeedUnit));
+          tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_CURRSPD, toUsrSpeed_Plugin(m_ExpSmoothCurrSpd, g_iDashSpeedUnit), getUsrSpeedUnit_Plugin(g_iDashSpeedUnit));
         }
       }
     }
