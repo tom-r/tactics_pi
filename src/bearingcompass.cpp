@@ -139,10 +139,10 @@ void TacticsInstrument_BearingCompass::SetData(int st, double data, wxString uni
 		m_diffCogHdt = m_Cog - m_Hdt;
     }
 	if (st == OCPN_DBP_STC_BRG) {
-		if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)){
+		//if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)){
 			m_Bearing = data;
 			m_ToWpt = unit;
-		}
+		/*}
 		else{
 			if (m_pMark) {
 				double dist;
@@ -151,9 +151,18 @@ void TacticsInstrument_BearingCompass::SetData(int st, double data, wxString uni
 				m_ExtraValueDTW = toUsrDistance_Plugin(dist, g_iDashDistanceUnit);
 				m_ExtraValueDTWUnit = getUsrDistanceUnit_Plugin(g_iDashDistanceUnit);
 			}
-		}
+		}*/
 		m_BearingUnit = _T("\u00B0");
 	}
+    if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)) m_pMark = NULL;
+    if (m_pMark) {
+      double dist;
+      DistanceBearingMercator_Plugin(m_pMark->m_lat, m_pMark->m_lon, m_lat, m_lon, &m_Bearing, &dist);
+      m_ToWpt = _T("TacticsWP");
+      m_ExtraValueDTW = toUsrDistance_Plugin(dist, g_iDashDistanceUnit);
+      m_ExtraValueDTWUnit = getUsrDistanceUnit_Plugin(g_iDashDistanceUnit);
+      m_BearingUnit = _T("\u00B0");
+    }
 
 	CalculateLaylineDegreeRange();
 }
