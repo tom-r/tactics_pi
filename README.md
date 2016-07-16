@@ -1,5 +1,8 @@
 TACTICS Plugin for OpenCPN
 ==============================
+
+For detailed description / manual see tactics_pi.odt and tactics_pi.pdf
+
 Compiling
 =========
 

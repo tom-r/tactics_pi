@@ -165,8 +165,8 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
               m_lon = data;
             }
 			else if (st == OCPN_DBP_STC_BRG){
-				//mBRG = data;
-              if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)){
+			  mBRG = data;
+              /*if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)){
                 mBRG = data;
                 //m_ToWpt = unit;
                 //wxLogMessage(_T("RMB mBRG=%.2f"), mBRG);
@@ -179,7 +179,7 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
                  // wxLogMessage(_T("TacticsWP m_pMark->m_lat=%f, m_pMark->m_lon=%f, m_lat=%f, m_lon=%f, mBRG=%.2f"), m_pMark->m_lat, m_pMark->m_lon, m_lat, m_lon,mBRG);
 
                 }
-              }
+              }*/
             }
 			else if (st == OCPN_DBP_STC_TWS){
               //mTWS = data;
@@ -192,6 +192,12 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
             else if (st == OCPN_DBP_STC_TWD){
               mTWD = data;
             }
+            if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)) m_pMark = NULL;
+              if (m_pMark && m_lat > 0 && m_lon > 0) {
+                double dist;
+                DistanceBearingMercator_Plugin(m_pMark->m_lat, m_pMark->m_lon, m_lat, m_lon, &mBRG, &dist);
+                //m_ToWpt = _T("TacticsWP");
+              }
 
 			if (!wxIsNaN(mSTW) && !wxIsNaN(mTWA) && !wxIsNaN(mTWS)){
 
