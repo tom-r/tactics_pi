@@ -171,7 +171,6 @@ public:
 	  void ToggleLaylineRender(wxWindow* parent);
 	  bool GetLaylineVisibility(wxWindow* parent);
 	  void OnContextMenuItemCallback(int id);
-	  //double get_deviation(double currdir_old, double currdir);
 
 private:
       bool LoadConfig(void);
@@ -180,13 +179,13 @@ private:
       void SendSatInfoToAllInstruments(int cnt, int seq, SAT_INFO sats[4]);
       void SendUtcTimeToAllInstruments( wxDateTime value );
 
-      wxFileConfig     *m_pconfig;
-      wxAuiManager     *m_pauimgr;
-      int              m_toolbar_item_id;
+      wxFileConfig         *m_pconfig;
+      wxAuiManager         *m_pauimgr;
+      int                  m_toolbar_item_id;
 
-      wxArrayOfTactics       m_ArrayOfTacticsWindow;
-      int               m_show_id;
-      int               m_hide_id;
+      wxArrayOfTactics     m_ArrayOfTacticsWindow;
+      int                  m_show_id;
+      int                  m_hide_id;
 
       NMEA0183             m_NMEA0183;                 // Used to parse NMEA Sentences
       short                mPriPosition, mPriCOGSOG, mPriHeadingM, mPriHeadingT, mPriVar, mPriDateTime, mPriAWA, mPriTWA, mPriDepth;
@@ -201,40 +200,38 @@ private:
       int                  mHDT_Watchdog;
       int                  mGPS_Watchdog;
       int                  mVar_Watchdog;
+      int                  mBRG_Watchdog;
 
 	  // TR : bearing compass + TWA/TWD calculation
 	  wxMenu               *m_pmenu;
 	  double               mHdt, mStW, mSOG, mCOG, mlat, mlon, mheel,msensorheel, mLeeway;
       double               m_calcTWS, m_calcTWA, m_calcTWD; //temp testing for Windbarb display
 	  wxString             mHeelUnit, mAWAUnit, mAWSUnit;
-	  double mAWA, mAWS, mTWA, mTWD, mTWS;
-	  bool m_bTrueWind_available, m_bLaylinesIsVisible;
-	  bool m_LeewayOK;
-	  double  alpha_currspd, alpha_CogHdt;
+	  double               mAWA, mAWS, mTWA, mTWD, mTWS;
+	  bool                 m_bTrueWind_available, m_bLaylinesIsVisible;
+	  bool                 m_LeewayOK;
+	  double               alpha_currspd, alpha_CogHdt;
 	  double               m_ExpSmoothCurrSpd, m_ExpSmoothCurrDir,m_ExpSmoothSog;
-	  double m_ExpSmoothSinCurrDir, m_ExpSmoothCosCurrDir;
-	  double            m_tempSmoothedLaylineCOG;
-	  double			m_ExpSmoothDiffCogHdt;
-	  double    m_LaylineDegRange, m_COGRange[COGRANGE], m_ExpSmoothDegRange, m_alphaDeltaCog;
-	  double m_LaylineSmoothedCog, m_ExpSmoothSinCog, m_ExpSmoothCosCog, m_alphaLaylineCog;
+	  double               m_ExpSmoothSinCurrDir, m_ExpSmoothCosCurrDir;
+	  double               m_tempSmoothedLaylineCOG;
+	  double			   m_ExpSmoothDiffCogHdt;
+	  double               m_LaylineDegRange, m_COGRange[COGRANGE], m_ExpSmoothDegRange, m_alphaDeltaCog;
+	  double               m_LaylineSmoothedCog, m_ExpSmoothSinCog, m_ExpSmoothCosCog, m_alphaLaylineCog;
 
 
 
-	  wxDC *m_pdc;
-	  wxPoint  vpoints[3],tackpoints[3];
-	  double m_CurrentDirection;
+	  wxDC            *m_pdc;
+	  wxPoint         vpoints[3],tackpoints[3];
+	  double          m_CurrentDirection;
 
-	  //Kalman Test
-	  double m_kalmanSog_old, m_kalmanSog;
-	  double m_PSog, m_PSog_old, mNoise;
 	  DoubleExpSmooth *mSinCurrDir;
 	  DoubleExpSmooth *mCosCurrDir;
-	  ExpSmooth *mExpSmoothCurrSpd;
+	  ExpSmooth       *mExpSmoothCurrSpd;
 	  DoubleExpSmooth *mExpSmoothSog;
-	  ExpSmooth *mExpSmSinCog;
-	  ExpSmooth *mExpSmCosCog;
-	  ExpSmooth *mExpSmDegRange;
-	  ExpSmooth *mExpSmDiffCogHdt;
+	  ExpSmooth       *mExpSmSinCog;
+	  ExpSmooth       *mExpSmCosCog;
+	  ExpSmooth       *mExpSmDegRange;
+	  ExpSmooth       *mExpSmDiffCogHdt;
 
 //protected:
 //      DECLARE_EVENT_TABLE();

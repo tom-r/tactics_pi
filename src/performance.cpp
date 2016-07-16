@@ -73,7 +73,7 @@ TacticsInstrument_PerformanceSingle::TacticsInstrument_PerformanceSingle(wxWindo
 	mSTW = NAN;
 	mSOG = NAN;
 	mCOG = NAN;
-	mBRG = NAN;
+	mBRG = -1;
     mTWD = NAN;
 	stwunit = _T("");
 
@@ -193,12 +193,11 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
               mTWD = data;
             }
             if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)) m_pMark = NULL;
-              if (m_pMark && m_lat > 0 && m_lon > 0) {
+            if (m_pMark && m_lat > 0 && m_lon > 0) {
                 double dist;
                 DistanceBearingMercator_Plugin(m_pMark->m_lat, m_pMark->m_lon, m_lat, m_lon, &mBRG, &dist);
                 //m_ToWpt = _T("TacticsWP");
-              }
-
+            }
 			if (!wxIsNaN(mSTW) && !wxIsNaN(mTWA) && !wxIsNaN(mTWS)){
 
 				if (m_displaytype == POLARSPEED){
@@ -244,7 +243,7 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
 			  m_data = _T("---");
 
 			if (m_displaytype == POLARCMG){
-				if (!wxIsNaN(mSOG) && !wxIsNaN(mCOG) && !wxIsNaN(mBRG)) {
+				if (!wxIsNaN(mSOG) && !wxIsNaN(mCOG) && mBRG>=0) {
 				  mCMG = BoatPolar->Calc_CMG(mCOG, mSOG, mBRG);
                   double user_CMG = toUsrSpeed_Plugin(mCMG, g_iDashSpeedUnit);
 				   m_data = wxString::Format("%.2f", user_CMG) + _T(" ") + stwunit;
@@ -284,7 +283,7 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
               //}
 			}
             else if (m_displaytype == TWAMARK){
-              if (!wxIsNaN(mBRG) && !wxIsNaN(mTWD)) {
+              if (mBRG>=0 && !wxIsNaN(mTWD)) {
                 double markBrG = getDegRange(mBRG, mTWD);
                 m_data = wxString::Format("%.0f",(double) markBrG) + _T("\u00B0");
               }

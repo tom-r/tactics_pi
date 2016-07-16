@@ -456,6 +456,7 @@ int tactics_pi::Init( void )
     mHDT_Watchdog = 2;
     mGPS_Watchdog = 2;
     mVar_Watchdog = 2;
+    mBRG_Watchdog = 2;
 	//************TR
 	alpha_currspd = 0.2;  //smoothing constant for current speed
 	alpha_CogHdt = 0.1; // smoothing constant for diff. btw. Cog & Hdt
@@ -522,8 +523,6 @@ int tactics_pi::Init( void )
     else
       BoatPolar->loadPolar(_T("NULL"));
     //    This PlugIn needs a toolbar icon
-//TR24.04.    m_toolbar_item_id = InsertPlugInTool( _T(""), _img_tactics, _img_tactics, wxITEM_CHECK,
-//TR24.04.            _("Tactics"), _T(""), NULL, TACTICS_TOOL_POSITION, 0, this );
     wxString shareLocn = *GetpSharedDataLocation() +
       _T("plugins") + wxFileName::GetPathSeparator() +
       _T("tactics_pi") + wxFileName::GetPathSeparator()
@@ -650,6 +649,11 @@ void tactics_pi::Notify()
         //SendSentenceToAllInstruments( OCPN_DBP_STC_SAT, 0, _T("") );
 		
     }
+    mBRG_Watchdog--;
+    if (mBRG_Watchdog <= 0) {
+      SendSentenceToAllInstruments(OCPN_DBP_STC_BRG, -1, _T("\u00B0"));
+    }
+
 }
 
 int tactics_pi::GetAPIVersionMajor()
@@ -1922,7 +1926,11 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
 				}
 				else
 					SendSentenceToAllInstruments(OCPN_DBP_STC_BRG, m_NMEA0183.Rmb.BearingToDestinationDegreesTrue, m_NMEA0183.ErrorMessage);
+                if (!wxIsNaN(m_NMEA0183.Rmb.BearingToDestinationDegreesTrue))
+                  mBRG_Watchdog = gps_watchdog_timeout_ticks;
+
 			}
+
 		}
 
         else if( m_NMEA0183.LastSentenceIDReceived == _T("RMC") ) {
