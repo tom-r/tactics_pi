@@ -1,465 +1,616 @@
+#: src\tactics_pi.cpp:3053 src\tactics_pi.cpp:3070 src\tactics_pi.cpp:4220
+#: src\tactics_pi.cpp:4246
 msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-10 22:39+0200\n"
-"PO-Revision-Date: 2016-07-10 15:32-0400\n"
+"POT-Creation-Date: 2016-07-05 09:24+0200\n"
+"PO-Revision-Date: 2016-07-28 06:47-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
-#
-msgid " 45°"
-msgstr ""
-#
-msgid " 90°"
-msgstr ""
-#
-msgid " mag"
-msgstr " магн."
-#
-msgid " true"
-msgstr " ист."
-#
-msgid "--"
-msgstr ""
-#
-msgid "10 kn"
-msgstr ""
-#
-msgid "135°"
-msgstr ""
-#
-msgid "15 kn"
-msgstr ""
-#
-msgid "20 kn"
-msgstr ""
-#
-msgid "25 kn"
-msgstr ""
-#
-msgid "5 kn"
-msgstr ""
-#
-msgid "Actual CMG"
-msgstr ""
-#
-msgid "Actual VMG"
-msgstr ""
-#
-msgid "Add"
-msgstr "Добавить"
-#
-msgid "Add instrument"
-msgstr "Добавить инструмент"
-#
-msgid "Air Temp."
-msgstr "Температура воздуха"
-#
-msgid "App & True Wind Angle"
-msgstr ""
-#
-msgid "App. Wind Angle"
-msgstr "Вымп. угол ветра"
-#
-msgid "App. Wind Angle & Speed"
-msgstr "Вымп. угол и скор. ветра"
-#
-msgid "App. Wind Speed"
-msgstr "Вымп. скорость ветра"
-#
-msgid "Appearance"
-msgstr "Внешний вид"
-#
-msgid "Barometric history"
-msgstr "История давления"
-#
-msgid "Barometric pressure"
-msgstr "Атмосферное давление"
-#
-msgid "Bearing Compass"
-msgstr ""
-#
-msgid "Boat speed units:"
-msgstr "Единицы скорости судна:"
-#
-msgid "Boat's Leeway factor [0-20]:  "
-msgstr ""
-#
-msgid "COG"
-msgstr "Курс"
-#
-msgid "Caption:"
-msgstr "Название:"
-#
-msgid "Centimeters"
-msgstr "см"
-#
-msgid "Clock"
-msgstr "Часы"
-#
-msgid "Correct AWS/AWA with Heel"
-msgstr ""
-#
-msgid "Correct STW with Leeway"
-msgstr ""
-#
-msgid "Current"
-msgstr ""
-#
-msgid "Current Direction"
-msgstr ""
-#
-msgid "Current Speed"
-msgstr ""
-#
-msgid "Current damping factor [1-400]:  "
-msgstr ""
-#
-msgid "Data:"
-msgstr "Данные:"
-#
-msgid "Delete"
-msgstr "Удалить"
-#
-msgid "Depth"
-msgstr "Глубина"
-#
-msgid "Depth units:"
-msgstr "Единицы глубины:"
-#
-msgid "Display Current on Chart (OpenGL)"
-msgstr ""
-#
-msgid "Distance units:"
-msgstr "Единицы расстояния:"
-#
-msgid "Down"
-msgstr "Вниз"
-#
-msgid "E"
-msgstr "В"
-#
-msgid "ENE"
-msgstr "ВСВ"
-#
-msgid "ESE"
-msgstr "ВЮВ"
-#
-msgid "Fathoms"
-msgstr "саж."
-#
-msgid "Feet"
-msgstr "фут"
-#
-msgid "Fonts"
-msgstr "Шрифты"
-#
-msgid "Force True Wind Calculation"
-msgstr ""
-#
-msgid "Format in this file not recognised"
-msgstr ""
-#
-msgid "From Ownship"
-msgstr "Пеленг и Дистанция от Судна"
-#
-msgid "GPS Compass"
-msgstr "GPS-компас"
-#
-msgid "Heel"
-msgstr ""
-#
-msgid "Honor OpenCPN settings"
-msgstr "из OpenCPN"
-#
-msgid "Horizontal"
-msgstr "горизонтальная"
-#
-msgid "Inches"
-msgstr "дюйм"
-#
-msgid "Instruments"
-msgstr "Инструменты"
-#
-msgid "Kilometers"
-msgstr "км"
-#
-msgid "Kts"
-msgstr "уз."
-#
-msgid "L"
-msgstr ""
-#
-msgid "Label:"
-msgstr "Подпись:"
-#
-msgid "Layline length on Chart [nm]:  "
-msgstr ""
-#
-msgid "Layline width damping factor [0.025-1]:  "
-msgstr ""
-#
-msgid "Laylines"
-msgstr ""
-#
-msgid "Leeway"
-msgstr ""
-#
-msgid "Load"
-msgstr ""
-#
-msgid "Mag COG"
-msgstr "Магнитный курс"
-#
-msgid "Mag HDG"
-msgstr "Магн. путевой угол"
-#
+
+#: src\baro_history.cpp:288 src\performance.cpp:1452 src\wind_history.cpp:582
 msgid "Max"
 msgstr ""
-#
-msgid "Max. Layline Width [°]:"
-msgstr ""
-#
-msgid "Meters"
-msgstr "м"
-#
-msgid "Min"
-msgstr ""
-#
-msgid "Min. Layline Width [°]:"
-msgstr ""
-#
-msgid "N"
-msgstr "С"
-#
-msgid "NE"
-msgstr "СВ"
-#
-msgid "NNE"
-msgstr "ССВ"
-#
-msgid "NNW"
-msgstr "ССЗ"
-#
-msgid "NW"
-msgstr "СЗ"
-#
-msgid "Nautical miles"
-msgstr "м. м."
-#
-msgid "Orientation:"
-msgstr "Ориентация:"
-#
-msgid "Overall"
-msgstr ""
-#
-msgid "Overall Max"
-msgstr ""
-#
-msgid "Performance Parameters"
-msgstr ""
-#
-msgid "Pitch"
-msgstr ""
-#
-msgid "Polar"
-msgstr ""
-#
-msgid "Polar :"
-msgstr ""
-#
-msgid "Polar performance"
-msgstr ""
-#
-msgid "Polarspeed"
-msgstr ""
-#
-msgid "Position"
-msgstr "Местоположение"
-#
-msgid "Preferences..."
-msgstr "Предпочтения…"
-#
-msgid "R"
-msgstr ""
-#
-msgid "S"
-msgstr "Ю"
-#
-msgid "SE"
-msgstr "ЮВ"
-#
-msgid "SOG"
-msgstr "Скорость"
-#
-msgid "SSE"
-msgstr "ЮЮВ"
-#
-msgid "SSW"
-msgstr "ЮЮЗ"
-#
-msgid "STW"
-msgstr "Относ. скорость"
-#
-msgid "SW"
-msgstr "ЮЗ"
-#
-msgid "Select a Polar-File"
-msgstr ""
-#
-msgid "Select instrument to add:"
-msgstr "Выберите инструмент для добавления:"
-#
-msgid "Show Laylines"
-msgstr ""
-#
-msgid "Show Wind Barb on Chart (OpenGL)"
-msgstr ""
-#
-msgid "Small:"
-msgstr "Мелкий текст:"
-#
-msgid "Speedometer"
-msgstr "Спидометр"
-#
-msgid "Speedometer max value:"
-msgstr "Предел спидометра:"
-#
-msgid "Statute miles"
-msgstr "с. м."
-#
-msgid "Sunrise/Sunset"
-msgstr "Восход/Закат"
-#
-msgid "TWA to Waypoint"
-msgstr ""
-#
-msgid "TWS/TWA "
-msgstr ""
-#
-msgid "Tactics"
-msgstr ""
-#
-msgid "Tactics PlugIn for OpenCPN"
-msgstr ""
-#
-msgid ""
-"Tactics PlugIn for OpenCPN\n"
-"Provides performance data & instrument display from NMEA source and polar "
-"file."
-msgstr ""
-#
-msgid "Tactics preferences"
-msgstr ""
-#
-msgid "Target CMG"
-msgstr ""
-#
-msgid "Target CMG-Angle"
-msgstr ""
-#
-msgid "Target VMG"
-msgstr ""
-#
-msgid "Target VMG-Angle"
-msgstr ""
-#
-msgid "Title:"
-msgstr "Заголовок:"
-#
-msgid "True Compass"
-msgstr "Истинный компас"
-#
-msgid "True HDG"
-msgstr "Ист. путевой угол"
-#
-msgid "True Wind"
-msgstr ""
-#
-msgid "True Wind Angle"
-msgstr "Ист. угол ветра"
-#
-msgid "True Wind Angle & Speed"
-msgstr "Ист. угол и скор. ветра"
-#
-msgid "True Wind Dir. & Speed"
-msgstr "Ист. направл. и скор. ветра"
-#
-msgid "True Wind Direction"
-msgstr "Ист. направл. ветра"
-#
-msgid "True Wind Speed"
-msgstr "Ист. скорость ветра"
-#
-msgid "Units, Ranges, Formats"
-msgstr "Единицы измерения, форматы"
-#
-msgid "Up"
-msgstr "Вверх"
-#
-msgid "Use Heel Sensor"
-msgstr ""
-#
-msgid "Use SOG instead of STW for True Wind Calc."
-msgstr ""
-#
-msgid "VMG"
-msgstr "Эффект. скорость"
-#
-msgid "Vertical"
-msgstr "вертикальная"
-#
-msgid "W"
-msgstr "З"
-#
-msgid "WNW"
-msgstr "ЗСЗ"
-#
-msgid "WSW"
-msgstr "ЗЮЗ"
-#
-msgid "Water Temp."
-msgstr "Температура воды"
-#
-msgid "Wind history"
-msgstr "История ветра"
-#
-msgid "Wind speed units:"
-msgstr "Единицы скорости ветра:"
-#
-msgid "You have to turn on OpenGL to use chart overlay "
-msgstr ""
-#
-msgid "fixed/max Leeway [°]:"
-msgstr ""
-#
-msgid "km/h"
-msgstr "км/ч"
-#
-msgid "m/s"
-msgstr "м/с"
-#
-msgid "manual Heel input:"
-msgstr ""
-#
-msgid "mph"
-msgstr "миль/ч"
-#
-msgid "show this tactics"
-msgstr ""
-#
+
+#: src\baro_history.cpp:289 src\performance.cpp:1453 src\wind_history.cpp:583
 msgid "since"
 msgstr ""
-#
+
+#: src\baro_history.cpp:290
+msgid "Overall Max"
+msgstr ""
+
+#: src\baro_history.cpp:291
+msgid "Min"
+msgstr ""
+
+#: src\bearingcompass.cpp:710
+msgid "R"
+msgstr ""
+
+#: src\bearingcompass.cpp:715
+msgid "L"
+msgstr ""
+
+#: src\clock.cpp:126 src\dial.cpp:524 src\gps.cpp:142 src\wind.cpp:65
+#: src\wind_history.cpp:435
+msgid "N"
+msgstr "С"
+
+#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:441
+msgid "NE"
+msgstr "СВ"
+
+#: src\dial.cpp:524 src\gps.cpp:146 src\wind.cpp:65 src\wind_history.cpp:447
+msgid "E"
+msgstr "В"
+
+#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:453
+msgid "SE"
+msgstr "ЮВ"
+
+#: src\dial.cpp:524 src\gps.cpp:150 src\wind.cpp:65 src\wind_history.cpp:459
+msgid "S"
+msgstr "Ю"
+
+#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:465
+msgid "SW"
+msgstr "ЮЗ"
+
+#: src\dial.cpp:524 src\gps.cpp:154 src\wind.cpp:65 src\wind_history.cpp:471
+msgid "W"
+msgstr "З"
+
+#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:477
+msgid "NW"
+msgstr "СЗ"
+
+#: src\instrument.cpp:256
+msgid " true"
+msgstr " ист."
+
+#: src\instrument.cpp:258
+msgid " mag"
+msgstr " магн."
+
+#: src\performance.cpp:385
 msgid "tactics_pi: Select a Polar-File"
 msgstr ""
+
+#: src\performance.cpp:453
+msgid "Format in this file not recognised"
+msgstr ""
+
+#: src\performance.cpp:1454 src\wind_history.cpp:584
+msgid "Overall"
+msgstr "Общее"
+
+#: src\tactics_pi.cpp:179
+msgid "Position"
+msgstr "Местоположение"
+
+#: src\tactics_pi.cpp:181
+msgid "SOG"
+msgstr "Скорость"
+
+#: src\tactics_pi.cpp:183
+msgid "Speedometer"
+msgstr "Спидометр"
+
+#: src\tactics_pi.cpp:185
+msgid "COG"
+msgstr "Курс"
+
+#: src\tactics_pi.cpp:187
+msgid "Mag COG"
+msgstr "Магнитный курс"
+
+#: src\tactics_pi.cpp:189
+msgid "GPS Compass"
+msgstr "GPS-компас"
+
+#: src\tactics_pi.cpp:191
+msgid "True Compass"
+msgstr "Истинный компас"
+
+#: src\tactics_pi.cpp:193
+msgid "STW"
+msgstr "Относ. скорость"
+
+#: src\tactics_pi.cpp:195
+msgid "True HDG"
+msgstr "Ист. путевой угол"
+
+#: src\tactics_pi.cpp:197
+msgid "Mag HDG"
+msgstr "Магн. путевой угол"
+
+#: src\tactics_pi.cpp:200
+msgid "App. Wind Angle & Speed"
+msgstr "Вымп. угол и скор. ветра"
+
+#: src\tactics_pi.cpp:202
+msgid "App & True Wind Angle"
+msgstr "Вымп. и Ист. угол ветра"
+
+#: src\tactics_pi.cpp:204 src\tactics_pi.cpp:206
+msgid "App. Wind Speed"
+msgstr "Вымп. скорость ветра"
+
+#: src\tactics_pi.cpp:208
+msgid "True Wind Angle & Speed"
+msgstr "Ист. угол и скор. ветра"
+
+#: src\tactics_pi.cpp:210 src\tactics_pi.cpp:212
+msgid "Depth"
+msgstr "Глубина"
+
+#: src\tactics_pi.cpp:214 src\tactics_pi.cpp:216
+msgid "Barometric pressure"
+msgstr "Атмосферное давление"
+
+#: src\tactics_pi.cpp:218
+msgid "Water Temp."
+msgstr "Температура воды"
+
+#: src\tactics_pi.cpp:220
+msgid "Air Temp."
+msgstr "Температура воздуха"
+
+#: src\tactics_pi.cpp:222
+msgid "App. Wind Angle"
+msgstr "Вымп. угол ветра"
+
+#: src\tactics_pi.cpp:224
+msgid "True Wind Angle"
+msgstr "Ист. угол ветра"
+
+#: src\tactics_pi.cpp:226
+msgid "True Wind Direction"
+msgstr "Ист. направл. ветра"
+
+#: src\tactics_pi.cpp:228
+msgid "True Wind Speed"
+msgstr "Ист. скорость ветра"
+
+#: src\tactics_pi.cpp:230
+msgid "True Wind Dir. & Speed"
+msgstr "Ист. направл. и скор. ветра"
+
+#: src\tactics_pi.cpp:232 src\tactics_pi.cpp:234
+msgid "VMG"
+msgstr "Эффект. скорость"
+
+#: src\tactics_pi.cpp:246
+msgid "Clock"
+msgstr "Часы"
+
+#: src\tactics_pi.cpp:248
+msgid "Sunrise/Sunset"
+msgstr "Восход/Закат"
+
+#: src\tactics_pi.cpp:252
+msgid "Wind history"
+msgstr "История ветра"
+
+#: src\tactics_pi.cpp:254
+msgid "Barometric history"
+msgstr "История давления"
+
+#: src\tactics_pi.cpp:260
+msgid "TWA to Waypoint"
+msgstr ""
+
+#: src\tactics_pi.cpp:262
+msgid "From Ownship"
+msgstr "Пеленг и Дистанция от Судна"
+
+#: src\tactics_pi.cpp:264
+msgid "Pitch"
+msgstr "Дифферент"
+
+#: src\tactics_pi.cpp:266 src\tactics_pi.cpp:3073
+msgid "Heel"
+msgstr "Дрейф"
+
+#: src\tactics_pi.cpp:268 src\tactics_pi.cpp:3034
+msgid "Leeway"
+msgstr ""
+
+#: src\tactics_pi.cpp:270
+msgid "Current Direction"
+msgstr ""
+
+#: src\tactics_pi.cpp:272
+msgid "Current Speed"
+msgstr ""
+
+#: src\tactics_pi.cpp:274
+msgid "Bearing Compass"
+msgstr ""
+
+#: src\tactics_pi.cpp:276
+msgid "Polarspeed"
+msgstr ""
+
+#: src\tactics_pi.cpp:278
+msgid "Actual VMG"
+msgstr ""
+
+#: src\tactics_pi.cpp:280
+msgid "Target VMG"
+msgstr ""
+
+#: src\tactics_pi.cpp:282
+msgid "Target VMG-Angle"
+msgstr ""
+
+#: src\tactics_pi.cpp:284
+msgid "Actual CMG"
+msgstr ""
+
+#: src\tactics_pi.cpp:286
+msgid "Target CMG"
+msgstr ""
+
+#: src\tactics_pi.cpp:288
+msgid "Target CMG-Angle"
+msgstr ""
+
+#: src\tactics_pi.cpp:290
+msgid "Polar performance"
+msgstr ""
+
+#: src\tactics_pi.cpp:544 src\tactics_pi.cpp:682 src\tactics_pi.cpp:2551
+#: src\tactics_pi.cpp:2561 src\tactics_pi.cpp:2779 src\tactics_pi.cpp:2818
+#: src\tactics_pi.cpp:3449
+msgid "Tactics"
+msgstr ""
+
+#: src\tactics_pi.cpp:687
+msgid "Tactics PlugIn for OpenCPN"
+msgstr ""
+
+#: src\tactics_pi.cpp:692
+msgid "Tactics PlugIn for OpenCPN\n"
+"Provides performance data & instrument display from NMEA source and polar file."
+msgstr ""
+
+#: src\tactics_pi.cpp:1500
+msgid "You have to turn on OpenGL to use chart overlay "
+msgstr ""
+
+#: src\tactics_pi.cpp:2754
+msgid "Tactics preferences"
+msgstr ""
+
+#: src\tactics_pi.cpp:2825
+msgid "show this tactics"
+msgstr ""
+
+#: src\tactics_pi.cpp:2831
+msgid "Caption:"
+msgstr "Название:"
+
+#: src\tactics_pi.cpp:2839
+msgid "Orientation:"
+msgstr "Ориентация:"
+
+#: src\tactics_pi.cpp:2843 src\tactics_pi.cpp:3642
+msgid "Vertical"
+msgstr "вертикальная"
+
+#: src\tactics_pi.cpp:2844 src\tactics_pi.cpp:3644
+msgid "Horizontal"
+msgstr "горизонтальная"
+
+#: src\tactics_pi.cpp:2851 src\tactics_pi.cpp:2859 src\tactics_pi.cpp:3568
+msgid "Instruments"
+msgstr "Инструменты"
+
+#: src\tactics_pi.cpp:2867
+msgid "Add"
+msgstr "Добавить"
+
+#: src\tactics_pi.cpp:2880
+msgid "Delete"
+msgstr "Удалить"
+
+#: src\tactics_pi.cpp:2886
+msgid "Up"
+msgstr "Вверх"
+
+#: src\tactics_pi.cpp:2891
+msgid "Down"
+msgstr "Вниз"
+
+#: src\tactics_pi.cpp:2901
+msgid "Appearance"
+msgstr "Внешний вид"
+
+#: src\tactics_pi.cpp:2903
+msgid "Fonts"
+msgstr "Шрифты"
+
+#: src\tactics_pi.cpp:2909
+msgid "Title:"
+msgstr "Заголовок:"
+
+#: src\tactics_pi.cpp:2915
+msgid "Data:"
+msgstr "Данные:"
+
+#: src\tactics_pi.cpp:2921
+msgid "Label:"
+msgstr "Подпись:"
+
+#: src\tactics_pi.cpp:2927
+msgid "Small:"
+msgstr "Мелкий текст:"
+
+#: src\tactics_pi.cpp:2935
+msgid "Units, Ranges, Formats"
+msgstr "Единицы измерения, форматы"
+
+#: src\tactics_pi.cpp:2941
+msgid "Speedometer max value:"
+msgstr "Предел спидометра:"
+
+#: src\tactics_pi.cpp:2946
+msgid "Boat speed units:"
+msgstr "Единицы скорости судна:"
+
+#: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2967
+msgid "Honor OpenCPN settings"
+msgstr "из OpenCPN"
+
+#: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2976
+msgid "Kts"
+msgstr "уз."
+
+#: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2976
+msgid "mph"
+msgstr "миль/ч"
+
+#: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2976
+msgid "km/h"
+msgstr "км/ч"
+
+#: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2976
+msgid "m/s"
+msgstr "м/с"
+
+#: src\tactics_pi.cpp:2955
+msgid "Depth units:"
+msgstr "Единицы глубины:"
+
+#: src\tactics_pi.cpp:2958 src\tactics_pi.cpp:2967
+msgid "Meters"
+msgstr "м"
+
+#: src\tactics_pi.cpp:2958
+msgid "Feet"
+msgstr "фут"
+
+#: src\tactics_pi.cpp:2958
+msgid "Fathoms"
+msgstr "саж."
+
+#: src\tactics_pi.cpp:2958
+msgid "Centimeters"
+msgstr "см"
+
+#: src\tactics_pi.cpp:2958
+msgid "Inches"
+msgstr "дюйм"
+
+#: src\tactics_pi.cpp:2964
+msgid "Distance units:"
+msgstr "Единицы расстояния:"
+
+#: src\tactics_pi.cpp:2967
+msgid "Nautical miles"
+msgstr "м. м."
+
+#: src\tactics_pi.cpp:2967
+msgid "Statute miles"
+msgstr "с. м."
+
+#: src\tactics_pi.cpp:2967
+msgid "Kilometers"
+msgstr "км"
+
+#: src\tactics_pi.cpp:2973
+msgid "Wind speed units:"
+msgstr "Единицы скорости ветра:"
+
+#: src\tactics_pi.cpp:2994
+msgid "Performance Parameters"
+msgstr ""
+
+#: src\tactics_pi.cpp:2996
+msgid "Laylines"
+msgstr ""
+
+#: src\tactics_pi.cpp:3005
+msgid "Layline width damping factor [0.025-1]:  "
+msgstr ""
+
+#: src\tactics_pi.cpp:3013
+msgid "Layline length on Chart [nm]:  "
+msgstr ""
+
+#: src\tactics_pi.cpp:3021
+msgid "Min. Layline Width [°]:"
+msgstr ""
+
+#: src\tactics_pi.cpp:3028
+msgid "Max. Layline Width [°]:"
+msgstr ""
+
+#: src\tactics_pi.cpp:3043
+msgid "Boat's Leeway factor [0-20]:  "
+msgstr ""
+
+#: src\tactics_pi.cpp:3050
+msgid "Use Heel Sensor"
+msgstr ""
+
+#: src\tactics_pi.cpp:3056
+msgid "fixed/max Leeway [°]:"
+msgstr ""
+
+#: src\tactics_pi.cpp:3065
+msgid "manual Heel input:"
+msgstr ""
+
+#: src\tactics_pi.cpp:3080
+msgid "TWS/TWA "
+msgstr ""
+
+#: src\tactics_pi.cpp:3082
+msgid " 45°"
+msgstr ""
+
+#: src\tactics_pi.cpp:3084
+msgid " 90°"
+msgstr ""
+
+#: src\tactics_pi.cpp:3086
+msgid "135°"
+msgstr ""
+
+#: src\tactics_pi.cpp:3089
+msgid "5 kn"
+msgstr ""
+
+#: src\tactics_pi.cpp:3103
+msgid "10 kn"
+msgstr ""
+
+#: src\tactics_pi.cpp:3117
+msgid "15 kn"
+msgstr ""
+
+#: src\tactics_pi.cpp:3132
+msgid "20 kn"
+msgstr ""
+
+#: src\tactics_pi.cpp:3146
+msgid "25 kn"
+msgstr ""
+
+#: src\tactics_pi.cpp:3162
+msgid "Current"
+msgstr ""
+
+#: src\tactics_pi.cpp:3177
+msgid "Current damping factor [1-400]:  "
+msgstr ""
+
+#: src\tactics_pi.cpp:3190
+msgid "Display Current on Chart (OpenGL)"
+msgstr ""
+
+#: src\tactics_pi.cpp:3194
+msgid "True Wind"
+msgstr ""
+
+#: src\tactics_pi.cpp:3202
+msgid "Correct STW with Leeway"
+msgstr ""
+
+#: src\tactics_pi.cpp:3206
+msgid "Correct AWS/AWA with Heel"
+msgstr ""
+
+#: src\tactics_pi.cpp:3211
+msgid "Force True Wind Calculation"
+msgstr ""
+
+#: src\tactics_pi.cpp:3215
+msgid "Use SOG instead of STW for True Wind Calc."
+msgstr ""
+
+#: src\tactics_pi.cpp:3219
+msgid "Show Wind Barb on Chart (OpenGL)"
+msgstr ""
+
+#: src\tactics_pi.cpp:3227
+msgid "Polar"
+msgstr ""
+
+#: src\tactics_pi.cpp:3234
+msgid "Polar :"
+msgstr ""
+
+#: src\tactics_pi.cpp:3240
+msgid "Load"
+msgstr ""
+
+#: src\tactics_pi.cpp:3322
+msgid "Select a Polar-File"
+msgstr ""
+
+#: src\tactics_pi.cpp:3551
+msgid "Add instrument"
+msgstr "Добавить инструмент"
+
+#: src\tactics_pi.cpp:3557
+msgid "Select instrument to add:"
+msgstr "Выберите инструмент для добавления:"
+
+#: src\tactics_pi.cpp:3651
+msgid "Preferences..."
+msgstr "Предпочтения…"
+
+#: src\tactics_pi.cpp:3653
+msgid "Show Laylines"
+msgstr ""
+
+#: src\wind_history.cpp:108
+msgid "--"
+msgstr ""
+
+#: src\wind_history.cpp:438
+msgid "NNE"
+msgstr "ССВ"
+
+#: src\wind_history.cpp:444
+msgid "ENE"
+msgstr "ВСВ"
+
+#: src\wind_history.cpp:450
+msgid "ESE"
+msgstr "ВЮВ"
+
+#: src\wind_history.cpp:456
+msgid "SSE"
+msgstr "ЮЮВ"
+
+#: src\wind_history.cpp:462
+msgid "SSW"
+msgstr "ЮЮЗ"
+
+#: src\wind_history.cpp:468
+msgid "WSW"
+msgstr "ЗЮЗ"
+
+#: src\wind_history.cpp:474
+msgid "WNW"
+msgstr "ЗСЗ"
+
+#: src\wind_history.cpp:480
+msgid "NNW"
+msgstr "ССЗ"
+
