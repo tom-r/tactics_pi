@@ -3,6 +3,7 @@ TACTICS Plugin for OpenCPN
 a performance enhancement of dashboard_pi
 
 For detailed description / manual see tactics_pi.odt and tactics_pi.pdf
+
 In short (taken from the manual):
 
 What tactics_pi can do :
