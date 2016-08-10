@@ -67,7 +67,9 @@ wxFont *g_pFontData;
 wxFont *g_pFontLabel;
 wxFont *g_pFontSmall;
 int g_iDashSpeedMax;
+int g_iDashCOGDamp;
 int g_iDashSpeedUnit;
+int g_iDashSOGDamp;
 int g_iDashDepthUnit;
 int g_iDashDistanceUnit;  //0="Nautical miles", 1="Statute miles", 2="Kilometers", 3="Meters"
 int g_iDashWindSpeedUnit; //0="Kts", 1="mph", 2="km/h", 3="m/s"
@@ -1961,28 +1963,34 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
                     if( mPriCOGSOG >= 3 ) {
                         mPriCOGSOG = 3;
                         if( m_NMEA0183.Rmc.SpeedOverGroundKnots < 999. ) {
-							//mSOG = m_NMEA0183.Rmc.SpeedOverGroundKnots;
-                            SendSentenceToAllInstruments( OCPN_DBP_STC_SOG,
-                                    toUsrSpeed_Plugin( m_NMEA0183.Rmc.SpeedOverGroundKnots, g_iDashSpeedUnit ), getUsrSpeedUnit_Plugin( g_iDashSpeedUnit ) );
-                        } else {
+                            //SendSentenceToAllInstruments( OCPN_DBP_STC_SOG,
+                            //        toUsrSpeed_Plugin( m_NMEA0183.Rmc.SpeedOverGroundKnots, g_iDashSpeedUnit ), getUsrSpeedUnit_Plugin( g_iDashSpeedUnit ) );
+                            SendSentenceToAllInstruments(OCPN_DBP_STC_SOG,
+                              toUsrSpeed_Plugin(mSOGFilter.filter(m_NMEA0183.Rmc.SpeedOverGroundKnots), g_iDashSpeedUnit), getUsrSpeedUnit_Plugin(g_iDashSpeedUnit));
+                        }
+                        else {
                             //->SetData(_T("---"));
                         }
                         if( m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue < 999. ) {
 							//mCOG = m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue;
-                            SendSentenceToAllInstruments( OCPN_DBP_STC_COG,
-                                    m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue, _T("\u00B0") );
+//                            SendSentenceToAllInstruments( OCPN_DBP_STC_COG,
+//                                    m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue, _T("\u00B0") );
+                          SendSentenceToAllInstruments(OCPN_DBP_STC_COG,
+                            mCOGFilter.filter(m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue), _T("\u00B0"));
                         } else {
                             //->SetData(_T("---"));
                         }
                         if( m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue < 999. && m_NMEA0183.Rmc.MagneticVariation < 999.) {
                             double dMagneticCOG;
                             if (m_NMEA0183.Rmc.MagneticVariationDirection == East) {
-                                dMagneticCOG = m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue - m_NMEA0183.Rmc.MagneticVariation;
-                                if ( dMagneticCOG < 0.0 ) dMagneticCOG = 360.0 + dMagneticCOG;
+//                                dMagneticCOG = m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue - m_NMEA0183.Rmc.MagneticVariation;
+                              dMagneticCOG = mCOGFilter.get() - m_NMEA0183.Rmc.MagneticVariation;
+                              if (dMagneticCOG < 0.0) dMagneticCOG = 360.0 + dMagneticCOG;
                             }
                             else {
-                                dMagneticCOG = m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue + m_NMEA0183.Rmc.MagneticVariation;
-                                if ( dMagneticCOG > 360.0 ) dMagneticCOG = dMagneticCOG - 360.0;
+//                                dMagneticCOG = m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue + m_NMEA0183.Rmc.MagneticVariation;
+                              dMagneticCOG = mCOGFilter.get() + m_NMEA0183.Rmc.MagneticVariation;
+                              if (dMagneticCOG > 360.0) dMagneticCOG = dMagneticCOG - 360.0;
                             }
 							//mCOG = dMagneticCOG;
                             SendSentenceToAllInstruments( OCPN_DBP_STC_MCOG,
@@ -2038,12 +2046,10 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
                 }
                 if( mPriHeadingM >= 3 ) {
                     mPriHeadingM = 3;
-					//mHdm = m_NMEA0183.Vhw.DegreesMagnetic;
                     SendSentenceToAllInstruments( OCPN_DBP_STC_HDM, m_NMEA0183.Vhw.DegreesMagnetic,
                             _T("\u00B0M") );
                 }
                 if( m_NMEA0183.Vhw.Knots < 999. ) {
-					//mStW = m_NMEA0183.Vhw.Knots;
                   SendSentenceToAllInstruments(OCPN_DBP_STC_STW, toUsrSpeed_Plugin(m_NMEA0183.Vhw.Knots, g_iDashSpeedUnit),
                             getUsrSpeedUnit_Plugin( g_iDashSpeedUnit ) );
                 }
@@ -2062,18 +2068,22 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
                     mPriCOGSOG = 2;
                     //    Special check for unintialized values, as opposed to zero values
                     if( m_NMEA0183.Vtg.SpeedKnots < 999. ) {
-						//mSOG = m_NMEA0183.Vtg.SpeedKnots;
-                        SendSentenceToAllInstruments( OCPN_DBP_STC_SOG, toUsrSpeed_Plugin( m_NMEA0183.Vtg.SpeedKnots, g_iDashSpeedUnit ),
-                                getUsrSpeedUnit_Plugin( g_iDashSpeedUnit ) );
+                        //SendSentenceToAllInstruments( OCPN_DBP_STC_SOG, toUsrSpeed_Plugin( m_NMEA0183.Vtg.SpeedKnots, g_iDashSpeedUnit ),
+                        //        getUsrSpeedUnit_Plugin( g_iDashSpeedUnit ) );
+                      SendSentenceToAllInstruments(OCPN_DBP_STC_SOG, toUsrSpeed_Plugin(mSOGFilter.filter(m_NMEA0183.Vtg.SpeedKnots), g_iDashSpeedUnit),
+                        getUsrSpeedUnit_Plugin(g_iDashSpeedUnit));
+
                     } else {
                         //->SetData(_T("---"));
                     }
                     // Vtg.SpeedKilometersPerHour;
                     if( m_NMEA0183.Vtg.TrackDegreesTrue < 999. ) {
-						//mCOG = m_NMEA0183.Vtg.TrackDegreesTrue;
-                        SendSentenceToAllInstruments( OCPN_DBP_STC_COG,
-                                m_NMEA0183.Vtg.TrackDegreesTrue, _T("\u00B0") );
-                    } else {
+//                        SendSentenceToAllInstruments( OCPN_DBP_STC_COG,
+//                                m_NMEA0183.Vtg.TrackDegreesTrue, _T("\u00B0") );
+                      SendSentenceToAllInstruments(OCPN_DBP_STC_COG,
+                        mCOGFilter.filter(m_NMEA0183.Vtg.TrackDegreesTrue), _T("\u00B0"));
+                    }
+                    else {
                         //->SetData(_T("---"));
                     }
                 }
@@ -2217,9 +2227,11 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
             if( !wxIsNaN(gpd.Lon) )
                 SendSentenceToAllInstruments( OCPN_DBP_STC_LON, gpd.Lon, _T("SDMM") );
 
-            SendSentenceToAllInstruments( OCPN_DBP_STC_SOG, toUsrSpeed_Plugin( gpd.Sog, g_iDashSpeedUnit ), getUsrSpeedUnit_Plugin( g_iDashSpeedUnit ) );
-            SendSentenceToAllInstruments( OCPN_DBP_STC_COG, gpd.Cog, _T("\u00B0") );
-            if( !wxIsNaN(gpd.Hdt) ) {
+//            SendSentenceToAllInstruments( OCPN_DBP_STC_SOG, toUsrSpeed_Plugin( gpd.Sog, g_iDashSpeedUnit ), getUsrSpeedUnit_Plugin( g_iDashSpeedUnit ) );
+//            SendSentenceToAllInstruments( OCPN_DBP_STC_COG, gpd.Cog, _T("\u00B0") );
+            SendSentenceToAllInstruments(OCPN_DBP_STC_SOG, toUsrSpeed_Plugin(mSOGFilter.filter(gpd.Sog), g_iDashSpeedUnit), getUsrSpeedUnit_Plugin(g_iDashSpeedUnit));
+            SendSentenceToAllInstruments(OCPN_DBP_STC_COG, mCOGFilter.filter(gpd.Cog), _T("\u00B0"));
+            if (!wxIsNaN(gpd.Hdt)) {
                 SendSentenceToAllInstruments( OCPN_DBP_STC_HDT, gpd.Hdt, _T("\u00B0T") );
                 mHDT_Watchdog = gps_watchdog_timeout_ticks;
             }
@@ -2237,10 +2249,13 @@ void tactics_pi::SetPositionFix( PlugIn_Position_Fix &pfix )
     if( mPriCOGSOG >= 1 ) {
         double dMagneticCOG;
         mPriCOGSOG = 1;
-        SendSentenceToAllInstruments( OCPN_DBP_STC_SOG, toUsrSpeed_Plugin( pfix.Sog, g_iDashSpeedUnit ), getUsrSpeedUnit_Plugin( g_iDashSpeedUnit ) );
-        SendSentenceToAllInstruments( OCPN_DBP_STC_COG, pfix.Cog, _T("\u00B0") );
-        dMagneticCOG = pfix.Cog - pfix.Var;
-        if ( dMagneticCOG < 0.0 ) dMagneticCOG = 360.0 + dMagneticCOG;
+        //SendSentenceToAllInstruments( OCPN_DBP_STC_SOG, toUsrSpeed_Plugin( pfix.Sog, g_iDashSpeedUnit ), getUsrSpeedUnit_Plugin( g_iDashSpeedUnit ) );
+        //SendSentenceToAllInstruments( OCPN_DBP_STC_COG, pfix.Cog, _T("\u00B0") );
+        //dMagneticCOG = pfix.Cog - pfix.Var;
+        SendSentenceToAllInstruments(OCPN_DBP_STC_SOG, toUsrSpeed_Plugin(mSOGFilter.filter(pfix.Sog), g_iDashSpeedUnit), getUsrSpeedUnit_Plugin(g_iDashSpeedUnit));
+        SendSentenceToAllInstruments(OCPN_DBP_STC_COG, mCOGFilter.filter(pfix.Cog), _T("\u00B0"));
+        dMagneticCOG = mCOGFilter.get() - pfix.Var;
+        if (dMagneticCOG < 0.0) dMagneticCOG = 360.0 + dMagneticCOG;
         if ( dMagneticCOG >= 360.0 ) dMagneticCOG = dMagneticCOG - 360.0;
         SendSentenceToAllInstruments( OCPN_DBP_STC_MCOG, dMagneticCOG , _T("\u00B0M") );
     }
@@ -2530,8 +2545,9 @@ bool tactics_pi::LoadConfig( void )
         if( !config.IsEmpty() ) g_pFontSmall->SetNativeFontInfo( config );
 
         pConf->Read( _T("SpeedometerMax"), &g_iDashSpeedMax, 12 );
-        pConf->Read( _T("SpeedUnit"), &g_iDashSpeedUnit, 0 );
-
+        pConf->Read(_T("COGDamp"), &g_iDashCOGDamp, 0);
+        pConf->Read(_T("SpeedUnit"), &g_iDashSpeedUnit, 0);
+        pConf->Read(_T("SOGDamp"), &g_iDashSOGDamp, 0);
         pConf->Read( _T("DepthUnit"), &g_iDashDepthUnit, 3 );
         g_iDashDepthUnit = wxMax(g_iDashDepthUnit, 3);
 
@@ -2638,8 +2654,10 @@ bool tactics_pi::SaveConfig( void )
         pConf->Write( _T("FontSmall"), g_pFontSmall->GetNativeFontInfoDesc() );
 
         pConf->Write( _T("SpeedometerMax"), g_iDashSpeedMax );
-        pConf->Write( _T("SpeedUnit"), g_iDashSpeedUnit );
-        pConf->Write( _T("DepthUnit"), g_iDashDepthUnit );
+        pConf->Write(_T("COGDamp"), g_iDashCOGDamp);
+        pConf->Write(_T("SpeedUnit"), g_iDashSpeedUnit);
+        pConf->Write(_T("SOGDamp"), g_iDashSOGDamp);
+        pConf->Write(_T("DepthUnit"), g_iDashDepthUnit);
         pConf->Write( _T("DistanceUnit"), g_iDashDistanceUnit );
         pConf->Write( _T("WindSpeedUnit"), g_iDashWindSpeedUnit );
         pConf->Write( _T("TacticsCount" ), (int) m_ArrayOfTacticsWindow.GetCount() );
@@ -2742,6 +2760,9 @@ void tactics_pi::ApplyConfig( void )
         }
     }
     m_pauimgr->Update();
+    mSOGFilter.setFC(g_iDashSOGDamp ? 1.0 / (2.0*g_iDashSOGDamp) : 0.0);
+    mCOGFilter.setFC(g_iDashCOGDamp ? 1.0 / (2.0*g_iDashCOGDamp) : 0.0);
+    mCOGFilter.setType(IIRFILTER_TYPE_DEG);
 }
 
 void tactics_pi::PopulateContextMenu( wxMenu* menu )
@@ -2962,6 +2983,19 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     itemFlexGridSizer04->Add( itemStaticText08, 0, wxEXPAND | wxALL, border_size );
     m_pSpinSpeedMax = new wxSpinCtrl( itemPanelNotebook02, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 10, 100, g_iDashSpeedMax );
     itemFlexGridSizer04->Add( m_pSpinSpeedMax, 0, wxALIGN_RIGHT | wxALL, 0 );
+    //iir filter for sog, cog
+    wxStaticText* itemStaticText10 = new wxStaticText(itemPanelNotebook02, wxID_ANY, _("Speed Over Ground Damping Factor:"),
+      wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizer04->Add(itemStaticText10, 0, wxEXPAND | wxALL, border_size);
+    m_pSpinSOGDamp = new wxSpinCtrl(itemPanelNotebook02, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, g_iDashSOGDamp);
+    itemFlexGridSizer04->Add(m_pSpinSOGDamp, 0, wxALIGN_RIGHT | wxALL, 0);
+
+    wxStaticText* itemStaticText11 = new wxStaticText(itemPanelNotebook02, wxID_ANY, _("COG Damping Factor:"),
+      wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizer04->Add(itemStaticText11, 0, wxEXPAND | wxALL, border_size);
+    m_pSpinCOGDamp = new wxSpinCtrl(itemPanelNotebook02, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, g_iDashCOGDamp);
+    itemFlexGridSizer04->Add(m_pSpinCOGDamp, 0, wxALIGN_RIGHT | wxALL, 0);
+    //iir filter end
     wxStaticText* itemStaticText09 = new wxStaticText( itemPanelNotebook02, wxID_ANY, _("Boat speed units:"),
             wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer04->Add( itemStaticText09, 0, wxEXPAND | wxALL, border_size );
@@ -3357,6 +3391,8 @@ void TacticsPreferencesDialog::ApplyPrefs(wxCommandEvent& event)
 void TacticsPreferencesDialog::SaveTacticsConfig()
 {
     g_iDashSpeedMax = m_pSpinSpeedMax->GetValue();
+    g_iDashCOGDamp = m_pSpinCOGDamp->GetValue();
+    g_iDashSOGDamp = m_pSpinSOGDamp->GetValue();
     g_iDashSpeedUnit = m_pChoiceSpeedUnit->GetSelection() - 1;
     g_iDashDepthUnit = m_pChoiceDepthUnit->GetSelection() + 3;
     g_iDashDistanceUnit = m_pChoiceDistanceUnit->GetSelection() - 1;

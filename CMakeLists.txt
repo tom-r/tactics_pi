@@ -47,12 +47,14 @@ INCLUDE("cmake/PluginConfigure.cmake")
 SET(SRC_TACTICS
     src/tactics_pi.h
     src/tactics_pi.cpp
-	src/bearingcompass.cpp
-	src/bearingcompass.h
-	src/performance.cpp
-	src/performance.h
+    src/bearingcompass.cpp
+    src/bearingcompass.h
+    src/performance.cpp
+    src/performance.h
     src/instrument.cpp
     src/instrument.h
+    src/iirfilter.h
+    src/iirfilter.cpp
     src/compass.cpp
     src/compass.h
     src/dial.cpp
@@ -79,7 +81,7 @@ SET(SRC_TACTICS
     src/from_ownship.h
     src/wxJSON/jsonval.cpp
     src/wxJSON/jsonreader.cpp
-	src/ocpn_plugin.h
+    src/ocpn_plugin.h
 
 )
 

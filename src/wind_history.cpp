@@ -106,7 +106,6 @@ void TacticsInstrument_WindDirHistory::SetData(int st, double data, wxString uni
       m_WindSpd = data;
       //convert to knots first
       m_WindSpd = fromUsrSpeed_Plugin(data, g_iDashWindSpeedUnit);
-
       // if unit changes, reset everything ...
      /* if (unit != m_WindSpeedUnit && m_WindSpeedUnit != _("--")) {
         m_MaxWindDir = -1;
