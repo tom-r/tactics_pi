@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2016-07-10 15:32-0400\n"
+"PO-Revision-Date: 2016-08-09 02:29-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -20,19 +20,19 @@ msgstr ""
 
 #: src\baro_history.cpp:288 src\performance.cpp:1452 src\wind_history.cpp:582
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #: src\baro_history.cpp:289 src\performance.cpp:1453 src\wind_history.cpp:583
 msgid "since"
-msgstr ""
+msgstr "da"
 
 #: src\baro_history.cpp:290
 msgid "Overall Max"
-msgstr ""
+msgstr "Max totale"
 
 #: src\baro_history.cpp:291
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: src\bearingcompass.cpp:710
 msgid "R"
@@ -89,11 +89,11 @@ msgstr ""
 
 #: src\performance.cpp:453
 msgid "Format in this file not recognised"
-msgstr ""
+msgstr "Formato file non riconosciuto"
 
 #: src\performance.cpp:1454 src\wind_history.cpp:584
 msgid "Overall"
-msgstr ""
+msgstr "Totale"
 
 #: src\tactics_pi.cpp:179
 msgid "Position"
@@ -229,11 +229,11 @@ msgstr ""
 
 #: src\tactics_pi.cpp:270
 msgid "Current Direction"
-msgstr ""
+msgstr "Direzione corrente"
 
 #: src\tactics_pi.cpp:272
 msgid "Current Speed"
-msgstr ""
+msgstr "Velocità corrente"
 
 #: src\tactics_pi.cpp:274
 msgid "Bearing Compass"
@@ -241,7 +241,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:276
 msgid "Polarspeed"
-msgstr ""
+msgstr "Velocità polare"
 
 #: src\tactics_pi.cpp:278
 msgid "Actual VMG"
@@ -279,7 +279,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:687
 msgid "Tactics PlugIn for OpenCPN"
-msgstr ""
+msgstr "Plugin Tactics per OpenCPN"
 
 #: src\tactics_pi.cpp:692
 msgid "Tactics PlugIn for OpenCPN\n"
@@ -384,11 +384,11 @@ msgstr "mi/h"
 
 #: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2976
 msgid "km/h"
-msgstr ""
+msgstr "km/h"
 
 #: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2976
 msgid "m/s"
-msgstr ""
+msgstr "m/s"
 
 #: src\tactics_pi.cpp:2955
 msgid "Depth units:"
@@ -464,11 +464,11 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3050
 msgid "Use Heel Sensor"
-msgstr ""
+msgstr "Uso sensore di inclinazione laterale"
 
 #: src\tactics_pi.cpp:3056
 msgid "fixed/max Leeway [°]:"
-msgstr ""
+msgstr "fisso/max angolo d'inclinazione laterale [°]:"
 
 #: src\tactics_pi.cpp:3065
 msgid "manual Heel input:"
@@ -480,39 +480,39 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3082
 msgid " 45°"
-msgstr ""
+msgstr " 45°"
 
 #: src\tactics_pi.cpp:3084
 msgid " 90°"
-msgstr ""
+msgstr " 90°"
 
 #: src\tactics_pi.cpp:3086
 msgid "135°"
-msgstr ""
+msgstr "135°"
 
 #: src\tactics_pi.cpp:3089
 msgid "5 kn"
-msgstr ""
+msgstr "5 kn"
 
 #: src\tactics_pi.cpp:3103
 msgid "10 kn"
-msgstr ""
+msgstr "10 kn"
 
 #: src\tactics_pi.cpp:3117
 msgid "15 kn"
-msgstr ""
+msgstr "10 kn"
 
 #: src\tactics_pi.cpp:3132
 msgid "20 kn"
-msgstr ""
+msgstr "20 kn"
 
 #: src\tactics_pi.cpp:3146
 msgid "25 kn"
-msgstr ""
+msgstr "25 kn"
 
 #: src\tactics_pi.cpp:3162
 msgid "Current"
-msgstr ""
+msgstr "Corrente"
 
 #: src\tactics_pi.cpp:3177
 msgid "Current damping factor [1-400]:  "
@@ -520,11 +520,11 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3190
 msgid "Display Current on Chart (OpenGL)"
-msgstr ""
+msgstr "Visualizzazione corrente in mappa (OpenGL)"
 
 #: src\tactics_pi.cpp:3194
 msgid "True Wind"
-msgstr ""
+msgstr "Vento reale"
 
 #: src\tactics_pi.cpp:3202
 msgid "Correct STW with Leeway"
@@ -560,7 +560,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3322
 msgid "Select a Polar-File"
-msgstr ""
+msgstr "Scegli un file Polar"
 
 #: src\tactics_pi.cpp:3551
 msgid "Add instrument"
@@ -576,11 +576,11 @@ msgstr "Preferenze..."
 
 #: src\tactics_pi.cpp:3653
 msgid "Show Laylines"
-msgstr ""
+msgstr "Visualizza layline"
 
 #: src\wind_history.cpp:108
 msgid "--"
-msgstr ""
+msgstr "--"
 
 #: src\wind_history.cpp:438
 msgid "NNE"
