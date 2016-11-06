@@ -37,6 +37,10 @@ What tactics_pi can do :
   it shows the boat laylines as well, the surface current, a pointer to the waypoint (either set manually
   as the temporary Tactics waypoint or read from a NMEA RMB sentence), AWA, TWA and a marker for the Target-TWA.
   It also shows pointers (needles) for AWA and TWA.
+* If you use NKE instruments, the can create specific NMEA183 performance records with the purpose to upload the data
+  to the system bus and show it on the display of your instruments.
+  You can now e.g. calculate the 'polar target speed' in the plugin and send it to your instrument display
+  outside in the cockpit. Currently only available for NKE, but may be enhanced in the future.
 * There are various settings, which I grouped in a separate tab. To access the preferences screen, right mouse click
   on the tactics_pi window, then select “Preferences ...”
 
@@ -64,10 +68,18 @@ Compiling
 Under windows, you must find the file "opencpn.lib" (Visual Studio)  which is built in the build directory after compiling opencpn. 
 This file must be copied to the plugins build directory.
 
+Windows build :
+---------------
+cd ..
+cd build
+cmake  -T v120_xp ..
+cmake --build . --config release
+cpack
 
+cpack requires NSIS to make an executable.
 
-Build as normally:
-
+Unix style build :
+------------------
 * cd ..
 * cd build
 * cmake ..
