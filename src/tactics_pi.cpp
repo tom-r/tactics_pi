@@ -99,6 +99,11 @@ bool g_bCorrectAWwithHeel;    //if true, AWS/AWA will be corrected with Heel-Ang
 bool g_bForceTrueWindCalculation;    //if true, NMEA Data for TWS,TWA,TWD is not used, but the plugin calculated data is used
 bool g_bUseSOGforTWCalc; //if true, use SOG instead of STW to calculate TWS,TWA,TWD
 bool g_bShowWindbarbOnChart;
+bool g_bExpPerfData01;
+bool g_bExpPerfData02;
+bool g_bExpPerfData03;
+bool g_bExpPerfData04;
+bool g_bExpPerfData05;
 bool b_tactics_dc_message_shown=false;
 
 #if !defined(NAN)
@@ -463,7 +468,7 @@ int tactics_pi::Init( void )
 	alpha_currspd = 0.2;  //smoothing constant for current speed
 	alpha_CogHdt = 0.1; // smoothing constant for diff. btw. Cog & Hdt
 	m_alphaLaylineCog = 0.2; //0.1
-	m_ExpSmoothCurrSpd = -1;
+    m_ExpSmoothCurrSpd = -1;
 	m_ExpSmoothCurrDir = -1;
 	m_ExpSmoothSog = NAN;
 	m_ExpSmoothSinCurrDir = NAN;
@@ -499,6 +504,7 @@ int tactics_pi::Init( void )
 	mlon = NAN;
 	mheel = NAN;
 	mLeeway = NAN;
+    mPolarTargetSpeed = NAN;
 	for (int i = 0; i < COGRANGE; i++) m_COGRange[i] = NAN;
 
 	m_bTrueWind_available = false;
@@ -655,7 +661,7 @@ void tactics_pi::Notify()
     if (mBRG_Watchdog <= 0) {
       SendSentenceToAllInstruments(OCPN_DBP_STC_BRG, -1, _T("\u00B0"));
     }
-
+    ExportPerformanceData();
 }
 
 int tactics_pi::GetAPIVersionMajor()
@@ -756,7 +762,8 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
 	CalculateLeeway(st, value, unit);
 	CalculateCurrent(st, value, unit);
 	CalculateLaylineDegreeRange();
-
+    CalculatePerformanceData();
+    //ExportPerformanceData();
 }
 /*********************************************************************************
 Draw the OpenGL overlay
@@ -1029,7 +1036,7 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 			2. at that point apply current : startpoint predictedLatHdt, predictedLonHdt + bearing + speed; out : predictedLatCog, predictedLonCog
 			3. calculate angle (and speed) from curr pos to predictedLatCog, predictedLonCog; out : newCog + newSOG
 			********************************************************************************************/
-			double predictedHdG, diffCogHdt;
+			double  diffCogHdt;
             double tws_kts = fromUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
             double stw_kts = fromUsrSpeed_Plugin(mStW, g_iDashSpeedUnit);
             double currspd_kts = fromUsrSpeed_Plugin(m_ExpSmoothCurrSpd, g_iDashSpeedUnit);
@@ -1037,32 +1044,32 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 			mExpSmDiffCogHdt->SetAlpha(alpha_CogHdt);
 			m_ExpSmoothDiffCogHdt = mExpSmDiffCogHdt->GetSmoothVal((diffCogHdt < 0 ? -diffCogHdt : diffCogHdt));
 			if (targetTack == _T("R")){ // currently wind is from port ...now
-				predictedHdG = m_LaylineSmoothedCog - m_ExpSmoothDiffCogHdt - 2 * mTWA - fabs(mLeeway); //Leeway is signed 
+                mPredictedHdG = m_LaylineSmoothedCog - m_ExpSmoothDiffCogHdt - 2 * mTWA - fabs(mLeeway); //Leeway is signed 
 				GLubyte red(0), green(200), blue(0), alpha(128);
 				glColor4ub(0, 200, 0, 128);                 	// red, green, blue,  alpha
 			}
 			else if (targetTack == _T("L")){ //currently wind from starboard
-				predictedHdG = m_LaylineSmoothedCog + m_ExpSmoothDiffCogHdt + 2 * mTWA + fabs(mLeeway); //Leeway is signed 
+                mPredictedHdG = m_LaylineSmoothedCog + m_ExpSmoothDiffCogHdt + 2 * mTWA + fabs(mLeeway); //Leeway is signed 
 				GLubyte red(204), green(41), blue(41), alpha(128);
 				glColor4ub(204, 41, 41, 128);                 	// red, green, blue,  alpha
 			}
 			else {
-				predictedHdG = (mTWA < 10) ? 180 : 0;
+                 mPredictedHdG = (mTWA < 10) ? 180 : 0;
 			}
-			if (predictedHdG < 0) predictedHdG += 360;
-			if (predictedHdG >= 360) predictedHdG -= 360;
+            if (mPredictedHdG < 0) mPredictedHdG += 360;
+            if (mPredictedHdG >= 360) mPredictedHdG -= 360;
 			double predictedLatHdt, predictedLonHdt, predictedLatCog, predictedLonCog;
-			double predictedCoG, predictedSog;
+			double  predictedSog;
             //apply current on predicted Heading
-            PositionBearingDistanceMercator_Plugin(mlat, mlon, predictedHdG, stw_kts, &predictedLatHdt, &predictedLonHdt);
+            PositionBearingDistanceMercator_Plugin(mlat, mlon, mPredictedHdG, stw_kts, &predictedLatHdt, &predictedLonHdt);
             PositionBearingDistanceMercator_Plugin(predictedLatHdt, predictedLonHdt, m_CurrentDirection, currspd_kts, &predictedLatCog, &predictedLonCog);
-			DistanceBearingMercator_Plugin(predictedLatCog, predictedLonCog, mlat, mlon, &predictedCoG, &predictedSog);
+            DistanceBearingMercator_Plugin(predictedLatCog, predictedLonCog, mlat, mlon, &mPredictedCoG, &predictedSog);
 
 			tackpoints[0] = vpoints[0];
 			double tmplat3, tmplon3, tmplat4, tmplon4;
-			PositionBearingDistanceMercator_Plugin(mlat, mlon, predictedCoG - m_ExpSmoothDegRange / 2., g_dLaylineLengthonChart, &tmplat3, &tmplon3);
+			PositionBearingDistanceMercator_Plugin(mlat, mlon, mPredictedCoG - m_ExpSmoothDegRange / 2., g_dLaylineLengthonChart, &tmplat3, &tmplon3);
 			GetCanvasPixLL(vp, &tackpoints[1], tmplat3, tmplon3);
-			PositionBearingDistanceMercator_Plugin(mlat, mlon, predictedCoG + m_ExpSmoothDegRange / 2., g_dLaylineLengthonChart, &tmplat4, &tmplon4);
+            PositionBearingDistanceMercator_Plugin(mlat, mlon, mPredictedCoG + m_ExpSmoothDegRange / 2., g_dLaylineLengthonChart, &tmplat4, &tmplon4);
 			GetCanvasPixLL(vp, &tackpoints[2], tmplat4, tmplon4);
 			glBegin(GL_TRIANGLES);
 			glVertex2d(tackpoints[0].x, tackpoints[0].y);
@@ -2530,7 +2537,12 @@ bool tactics_pi::LoadConfig( void )
         pConf->Read(_T("ForceTrueWindCalculation"), &g_bForceTrueWindCalculation, false);    //if true, NMEA Data for TWS,TWA,TWD is not used, but the plugin calculated data is used
         pConf->Read(_T("ShowWindbarbOnChart"), &g_bShowWindbarbOnChart, false);
         pConf->Read(_T("UseSOGforTWCalc"), &g_bUseSOGforTWCalc, false);
- 		pConf->SetPath(_T("/PlugIns/Tactics"));
+        pConf->Read(_T("ExpPolarSpeed"), &g_bExpPerfData01, false);
+        pConf->Read(_T("ExpCourseOtherTack"), &g_bExpPerfData02, false);
+        pConf->Read(_T("ExpTargetVMG"), &g_bExpPerfData03, false);
+        pConf->Read(_T("ExpVMG_CMG_Diff_Gain"), &g_bExpPerfData04, false);
+        pConf->Read(_T("ExpCurrent"), &g_bExpPerfData05, false);
+        pConf->SetPath(_T("/PlugIns/Tactics"));
 
         wxString version;
         pConf->Read( _T("Version"), &version, wxEmptyString );
@@ -2694,6 +2706,11 @@ bool tactics_pi::SaveConfig( void )
 		pConf->Write(_T("Heel_25kn_45Degree"), g_dheel[5][1]);
 		pConf->Write(_T("Heel_25kn_90Degree"), g_dheel[5][2]);
 		pConf->Write(_T("Heel_25kn_135Degree"), g_dheel[5][3]);
+        pConf->Write(_T("ExpPolarSpeed"), g_bExpPerfData01);
+        pConf->Write(_T("ExpCourseOtherTack"), g_bExpPerfData02);
+        pConf->Write(_T("ExpTargetVMG"), g_bExpPerfData03);
+        pConf->Write(_T("ExpVMG_CMG_Diff_Gain"), g_bExpPerfData04);
+        pConf->Write(_T("ExpCurrent"), g_bExpPerfData05);
 
         for( unsigned int i = 0; i < m_ArrayOfTacticsWindow.GetCount(); i++ ) {
             TacticsWindowContainer *cont = m_ArrayOfTacticsWindow.Item( i );
@@ -3045,8 +3062,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     wxBoxSizer* itemBoxSizer06 = new wxBoxSizer(wxVERTICAL);
 	itemPanelNotebook03->SetSizer(itemBoxSizer06);
 	itemNotebook->AddPage(itemPanelNotebook03, _("Performance Parameters"));
-//**********************************************
-	wxStaticBox* itemStaticBox05 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Laylines"));
+    //****************************************************************************************************
+    wxStaticBox* itemStaticBox05 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Laylines"));
 	wxStaticBoxSizer* itemStaticBoxSizer05 = new wxStaticBoxSizer(itemStaticBox05, wxHORIZONTAL);
 	itemBoxSizer06->Add(itemStaticBoxSizer05, 0, wxEXPAND | wxALL, border_size);
 	
@@ -3083,8 +3100,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
 	itemFlexGridSizer05->Add(itemStaticText22, 0, wxEXPAND | wxALL, border_size);
     m_maxLayLineWidth = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 30, g_iMaxLaylineWidth);
     itemFlexGridSizer05->Add(m_maxLayLineWidth, 0, wxALIGN_LEFT | wxALL, 0);
-//**********************************************
-	wxStaticBox* itemStaticBox06 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Leeway"));
+    //****************************************************************************************************
+    wxStaticBox* itemStaticBox06 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Leeway"));
 	wxStaticBoxSizer* itemStaticBoxSizer06 = new wxStaticBoxSizer(itemStaticBox06, wxHORIZONTAL);
 	itemBoxSizer06->Add(itemStaticBoxSizer06, 0, wxEXPAND | wxALL, border_size);
 	wxFlexGridSizer *itemFlexGridSizer06 = new wxFlexGridSizer(2);
@@ -3122,8 +3139,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
 
 	wxStaticText* itemStaticText23c = new wxStaticText(itemPanelNotebook03, wxID_ANY, _(""),	wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer06->Add(itemStaticText23c, 0, wxEXPAND | wxALL, border_size);
-	//**********************************************
-	wxStaticBox* itemStaticBox07 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Heel"));
+    //****************************************************************************************************
+    wxStaticBox* itemStaticBox07 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Heel"));
 	wxStaticBoxSizer* itemStaticBoxSizer07 = new wxStaticBoxSizer(itemStaticBox07, wxHORIZONTAL);
 	itemBoxSizer06->Add(itemStaticBoxSizer07, 0, wxEXPAND | wxALL, border_size);
 	wxFlexGridSizer *itemFlexGridSizer07 = new wxFlexGridSizer(4);
@@ -3209,10 +3226,9 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     m_heel25_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[5][3], 0.1);
     itemFlexGridSizer07->Add(m_heel25_135, 0, wxALIGN_LEFT, 0);
     m_heel25_135->SetValue(g_dheel[5][3]); 
-	//--------------------
-	//**********************************************
 
-	wxStaticBox* itemStaticBox08 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Current"));
+    //****************************************************************************************************
+    wxStaticBox* itemStaticBox08 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Current"));
 	wxStaticBoxSizer* itemStaticBoxSizer08 = new wxStaticBoxSizer(itemStaticBox08, wxHORIZONTAL);
 	itemBoxSizer06->Add(itemStaticBoxSizer08, 0, wxEXPAND | wxALL, border_size);
 	wxFlexGridSizer *itemFlexGridSizer08 = new wxFlexGridSizer(2);
@@ -3243,7 +3259,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     m_CurrentOnChart = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Display Current on Chart (OpenGL)"));
     itemFlexGridSizer08->Add(m_CurrentOnChart, 0, wxEXPAND, 5);
     m_CurrentOnChart->SetValue(g_bDisplayCurrentOnChart);
-    //--------------------
+    //****************************************************************************************************
     wxStaticBox* itemStaticBox10 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("True Wind"));
     wxStaticBoxSizer* itemStaticBoxSizer10 = new wxStaticBoxSizer(itemStaticBox10, wxHORIZONTAL);
     itemBoxSizer06->Add(itemStaticBoxSizer10, 0, wxEXPAND | wxALL, border_size);
@@ -3273,11 +3289,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     itemFlexGridSizer10->Add(m_ShowWindbarbOnChart, 0, wxEXPAND, 5);
     m_ShowWindbarbOnChart->SetValue(g_bShowWindbarbOnChart);
 
-    //--------------------
-
-
-	//**********************************************
-	wxStaticBox* itemStaticBox09 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Polar"));
+    //****************************************************************************************************
+    wxStaticBox* itemStaticBox09 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Polar"));
 	wxStaticBoxSizer* itemStaticBoxSizer09 = new wxStaticBoxSizer(itemStaticBox09, wxHORIZONTAL);
 	itemBoxSizer06->Add(itemStaticBoxSizer09, 0, wxEXPAND | wxALL, border_size);
 	wxFlexGridSizer *itemFlexGridSizer09 = new wxFlexGridSizer(2);
@@ -3293,7 +3306,46 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
 	m_buttonLoadPolar = new wxButton(itemPanelNotebook03, wxID_ANY, _("Load"), wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer09->Add(m_buttonLoadPolar, 0, wxALIGN_RIGHT | wxALL, 5);
 	m_buttonLoadPolar->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TacticsPreferencesDialog::SelectPolarFile), NULL, this);
-//****************************************************************************************************
+
+    //****************************************************************************************************
+    wxStaticBox* itemStaticBoxExpData = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Export NMEA Performance Data"));
+    wxStaticBoxSizer* itemStaticBoxSizerExpData = new wxStaticBoxSizer(itemStaticBoxExpData, wxHORIZONTAL);
+    itemBoxSizer06->Add(itemStaticBoxSizerExpData, 0, wxEXPAND | wxALL, border_size);
+    wxFlexGridSizer *itemFlexGridSizerExpData = new wxFlexGridSizer(2);
+    itemFlexGridSizerExpData->AddGrowableCol(1);
+    itemStaticBoxSizerExpData->Add(itemFlexGridSizerExpData, 1, wxEXPAND | wxALL, 0);
+    //-------------------- Radiobutton(s) for different instrument systems -----------
+    m_ButtonExpNKE = new wxRadioButton(itemPanelNotebook03, wxID_ANY, _("NKE format ($PNKEP)"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+    itemFlexGridSizerExpData->Add(m_ButtonExpNKE, 0, wxALL, 5);
+    m_ButtonExpNKE->SetValue(true); // fixed value for now
+    wxStaticText* itemStaticTextDummy = new wxStaticText(itemPanelNotebook03, wxID_ANY, _(""), wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizerExpData->Add(itemStaticTextDummy, 0, wxEXPAND | wxALL, border_size);
+    //--------------------
+    //--------------------
+    m_ExpPerfData01 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Target Polar Speed"));
+    itemFlexGridSizerExpData->Add(m_ExpPerfData01, 0, wxEXPAND, 5);
+    m_ExpPerfData01->SetValue(g_bExpPerfData01);
+    //--------------------
+    m_ExpPerfData02 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("CoG on other Tack"));
+    itemFlexGridSizerExpData->Add(m_ExpPerfData02, 0, wxEXPAND, 5);
+    m_ExpPerfData02->SetValue(g_bExpPerfData02);
+    m_ExpPerfData02->Disable();
+    //--------------------
+    m_ExpPerfData03 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Target-VMG angle + Perf. %"));
+    itemFlexGridSizerExpData->Add(m_ExpPerfData03, 0, wxEXPAND, 5);
+    m_ExpPerfData03->SetValue(g_bExpPerfData03);
+    //--------------------
+    m_ExpPerfData04 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Diff. angle to Target-VMG/-CMG + corresp. gain"));
+    itemFlexGridSizerExpData->Add(m_ExpPerfData04, 0, wxEXPAND, 5);
+    m_ExpPerfData04->SetValue(g_bExpPerfData04);
+    m_ExpPerfData04->Disable();
+    //--------------------
+    m_ExpPerfData05 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Current Direction + Speed"));
+    itemFlexGridSizerExpData->Add(m_ExpPerfData05, 0, wxEXPAND, 5);
+    m_ExpPerfData05->SetValue(g_bExpPerfData05);
+    //--------------------
+
+    //****************************************************************************************************
 //    m_buttonPrefsApply = new wxButton(itemPanelNotebook03, wxID_ANY, _("Apply"), wxDefaultPosition, wxDefaultSize, 0);
 //    itemFlexGridSizer09->Add(m_buttonPrefsApply, 0, wxALIGN_RIGHT | wxALL, 5);
 //    m_buttonPrefsApply->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TacticsPreferencesDialog::ApplyPrefs), NULL, this);
@@ -3432,7 +3484,12 @@ void TacticsPreferencesDialog::SaveTacticsConfig()
     g_bForceTrueWindCalculation = m_ForceTrueWindCalculation->GetValue();
     g_bUseSOGforTWCalc=m_UseSOGforTWCalc->GetValue();
     g_bShowWindbarbOnChart = m_ShowWindbarbOnChart->GetValue();
-    if( curSel != -1 ) {
+    g_bExpPerfData01 = m_ExpPerfData01->GetValue();
+    g_bExpPerfData02 = m_ExpPerfData02->GetValue();
+    g_bExpPerfData03 = m_ExpPerfData03->GetValue();
+    g_bExpPerfData04 = m_ExpPerfData04->GetValue();
+    g_bExpPerfData05 = m_ExpPerfData05->GetValue();
+    if (curSel != -1) {
         TacticsWindowContainer *cont = m_Config.Item( curSel );
         cont->m_bIsVisible = m_pCheckBoxIsVisible->IsChecked();
         cont->m_sCaption = m_pTextCtrlCaption->GetValue();
@@ -4289,12 +4346,14 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
           mTWA = 180.;
         }
         mTWS = sqrt(pow((aws_kts*cos(mAWA*M_PI / 180.)) - spdval, 2) + pow(aws_kts*sin(mAWA*M_PI / 180.), 2));
-        if (!wxIsNaN(mLeeway) && g_bUseHeelSensor) { //correct TWD with Leeway if heel is available. Makes only sense with heel sensor
-          mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA + mLeeway : mHdt - mTWA + mLeeway;
+      /* ToDo: adding leeway needs to be reviewed, as the direction of the bow is still based in the magnetic compass,
+               no matter if leeway or not ...
+      if (!wxIsNaN(mLeeway) && g_bUseHeelSensor) { //correct TWD with Leeway if heel is available. Makes only sense with heel sensor
+        mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA + mLeeway : mHdt - mTWA + mLeeway;
         }
-        else
+        else*/
           mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA : mHdt - mTWA;
-
+        //endif
         if (mTWD >= 360) mTWD -= 360;
         if (mTWD < 0) mTWD += 360;
         //convert mTWS back to user wind speed settings
@@ -4470,3 +4529,180 @@ void tactics_pi::OnContextMenuItemCallback(int id)
   AddSingleWaypoint(m_pMark, false);
   m_pMark->m_CreateTime = wxDateTime::Now();
 }
+
+/*********************************************************************************
+Central routine to calculate the polar based performance data, independent of the
+use of any instrument or setting
+**********************************************************************************/
+void tactics_pi::CalculatePerformanceData(void)
+{
+  mPolarTargetSpeed = BoatPolar->GetPolarSpeed(wxRound(mTWA), wxRound(mTWS));
+  // get Target VMG Angle from Polar
+  tvmg = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
+  if (tvmg.TargetSpeed > 0) {
+    double VMG = BoatPolar->Calc_VMG(mTWA, mStW);
+    mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0;
+    if (mTWA < 90){
+      mPercentTargetVMGupwind = fabs(VMG / tvmg.TargetSpeed * 100.);
+    }
+    if (mTWA > 90){
+       mPercentTargetVMGdownwind = fabs(VMG / tvmg.TargetSpeed * 100.);
+    }
+  }
+
+}
+/*********************************************************************************
+First shot of an export routine for the NMEA $PNKEP (NKE style) performance data 
+**********************************************************************************/
+void tactics_pi::ExportPerformanceData(void)
+{
+  //PolarTargetSpeed
+  if (g_bExpPerfData01 && !wxIsNaN(mPolarTargetSpeed)){
+    createPNKEP_NMEA(1, mPolarTargetSpeed, mPolarTargetSpeed  * 1.852, 0, 0);   
+  }
+  //todo : extract mPredictedCoG calculation from layline.calc and add to CalculatePerformanceData
+  //if (g_bExpPerfData02 && !wxIsNaN(mPredictedHdG)){
+  //  createPNKEP_NMEA(2, mPredictedHdG, 0, 0, 0); // course (CoG) on other tack
+  //}
+  //Target VMG angle, act. VMG % upwind, act. VMG % downwind
+  if (g_bExpPerfData03 && !wxIsNaN(tvmg.TargetAngle) && tvmg.TargetSpeed > 0){
+    createPNKEP_NMEA(3, tvmg.TargetAngle, mPercentTargetVMGupwind, mPercentTargetVMGdownwind, 0);  }
+  //Gain VMG de 0 à 999%, Angle pour optimiser le VMG de 0 à 359°,Gain CMG de 0 à 999%,Angle pour optimiser le CMG de 0 à 359°
+  //  if (g_bExpPerfData03 && !wxIsNaN(tvmg.TargetAngle) && tvmg.TargetSpeed > 0){
+  //createPNKEP_NMEA(4, mPolarTargetSpeed, mPolarTargetSpeed, mPolarTargetSpeed, mPolarTargetSpeed);  //}
+  //current direction, current speed kts, current speed in km/h,
+  if (g_bExpPerfData05 && !wxIsNaN(m_CurrentDirection) && m_ExpSmoothCurrSpd >= 0){
+    createPNKEP_NMEA(5, m_CurrentDirection, m_ExpSmoothCurrSpd, m_ExpSmoothCurrSpd  * 1.852, 0);  }
+}
+/************************************************************************************
+Calculate the checksum of the created NMEA record.
+Taken from nmeaconverter_pi.
+All credits to Pavel !
+************************************************************************************/
+wxString tactics_pi::ComputeChecksum(wxString sentence)
+{
+  unsigned char calculated_checksum = 0;
+  for (wxString::const_iterator i = sentence.begin() + 1; i != sentence.end() && *i != '*'; ++i)
+    calculated_checksum ^= static_cast<unsigned char> (*i);
+
+  return(wxString::Format(_("%02X"), calculated_checksum));
+}
+/************************************************************************************
+Put the created NMEA record ot O's NMEA data stream
+Taken from nmeaconverter_pi.
+All credits to Pavel !
+************************************************************************************/
+void tactics_pi::SendNMEASentence(wxString sentence)
+{
+  wxString Checksum = ComputeChecksum(sentence);
+  sentence = sentence.Append(wxT("*"));
+  sentence = sentence.Append(Checksum);
+  sentence = sentence.Append(wxT("\r\n"));
+  //wxLogMessage(sentence);
+  PushNMEABuffer(sentence);
+}
+/************************************************************************************
+Creation of the specific NKE style  performance data NMEA-records.
+These records are visible in the NKE instruments !
+You need to define an outbound interface and filter for $PNKEP
+-----------------------
+Speed and performance target (code PNKEP01)
+$PNKEP,01,x.x,N,x.x,K*hh<CR><LF>
+|      \ target speed in km/h
+\ target speed in knots
+course on next tack (code PNKEP02)
+$PNKEP,02,x.x*hh<CR><LF>
+\ Cap sur bord Opposé/prochain bord de 0 à 359°
+Opt. VMG angle and performance up and downwind   (code PNKEP03)
+$PNKEP,03,x.x,x.x,x.x*hh<CR><LF>
+          |   |   \ performance downwind from 0 to 99%
+          |   \ performance upwind from 0 to 99%
+          \ opt. VMG angle  0 à 359°
+Angles pour optimiser le CMG et VMG et gain correspondant (code PNKEP04)
+$PNKEP,04,x.x,x.x,x.x,x.x*hh<CR><LF>
+|   |   |   \ Gain VMG de 0 à 999%
+|   |   \ Angle pour optimiser le VMG de 0 à 359°
+|   \ Gain CMG de 0 à 999%
+\ Angle pour optimiser le CMG de 0 à 359°
+Direction and speed of sea current (code PNKEP05)
+$PNKEP,05,x.x,x.x,N,x.x,K*hh<CR><LF>
+           |   |     \ current speed in km/h
+           |   \ current speed in knots
+           \ current direction from 0 à 359°
+-------------------------------------
+Found in the documentation of the normal heel sensor ...
+I bet we could also upload acceleration and gyrometer data ;-)
+
+Les mesures de ses capteurs (accéléromètre et gyromètre) sont aussi envoyées sur sa
+sortie NMEA, à l’aide d’une trame propriétaire nke.
+$PNKEP,06,-0.988,-0.096,12.0*5D
+-------------------------------------
+
+Detail of the NMEA Interface NKE/NMEA this single sentence frames has been
+created for the purposes of the Topline bus with Adrena software compatibility:
+$PNKEA,AA,N,FF,XXXXX,TTTTTTTTTT,UUUUUUU *hh<CR><LF>
+* AA : Code corresponding to the channel data displayed, consisting of 2
+alphanumeric characters. These 2 letters allow a view of the data on the old displays,
+able to display simple dynamic channels.
+* N : number display on the dynamic page order. 1 To 4 for the main channels and 5
+to 8 to display alternating.
+* FF : digital code corresponding to the display format.
+* XXXXX raw digital data between 0 and 32767.
+* TTTTTTTTTT: label of the title (10 characters)
+* UUUUUUU: label of the units (7 characters)
+Remarques :
+* If one of the fields is empty the data will not be published
+* Labels can contain uppercase letters and or lower case, but on non-graphical
+displays (type TL25), they will be displayed in uppercase.
+Example of sentences (the checksum is not calculated in these examples):
+$PNKEA,TL,1,11,135,Tps Ligne,Min Sec*hh
+$PNKEA,DL,5,40,111,Dist Ligne,Long.,*hh
+$PNKEA,PV,2,34,84,Pcent VMG,Bord 1,*hh
+$PNKEA,TB,3,11,201,Tps Bouee,Min Sec,*hh
+$PNKEA,DB,7,40,60,Dist Bouee,Long,*hh
+$PNKEA,TR,4,5,40,Ang Target,Pres,*hh
+$PNKEA,TO,8,5,205,Ang Target,Portant,*hh
+*************************************************************************************/
+void tactics_pi::createPNKEP_NMEA(int sentence, double data1, double data2, double data3, double data4)
+{
+  wxString nmeastr = "";
+  switch (sentence)
+  {
+  case 0:
+    //strcpy(nmeastr, "$PNKEPA,");
+    break;
+  case 1:
+    nmeastr = _T("$PNKEP,01,") + wxString::Format("%.2f,N,", data1) + wxString::Format("%.2f,K", data2);
+    break;
+  case 2:
+    /*course on next tack(code PNKEP02)
+    $PNKEP, 02, x.x*hh<CR><LF>
+    \ Cap sur bord Opposé / prochain bord de 0 à 359°*/
+    nmeastr = _T("$PNKEP,02,") + wxString::Format("%.1f", data1);
+    break;
+  case 3:
+    /*    $PNKEP, 03, x.x, x.x, x.x*hh<CR><LF>
+    |    |     \ performance downwind from 0 to 99 %
+    |     \ performance upwind from 0 to 99 %
+    \ opt.VMG angle  0 à 359°  */
+    nmeastr = _T("$PNKEP,03,") + wxString::Format("%.1f,", data1) + wxString::Format("%.1f,", data2) + wxString::Format("%.1f", data3);
+    break;
+  case 4:
+    /*    $PNKEP, 04, x.x, x.x, x.x, x.x*hh<CR><LF>
+    |    |    |    \ Gain VMG de 0 à 999 %
+    |    |     \ Angle pour optimiser le VMG de 0 à 359°
+    |    \ Gain CMG de 0 à 999 %
+    \ Angle pour optimiser le CMG de 0 à 359°*/
+    nmeastr = _T("$PNKEP,04,") + wxString::Format("%.1f,", data1) + wxString::Format("%.1f,", data2) + wxString::Format("%.1f,", data3) + wxString::Format("%.1f", data4);
+    break;
+  case 5:
+    nmeastr = _T("$PNKEP,05,") + wxString::Format("%.1f,", data1) + wxString::Format("%.2f,N,", data2) + wxString::Format("%.2f,K", data3);
+    break;
+  default:
+    nmeastr = _T("");
+    break;
+  }
+  if (nmeastr != "")
+    SendNMEASentence(nmeastr);
+}
+

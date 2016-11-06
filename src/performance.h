@@ -54,15 +54,6 @@ WX_DEFINE_ARRAY_DOUBLE(int, ArrayOfDouble);
 //TR class FilterDlg;
 //TR class Options;
 //class NMEA0183P;
-//+------------------------------------------------------------------------------
-//|
-//| CLASS:
-//|    TacticsInstrument_Performance
-//|
-//| DESCRIPTION:
-//|    This class creates a simple Performance Instrument
-//|
-//+------------------------------------------------------------------------------
 enum{
 	POLARSPEED, POLARVMG, POLARTARGETVMG, POLARTARGETVMGANGLE, POLARCMG, POLARTARGETCMG, POLARTARGETCMGANGLE,TWAMARK
 };
@@ -73,6 +64,15 @@ struct TargetxMG{
 class tactics_pi;
 class Polar;
 
+//+------------------------------------------------------------------------------
+//|
+//| CLASS:
+//|    TacticsInstrument_Performance
+//|
+//| DESCRIPTION:
+//|    This class creates a simple Performance Instrument
+//|
+//+------------------------------------------------------------------------------
 class TacticsInstrument_PerformanceSingle : public TacticsInstrument
 {
 public:
@@ -160,11 +160,24 @@ private:
 	double toRad(int angle);
 };
 #endif
-//*************************************************************************************
+/*************************************************************************************
+Class for exponential smoothing
+
+Usage :
+ExpSmooth       *mp_expsmooth;
+double alpha,  unsmoothed_data, smoothed_val;
+...
+mp_expsmooth = new ExpSmooth(alpha);
+start_of_any_loop{
+  smoothed_val = mp_expsmooth->GetSmoothVal(unsmoothed_data);
+  optional:
+  mp_expsmooth->SetAlpha(new_alpha);
+}
+*************************************************************************************/
 class ExpSmooth
 {
 public:
-	ExpSmooth(double a);
+	ExpSmooth(double newalpha);
 	~ExpSmooth(void);
 
 	double GetSmoothVal(double input);
@@ -179,11 +192,34 @@ private:
 	double SmoothedValue;
 
 };
-//*************************************************************************************
+/***********************************************************************************
+Class for double exonential smoothing, DES
+------------------------------------------------------------------------------------
+Formula taken from
+Double Exponential Smoothing: An Alternative to Kalman Filter-Based Predictive Tracking
+Joseph J. LaViola Jr.
+Brown University Technology Center
+for Advanced Scientic Computing and Visualization
+PO Box 1910, Providence, RI, 02912, USA
+jjl@cs.brown.edu
+--------------------------------------------------------------------------------------
+T = 1;
+Spt = alpha*pt + (1 - alpha)*Sptmin1;
+Sp2t = alpha*Spt + (1 - alpha)*Sp2tmin1;
+ptplusT = (2 + alpha*T / (1 - alpha))*Spt - (1 + alpha*T / (1 - alpha)) * Sp2t;
+
+Note :
+There is only ONE damping factor alpha in this special implementation of DES. 
+The second factor beta dropped out. Search the net on the title above, there is
+a theoretical description on this
+Usage : 
+see "Class for exponential smoothing" above
+
+************************************************************************************/
 class DoubleExpSmooth
 {
 public:
-  DoubleExpSmooth(double a);
+  DoubleExpSmooth(double newalpha);
   ~DoubleExpSmooth(void);
 
   double GetSmoothVal(double input);
@@ -253,3 +289,17 @@ protected:
   void DrawPercentSpeedScale(wxGCDC* dc);
   //wxString GetWindDirStr(wxString WindDir);
 };
+/*
+class NKEPerformanceData
+{
+public:
+  NKEPerformanceData(void);
+  ~NKEPerformanceData(void);
+  wxString ComputeChecksum(wxString sentence);
+  void SendNMEASentence(wxString sentence);
+  void createPNKEP_NMEA(int sentence, double data1, double data2, double data3, double data4);
+protected:
+
+private:
+  double mPolarTargetSpeed;
+};*/

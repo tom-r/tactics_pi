@@ -35,8 +35,8 @@
 #endif //precompiled headers
 
 #define     PLUGIN_VERSION_MAJOR    0
-#define     PLUGIN_VERSION_MINOR    7
-#define     PLUGIN_VERSION_PATCH    3
+#define     PLUGIN_VERSION_MINOR    8
+#define     PLUGIN_VERSION_PATCH    0
 
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    12
@@ -163,6 +163,11 @@ public:
 	  void CalculateLeeway(int st, double value, wxString unit);
 	  void CalculateTrueWind(int st, double value, wxString unit);
 	  void CalculateLaylineDegreeRange(void);
+      void CalculatePerformanceData(void);
+      void ExportPerformanceData(void);
+      wxString ComputeChecksum(wxString sentence);
+      void SendNMEASentence(wxString sentence);
+      void createPNKEP_NMEA(int sentence, double data1, double data2, double data3, double data4);
 	  void SetCalcVariables(int st, double value, wxString unit);
 	  bool RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp);
 	  bool RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp);
@@ -218,8 +223,9 @@ private:
 	  double			   m_ExpSmoothDiffCogHdt;
 	  double               m_LaylineDegRange, m_COGRange[COGRANGE], m_ExpSmoothDegRange, m_alphaDeltaCog;
 	  double               m_LaylineSmoothedCog, m_ExpSmoothSinCog, m_ExpSmoothCosCog, m_alphaLaylineCog;
-
-
+      //Performance Variables
+      double               mPolarTargetSpeed, mPredictedHdG, mPredictedCoG, mPercentTargetVMGupwind, mPercentTargetVMGdownwind;
+      TargetxMG tvmg;
 
 	  wxDC            *m_pdc;
 	  wxPoint         vpoints[3],tackpoints[3];
@@ -316,7 +322,12 @@ public:
       wxCheckBox                   *m_ForceTrueWindCalculation;
       wxCheckBox                   *m_UseSOGforTWCalc;
       wxCheckBox                   *m_ShowWindbarbOnChart;
-
+      wxRadioButton                *m_ButtonExpNKE;
+      wxCheckBox                   *m_ExpPerfData01;
+      wxCheckBox                   *m_ExpPerfData02;
+      wxCheckBox                   *m_ExpPerfData03;
+      wxCheckBox                   *m_ExpPerfData04;
+      wxCheckBox                   *m_ExpPerfData05;
 private:
       void UpdateTacticsButtonsState(void);
       void UpdateButtonsState(void);

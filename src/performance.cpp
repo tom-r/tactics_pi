@@ -54,6 +54,8 @@ extern int g_iSpeedFormat;
 
 double getDegRange(double max, double min);
 double getSignedDegRange(double max, double min);
+//void createPNKEP_NMEA(int sentence, double data1, double data2, double data3, double data4);
+
 // ----------------------------------------------------------------
 //
 //    TacticsInstrument_Simple Implementation
@@ -209,6 +211,7 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
                         double percent = mSTW / targetspeed * 100;
                         double user_targetSpeed = toUsrSpeed_Plugin(targetspeed, g_iDashSpeedUnit);
                         m_data = wxString::Format("%d", wxRound(percent)) + _T(" % / ") + wxString::Format("%.2f", user_targetSpeed) + _T(" ") + stwunit;
+                        //createPNKEP_NMEA(1, targetspeed, targetspeed  * 1.852 , 0, 0);
                     }
 				}
 				else if (m_displaytype == POLARVMG){
@@ -977,9 +980,9 @@ Sp2t = alpha*Spt + (1 - alpha)*Sp2tmin1;
 ptplusT = (2 + alpha*T / (1 - alpha))*Spt - (1 + alpha*T / (1 - alpha)) * Sp2t;
 
 ************************************************************************************/
-DoubleExpSmooth::DoubleExpSmooth(double a)
+DoubleExpSmooth::DoubleExpSmooth(double newalpha)
 {
-  alpha = a;
+  alpha = newalpha;
   T = 1;
   //SmoothedValue = NAN;
   SpT = NAN;
@@ -1030,9 +1033,6 @@ void DoubleExpSmooth::SetInitVal(double init)
   SpT = init;
   Sp2T = init;
 }
-
-//************************************************************************************
-//************************************************************************************
 
 //************************************************************************************************************************
 // Polar Performance instrument

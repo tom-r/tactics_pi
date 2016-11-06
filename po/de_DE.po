@@ -1,11 +1,9 @@
-#: src\tactics_pi.cpp:3053 src\tactics_pi.cpp:3070 src\tactics_pi.cpp:4220
-#: src\tactics_pi.cpp:4246
 msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2016-08-09 02:29-0400\n"
+"PO-Revision-Date: 2016-11-06 14:47+0100\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -13,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: crowdin.com\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
@@ -282,9 +280,11 @@ msgid "Tactics PlugIn for OpenCPN"
 msgstr "Taktik PlugIn für OpenCPN"
 
 #: src\tactics_pi.cpp:692
-msgid "Tactics PlugIn for OpenCPN\n"
+msgid ""
+"Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar file."
-msgstr "Taktik-PlugIn für OpenCPN\n"
+msgstr ""
+"Taktik-PlugIn für OpenCPN\n"
 "Liefert Leistungsdaten & Instrumentenanzeigen des Bootes aus NMEA-Quellen und Polarendateien."
 
 #: src\tactics_pi.cpp:1500
@@ -614,4 +614,3 @@ msgstr "WNW"
 #: src\wind_history.cpp:480
 msgid "NNW"
 msgstr "NNW"
-
