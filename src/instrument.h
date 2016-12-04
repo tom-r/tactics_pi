@@ -98,7 +98,7 @@ enum
     //OCPN_DBP_STC_VLW1 = 1 << 26, // Trip Log
     //OCPN_DBP_STC_VLW2 = 1 << 27,  // Sum Log
     OCPN_DBP_STC_TWAMARK = 1 << 27,  // TWA to a Waypoint
-    OCPN_DBP_STC_MDA = 1 << 28,  // Bareometic pressure
+    OCPN_DBP_STC_MDA = 1 << 28,  // Barometic pressure
     OCPN_DBP_STC_MCOG = 1 << 29,  // Magnetic Course over Ground
 	OCPN_DBP_STC_PITCH = 1 << 30, //Pitch
 	OCPN_DBP_STC_HEEL = 1 << 31//Heel

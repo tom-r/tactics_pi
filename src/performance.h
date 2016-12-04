@@ -49,11 +49,6 @@ WX_DEFINE_ARRAY_DOUBLE(int, ArrayOfDouble);
 #define WINDDIR 360
 #define WINDSPEED 60
 
-//TR class PolarDialog;
-//TR class polar_pi;
-//TR class FilterDlg;
-//TR class Options;
-//class NMEA0183P;
 enum{
 	POLARSPEED, POLARVMG, POLARTARGETVMG, POLARTARGETVMGANGLE, POLARCMG, POLARTARGETCMG, POLARTARGETCMGANGLE,TWAMARK
 };
@@ -137,14 +132,15 @@ public:
 
 
 	void showDlg();
-	void setValue(wxString s, int row, int col, bool cnt);
+	void setValue(wxString s, int row, int col);
 	void reset();
 	bool insert();
 	void loadPolar(wxString FilePath);        //fill the polar values from file in the lookup table
 	void completePolar();    //complete the empty spots in the lookup table with simple average calculation
 	void CalculateLineAverages(int n, int min, int max);
 	void CalculateRowAverages(int i, int min, int max);
-	double GetPolarSpeed(int twa, int tws);
+	double GetPolarSpeed(double twa, double tws);
+    double GetAvgPolarSpeed(double twa, double tws);
 	double Calc_VMG(double TWA, double StW);
 	double Calc_CMG(double COG, double SOG, double BTM);
 	TargetxMG Calc_TargetVMG(double TWA, double TWS);
@@ -199,7 +195,7 @@ Formula taken from
 Double Exponential Smoothing: An Alternative to Kalman Filter-Based Predictive Tracking
 Joseph J. LaViola Jr.
 Brown University Technology Center
-for Advanced Scientic Computing and Visualization
+for Advanced Scientific Computing and Visualization
 PO Box 1910, Providence, RI, 02912, USA
 jjl@cs.brown.edu
 --------------------------------------------------------------------------------------

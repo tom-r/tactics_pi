@@ -35,7 +35,7 @@
 #endif //precompiled headers
 
 #define     PLUGIN_VERSION_MAJOR    0
-#define     PLUGIN_VERSION_MINOR    8
+#define     PLUGIN_VERSION_MINOR    9
 #define     PLUGIN_VERSION_PATCH    0
 
 #define     MY_API_VERSION_MAJOR    1
@@ -164,6 +164,7 @@ public:
 	  void CalculateTrueWind(int st, double value, wxString unit);
 	  void CalculateLaylineDegreeRange(void);
       void CalculatePerformanceData(void);
+      void CalculatePredictedCourse(void);
       void ExportPerformanceData(void);
       wxString ComputeChecksum(wxString sentence);
       void SendNMEASentence(wxString sentence);
@@ -224,9 +225,9 @@ private:
 	  double               m_LaylineDegRange, m_COGRange[COGRANGE], m_ExpSmoothDegRange, m_alphaDeltaCog;
 	  double               m_LaylineSmoothedCog, m_ExpSmoothSinCog, m_ExpSmoothCosCog, m_alphaLaylineCog;
       //Performance Variables
-      double               mPolarTargetSpeed, mPredictedHdG, mPredictedCoG, mPercentTargetVMGupwind, mPercentTargetVMGdownwind;
-      TargetxMG tvmg;
-
+      double               mPolarTargetSpeed, mPredictedHdG, mPredictedCoG, mPredictedSoG, mPercentTargetVMGupwind, mPercentTargetVMGdownwind;
+      TargetxMG tvmg,tcmg;
+      double               mVMGGain, mCMGGain, mVMGoptAngle, mCMGoptAngle,mBRG;
 	  wxDC            *m_pdc;
 	  wxPoint         vpoints[3],tackpoints[3];
 	  double          m_CurrentDirection;

@@ -505,6 +505,9 @@ int tactics_pi::Init( void )
 	mheel = NAN;
 	mLeeway = NAN;
     mPolarTargetSpeed = NAN;
+    mBRG = -1; // -1 due to Watchdog sending out -1 in case of failure
+    mVMGGain= mCMGGain= mVMGoptAngle= mCMGoptAngle = 0.0;
+    mPredictedCoG = NAN;
 	for (int i = 0; i < COGRANGE; i++) m_COGRange[i] = NAN;
 
 	m_bTrueWind_available = false;
@@ -711,6 +714,7 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
     if (st == OCPN_DBP_STC_AWS){
       //Correct AWS with heel if global variable set and heel is available
       //correction only makes sense if you use a heel sensor 
+      //AWS_corrected = AWS_measured * cos(AWA_measured) / cos(AWA_corrected)
       if (g_bCorrectAWwithHeel == true && g_bUseHeelSensor && !wxIsNaN(mheel))
         value = value / cos(mheel*M_PI / 180.);
     }
@@ -3329,7 +3333,6 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     m_ExpPerfData02 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("CoG on other Tack"));
     itemFlexGridSizerExpData->Add(m_ExpPerfData02, 0, wxEXPAND, 5);
     m_ExpPerfData02->SetValue(g_bExpPerfData02);
-    m_ExpPerfData02->Disable();
     //--------------------
     m_ExpPerfData03 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Target-VMG angle + Perf. %"));
     itemFlexGridSizerExpData->Add(m_ExpPerfData03, 0, wxEXPAND, 5);
@@ -3338,7 +3341,6 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     m_ExpPerfData04 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Diff. angle to Target-VMG/-CMG + corresp. gain"));
     itemFlexGridSizerExpData->Add(m_ExpPerfData04, 0, wxEXPAND, 5);
     m_ExpPerfData04->SetValue(g_bExpPerfData04);
-    m_ExpPerfData04->Disable();
     //--------------------
     m_ExpPerfData05 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Current Direction + Speed"));
     itemFlexGridSizerExpData->Add(m_ExpPerfData05, 0, wxEXPAND, 5);
@@ -4283,7 +4285,16 @@ void tactics_pi::SetCalcVariables(int st, double value, wxString unit)
 	case OCPN_DBP_STC_LON:
 		mlon = value;
 		break;
-	default:
+    case OCPN_DBP_STC_CURRDIR:
+        m_CurrentDirection = value;
+        break;
+    case OCPN_DBP_STC_CURRSPD:
+        m_ExpSmoothCurrSpd = value;
+        break;
+    case OCPN_DBP_STC_BRG:
+        mBRG = value;
+        break;
+    default:
 		break;
 	}
   if (g_bManHeelInput){
@@ -4536,9 +4547,15 @@ use of any instrument or setting
 **********************************************************************************/
 void tactics_pi::CalculatePerformanceData(void)
 {
-  mPolarTargetSpeed = BoatPolar->GetPolarSpeed(wxRound(mTWA), wxRound(mTWS));
+  mPolarTargetSpeed = BoatPolar->GetPolarSpeed(mTWA, mTWS);
+  //transfer targetangle dependent on AWA, not TWA
+  if (mAWA <=90)
+    tvmg = BoatPolar->Calc_TargetVMG(60, mTWS);
+  else
+    tvmg = BoatPolar->Calc_TargetVMG(120, mTWS);
+
   // get Target VMG Angle from Polar
-  tvmg = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
+  //tvmg = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
   if (tvmg.TargetSpeed > 0) {
     double VMG = BoatPolar->Calc_VMG(mTWA, mStW);
     mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0;
@@ -4548,8 +4565,30 @@ void tactics_pi::CalculatePerformanceData(void)
     if (mTWA > 90){
        mPercentTargetVMGdownwind = fabs(VMG / tvmg.TargetSpeed * 100.);
     }
+    mVMGGain = 100.0 - mStW/tvmg.TargetSpeed  * 100.;
   }
+  else
+  {
+    mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0;
+    mVMGGain = 0;
+  }
+  if (tvmg.TargetAngle >= 0 && tvmg.TargetAngle < 360) {
+    mVMGoptAngle = getSignedDegRange(mTWA, tvmg.TargetAngle);
+  }
+  else
+    mVMGoptAngle = 0;
 
+  if (mBRG>=0){
+    tcmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
+    mCMGGain = (tcmg.TargetSpeed >0) ? (100.0 - mStW / tcmg.TargetSpeed *100.) : 0.0;
+    if (tcmg.TargetAngle >= 0 && tcmg.TargetAngle < 360) {
+      mCMGoptAngle = getSignedDegRange(mTWA, tcmg.TargetAngle);
+    }
+    else
+      mCMGoptAngle = 0;
+
+  }
+  CalculatePredictedCourse();
 }
 /*********************************************************************************
 First shot of an export routine for the NMEA $PNKEP (NKE style) performance data 
@@ -4561,15 +4600,15 @@ void tactics_pi::ExportPerformanceData(void)
     createPNKEP_NMEA(1, mPolarTargetSpeed, mPolarTargetSpeed  * 1.852, 0, 0);   
   }
   //todo : extract mPredictedCoG calculation from layline.calc and add to CalculatePerformanceData
-  //if (g_bExpPerfData02 && !wxIsNaN(mPredictedHdG)){
-  //  createPNKEP_NMEA(2, mPredictedHdG, 0, 0, 0); // course (CoG) on other tack
-  //}
+  if (g_bExpPerfData02 && !wxIsNaN(mPredictedCoG)){
+    createPNKEP_NMEA(2, mPredictedCoG, 0, 0, 0); // course (CoG) on other tack
+  }
   //Target VMG angle, act. VMG % upwind, act. VMG % downwind
   if (g_bExpPerfData03 && !wxIsNaN(tvmg.TargetAngle) && tvmg.TargetSpeed > 0){
     createPNKEP_NMEA(3, tvmg.TargetAngle, mPercentTargetVMGupwind, mPercentTargetVMGdownwind, 0);  }
   //Gain VMG de 0 à 999%, Angle pour optimiser le VMG de 0 à 359°,Gain CMG de 0 à 999%,Angle pour optimiser le CMG de 0 à 359°
-  //  if (g_bExpPerfData03 && !wxIsNaN(tvmg.TargetAngle) && tvmg.TargetSpeed > 0){
-  //createPNKEP_NMEA(4, mPolarTargetSpeed, mPolarTargetSpeed, mPolarTargetSpeed, mPolarTargetSpeed);  //}
+  if (g_bExpPerfData04 )
+    createPNKEP_NMEA(4, mCMGoptAngle, mCMGGain, mVMGoptAngle, mVMGGain);  
   //current direction, current speed kts, current speed in km/h,
   if (g_bExpPerfData05 && !wxIsNaN(m_CurrentDirection) && m_ExpSmoothCurrSpd >= 0){
     createPNKEP_NMEA(5, m_CurrentDirection, m_ExpSmoothCurrSpd, m_ExpSmoothCurrSpd  * 1.852, 0);  }
@@ -4607,9 +4646,13 @@ These records are visible in the NKE instruments !
 You need to define an outbound interface and filter for $PNKEP
 -----------------------
 Speed and performance target (code PNKEP01)
+By definition of NKE this is the theoretically best VMG (Target-VMG),
+I implemented "Polar speed" here !, as this also works on crosswind courses
+And Target-VMG % is available in $PNKEP03 and $PNKEP04
+The Channel in the NKE instruments is called "Target Speed"
 $PNKEP,01,x.x,N,x.x,K*hh<CR><LF>
-|      \ target speed in km/h
-\ target speed in knots
+           |      \ target speed in km/h
+           \ target speed in knots
 course on next tack (code PNKEP02)
 $PNKEP,02,x.x*hh<CR><LF>
 \ Cap sur bord Opposé/prochain bord de 0 à 359°
@@ -4620,10 +4663,10 @@ $PNKEP,03,x.x,x.x,x.x*hh<CR><LF>
           \ opt. VMG angle  0 à 359°
 Angles pour optimiser le CMG et VMG et gain correspondant (code PNKEP04)
 $PNKEP,04,x.x,x.x,x.x,x.x*hh<CR><LF>
-|   |   |   \ Gain VMG de 0 à 999%
-|   |   \ Angle pour optimiser le VMG de 0 à 359°
-|   \ Gain CMG de 0 à 999%
-\ Angle pour optimiser le CMG de 0 à 359°
+           |   |   |   \ Gain VMG de 0 à 999%
+           |   |   \ Angle pour optimiser le VMG de 0 à 359°
+           |   \ Gain CMG de 0 à 999%
+           \ Angle pour optimiser le CMG de 0 à 359°
 Direction and speed of sea current (code PNKEP05)
 $PNKEP,05,x.x,x.x,N,x.x,K*hh<CR><LF>
            |   |     \ current speed in km/h
@@ -4688,7 +4731,11 @@ void tactics_pi::createPNKEP_NMEA(int sentence, double data1, double data2, doub
     nmeastr = _T("$PNKEP,03,") + wxString::Format("%.1f,", data1) + wxString::Format("%.1f,", data2) + wxString::Format("%.1f", data3);
     break;
   case 4:
-    /*    $PNKEP, 04, x.x, x.x, x.x, x.x*hh<CR><LF>
+    /*Calculates the gain for VMG & CMG and stores it in the variables
+mVMGGain, mCMGGain,mVMGoptAngle,mCMGoptAngle
+Gain is the percentage btw. the current boat speed mStW value and Target-VMG/CMG
+Question : shouldn't we compare act.VMG with Target-VMG ? To be investigated ...
+    $PNKEP, 04, x.x, x.x, x.x, x.x*hh<CR><LF>
     |    |    |    \ Gain VMG de 0 à 999 %
     |    |     \ Angle pour optimiser le VMG de 0 à 359°
     |    \ Gain CMG de 0 à 999 %
@@ -4706,3 +4753,48 @@ void tactics_pi::createPNKEP_NMEA(int sentence, double data1, double data2, doub
     SendNMEASentence(nmeastr);
 }
 
+/************************************************************************************
+Calculates the predicted course/speed on the other tack and stores it in the variables
+mPredictedCoG, mPredictedSoG
+************************************************************************************/
+void tactics_pi::CalculatePredictedCourse(void)
+{
+  double predictedKdW; //==predicted Course Through Water
+  //New: with BearingCompass in Head-Up mode = Hdt
+  double Leeway = (mHeelUnit == _T("\u00B0L")) ? -mLeeway : mLeeway;
+  //todo : assuming TWAunit = AWAunit ...
+  if (mAWAUnit == _T("\u00B0L")){ //currently wind is from port, target is from starboard ...
+    predictedKdW = mHdt - 2 * mTWA - Leeway;
+  }
+  else if (mAWAUnit == _T("\u00B0R")){ //so, currently wind from starboard
+    predictedKdW = mHdt + 2 * mTWA - Leeway;
+  }
+  else {
+    predictedKdW = (mTWA < 10) ? 180 : 0; // should never happen, but is this correct ???
+  }
+  if (predictedKdW >= 360) predictedKdW -= 360;
+  if (predictedKdW < 0) predictedKdW += 360;
+  double predictedLatHdt, predictedLonHdt, predictedLatCog, predictedLonCog;
+  //double predictedCoG;
+  //standard triangle calculation to get predicted CoG / SoG
+  //get endpoint from boat-position by applying  KdW, StW
+  PositionBearingDistanceMercator_Plugin(mlat, mlon, predictedKdW, mStW, &predictedLatHdt, &predictedLonHdt);
+  //wxLogMessage(_T("Step1: m_lat=%f,m_lon=%f, predictedKdW=%f,m_StW=%f --> predictedLatHdt=%f,predictedLonHdt=%f\n"), m_lat, m_lon, predictedKdW, m_StW, predictedLatHdt, predictedLonHdt);
+  //apply surface current with direction & speed to endpoint from above
+  PositionBearingDistanceMercator_Plugin(predictedLatHdt, predictedLonHdt, m_CurrentDirection, m_ExpSmoothCurrSpd, &predictedLatCog, &predictedLonCog);
+  //wxLogMessage(_T("Step2: predictedLatHdt=%f,predictedLonHdt=%f, m_CurrDir=%f,m_CurrSpeed=%f --> predictedLatCog=%f,predictedLonCog=%f\n"), predictedLatHdt, predictedLonHdt, m_CurrDir, m_CurrSpeed, predictedLatCog, predictedLonCog);
+  //now get predicted CoG & SoG as difference between the 2 endpoints (coordinates) from above
+  DistanceBearingMercator_Plugin(predictedLatCog, predictedLonCog, mlat, mlon, &mPredictedCoG, &mPredictedSoG);
+
+}
+/************************************************************************************
+Calculates the gain for VMG & CMG and stores it in the variables
+mVMGGain, mCMGGain,mVMGoptAngle,mCMGoptAngle
+Gain is the percentage btw. the current boat speed mStW value and Target-VMG/CMG 
+$PNKEP, 04, x.x, x.x, x.x, x.x*hh<CR><LF>
+             |    |    |    \ Gain VMG de 0 à 999 %
+             |    |     \ Angle pour optimiser le VMG de 0 à 359°
+             |    \ Gain CMG de 0 à 999 %
+             \ Angle pour optimiser le CMG de 0 à 359°
+
+************************************************************************************/

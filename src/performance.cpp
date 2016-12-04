@@ -1,10 +1,9 @@
-/***************************************************************************
+/**************************************************************************
 * $Id: performance.cpp, v1.0 2016/06/07 tom_BigSpeedy Exp $
 *
 * Project:  OpenCPN
 * Purpose:  tactics Plugin
 * Author:   Thomas Rauch
-*       (Inspired by original work from Jean-Eudes Onfray)
 ***************************************************************************
 *   Copyright (C) 2010 by David S. Register                               *
 *                                                                         *
@@ -203,15 +202,16 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
 			if (!wxIsNaN(mSTW) && !wxIsNaN(mTWA) && !wxIsNaN(mTWS)){
 
 				if (m_displaytype == POLARSPEED){
-                  double targetspeed = BoatPolar->GetPolarSpeed(wxRound(mTWA), wxRound(mTWS));
+                  double targetspeed = BoatPolar->GetPolarSpeed(mTWA, mTWS);
+                  //double avgtargetspeed = BoatPolar->GetAvgPolarSpeed(mTWA, mTWS);
 
 					if (wxIsNaN(targetspeed) || mSTW == 0)
 						m_data = _T("no polar data");
 					else {
                         double percent = mSTW / targetspeed * 100;
                         double user_targetSpeed = toUsrSpeed_Plugin(targetspeed, g_iDashSpeedUnit);
-                        m_data = wxString::Format("%d", wxRound(percent)) + _T(" % / ") + wxString::Format("%.2f", user_targetSpeed) + _T(" ") + stwunit;
-                        //createPNKEP_NMEA(1, targetspeed, targetspeed  * 1.852 , 0, 0);
+                        m_data = wxString::Format("%d", wxRound(percent)) + _T(" % / ") + wxString::Format("%.2f ", user_targetSpeed) + stwunit;
+                        //m_data = wxString::Format("%.2f / ", avgtargetspeed) + wxString::Format("%.2f", user_targetSpeed) + _T(" ") + stwunit;
                     }
 				}
 				else if (m_displaytype == POLARVMG){
@@ -444,7 +444,7 @@ void Polar::loadPolar(wxString FilePath)
                 continue;
               }
               if (col < WINDSPEED + 1) {
-                setValue(s, row, col, true);
+                setValue(s, row, col);
               }
             }
           }
@@ -479,7 +479,7 @@ void Polar::loadPolar(wxString FilePath)
               continue;
             }
             col = wxAtoi(WS[i]);
-            setValue(s, row, col, true);
+            setValue(s, row, col);
           }
         }
 
@@ -503,7 +503,7 @@ void Polar::loadPolar(wxString FilePath)
             }
             //if (col < 21)
             if (col < WINDSPEED + 1){
-              setValue(s, row, col, true);
+              setValue(s, row, col);
             }
           }
         }
@@ -530,14 +530,14 @@ void Polar::loadPolar(wxString FilePath)
 		wxTextOutputStream out(outstream);
 
 		wxString str = _T("d/s");
-		for (int i = 0; i <= 60; i++){
+        for (int i = 0; i <= WINDSPEED; i++){
 			str = wxString::Format(_T("%s\t%02d"), str, i);
 		}
 		str = str + _T("\n");
 		out.WriteString(str);				// write line by line
 		for (int n = 0; n < WINDDIR; n++){
 			str = wxString::Format(_T("%d\t"), n);
-			for (int i = 0; i <= 60; i++){
+            for (int i = 0; i <= WINDSPEED; i++){
 				str = wxString::Format(_T("%s\t%.2f"), str, windsp[i].winddir[n]);
 			}
 			str = str + _T("\n");
@@ -551,12 +551,14 @@ void Polar::loadPolar(wxString FilePath)
 /***********************************************************************************
 
 ************************************************************************************/
-void Polar::setValue(wxString s, int dir, int spd, bool cnt)
+void Polar::setValue(wxString s, int dir, int spd)
 {
 	s.Replace(_T(","), _T("."));
 	double speed = wxAtof(s);
-    if (speed > 0.0 && speed <= WINDSPEED && dir >= 0 && dir <WINDDIR)
-	{
+   
+    //if (speed > 0.0 && speed <= WINDSPEED && dir >= 0 && dir <WINDDIR)
+    if (spd > 0 && spd <= WINDSPEED && dir >= 0 && dir <WINDDIR)
+      {
 		windsp[spd].winddir[dir] = speed;
 		windsp[spd].isfix[dir] = true;
 //TR temp. for cmg test: fill the second half of the polar
@@ -681,12 +683,54 @@ void Polar::CalculateRowAverages(int i, int min, int max)
 
 }
 /***********************************************************************************
-
+Return the polar speed with averaging of wind speed.
+We're still roúnding the TWA, as this is a calculated value anyway and I doubt
+it will have an accuracy < 1°.
+With this simplified approach of averaging only TWS we can reduce some load ...
 ************************************************************************************/
-double Polar::GetPolarSpeed(int twa, int tws)
+double Polar::GetPolarSpeed(double twa, double tws)
 {
-  return (windsp[tws].winddir[twa]);
+  //original w/o averaging:
+  //return (windsp[wxRound(tws)].winddir[wxRound(twa)]);
+  double  fws, avspd1, avspd2;
+  int twsmin, i_twa;
+
+  // to do : limits to be checked (0°, 180°, etc.)
+  i_twa = wxRound(twa); //the next lower full true wind angle value of the polar array
+  twsmin = (int)tws; //the next lower full true wind speed value of the polar array
+  fws = tws - twsmin; // factor tws (how much are we above twsmin)
+  //do the vertical averaging btw. the 2 surrounding polar twa angles
+  avspd1 = windsp[twsmin].winddir[i_twa] ;
+  avspd2 = windsp[twsmin + 1].winddir[i_twa];
+  // now do the horizontal averaging btw. the 2 surrounding polar tws values ...
+  return (avspd1 + (avspd2 - avspd1)*fws);
 }
+/***********************************************************************************
+Get the polar speed with full averaging of the input data of both TWA and TWS.
+The polar is stored as a lookup table (2dim array) in steps of 1 kt / 1°.
+Instead of rounding up/down to the next full value as done in original GetPolarSpeed() we're
+averaging both TWA & TWS.
+Currently not used ...
+************************************************************************************/
+double Polar::GetAvgPolarSpeed(double twa, double tws)
+{
+  double fangle, fws,  avspd1, avspd2, av_Spd;
+  int twsmin, twamin;
+
+  // to do : limits to be checked (0°, 180°, etc.)
+  twamin = (int)twa; //the next lower full true wind angle value of the polar array
+  twsmin = (int)tws; //the next lower full true wind speed value of the polar array
+  fangle = twa - twamin; //factor twa (how much are we above twamin)
+  fws = tws - twsmin; // factor tws (how much are we above twsmin)
+  //do the vertical averaging btw. the 2 surrounding polar twa angles
+  avspd1 = windsp[twsmin].winddir[twamin] + (windsp[twsmin].winddir[twamin + 1] - windsp[twsmin].winddir[twamin])*fangle;
+  avspd2 = windsp[twsmin + 1].winddir[twamin] + (windsp[twsmin + 1].winddir[twamin + 1] - windsp[twsmin + 1].winddir[twamin])*fangle;
+  // now do the horizontal averaging btw. the 2 surrounding polar tws values.
+  av_Spd = avspd1 + (avspd2 - avspd1)*fws;
+  //wxLogMessage("TWA=%.1f,TWS=%.1f, =%f, av_Spd=%f", twa, tws, av_Spd);
+  return av_Spd;
+}
+
 /***********************************************************************************
 Basic VMG(Velocity made good) measured against the wind direction
 ************************************************************************************/
@@ -970,7 +1014,7 @@ Formula taken from
 Double Exponential Smoothing: An Alternative to Kalman Filter-Based Predictive Tracking
 Joseph J. LaViola Jr.
 Brown University Technology Center
-for Advanced Scientic Computing and Visualization
+for Advanced Scientific Computing and Visualization
 PO Box 1910, Providence, RI, 02912, USA
 jjl@cs.brown.edu
 --------------------------------------------------------------------------------------
@@ -1100,7 +1144,7 @@ void TacticsInstrument_PolarPerformance::SetData(int st, double data, wxString u
       m_STW = fromUsrSpeed_Plugin(data, g_iDashSpeedUnit);
 
       if (!wxIsNaN(m_STW) && !wxIsNaN(m_TWA) && !wxIsNaN(m_TWS)){
-        double m_PolarSpeed = BoatPolar->GetPolarSpeed(wxRound(m_TWA), wxRound(m_TWS));
+        double m_PolarSpeed = BoatPolar->GetPolarSpeed(m_TWA, m_TWS);
 
         if (wxIsNaN(m_PolarSpeed))
           m_PercentUnit = _T("no polar data");
