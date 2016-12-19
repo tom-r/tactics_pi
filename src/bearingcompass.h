@@ -67,7 +67,7 @@ class TacticsInstrument_BearingCompass : public TacticsInstrument_Dial
 
             void SetData(int, double, wxString);
 			bool SaveConfig(void);
-			double m_Bearing,  m_ExtraValueDTW, m_CurrDir, m_CurrSpeed, m_currAngleStart, m_TWA, m_AWA,m_TWS, m_Hdt, m_Leeway;
+			double m_Bearing,  m_ExtraValueDTW, m_CurrDir, m_CurrSpeed, m_currAngleStart, m_TWA, m_TWD, m_AWA,m_TWS, m_Hdt, m_Leeway;
             //double m_RMBlat, m_RMBlon;
 			double m_diffCogHdt;
 			double m_lat, m_lon,m_StW,m_predictedSog;
@@ -89,8 +89,10 @@ class TacticsInstrument_BearingCompass : public TacticsInstrument_Dial
 			void DrawForeground(wxGCDC* dc);
 			void DrawBearing(wxGCDC* dc);
 			void DrawWindAngles(wxGCDC* dc);
-			void DrawTargetVMGAngle(wxGCDC* dc);
-			void DrawCurrent(wxGCDC* dc);
+            void DrawPolar(wxGCDC* dc);
+            void DrawTargetxMGAngle(wxGCDC* dc);
+            void DrawTargetAngle(wxGCDC* dc, double TargetAngle, wxString color);
+            void DrawCurrent(wxGCDC* dc);
 			void DrawLaylines(wxGCDC* dc);
 			virtual void DrawData(wxGCDC* dc, double value, wxString unit, wxString format, DialPositionOption position);
 			virtual void Draw(wxGCDC* dc);

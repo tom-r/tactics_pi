@@ -175,9 +175,18 @@ public:
 	  void DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp);
 	  void DoRenderCurrentGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp);
       void DrawWindBarb(wxPoint pp, PlugIn_ViewPort *vp);
-	  void ToggleLaylineRender(wxWindow* parent);
-	  bool GetLaylineVisibility(wxWindow* parent);
-	  void OnContextMenuItemCallback(int id);
+      void DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle );
+      //void DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle, double TargetAngle, wxString color, double rad);
+      void DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double Angle, wxString color, double rad);
+      void ToggleLaylineRender(wxWindow* parent);
+      void ToggleCurrentRender(wxWindow* parent);
+      void TogglePolarRender(wxWindow* parent);
+      void ToggleWindbarbRender(wxWindow* parent);
+      bool GetLaylineVisibility(wxWindow* parent);
+      bool GetWindbarbVisibility(wxWindow* parent);
+      bool GetCurrentVisibility(wxWindow* parent);
+      bool GetPolarVisibility(wxWindow* parent);
+      void OnContextMenuItemCallback(int id);
 
 private:
       bool LoadConfig(void);
@@ -215,7 +224,7 @@ private:
       double               m_calcTWS, m_calcTWA, m_calcTWD; //temp testing for Windbarb display
 	  wxString             mHeelUnit, mAWAUnit, mAWSUnit;
 	  double               mAWA, mAWS, mTWA, mTWD, mTWS;
-	  bool                 m_bTrueWind_available, m_bLaylinesIsVisible;
+      bool                 m_bTrueWind_available, m_bLaylinesIsVisible;// , m_bDisplayCurrentOnChart, m_bShowWindbarbOnChart, m_bShowPolarOnChart;
 	  bool                 m_LeewayOK;
 	  double               alpha_currspd, alpha_CogHdt;
 	  double               m_ExpSmoothCurrSpd, m_ExpSmoothCurrDir,m_ExpSmoothSog;
@@ -323,6 +332,7 @@ public:
       wxCheckBox                   *m_ForceTrueWindCalculation;
       wxCheckBox                   *m_UseSOGforTWCalc;
       wxCheckBox                   *m_ShowWindbarbOnChart;
+      wxCheckBox                   *m_ShowPolarOnChart;
       wxRadioButton                *m_ButtonExpNKE;
       wxCheckBox                   *m_ExpPerfData01;
       wxCheckBox                   *m_ExpPerfData02;
@@ -372,7 +382,10 @@ enum
       ID_DASH_PREFS = 999,
       ID_DASH_VERTICAL,
       ID_DASH_HORIZONTAL,
-	  ID_DASH_LAYLINE  //TR
+	  ID_DASH_LAYLINE,
+      ID_DASH_CURRENT,
+      ID_DASH_POLAR,
+      ID_DASH_WINDBARB
 };
 
 class TacticsWindow : public wxWindow

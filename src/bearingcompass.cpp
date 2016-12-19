@@ -77,6 +77,7 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 	m_TWA = NAN;
 	m_AWA = -999;
 	m_TWS = NAN;
+    m_TWD = NAN;
 	alpha_diffCogHdt = 0.1;
 	m_ExpSmoothDiffCogHdt = 0;
 	m_oldExpSmoothDiffCogHdt = 0;
@@ -114,7 +115,10 @@ void TacticsInstrument_BearingCompass::SetData(int st, double data, wxString uni
 		m_curTack = unit;
 		m_TWA = data;
 	}
-	else if (st == OCPN_DBP_STC_AWA) {
+    else if (st == OCPN_DBP_STC_TWD) {
+      m_TWD = data;
+    }
+    else if (st == OCPN_DBP_STC_AWA) {
 		m_AWA = data;
 	}
 	else if (st == OCPN_DBP_STC_TWS) {
@@ -390,80 +394,80 @@ void TacticsInstrument_BearingCompass::DrawWindAngles(wxGCDC* dc)
 	}
 }
 /***************************************************************************************
-  Draw a pointer for the optimum target VMG Angle
+Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawTargetVMGAngle(wxGCDC* dc){
-	if (!wxIsNaN(m_TWS) && !wxIsNaN(m_TWA)) {
-		// get Target VMG Angle from Polar
-		TargetxMG tvmg = BoatPolar->Calc_TargetVMG(m_TWA, m_TWS);
-		if (tvmg.TargetAngle > 0){
-			wxColour cl;
-			GetGlobalColor(_T("DASH2"), &cl);
-			wxPen pen1;
-			pen1.SetStyle(wxSOLID);
-			pen1.SetColour(cl);
-			pen1.SetWidth(2);
-			dc->SetPen(pen1);
-			GetGlobalColor(_T("DASH1"), &cl);
-			wxBrush brush1;
-			brush1.SetStyle(wxSOLID);
-			brush1.SetColour(cl);
-			dc->SetBrush(brush1);
+void TacticsInstrument_BearingCompass::DrawTargetxMGAngle(wxGCDC* dc){
+  if (!wxIsNaN(m_TWS) && !wxIsNaN(m_TWA)) {
+    // get Target VMG Angle from Polar
+    TargetxMG tvmg_up = BoatPolar->GetTargetVMGUpwind(m_TWS);
+    TargetxMG tvmg_dn = BoatPolar->GetTargetVMGDownwind(m_TWS);
+    if (tvmg_up.TargetAngle > 0) DrawTargetAngle(dc, tvmg_up.TargetAngle, _T("BLUE3"));
+    if (tvmg_dn.TargetAngle > 0) DrawTargetAngle(dc, tvmg_dn.TargetAngle, _T("BLUE3"));
+    if (m_Bearing >= 0 && m_Bearing < 360 && !wxIsNaN(m_TWD)){
+       TargetxMG tcmg = BoatPolar->Calc_TargetCMG(m_TWS, m_TWD, m_Bearing);
+       DrawTargetAngle(dc, tcmg.TargetAngle, _T("URED"));
+    }
+  }
+}
+/***************************************************************************************
+Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
+****************************************************************************************/
+void TacticsInstrument_BearingCompass::DrawTargetAngle(wxGCDC* dc, double TargetAngle, wxString color){
+    if (TargetAngle > 0){
+      wxColour cl;
+      dc->SetPen(*wxTRANSPARENT_PEN);
+      GetGlobalColor(color, &cl);
+      wxBrush brush;
+      brush.SetStyle(wxSOLID);
+      brush.SetColour(cl);
+      dc->SetBrush(brush);
 
-			dc->SetPen(*wxTRANSPARENT_PEN);
-
-			GetGlobalColor(_T("BLUE3"), &cl);
-			wxBrush brush;
-			brush.SetStyle(wxSOLID);
-			brush.SetColour(cl);
-			dc->SetBrush(brush);
-
-			/* this is fix for a +/-180° round instrument, when m_MainValue is supplied as <0..180><L | R>
-			* for example TWA & AWA */
-			double data, TwaCog;
-			// head-up = COG, but TWA is based on Hdt --> add the diff here for a correct display
-			TwaCog = tvmg.TargetAngle;
+      /* this is fix for a +/-180° round instrument, when m_MainValue is supplied as <0..180><L | R>
+      * for example TWA & AWA */
+      double data, TwaCog;
+      // head-up = COG, but TWA is based on Hdt --> add the diff here for a correct display
+      TwaCog = TargetAngle;
 
 
-			/* this is fix for a +/-180° round instrument, when m_MainValue is supplied as <0..180><L | R>
-			* for example TWA & AWA */
-			if (m_curTack == _T("\u00B0L"))
-				data = 360 - TwaCog;
-			else
-				data = TwaCog;
+      /* this is fix for a +/-180° round instrument, when m_MainValue is supplied as <0..180><L | R>
+      * for example TWA & AWA */
+      if (m_curTack == _T("\u00B0L"))
+        data = 360 - TwaCog;
+      else
+        data = TwaCog;
 
-			// The arrow should stay inside fixed limits
-			double val;
-			if (data < m_MainValueMin)
-				val = m_MainValueMin;
-			else if (data > m_MainValueMax)
-				val = m_MainValueMax;
-			else
-				val = data;
+      // The arrow should stay inside fixed limits
+      double val;
+      if (data < m_MainValueMin)
+        val = m_MainValueMin;
+      else if (data > m_MainValueMax)
+        val = m_MainValueMax;
+      else
+        val = data;
 
-			double value = deg2rad((val - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
-			double value1 = deg2rad((val + 5 - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
-			double value2 = deg2rad((val - 5 - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
+      double value = deg2rad((val - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
+      double value1 = deg2rad((val + 5 - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
+      double value2 = deg2rad((val - 5 - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
 
-			/*
-			*           0
-			*          /\
-			*         /  \
-			*        /    \
-			*     2 /_ __ _\ 1
-			*
-			*           X
-			*/
-			wxPoint points[4];
-			points[0].x = m_cx + (m_radius * 0.95 * cos(value));
-			points[0].y = m_cy + (m_radius * 0.95 * sin(value));
-			points[1].x = m_cx + (m_radius * 1.15 * cos(value1));
-			points[1].y = m_cy + (m_radius * 1.15 * sin(value1));
-			points[2].x = m_cx + (m_radius * 1.15 * cos(value2));
-			points[2].y = m_cy + (m_radius * 1.15 * sin(value2));
-			dc->DrawPolygon(3, points, 0, 0);
-		}
-	}
+      /*
+      *           0
+      *          /\
+      *         /  \
+      *        /    \
+      *     2 /_ __ _\ 1
+      *
+      *           X
+      */
+      wxPoint points[4];
+      points[0].x = m_cx + (m_radius * 0.95 * cos(value));
+      points[0].y = m_cy + (m_radius * 0.95 * sin(value));
+      points[1].x = m_cx + (m_radius * 1.15 * cos(value1));
+      points[1].y = m_cy + (m_radius * 1.15 * sin(value1));
+      points[2].x = m_cx + (m_radius * 1.15 * cos(value2));
+      points[2].y = m_cy + (m_radius * 1.15 * sin(value2));
+      dc->DrawPolygon(3, points, 0, 0);
+    //}
+  }
 }
 /***************************************************************************************
 ****************************************************************************************/
@@ -471,8 +475,9 @@ void TacticsInstrument_BearingCompass::DrawForeground(wxGCDC* dc)
 {
 	if (m_Bearing >= 0)  
 		DrawBearing(dc);
+    DrawPolar(dc);
 	DrawWindAngles(dc);
-	DrawTargetVMGAngle(dc);
+	DrawTargetxMGAngle(dc);
 }
 /***************************************************************************************
 ****************************************************************************************/
@@ -505,6 +510,46 @@ void TacticsInstrument_BearingCompass::DrawBearing(wxGCDC* dc)
 
 	dc->DrawLine(brg[0],brg[1]);
 	dc->SetPen(*wxTRANSPARENT_PEN);
+
+}
+/***************************************************************************************
+****************************************************************************************/
+void TacticsInstrument_BearingCompass::DrawPolar(wxGCDC*dc)
+{
+  wxColour cl;
+  GetGlobalColor(_T("UBLACK"), &cl);
+  wxPen pen1;
+  pen1.SetStyle(wxSOLID);
+  pen1.SetColour(cl);
+  pen1.SetWidth(2);
+  dc->SetPen(pen1);
+  double polval[72];
+  double max = 0;
+  for (int i = 0; i < 72; i++){
+    polval[i] = BoatPolar->GetPolarSpeed(i*5, m_TWS);
+    if (wxIsNaN(polval[i])) polval[i] = 0.0;
+    if (polval[i]>max) max = polval[i];
+  }
+ // double anglevalue = deg2rad(m_Bearing) + deg2rad(m_AngleStart - ANGLE_OFFSET);
+  wxPoint currpoints[72];
+  double rad, anglevalue;
+  for (int i = 0; i < 72; i++){
+    //anglevalue = deg2rad(m_Bearing+i*5) + deg2rad(m_AngleStart - ANGLE_OFFSET);
+    anglevalue = deg2rad(m_Hdt + i * 5) + deg2rad(m_AngleStart - ANGLE_OFFSET);
+    rad = m_radius*0.74*polval[i] / max;
+   // wxLogMessage("polval[%d]=%.2f, rad=%.2f",i,polval[i],rad);
+
+    currpoints[i].x = m_cx + (rad * cos(anglevalue));
+    currpoints[i].y = m_cy + (rad * sin(anglevalue));
+
+  }
+  wxBrush currbrush;
+  currbrush.SetColour(wxColour(7, 107, 183, 0));
+  currbrush.SetStyle(wxSOLID);
+  dc->SetBrush(currbrush);
+
+
+  dc->DrawPolygon(72, currpoints, 0, 0);
 
 }
 /***************************************************************************************

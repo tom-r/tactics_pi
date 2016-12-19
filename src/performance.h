@@ -113,6 +113,12 @@ public:
 		bool     isfix[WINDDIR+1];   //one of the values from the original polar
 	} windsp[WINDSPEED+1];
 	
+    struct optAngle
+    {
+      TargetxMG tvmg_up; //upwind
+      TargetxMG tvmg_dn; //downwind
+    }tws[WINDSPEED + 1];
+
 	wxDC*			dc;
 
 	wxArrayString	sails;
@@ -140,6 +146,8 @@ public:
 	void CalculateLineAverages(int n, int min, int max);
 	void CalculateRowAverages(int i, int min, int max);
 	double GetPolarSpeed(double twa, double tws);
+    TargetxMG GetTargetVMGUpwind(double TWS);
+    TargetxMG GetTargetVMGDownwind(double TWS);
     double GetAvgPolarSpeed(double twa, double tws);
 	double Calc_VMG(double TWA, double StW);
 	double Calc_CMG(double COG, double SOG, double BTM);

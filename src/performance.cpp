@@ -581,7 +581,10 @@ void Polar::reset()
 			windsp[i].isfix[n] = false;
 		}
 	}
-
+    for (int i = 0; i <= WINDSPEED; i++) {
+      tws[i].tvmg_up.TargetAngle = tws[i].tvmg_up.TargetSpeed = 0;
+      tws[i].tvmg_dn.TargetAngle = tws[i].tvmg_dn.TargetSpeed = 0;
+    }
 }
 
 /***********************************************************************************
@@ -629,7 +632,24 @@ void Polar::completePolar()
 			n++;
 		}
 	}
+    //fill the TargetVMG lookup table now
+    for (int i = 0; i <= WINDSPEED; i++){
+      tws[i].tvmg_up = Calc_TargetVMG(45.0, (double)i);
+      tws[i].tvmg_dn = Calc_TargetVMG(120.0, (double)i);
+    }
+    //for (int j = 0; j <= WINDSPEED; j++){
+    //  wxLogMessage("TWS=%d, UP: TargetAngle=%.2f, TargetSpeed=%.2f, DOWN: TargetAngle=%.2f, TargetSpeed=%.2f", j, tws[j].tvmg_up.TargetAngle, tws[j].tvmg_up.TargetSpeed, tws[j].tvmg_dn.TargetAngle, tws[j].tvmg_dn.TargetSpeed);
+    //}
 }
+TargetxMG Polar::GetTargetVMGUpwind(double TWS)
+{
+  return( tws[wxRound(TWS)].tvmg_up);
+}
+TargetxMG Polar::GetTargetVMGDownwind(double TWS)
+{
+  return(tws[wxRound(TWS)].tvmg_dn);
+}
+
 /***********************************************************************************
 
 ************************************************************************************/

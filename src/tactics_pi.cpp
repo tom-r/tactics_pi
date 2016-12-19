@@ -99,6 +99,7 @@ bool g_bCorrectAWwithHeel;    //if true, AWS/AWA will be corrected with Heel-Ang
 bool g_bForceTrueWindCalculation;    //if true, NMEA Data for TWS,TWA,TWD is not used, but the plugin calculated data is used
 bool g_bUseSOGforTWCalc; //if true, use SOG instead of STW to calculate TWS,TWA,TWD
 bool g_bShowWindbarbOnChart;
+bool g_bShowPolarOnChart;
 bool g_bExpPerfData01;
 bool g_bExpPerfData02;
 bool g_bExpPerfData03;
@@ -511,8 +512,7 @@ int tactics_pi::Init( void )
 	for (int i = 0; i < COGRANGE; i++) m_COGRange[i] = NAN;
 
 	m_bTrueWind_available = false;
-	m_bLaylinesIsVisible = false;
-	//*****************
+    //*****************
     g_pFontTitle = new wxFont( 10, wxFONTFAMILY_SWISS, wxFONTSTYLE_ITALIC, wxFONTWEIGHT_NORMAL );
     g_pFontData = new wxFont( 14, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL );
     g_pFontLabel = new wxFont( 8, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL );
@@ -617,7 +617,7 @@ bool tactics_pi::DeInit( void )
 
     return true;
 }
-
+//*********************************************************************************
 void tactics_pi::Notify()
 {
     SendUtcTimeToAllInstruments( mUTCDateTime );
@@ -666,27 +666,27 @@ void tactics_pi::Notify()
     }
     ExportPerformanceData();
 }
-
+//*********************************************************************************
 int tactics_pi::GetAPIVersionMajor()
 {
     return MY_API_VERSION_MAJOR;
 }
-
+//*********************************************************************************
 int tactics_pi::GetAPIVersionMinor()
 {
     return MY_API_VERSION_MINOR;
 }
-
+//*********************************************************************************
 int tactics_pi::GetPlugInVersionMajor()
 {
     return PLUGIN_VERSION_MAJOR;
 }
-
+//*********************************************************************************
 int tactics_pi::GetPlugInVersionMinor()
 {
     return PLUGIN_VERSION_MINOR;
 }
-
+//*********************************************************************************
 wxBitmap *tactics_pi::GetPlugInBitmap()
 {
     return _img_tactics_pi;
@@ -696,19 +696,19 @@ wxString tactics_pi::GetCommonName()
 {
     return _("Tactics");
 }
-
+//*********************************************************************************
 wxString tactics_pi::GetShortDescription()
 {
     return _("Tactics PlugIn for OpenCPN");
 }
-
+//*********************************************************************************
 wxString tactics_pi::GetLongDescription()
 {
     return _("Tactics PlugIn for OpenCPN\n\
 Provides performance data & instrument display from NMEA source and polar file.");
 
 }
-
+//*********************************************************************************
 void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString unit)
 {
     if (st == OCPN_DBP_STC_AWS){
@@ -776,7 +776,7 @@ Called by Plugin Manager on main system process cycle
 bool tactics_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp)
 {
     b_tactics_dc_message_shown = false; // show message box if RenderOverlay() is called again
-    if (m_bLaylinesIsVisible || g_bDisplayCurrentOnChart || g_bShowWindbarbOnChart){
+    if (m_bLaylinesIsVisible || g_bDisplayCurrentOnChart || g_bShowWindbarbOnChart || g_bShowPolarOnChart){
 		glPushAttrib(GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_ENABLE_BIT | GL_POLYGON_BIT | GL_HINT_BIT);
 		glEnable(GL_LINE_SMOOTH);
 		glEnable(GL_BLEND);
@@ -968,6 +968,7 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
        Draw wind barb on boat position
       ******************************************************************************************/
       DrawWindBarb(boat, vp);
+      DrawPolar(vp,boat,mTWD);
     }
     //wxString GUID = _T("TacticsWP");
     if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)) m_pMark = NULL;
@@ -1506,7 +1507,162 @@ void tactics_pi::DrawWindBarb(wxPoint pp, PlugIn_ViewPort *vp)
   }
 }
 
+/*********************************************************************************
+Draw the OpenGL Polar on the ships position overlay
+Polar is normalized (always same size)
+**********************************************************************************/
+void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
+{
+  if (g_bShowPolarOnChart && !wxIsNaN(mTWS)){
+    glColor4ub(0, 0, 255, 192);	// red, green, blue,  alpha (byte values)
+    double polval[72];
+    double max = 0;
+    double rotate = vp->rotation;
+    if (mTWS > 0){
+      for (int i = 0; i < 72; i++){
+        polval[i] = BoatPolar->GetPolarSpeed(i * 5, mTWS);
+        if (wxIsNaN(polval[i])) polval[i] = 0.0;
+        if (polval[i]>max) max = polval[i];
+      }
+      // double anglevalue = deg2rad(m_Bearing) + deg2rad(m_AngleStart - ANGLE_OFFSET);
+      wxPoint currpoints[72];
+      double rad, anglevalue;
+      int i;
+      //double rot = getSignedDegRange(mTWD, mBRG);
+      for (i = 0; i < 72; i++){
+        anglevalue = deg2rad(PolarAngle + i * 5) + deg2rad(0. - ANGLE_OFFSET);
+        //anglevalue = deg2rad(mBRG + i * 5) + deg2rad(0. - ANGLE_OFFSET);
+        //anglevalue = deg2rad(mHdt + i * 5) + deg2rad(0. - ANGLE_OFFSET) + rotate;
+        rad = 81 * polval[i] / max;
+        // wxLogMessage("polval[%d]=%.2f, rad=%.2f",i,polval[i],rad);
+        currpoints[i].x = pp.x + (rad * cos(anglevalue));
+        currpoints[i].y = pp.y + (rad * sin(anglevalue));
+      }
+      glLineWidth(1);
+      glBegin(GL_LINES);
+      glVertex2d(currpoints[0].x, currpoints[0].y);
+      for (i = 1; i < 72; i++){
+        glVertex2d(currpoints[i].x, currpoints[i].y);
+        glVertex2d(currpoints[i].x, currpoints[i].y);
+      }
+      glVertex2d(currpoints[0].x, currpoints[0].y);
+      //dc->DrawPolygon(360, currpoints, 0, 0);
+      glEnd();
+      //draw Target-VMG Angles now
+      TargetxMG vmg_up = BoatPolar->GetTargetVMGUpwind(mTWS);
+      TargetxMG vmg_dn = BoatPolar->GetTargetVMGDownwind(mTWS);
+     // wxPoint vmg[6];
+      if (!wxIsNaN(vmg_up.TargetAngle)){
+//      anglevalue = deg2rad(PolarAngle + vmg_up.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
+        rad = 81 * BoatPolar->GetPolarSpeed(vmg_up.TargetAngle, mTWS) / max;
+/*      vmg[0].x = pp.x + (rad * cos(anglevalue));
+        vmg[0].y = pp.y + (rad * sin(anglevalue));
+        anglevalue = deg2rad(PolarAngle - vmg_up.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
+        vmg[1].x = pp.x + (rad * cos(anglevalue));
+        vmg[1].y = pp.y + (rad * sin(anglevalue));*/
+        DrawTargetAngle(vp, pp, PolarAngle + vmg_up.TargetAngle, _T("BLUE3"), rad);
+        DrawTargetAngle(vp, pp, PolarAngle - vmg_up.TargetAngle, _T("BLUE3"), rad);
+      }
+      if (!wxIsNaN(vmg_dn.TargetAngle)){
+//      anglevalue = deg2rad(PolarAngle + vmg_dn.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
+        rad = 81 * BoatPolar->GetPolarSpeed(vmg_dn.TargetAngle, mTWS) / max;
+/*      vmg[2].x = pp.x + (rad * cos(anglevalue));
+        vmg[2].y = pp.y + (rad * sin(anglevalue));
+        anglevalue = deg2rad(PolarAngle - vmg_dn.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
+        vmg[3].x = pp.x + (rad * cos(anglevalue));
+        vmg[3].y = pp.y + (rad * sin(anglevalue));*/
+        DrawTargetAngle(vp, pp, PolarAngle + vmg_dn.TargetAngle, _T("BLUE3"), rad);
+        DrawTargetAngle(vp, pp, PolarAngle - vmg_dn.TargetAngle, _T("BLUE3"), rad);
+      }
+      TargetxMG cmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
+      if (!wxIsNaN(cmg.TargetAngle)){
+//      anglevalue = deg2rad(PolarAngle + cmg.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
+        rad = 81 * BoatPolar->GetPolarSpeed(cmg.TargetAngle, mTWS) / max;
+/*      vmg[4].x = pp.x + (rad * cos(anglevalue));
+        vmg[4].y = pp.y + (rad * sin(anglevalue));
+        anglevalue = deg2rad(PolarAngle - cmg.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
+        vmg[5].x = pp.x + (rad * cos(anglevalue));
+        vmg[5].y = pp.y + (rad * sin(anglevalue));*/
+        DrawTargetAngle(vp, pp, PolarAngle + cmg.TargetAngle, _T("URED"), rad);
+        DrawTargetAngle(vp, pp, PolarAngle - cmg.TargetAngle, _T("URED"), rad);
+      }
+      //Hdt line
+      wxPoint hdt;
+      anglevalue = deg2rad(mHdt) + deg2rad(0. - ANGLE_OFFSET) + rotate;
+      rad = 81*1.1;
+      hdt.x = pp.x + (rad * cos(anglevalue));
+      hdt.y = pp.y + (rad * sin(anglevalue));
+      glColor4ub(0, 0, 255, 255);	// red, green, blue,  alpha (byte values)
+      glLineWidth(3);
+      glBegin(GL_LINES);
+      glVertex2d(pp.x, pp.y);
+      glVertex2d(hdt.x, hdt.y);
+      glEnd();
+/*      glLineWidth(1);
+      glBegin(GL_LINES);
+      glVertex2d(pp.x, pp.y);
+      glVertex2d(vmg[0].x, vmg[0].y);
+      glVertex2d(pp.x, pp.y);
+      glVertex2d(vmg[1].x, vmg[1].y);
+      glVertex2d(pp.x, pp.y);
+      glVertex2d(vmg[2].x, vmg[2].y);
+      glVertex2d(pp.x, pp.y);
+      glVertex2d(vmg[3].x, vmg[3].y);
 
+      glColor4ub(255, 0, 0, 192);	// red, green, blue,  alpha (byte values)
+      glVertex2d(pp.x, pp.y);
+      glVertex2d(vmg[4].x, vmg[4].y);
+      glVertex2d(pp.x, pp.y);
+      glVertex2d(vmg[5].x, vmg[5].y);
+      glEnd();*/
+    }
+  }
+}
+/***************************************************************************************
+Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
+****************************************************************************************/
+//void tactics_pi::DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle, double TargetAngle, wxString color, double rad){
+  void tactics_pi::DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double Angle, wxString color, double rad){
+//  if (TargetAngle > 0){
+    double rotate = vp->rotation;
+//    double value = deg2rad(PolarAngle + TargetAngle) + deg2rad(0 - ANGLE_OFFSET) + rotate;
+//    double value1 = deg2rad(PolarAngle + 5 + TargetAngle) + deg2rad(0 - ANGLE_OFFSET) + rotate;
+//    double value2 = deg2rad(PolarAngle - 5 + TargetAngle) + deg2rad(0 - ANGLE_OFFSET) + rotate;
+    double value = deg2rad(Angle) + deg2rad(0 - ANGLE_OFFSET) + rotate;
+    double value1 = deg2rad(Angle + 5) + deg2rad(0 - ANGLE_OFFSET) + rotate;
+    double value2 = deg2rad(Angle - 5) + deg2rad(0 - ANGLE_OFFSET) + rotate;
+
+    /*
+    *           0
+    *          /\
+    *         /  \
+    *        /    \
+    *     2 /_ __ _\ 1
+    *
+    *           X
+    */
+    wxPoint points[4];
+    points[0].x = pp.x + (rad * 0.95 * cos(value));
+    points[0].y = pp.y + (rad * 0.95 * sin(value));
+    points[1].x = pp.x + (rad * 1.15 * cos(value1));
+    points[1].y = pp.y + (rad * 1.15 * sin(value1));
+    points[2].x = pp.x + (rad * 1.15 * cos(value2));
+    points[2].y = pp.y + (rad * 1.15 * sin(value2));
+//    dc->DrawPolygon(3, points, 0, 0);
+    if (color == _T("BLUE3")) glColor4ub(0, 0,255, 192);
+    else if (color == _T("URED"))glColor4ub(255, 0, 0, 192);
+    else glColor4ub(255, 128, 0, 168);
+
+    glLineWidth(1);
+    glBegin(GL_TRIANGLES);
+    glVertex2d(points[0].x, points[0].y);
+    glVertex2d(points[1].x, points[1].y);
+    glVertex2d(points[2].x, points[2].y);
+    glEnd();
+
+    //}
+//  }
+}
 /*********************************************************************************
 Toggle Layline Render overlay
 **********************************************************************************/
@@ -1514,11 +1670,36 @@ void tactics_pi::ToggleLaylineRender(wxWindow* parent)
 {
 	m_bLaylinesIsVisible = m_bLaylinesIsVisible ? false : true;
 }
+void tactics_pi::ToggleCurrentRender(wxWindow* parent)
+{
+  g_bDisplayCurrentOnChart = g_bDisplayCurrentOnChart ? false : true;
+}
+void tactics_pi::TogglePolarRender(wxWindow* parent)
+{
+  g_bShowPolarOnChart = g_bShowPolarOnChart ? false : true;
+}
+void tactics_pi::ToggleWindbarbRender(wxWindow* parent)
+{
+  g_bShowWindbarbOnChart = g_bShowWindbarbOnChart ? false : true;
+}
+
 /*********************************************************************************
 **********************************************************************************/
 bool tactics_pi::GetLaylineVisibility(wxWindow* parent)
 {
 	return m_bLaylinesIsVisible;
+}
+bool tactics_pi::GetCurrentVisibility(wxWindow* parent)
+{
+  return g_bDisplayCurrentOnChart;
+}
+bool tactics_pi::GetWindbarbVisibility(wxWindow* parent)
+{
+  return g_bShowWindbarbOnChart;
+}
+bool tactics_pi::GetPolarVisibility(wxWindow* parent)
+{
+  return g_bShowPolarOnChart;
 }
 bool tactics_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp)
 {
@@ -2540,6 +2721,7 @@ bool tactics_pi::LoadConfig( void )
         pConf->Read(_T("CorrectAWwithHeel"), &g_bCorrectAWwithHeel, false);    //if true, AWS/AWA are corrected with Heel-Angle
         pConf->Read(_T("ForceTrueWindCalculation"), &g_bForceTrueWindCalculation, false);    //if true, NMEA Data for TWS,TWA,TWD is not used, but the plugin calculated data is used
         pConf->Read(_T("ShowWindbarbOnChart"), &g_bShowWindbarbOnChart, false);
+        pConf->Read(_T("ShowPolarOnChart"), &g_bShowPolarOnChart, false);
         pConf->Read(_T("UseSOGforTWCalc"), &g_bUseSOGforTWCalc, false);
         pConf->Read(_T("ExpPolarSpeed"), &g_bExpPerfData01, false);
         pConf->Read(_T("ExpCourseOtherTack"), &g_bExpPerfData02, false);
@@ -2695,7 +2877,8 @@ bool tactics_pi::SaveConfig( void )
         pConf->Write(_T("ForceTrueWindCalculation"), g_bForceTrueWindCalculation); 
         pConf->Write(_T("UseSOGforTWCalc"), g_bUseSOGforTWCalc);
         pConf->Write(_T("ShowWindbarbOnChart"), g_bShowWindbarbOnChart);
-		pConf->Write(_T("Heel_5kn_45Degree"), g_dheel[1][1]);
+        pConf->Write(_T("ShowPolarOnChart"), g_bShowPolarOnChart);
+        pConf->Write(_T("Heel_5kn_45Degree"), g_dheel[1][1]);
 		pConf->Write(_T("Heel_5kn_90Degree"), g_dheel[1][2]);
 		pConf->Write(_T("Heel_5kn_135Degree"), g_dheel[1][3]);
 		pConf->Write(_T("Heel_10kn_45Degree"), g_dheel[2][1]);
@@ -3291,7 +3474,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
 
     m_ShowWindbarbOnChart = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Show Wind Barb on Chart (OpenGL)"));
     itemFlexGridSizer10->Add(m_ShowWindbarbOnChart, 0, wxEXPAND, 5);
-    m_ShowWindbarbOnChart->SetValue(g_bShowWindbarbOnChart);
+    m_ShowWindbarbOnChart->SetValue( g_bShowWindbarbOnChart);
 
     //****************************************************************************************************
     wxStaticBox* itemStaticBox09 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Polar"));
@@ -3305,11 +3488,15 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     itemFlexGridSizer09->Add(itemStaticText30, 0, wxEXPAND | wxALL, border_size);
 	
 	m_pTextCtrlPolar = new wxTextCtrl(itemPanelNotebook03, wxID_ANY, g_path_to_PolarFile, wxDefaultPosition, wxDefaultSize);
-    itemFlexGridSizer09->Add(m_pTextCtrlPolar, 0,  wxEXPAND | wxALL, border_size);
+    itemFlexGridSizer09->Add(m_pTextCtrlPolar, 0, wxALIGN_LEFT | wxEXPAND | wxALL, border_size);
 
 	m_buttonLoadPolar = new wxButton(itemPanelNotebook03, wxID_ANY, _("Load"), wxDefaultPosition, wxDefaultSize, 0);
-	itemFlexGridSizer09->Add(m_buttonLoadPolar, 0, wxALIGN_RIGHT | wxALL, 5);
+	itemFlexGridSizer09->Add(m_buttonLoadPolar, 0, wxALIGN_LEFT | wxALL, 5);
 	m_buttonLoadPolar->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TacticsPreferencesDialog::SelectPolarFile), NULL, this);
+
+    m_ShowPolarOnChart = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Show Polar on Chart (OpenGL)"));
+    itemFlexGridSizer09->Add(m_ShowPolarOnChart, 0, wxEXPAND, 5);
+    m_ShowPolarOnChart->SetValue(g_bShowPolarOnChart);
 
     //****************************************************************************************************
     wxStaticBox* itemStaticBoxExpData = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Export NMEA Performance Data"));
@@ -3486,6 +3673,7 @@ void TacticsPreferencesDialog::SaveTacticsConfig()
     g_bForceTrueWindCalculation = m_ForceTrueWindCalculation->GetValue();
     g_bUseSOGforTWCalc=m_UseSOGforTWCalc->GetValue();
     g_bShowWindbarbOnChart = m_ShowWindbarbOnChart->GetValue();
+    g_bShowPolarOnChart = m_ShowPolarOnChart->GetValue();
     g_bExpPerfData01 = m_ExpPerfData01->GetValue();
     g_bExpPerfData02 = m_ExpPerfData02->GetValue();
     g_bExpPerfData03 = m_ExpPerfData03->GetValue();
@@ -3767,6 +3955,15 @@ void TacticsWindow::OnContextMenu( wxContextMenuEvent& event )
 	wxMenuItem* btnShowLaylines = contextMenu->AppendCheckItem(ID_DASH_LAYLINE, _("Show Laylines"));//TR
 	btnShowLaylines->Check(m_plugin->GetLaylineVisibility(this) );
 
+    wxMenuItem* btnShowCurrent = contextMenu->AppendCheckItem(ID_DASH_CURRENT, _("Show Current"));//TR
+    btnShowCurrent->Check(m_plugin->GetCurrentVisibility(this));
+
+    wxMenuItem* btnShowWindbarb = contextMenu->AppendCheckItem(ID_DASH_WINDBARB, _("Show Windbarb"));//TR
+    btnShowWindbarb->Check(m_plugin->GetWindbarbVisibility(this));
+
+    wxMenuItem* btnShowPolar = contextMenu->AppendCheckItem(ID_DASH_POLAR, _("Show Polar"));//TR
+    btnShowPolar->Check(m_plugin->GetPolarVisibility(this));
+
     PopupMenu( contextMenu );
     delete contextMenu;
 }
@@ -3798,6 +3995,18 @@ void TacticsWindow::OnContextMenuSelect( wxCommandEvent& event )
 			m_plugin->ToggleLaylineRender(this);
 			return; // Does it's own save.
 		}
+        case ID_DASH_CURRENT: {//TR
+          m_plugin->ToggleCurrentRender(this);
+          return; // Does it's own save.
+        }
+        case ID_DASH_POLAR: {//TR
+          m_plugin->TogglePolarRender(this);
+          return; // Does it's own save.
+        }
+        case ID_DASH_WINDBARB: {//TR
+          m_plugin->ToggleWindbarbRender(this);
+          return; // Does it's own save.
+        }
 
     }
     m_plugin->SaveConfig();
@@ -4125,7 +4334,7 @@ void TacticsWindow::SetInstrumentList( wxArrayInt list )
 				instrument = new TacticsInstrument_BearingCompass(this, wxID_ANY,
 					getInstrumentCaption(id), OCPN_DBP_STC_COG | OCPN_DBP_STC_BRG | OCPN_DBP_STC_CURRDIR | OCPN_DBP_STC_CURRSPD
 					| OCPN_DBP_STC_TWA | OCPN_DBP_STC_LEEWAY | OCPN_DBP_STC_HDT | OCPN_DBP_STC_LAT | OCPN_DBP_STC_LON
-					| OCPN_DBP_STC_STW | OCPN_DBP_STC_AWA | OCPN_DBP_STC_TWS );
+                    | OCPN_DBP_STC_STW | OCPN_DBP_STC_AWA | OCPN_DBP_STC_TWS | OCPN_DBP_STC_TWD);
 				((TacticsInstrument_Dial *)instrument)->SetOptionMarker(5,
 					DIAL_MARKER_SIMPLE, 2);
 				((TacticsInstrument_Dial *)instrument)->SetOptionLabel(30,
