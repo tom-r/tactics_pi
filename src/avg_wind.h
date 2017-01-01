@@ -2,7 +2,7 @@
 * $Id: wind_history.h, v1.0 2010/08/30 tom-r Exp $
 *
 * Project:  OpenCPN
-* Purpose:  Dashboard Plugin
+* Purpose:  Tactics_pi Plugin
 * Author:   Thomas Rauch
 *
 ***************************************************************************
@@ -25,8 +25,8 @@
 ***************************************************************************
 */
 
-#ifndef __WIND_HISTORY_H__
-#define __WIND_HISTORY_H__
+#ifndef __AVG_WIND_H__
+#define __AVG_WIND_H__
 
 // For compilers that support precompilation, includes "wx/wx.h".
 #include <wx/wxprec.h>
@@ -42,71 +42,57 @@
 #endif
 
 // Warn: div by 0 if count == 1
-#define WIND_RECORD_COUNT 3000
+#define AVG_WIND_RECORDS 1800  //30 min with 60 secs
 
 #include "instrument.h"
 #include "dial.h"
+#include "performance.h"
 
 
-
-class TacticsInstrument_WindDirHistory : public TacticsInstrument
+class TacticsInstrument_AvgWindDir : public TacticsInstrument 
 {
 public:
-  TacticsInstrument_WindDirHistory(wxWindow *parent, wxWindowID id, wxString title);
-  ~TacticsInstrument_WindDirHistory(void){}
+  TacticsInstrument_AvgWindDir(wxWindow *parent, wxWindowID id, wxString title);
+  ~TacticsInstrument_AvgWindDir(void){}
   void SetData(int, double, wxString);
   wxSize GetSize(int orient, wxSize hint);
 
 private:
   int m_soloInPane;
-  int    m_SpdRecCnt, m_DirRecCnt, m_SpdStartVal, m_DirStartVal;
-  int m_isNULL;
-  int m_WindDirShift;
 
 protected:
   double alpha;
-  double m_ArrayWindDirHistory[WIND_RECORD_COUNT];
-  double m_ArrayWindSpdHistory[WIND_RECORD_COUNT];
-  double m_ExpSmoothArrayWindSpd[WIND_RECORD_COUNT];
-  double m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT];
-  wxDateTime m_ArrayRecTime[WIND_RECORD_COUNT];
+  wxDateTime m_ArrayRecTime[AVG_WIND_RECORDS];
 
-  double m_MaxWindDir;
-  double m_MinWindDir;
   double m_WindDirRange;
-  double m_MaxWindSpd;  //...in array
-  double m_TotalMaxWindSpd; // since O is started
   double m_WindDir;
-  double m_WindSpd;
-  double m_TrueWindDir;
-  double m_TrueWindSpd;
-  double m_MaxWindSpdScale;
-  double m_ratioW;
+  double m_ratioW, m_ratioH;
   double m_oldDirVal;
+  double m_AvgWindDir;
+  double m_WindDirArray[AVG_WIND_RECORDS], m_signedWindDirArray[AVG_WIND_RECORDS];
+  double m_ExpSmoothSignedWindDirArray[AVG_WIND_RECORDS], m_ExpsinSmoothArrayWindDir[AVG_WIND_RECORDS], m_ExpcosSmoothArrayWindDir[AVG_WIND_RECORDS]; //30 min with 60sec each
+  int    m_AvgTime; // in [secs]
+  double m_DegRangeStb, m_DegRangePort;
   bool m_IsRunning;
   int m_SampleCount;
-  wxString m_WindSpeedUnit;
-  wxTimer m_WindHistUpdTimer;
-
-  wxRect m_WindowRect;
-  wxRect m_DrawAreaRect; //the coordinates of the real darwing area
-  int m_DrawingWidth, m_TopLineHeight, m_DrawingHeight;
-  int m_width, m_height;
-  int m_LeftLegend, m_RightLegend;
-  int m_currSec, m_lastSec, m_SpdCntperSec, m_DirCntperSec;
-  double m_cntSpd, m_cntDir, m_avgSpd, m_avgDir;
-
+  DoubleExpSmooth *mDblsinExpSmoothWindDir, *mDblcosExpSmoothWindDir;
+  wxSlider                     *m_AvgTimeSlider;
+  wxTimer m_avgWindUpdTimer;
+  int  m_TopLineHeight, m_SliderHeight, m_availableHeight;
+  int m_width, m_height, m_cx;
+  wxSize size;
+  int m_Legend;
   void Draw(wxGCDC* dc);
   void DrawBackground(wxGCDC* dc);
   void DrawForeground(wxGCDC* dc);
-  void SetMinMaxWindScale();
-  void DrawWindDirScale(wxGCDC* dc);
-  void DrawWindSpeedScale(wxGCDC* dc);
-  wxString GetWindDirStr(wxString WindDir);
-  void OnWindHistUpdTimer(wxTimerEvent & event);
+  double GetAvgWindDir();
+  void OnAvgTimeSliderUpdated(wxCommandEvent& event);
+  void CalcAvgWindDir(double CurWindDir);
+  void OnAvgWindUpdTimer(wxTimerEvent & event);
+  //void DrawWindSpeedScale(wxGCDC* dc);
 };
 
 
 
-#endif // __WIND_HISTORY_H__
+#endif // __AVG_WIND_H__
 

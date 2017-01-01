@@ -67,6 +67,7 @@
 #include "iirfilter.h"
 #include "performance.h"
 #include "bearingcompass.h"
+#include "avg_wind.h"
 
 class TacticsWindow;
 class TacticsWindowContainer;
@@ -217,6 +218,8 @@ private:
       int                  mGPS_Watchdog;
       int                  mVar_Watchdog;
       int                  mBRG_Watchdog;
+      int                  mTWD_Watchdog;
+      int                  mTWS_Watchdog;
 
 	  // TR : bearing compass + TWA/TWD calculation
 	  wxMenu               *m_pmenu;
@@ -224,7 +227,7 @@ private:
       double               m_calcTWS, m_calcTWA, m_calcTWD; //temp testing for Windbarb display
 	  wxString             mHeelUnit, mAWAUnit, mAWSUnit;
 	  double               mAWA, mAWS, mTWA, mTWD, mTWS;
-      bool                 m_bTrueWind_available, m_bLaylinesIsVisible;// , m_bDisplayCurrentOnChart, m_bShowWindbarbOnChart, m_bShowPolarOnChart;
+      bool                 m_bTrueWind_available, m_bLaylinesIsVisible, m_bDisplayCurrentOnChart, m_bShowWindbarbOnChart, m_bShowPolarOnChart;
 	  bool                 m_LeewayOK;
 	  double               alpha_currspd, alpha_CogHdt;
 	  double               m_ExpSmoothCurrSpd, m_ExpSmoothCurrDir,m_ExpSmoothSog;

@@ -25,11 +25,11 @@
 ***************************************************************************
 */
 
-#ifndef _PERFORMANCE_H_
-#define _PERFORMANCE_H_
+#ifndef __PERFORMANCE_H__
+#define __PERFORMANCE_H__
 
 #ifndef  WX_PRECOMP
-#include "wx/wx.h"
+  #include "wx/wx.h"
 #endif //precompiled headers
 
 #include <wx/dynarray.h>
@@ -58,6 +58,8 @@ struct TargetxMG{
 };
 class tactics_pi;
 class Polar;
+double getDegRange(double max, double min);
+double getSignedDegRange(double max, double min);
 
 //+------------------------------------------------------------------------------
 //|
@@ -163,7 +165,7 @@ private:
 
 	double toRad(int angle);
 };
-#endif
+
 /*************************************************************************************
 Class for exponential smoothing
 
@@ -293,6 +295,7 @@ protected:
   void DrawPercentSpeedScale(wxGCDC* dc);
   //wxString GetWindDirStr(wxString WindDir);
 };
+#endif
 /*
 class NKEPerformanceData
 {

@@ -51,8 +51,8 @@ extern int g_iDashSpeedUnit;
 extern PlugIn_Waypoint *m_pMark;
 extern int g_iSpeedFormat;
 
-double getDegRange(double max, double min);
-double getSignedDegRange(double max, double min);
+//double getDegRange(double max, double min);
+//double getSignedDegRange(double max, double min);
 //void createPNKEP_NMEA(int sentence, double data1, double data2, double data3, double data4);
 
 // ----------------------------------------------------------------
@@ -723,7 +723,8 @@ double Polar::GetPolarSpeed(double twa, double tws)
   avspd1 = windsp[twsmin].winddir[i_twa] ;
   avspd2 = windsp[twsmin + 1].winddir[i_twa];
   // now do the horizontal averaging btw. the 2 surrounding polar tws values ...
-  return (avspd1 + (avspd2 - avspd1)*fws);
+  //if (wxIsNaN(avspd1) || wxIsNaN(avspd1))
+    return ((wxIsNaN(avspd1) || wxIsNaN(avspd1))?NAN: avspd1 + (avspd2 - avspd1)*fws);
 }
 /***********************************************************************************
 Get the polar speed with full averaging of the input data of both TWA and TWS.

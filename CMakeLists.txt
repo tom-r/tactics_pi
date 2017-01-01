@@ -47,6 +47,8 @@ INCLUDE("cmake/PluginConfigure.cmake")
 SET(SRC_TACTICS
     src/tactics_pi.h
     src/tactics_pi.cpp
+	src/avg_wind.h
+	src/avg_wind.cpp
     src/bearingcompass.cpp
     src/bearingcompass.h
     src/performance.cpp

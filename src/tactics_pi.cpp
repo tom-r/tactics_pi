@@ -142,7 +142,7 @@ enum {
   ID_DBP_D_TWD, ID_DBP_I_HDM, ID_DBP_D_HDT, ID_DBP_D_WDH, ID_DBP_I_TWAMARK, ID_DBP_D_MDA, ID_DBP_I_MDA, ID_DBP_D_BPH, ID_DBP_I_FOS,
   ID_DBP_M_COG, ID_DBP_I_PITCH, ID_DBP_I_HEEL, ID_DBP_D_AWA_TWA, ID_DBP_I_LEEWAY, ID_DBP_I_CURRDIR,
   ID_DBP_I_CURRSPD, ID_DBP_D_BRG, ID_DBP_I_POLSPD, ID_DBP_I_POLVMG, ID_DBP_I_POLTVMG,
-  ID_DBP_I_POLTVMGANGLE, ID_DBP_I_POLCMG, ID_DBP_I_POLTCMG, ID_DBP_I_POLTCMGANGLE, ID_DBP_D_POLPERF,
+  ID_DBP_I_POLTVMGANGLE, ID_DBP_I_POLCMG, ID_DBP_I_POLTCMG, ID_DBP_I_POLTCMGANGLE, ID_DBP_D_POLPERF, ID_DBP_D_AVGWIND,
   ID_DBP_LAST_ENTRY //this has a reference in one of the routines; defining a "LAST_ENTRY" and setting the reference to it, is one codeline less to change (and find) when adding new instruments :-)
 };
 
@@ -296,6 +296,8 @@ wxString getInstrumentCaption( unsigned int id )
 			return _("Target CMG-Angle");
         case ID_DBP_D_POLPERF:
           return _("Polar performance");
+        case ID_DBP_D_AVGWIND:
+          return _("Average Wind");
 
 	}
     return _T("");
@@ -366,6 +368,7 @@ void getListItemForInstrument( wxListItem &item, unsigned int id )
 		//case ID_DBP_D_CURRDIR:
 		case ID_DBP_D_BRG:
         case ID_DBP_D_POLPERF:
+        case ID_DBP_D_AVGWIND:
             item.SetImage( 1 );
             break;
     }
@@ -465,7 +468,9 @@ int tactics_pi::Init( void )
     mGPS_Watchdog = 2;
     mVar_Watchdog = 2;
     mBRG_Watchdog = 2;
-	//************TR
+    mTWS_Watchdog = 2;
+    mTWD_Watchdog = 2;
+    //************TR
 	alpha_currspd = 0.2;  //smoothing constant for current speed
 	alpha_CogHdt = 0.1; // smoothing constant for diff. btw. Cog & Hdt
 	m_alphaLaylineCog = 0.2; //0.1
@@ -489,7 +494,9 @@ int tactics_pi::Init( void )
 	mExpSmDegRange->SetInitVal(g_iMinLaylineWidth);
 	mExpSmDiffCogHdt = new ExpSmooth(alpha_CogHdt);
 	mExpSmDiffCogHdt->SetInitVal(0);
-
+    m_bShowPolarOnChart = false;
+    m_bShowWindbarbOnChart = false;
+    m_bDisplayCurrentOnChart = false;
 	m_LeewayOK = false;
 	mHdt = NAN;
 	mStW = NAN;
@@ -664,6 +671,14 @@ void tactics_pi::Notify()
     if (mBRG_Watchdog <= 0) {
       SendSentenceToAllInstruments(OCPN_DBP_STC_BRG, -1, _T("\u00B0"));
     }
+    mTWS_Watchdog--;
+    if (mTWS_Watchdog <= 0) {
+      SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, NAN, _T(""));
+    }
+    mTWD_Watchdog--;
+    if (mTWD_Watchdog <= 0) {
+      SendSentenceToAllInstruments(OCPN_DBP_STC_TWD, NAN, _T("\u00B0"));
+    }
     ExportPerformanceData();
 }
 //*********************************************************************************
@@ -776,7 +791,7 @@ Called by Plugin Manager on main system process cycle
 bool tactics_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp)
 {
     b_tactics_dc_message_shown = false; // show message box if RenderOverlay() is called again
-    if (m_bLaylinesIsVisible || g_bDisplayCurrentOnChart || g_bShowWindbarbOnChart || g_bShowPolarOnChart){
+    if (m_bLaylinesIsVisible || m_bDisplayCurrentOnChart || m_bShowWindbarbOnChart || m_bShowPolarOnChart){
 		glPushAttrib(GL_COLOR_BUFFER_BIT | GL_LINE_BIT | GL_ENABLE_BIT | GL_POLYGON_BIT | GL_HINT_BIT);
 		glEnable(GL_LINE_SMOOTH);
 		glEnable(GL_BLEND);
@@ -1354,7 +1369,7 @@ Draw the OpenGL Layline overlay
 **********************************************************************************/
 void tactics_pi::DoRenderCurrentGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp)
 {
-	if (g_bDisplayCurrentOnChart && !wxIsNaN(mlat) && !wxIsNaN(mlon) && !wxIsNaN(m_CurrentDirection)) {
+	if (m_bDisplayCurrentOnChart && !wxIsNaN(mlat) && !wxIsNaN(mlon) && !wxIsNaN(m_CurrentDirection)) {
 			//draw the current on the chart here
 			/*
 			*           0
@@ -1411,7 +1426,7 @@ Basics taken from tackandlay_pi and adopted
 **********************************************************************************/
 void tactics_pi::DrawWindBarb(wxPoint pp, PlugIn_ViewPort *vp)
 {
-  if (g_bShowWindbarbOnChart && mTWD >=0 && mTWD < 360 && !wxIsNaN(mTWS)){
+  if (m_bShowWindbarbOnChart && mTWD >=0 && mTWD < 360 && !wxIsNaN(mTWS)){
     glColor4ub(0, 0, 255, 192);	// red, green, blue,  alpha (byte values)
     double rad_angle;
     double shaft_x, shaft_y;
@@ -1513,39 +1528,45 @@ Polar is normalized (always same size)
 **********************************************************************************/
 void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
 {
-  if (g_bShowPolarOnChart && !wxIsNaN(mTWS)){
+  if (m_bShowPolarOnChart && !wxIsNaN(mTWS)){
     glColor4ub(0, 0, 255, 192);	// red, green, blue,  alpha (byte values)
     double polval[72];
     double max = 0;
     double rotate = vp->rotation;
+    int i;
     if (mTWS > 0){
-      for (int i = 0; i < 72; i++){
+      for ( i = 0; i < 72; i++){
         polval[i] = BoatPolar->GetPolarSpeed(i * 5, mTWS);
-        if (wxIsNaN(polval[i])) polval[i] = 0.0;
+        //if (wxIsNaN(polval[i])) polval[i] = 0.0;
         if (polval[i]>max) max = polval[i];
       }
       // double anglevalue = deg2rad(m_Bearing) + deg2rad(m_AngleStart - ANGLE_OFFSET);
       wxPoint currpoints[72];
       double rad, anglevalue;
-      int i;
-      //double rot = getSignedDegRange(mTWD, mBRG);
       for (i = 0; i < 72; i++){
         anglevalue = deg2rad(PolarAngle + i * 5) + deg2rad(0. - ANGLE_OFFSET);
-        //anglevalue = deg2rad(mBRG + i * 5) + deg2rad(0. - ANGLE_OFFSET);
-        //anglevalue = deg2rad(mHdt + i * 5) + deg2rad(0. - ANGLE_OFFSET) + rotate;
         rad = 81 * polval[i] / max;
-        // wxLogMessage("polval[%d]=%.2f, rad=%.2f",i,polval[i],rad);
         currpoints[i].x = pp.x + (rad * cos(anglevalue));
         currpoints[i].y = pp.y + (rad * sin(anglevalue));
       }
       glLineWidth(1);
       glBegin(GL_LINES);
-      glVertex2d(currpoints[0].x, currpoints[0].y);
-      for (i = 1; i < 72; i++){
-        glVertex2d(currpoints[i].x, currpoints[i].y);
-        glVertex2d(currpoints[i].x, currpoints[i].y);
+      if (wxIsNaN(polval[0])) 
+        glVertex2d(pp.x, pp.y);
+      else
+        glVertex2d(currpoints[0].x, currpoints[0].y);
+      for (i = 1; i < 71; i++){
+        if (!wxIsNaN(polval[i])){
+          glVertex2d(currpoints[i].x, currpoints[i].y);
+          glVertex2d(currpoints[i].x, currpoints[i].y);
+        }
       }
-      glVertex2d(currpoints[0].x, currpoints[0].y);
+      if (wxIsNaN(polval[i]))
+        glVertex2d(pp.x, pp.y);
+      else
+        glVertex2d(currpoints[i].x, currpoints[i].y);
+
+
       //dc->DrawPolygon(360, currpoints, 0, 0);
       glEnd();
       //draw Target-VMG Angles now
@@ -1587,17 +1608,19 @@ void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
         DrawTargetAngle(vp, pp, PolarAngle - cmg.TargetAngle, _T("URED"), rad);
       }
       //Hdt line
-      wxPoint hdt;
-      anglevalue = deg2rad(mHdt) + deg2rad(0. - ANGLE_OFFSET) + rotate;
-      rad = 81*1.1;
-      hdt.x = pp.x + (rad * cos(anglevalue));
-      hdt.y = pp.y + (rad * sin(anglevalue));
-      glColor4ub(0, 0, 255, 255);	// red, green, blue,  alpha (byte values)
-      glLineWidth(3);
-      glBegin(GL_LINES);
-      glVertex2d(pp.x, pp.y);
-      glVertex2d(hdt.x, hdt.y);
-      glEnd();
+      if (!wxIsNaN(mHdt)){
+        wxPoint hdt;
+        anglevalue = deg2rad(mHdt) + deg2rad(0. - ANGLE_OFFSET) + rotate;
+        rad = 81 * 1.1;
+        hdt.x = pp.x + (rad * cos(anglevalue));
+        hdt.y = pp.y + (rad * sin(anglevalue));
+        glColor4ub(0, 0, 255, 255);	// red, green, blue,  alpha (byte values)
+        glLineWidth(3);
+        glBegin(GL_LINES);
+        glVertex2d(pp.x, pp.y);
+        glVertex2d(hdt.x, hdt.y);
+        glEnd();
+      }
 /*      glLineWidth(1);
       glBegin(GL_LINES);
       glVertex2d(pp.x, pp.y);
@@ -1621,7 +1644,6 @@ void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
 /***************************************************************************************
 Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
 ****************************************************************************************/
-//void tactics_pi::DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle, double TargetAngle, wxString color, double rad){
   void tactics_pi::DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double Angle, wxString color, double rad){
 //  if (TargetAngle > 0){
     double rotate = vp->rotation;
@@ -1648,9 +1670,8 @@ Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available
     points[1].y = pp.y + (rad * 1.15 * sin(value1));
     points[2].x = pp.x + (rad * 1.15 * cos(value2));
     points[2].y = pp.y + (rad * 1.15 * sin(value2));
-//    dc->DrawPolygon(3, points, 0, 0);
-    if (color == _T("BLUE3")) glColor4ub(0, 0,255, 192);
-    else if (color == _T("URED"))glColor4ub(255, 0, 0, 192);
+    if (color == _T("BLUE3")) glColor4ub(0, 0,255, 128);
+    else if (color == _T("URED"))glColor4ub(255, 0, 0, 128);
     else glColor4ub(255, 128, 0, 168);
 
     glLineWidth(1);
@@ -1672,15 +1693,15 @@ void tactics_pi::ToggleLaylineRender(wxWindow* parent)
 }
 void tactics_pi::ToggleCurrentRender(wxWindow* parent)
 {
-  g_bDisplayCurrentOnChart = g_bDisplayCurrentOnChart ? false : true;
+  m_bDisplayCurrentOnChart = m_bDisplayCurrentOnChart ? false : true;
 }
 void tactics_pi::TogglePolarRender(wxWindow* parent)
 {
-  g_bShowPolarOnChart = g_bShowPolarOnChart ? false : true;
+  m_bShowPolarOnChart = m_bShowPolarOnChart ? false : true;
 }
 void tactics_pi::ToggleWindbarbRender(wxWindow* parent)
 {
-  g_bShowWindbarbOnChart = g_bShowWindbarbOnChart ? false : true;
+  m_bShowWindbarbOnChart = m_bShowWindbarbOnChart ? false : true;
 }
 
 /*********************************************************************************
@@ -1691,15 +1712,15 @@ bool tactics_pi::GetLaylineVisibility(wxWindow* parent)
 }
 bool tactics_pi::GetCurrentVisibility(wxWindow* parent)
 {
-  return g_bDisplayCurrentOnChart;
+  return m_bDisplayCurrentOnChart;
 }
 bool tactics_pi::GetWindbarbVisibility(wxWindow* parent)
 {
-  return g_bShowWindbarbOnChart;
+  return m_bShowWindbarbOnChart;
 }
 bool tactics_pi::GetPolarVisibility(wxWindow* parent)
 {
-  return g_bShowPolarOnChart;
+  return m_bShowPolarOnChart;
 }
 bool tactics_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp)
 {
@@ -2025,13 +2046,17 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
                 if( m_NMEA0183.Mwd.WindAngleTrue < 999. ) { //if WindAngleTrue is available, use it ...
                     SendSentenceToAllInstruments( OCPN_DBP_STC_TWD, m_NMEA0183.Mwd.WindAngleTrue,
                             _T("\u00B0T") );
+                    mTWD_Watchdog = gps_watchdog_timeout_ticks;
                 } else if( m_NMEA0183.Mwd.WindAngleMagnetic < 999. ) { //otherwise try WindAngleMagnetic ...
                     SendSentenceToAllInstruments( OCPN_DBP_STC_TWD, m_NMEA0183.Mwd.WindAngleMagnetic,
                             _T("\u00B0M") );
+                    mTWD_Watchdog = gps_watchdog_timeout_ticks;
                 }
 
                 SendSentenceToAllInstruments( OCPN_DBP_STC_TWS, toUsrSpeed_Plugin( m_NMEA0183.Mwd.WindSpeedKnots, g_iDashWindSpeedUnit ),
                                               getUsrSpeedUnit_Plugin( g_iDashWindSpeedUnit ) );
+                mTWS_Watchdog = gps_watchdog_timeout_ticks;
+
                 /*SendSentenceToAllInstruments( OCPN_DBP_STC_TWS2, toUsrSpeed_Plugin( m_NMEA0183.Mwd.WindSpeedKnots, g_iDashWindSpeedUnit ),
                         getUsrSpeedUnit_Plugin( g_iDashWindSpeedUnit ) );*/
                 //m_NMEA0183.Mwd.WindSpeedms
@@ -2085,6 +2110,7 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
                             SendSentenceToAllInstruments( OCPN_DBP_STC_TWS,
                                     toUsrSpeed_Plugin( m_NMEA0183.Mwv.WindSpeed * m_wSpeedFactor, g_iDashWindSpeedUnit ),
                                     getUsrSpeedUnit_Plugin( g_iDashWindSpeedUnit ) );
+                            mTWS_Watchdog = gps_watchdog_timeout_ticks;
                         }
                     }
                 }
@@ -2320,6 +2346,7 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
                             m_NMEA0183.Vwt.WindDirectionMagnitude, vwtunit );
                     SendSentenceToAllInstruments( OCPN_DBP_STC_TWS, toUsrSpeed_Plugin( m_NMEA0183.Vwt.WindSpeedKnots, g_iDashWindSpeedUnit ),
                             getUsrSpeedUnit_Plugin( g_iDashWindSpeedUnit ) );
+                    mTWS_Watchdog = gps_watchdog_timeout_ticks;
                     /*
                      double           m_NMEA0183.Vwt.WindSpeedms;
                      double           m_NMEA0183.Vwt.WindSpeedKmh;
@@ -2721,7 +2748,9 @@ bool tactics_pi::LoadConfig( void )
         pConf->Read(_T("CorrectAWwithHeel"), &g_bCorrectAWwithHeel, false);    //if true, AWS/AWA are corrected with Heel-Angle
         pConf->Read(_T("ForceTrueWindCalculation"), &g_bForceTrueWindCalculation, false);    //if true, NMEA Data for TWS,TWA,TWD is not used, but the plugin calculated data is used
         pConf->Read(_T("ShowWindbarbOnChart"), &g_bShowWindbarbOnChart, false);
+        m_bShowWindbarbOnChart = g_bShowWindbarbOnChart;
         pConf->Read(_T("ShowPolarOnChart"), &g_bShowPolarOnChart, false);
+        m_bShowPolarOnChart = g_bShowPolarOnChart;
         pConf->Read(_T("UseSOGforTWCalc"), &g_bUseSOGforTWCalc, false);
         pConf->Read(_T("ExpPolarSpeed"), &g_bExpPerfData01, false);
         pConf->Read(_T("ExpCourseOtherTack"), &g_bExpPerfData02, false);
@@ -2757,6 +2786,7 @@ bool tactics_pi::LoadConfig( void )
 		pConf->Read(_T("MaxLaylineWidth"), &g_iMaxLaylineWidth,30);
 		pConf->Read(_T("LaylineWidthDampingFactor"), &g_dalphaDeltCoG,0.25);
 		pConf->Read(_T("ShowCurrentOnChart"), &g_bDisplayCurrentOnChart,false);
+        m_bDisplayCurrentOnChart = g_bDisplayCurrentOnChart;
         int d_cnt;
         pConf->Read( _T("TacticsCount"), &d_cnt, -1 );
         // TODO: Memory leak? We should destroy everything first
@@ -4388,6 +4418,9 @@ void TacticsWindow::SetInstrumentList( wxArrayInt list )
                 instrument = new TacticsInstrument_PolarPerformance(this, wxID_ANY,
                 getInstrumentCaption(id));
                 break;
+            case ID_DBP_D_AVGWIND:
+              instrument = new TacticsInstrument_AvgWindDir(this, wxID_ANY,
+                getInstrumentCaption(id));
 
 		}
 		if (instrument) {
@@ -4588,7 +4621,9 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
           if (tactics_window){
             tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWA, mTWA, mAWAUnit);
             tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, mTWS, mAWSUnit);
+            mTWS_Watchdog = gps_watchdog_timeout_ticks;
             tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWD, mTWD, _T("\u00B0T"));
+            mTWD_Watchdog = gps_watchdog_timeout_ticks;
           }
         }
       }
