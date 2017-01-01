@@ -1525,85 +1525,82 @@ void tactics_pi::DrawWindBarb(wxPoint pp, PlugIn_ViewPort *vp)
 /*********************************************************************************
 Draw the OpenGL Polar on the ships position overlay
 Polar is normalized (always same size)
+What should be drawn:
+* the actual polar curve for the actual TWS 
+* 0/360° point (directly upwind)
+* the first 'real' polar point
+* the last 'real' polar point
+* each of the 3 points for Target-VMG up- & downwind and Target-CMG
+* the rest of the polar currently in 1° steps ( but 5° should be good enough ...)
 **********************************************************************************/
+#define STEPS  360 //72
+
 void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
 {
   if (m_bShowPolarOnChart && !wxIsNaN(mTWS)){
     glColor4ub(0, 0, 255, 192);	// red, green, blue,  alpha (byte values)
-    double polval[72];
+    double polval[STEPS];
     double max = 0;
     double rotate = vp->rotation;
     int i;
     if (mTWS > 0){
-      for ( i = 0; i < 72; i++){
-        polval[i] = BoatPolar->GetPolarSpeed(i * 5, mTWS);
+      TargetxMG vmg_up = BoatPolar->GetTargetVMGUpwind(mTWS);
+      TargetxMG vmg_dn = BoatPolar->GetTargetVMGDownwind(mTWS);
+      TargetxMG cmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
+
+      for (i = 0; i < STEPS/2; i++){ //0...179
+        polval[i] = BoatPolar->GetPolarSpeed(i+1, mTWS); //polar data is 1...180 !!!
+        polval[STEPS-1 - i] = polval[i];
         //if (wxIsNaN(polval[i])) polval[i] = 0.0;
         if (polval[i]>max) max = polval[i];
       }
-      // double anglevalue = deg2rad(m_Bearing) + deg2rad(m_AngleStart - ANGLE_OFFSET);
-      wxPoint currpoints[72];
+      wxPoint currpoints[STEPS];
       double rad, anglevalue;
-      for (i = 0; i < 72; i++){
-        anglevalue = deg2rad(PolarAngle + i * 5) + deg2rad(0. - ANGLE_OFFSET);
+      for (i = 0; i < STEPS; i++){
+//        anglevalue = deg2rad(PolarAngle + i * 5) + deg2rad(0. - ANGLE_OFFSET);
+        anglevalue = deg2rad(PolarAngle + i) + deg2rad(0. - ANGLE_OFFSET);
         rad = 81 * polval[i] / max;
         currpoints[i].x = pp.x + (rad * cos(anglevalue));
         currpoints[i].y = pp.y + (rad * sin(anglevalue));
       }
       glLineWidth(1);
       glBegin(GL_LINES);
-      if (wxIsNaN(polval[0])) 
-        glVertex2d(pp.x, pp.y);
-      else
-        glVertex2d(currpoints[0].x, currpoints[0].y);
-      for (i = 1; i < 71; i++){
-        if (!wxIsNaN(polval[i])){
+
+      if (wxIsNaN(polval[0])){ //always draw the 0° point (directly upwind)
+        currpoints[0].x = pp.x;
+        currpoints[0].y = pp.y;
+      }
+      glVertex2d(currpoints[0].x, currpoints[0].y);
+
+      for (i = 1; i < STEPS; i++){
+        if (!wxIsNaN(polval[i])){  //only draw, if we have a real data value (NAN is init status, w/o data)
           glVertex2d(currpoints[i].x, currpoints[i].y);
           glVertex2d(currpoints[i].x, currpoints[i].y);
         }
       }
-      if (wxIsNaN(polval[i]))
+      glVertex2d(currpoints[0].x, currpoints[0].y); //close the curve
+
+ /*     if (wxIsNaN(polval[i])) //
         glVertex2d(pp.x, pp.y);
       else
         glVertex2d(currpoints[i].x, currpoints[i].y);
+*/
 
-
-      //dc->DrawPolygon(360, currpoints, 0, 0);
+      //dc->DrawPolygon(STEPS, currpoints, 0, 0);
       glEnd();
       //draw Target-VMG Angles now
-      TargetxMG vmg_up = BoatPolar->GetTargetVMGUpwind(mTWS);
-      TargetxMG vmg_dn = BoatPolar->GetTargetVMGDownwind(mTWS);
-     // wxPoint vmg[6];
       if (!wxIsNaN(vmg_up.TargetAngle)){
-//      anglevalue = deg2rad(PolarAngle + vmg_up.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
         rad = 81 * BoatPolar->GetPolarSpeed(vmg_up.TargetAngle, mTWS) / max;
-/*      vmg[0].x = pp.x + (rad * cos(anglevalue));
-        vmg[0].y = pp.y + (rad * sin(anglevalue));
-        anglevalue = deg2rad(PolarAngle - vmg_up.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
-        vmg[1].x = pp.x + (rad * cos(anglevalue));
-        vmg[1].y = pp.y + (rad * sin(anglevalue));*/
         DrawTargetAngle(vp, pp, PolarAngle + vmg_up.TargetAngle, _T("BLUE3"), rad);
         DrawTargetAngle(vp, pp, PolarAngle - vmg_up.TargetAngle, _T("BLUE3"), rad);
       }
       if (!wxIsNaN(vmg_dn.TargetAngle)){
-//      anglevalue = deg2rad(PolarAngle + vmg_dn.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
         rad = 81 * BoatPolar->GetPolarSpeed(vmg_dn.TargetAngle, mTWS) / max;
-/*      vmg[2].x = pp.x + (rad * cos(anglevalue));
-        vmg[2].y = pp.y + (rad * sin(anglevalue));
-        anglevalue = deg2rad(PolarAngle - vmg_dn.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
-        vmg[3].x = pp.x + (rad * cos(anglevalue));
-        vmg[3].y = pp.y + (rad * sin(anglevalue));*/
         DrawTargetAngle(vp, pp, PolarAngle + vmg_dn.TargetAngle, _T("BLUE3"), rad);
         DrawTargetAngle(vp, pp, PolarAngle - vmg_dn.TargetAngle, _T("BLUE3"), rad);
       }
-      TargetxMG cmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
       if (!wxIsNaN(cmg.TargetAngle)){
-//      anglevalue = deg2rad(PolarAngle + cmg.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
         rad = 81 * BoatPolar->GetPolarSpeed(cmg.TargetAngle, mTWS) / max;
-/*      vmg[4].x = pp.x + (rad * cos(anglevalue));
-        vmg[4].y = pp.y + (rad * sin(anglevalue));
-        anglevalue = deg2rad(PolarAngle - cmg.TargetAngle) + deg2rad(0. - ANGLE_OFFSET) + rotate;
-        vmg[5].x = pp.x + (rad * cos(anglevalue));
-        vmg[5].y = pp.y + (rad * sin(anglevalue));*/
         DrawTargetAngle(vp, pp, PolarAngle + cmg.TargetAngle, _T("URED"), rad);
         DrawTargetAngle(vp, pp, PolarAngle - cmg.TargetAngle, _T("URED"), rad);
       }
@@ -1621,23 +1618,6 @@ void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
         glVertex2d(hdt.x, hdt.y);
         glEnd();
       }
-/*      glLineWidth(1);
-      glBegin(GL_LINES);
-      glVertex2d(pp.x, pp.y);
-      glVertex2d(vmg[0].x, vmg[0].y);
-      glVertex2d(pp.x, pp.y);
-      glVertex2d(vmg[1].x, vmg[1].y);
-      glVertex2d(pp.x, pp.y);
-      glVertex2d(vmg[2].x, vmg[2].y);
-      glVertex2d(pp.x, pp.y);
-      glVertex2d(vmg[3].x, vmg[3].y);
-
-      glColor4ub(255, 0, 0, 192);	// red, green, blue,  alpha (byte values)
-      glVertex2d(pp.x, pp.y);
-      glVertex2d(vmg[4].x, vmg[4].y);
-      glVertex2d(pp.x, pp.y);
-      glVertex2d(vmg[5].x, vmg[5].y);
-      glEnd();*/
     }
   }
 }
