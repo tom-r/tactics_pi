@@ -474,8 +474,8 @@ int tactics_pi::Init( void )
 	alpha_currspd = 0.2;  //smoothing constant for current speed
 	alpha_CogHdt = 0.1; // smoothing constant for diff. btw. Cog & Hdt
 	m_alphaLaylineCog = 0.2; //0.1
-    m_ExpSmoothCurrSpd = -1;
-	m_ExpSmoothCurrDir = -1;
+    m_ExpSmoothCurrSpd = NAN;
+	m_ExpSmoothCurrDir = NAN;
 	m_ExpSmoothSog = NAN;
 	m_ExpSmoothSinCurrDir = NAN;
 	m_ExpSmoothCosCurrDir = NAN;
@@ -1059,7 +1059,8 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 			double  diffCogHdt;
             double tws_kts = fromUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
             double stw_kts = fromUsrSpeed_Plugin(mStW, g_iDashSpeedUnit);
-            double currspd_kts = fromUsrSpeed_Plugin(m_ExpSmoothCurrSpd, g_iDashSpeedUnit);
+            double currspd_kts = wxIsNaN(m_ExpSmoothCurrSpd)? 0.0 : fromUsrSpeed_Plugin(m_ExpSmoothCurrSpd, g_iDashSpeedUnit);
+            double currdir = wxIsNaN(m_CurrentDirection) ? 0.0 : m_CurrentDirection;
             diffCogHdt = getDegRange(mCOG, mHdt); 
 			mExpSmDiffCogHdt->SetAlpha(alpha_CogHdt);
 			m_ExpSmoothDiffCogHdt = mExpSmDiffCogHdt->GetSmoothVal((diffCogHdt < 0 ? -diffCogHdt : diffCogHdt));
@@ -1082,7 +1083,7 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 			double  predictedSog;
             //apply current on predicted Heading
             PositionBearingDistanceMercator_Plugin(mlat, mlon, mPredictedHdG, stw_kts, &predictedLatHdt, &predictedLonHdt);
-            PositionBearingDistanceMercator_Plugin(predictedLatHdt, predictedLonHdt, m_CurrentDirection, currspd_kts, &predictedLatCog, &predictedLonCog);
+            PositionBearingDistanceMercator_Plugin(predictedLatHdt, predictedLonHdt, currdir, currspd_kts, &predictedLatCog, &predictedLonCog);
             DistanceBearingMercator_Plugin(predictedLatCog, predictedLonCog, mlat, mlon, &mPredictedCoG, &predictedSog);
 
 			tackpoints[0] = vpoints[0];
@@ -1146,12 +1147,12 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
                     wxRealPoint m_end, m_end2, c_end, c_end2;
                     //apply current on foreward layline
                     PositionBearingDistanceMercator_Plugin(mlat, mlon, cur_tacklinedir, stw_kts, &lat, &lon);
-                    PositionBearingDistanceMercator_Plugin(lat, lon, m_CurrentDirection, currspd_kts, &curlat, &curlon);
+                    PositionBearingDistanceMercator_Plugin(lat, lon, currdir, currspd_kts, &curlat, &curlon);
                     DistanceBearingMercator_Plugin(curlat, curlon, mlat, mlon, &cur_tacklinedir, &act_sog);
                     //cur_tacklinedir=local_bearing(curlat, curlon, mlat, mlon);
                     //apply current on mark layline
                     PositionBearingDistanceMercator_Plugin(mlat, mlon, target_tacklinedir, stw_kts, &lat, &lon);
-                    PositionBearingDistanceMercator_Plugin(lat, lon, m_CurrentDirection, currspd_kts, &curlat, &curlon);
+                    PositionBearingDistanceMercator_Plugin(lat, lon, currdir, currspd_kts, &curlat, &curlon);
                     DistanceBearingMercator_Plugin(curlat, curlon, mlat, mlon, &target_tacklinedir, &act_sog);
                     //target_tacklinedir=local_bearing(curlat, curlon, mlat, mlon);
                     double cur_tacklinedir2 = cur_tacklinedir > 180 ? cur_tacklinedir - 180 : cur_tacklinedir + 180;
@@ -1546,7 +1547,11 @@ void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
     if (mTWS > 0){
       TargetxMG vmg_up = BoatPolar->GetTargetVMGUpwind(mTWS);
       TargetxMG vmg_dn = BoatPolar->GetTargetVMGDownwind(mTWS);
-      TargetxMG cmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
+//      TargetxMG cmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
+      //TargetxMG cmg2;
+      TargetxMG CmGMax,CmGMin;
+      BoatPolar->Calc_TargetCMG2(mTWS, mTWD, mBRG, &CmGMax, &CmGMin);  //cmg = the higher value, cmg2 the lower cmg value
+//      wxLogMessage("cmg.TargetAngle=%f, cmg.TargetSpeed=%f,cmg1.TargetAngle=%f, cmg1.TargetSpeed=%f, cmg2.TargetAngle=%f, cmg2.TargetSpeed=%f", cmg.TargetAngle, cmg.TargetSpeed, cmg1.TargetAngle, cmg1.TargetSpeed, cmg2.TargetAngle, cmg2.TargetSpeed);
 
       for (i = 0; i < STEPS/2; i++){ //0...179
         polval[i] = BoatPolar->GetPolarSpeed(i+1, mTWS); //polar data is 1...180 !!!
@@ -1591,18 +1596,21 @@ void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
       //draw Target-VMG Angles now
       if (!wxIsNaN(vmg_up.TargetAngle)){
         rad = 81 * BoatPolar->GetPolarSpeed(vmg_up.TargetAngle, mTWS) / max;
-        DrawTargetAngle(vp, pp, PolarAngle + vmg_up.TargetAngle, _T("BLUE3"), rad);
-        DrawTargetAngle(vp, pp, PolarAngle - vmg_up.TargetAngle, _T("BLUE3"), rad);
+        DrawTargetAngle(vp, pp, PolarAngle + vmg_up.TargetAngle, _T("BLUE3"), 1,rad);
+        DrawTargetAngle(vp, pp, PolarAngle - vmg_up.TargetAngle, _T("BLUE3"), 1, rad);
       }
       if (!wxIsNaN(vmg_dn.TargetAngle)){
         rad = 81 * BoatPolar->GetPolarSpeed(vmg_dn.TargetAngle, mTWS) / max;
-        DrawTargetAngle(vp, pp, PolarAngle + vmg_dn.TargetAngle, _T("BLUE3"), rad);
-        DrawTargetAngle(vp, pp, PolarAngle - vmg_dn.TargetAngle, _T("BLUE3"), rad);
+        DrawTargetAngle(vp, pp, PolarAngle + vmg_dn.TargetAngle, _T("BLUE3"), 1, rad);
+        DrawTargetAngle(vp, pp, PolarAngle - vmg_dn.TargetAngle, _T("BLUE3"), 1, rad);
       }
-      if (!wxIsNaN(cmg.TargetAngle)){
-        rad = 81 * BoatPolar->GetPolarSpeed(cmg.TargetAngle, mTWS) / max;
-        DrawTargetAngle(vp, pp, PolarAngle + cmg.TargetAngle, _T("URED"), rad);
-        DrawTargetAngle(vp, pp, PolarAngle - cmg.TargetAngle, _T("URED"), rad);
+      if (!wxIsNaN(CmGMax.TargetAngle)){
+        rad = 81 * BoatPolar->GetPolarSpeed(CmGMax.TargetAngle, mTWS) / max;
+        DrawTargetAngle(vp, pp, PolarAngle + CmGMax.TargetAngle, _T("URED"), 2, rad);
+      }
+      if (!wxIsNaN(CmGMin.TargetAngle)){
+        rad = 81 * BoatPolar->GetPolarSpeed(CmGMin.TargetAngle, mTWS) / max;
+        DrawTargetAngle(vp, pp, PolarAngle + CmGMin.TargetAngle, _T("URED"), 1, rad);
       }
       //Hdt line
       if (!wxIsNaN(mHdt)){
@@ -1624,15 +1632,24 @@ void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
 /***************************************************************************************
 Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
 ****************************************************************************************/
-  void tactics_pi::DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double Angle, wxString color, double rad){
+  void tactics_pi::DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double Angle, wxString color, int size, double rad){
 //  if (TargetAngle > 0){
     double rotate = vp->rotation;
 //    double value = deg2rad(PolarAngle + TargetAngle) + deg2rad(0 - ANGLE_OFFSET) + rotate;
 //    double value1 = deg2rad(PolarAngle + 5 + TargetAngle) + deg2rad(0 - ANGLE_OFFSET) + rotate;
 //    double value2 = deg2rad(PolarAngle - 5 + TargetAngle) + deg2rad(0 - ANGLE_OFFSET) + rotate;
+    double sizefactor,widthfactor;
+    if (size == 1) {
+      sizefactor = 1.05;
+      widthfactor = 1.05;
+    }
+    else{
+      sizefactor = 1.15;
+      widthfactor = 2;
+    }
     double value = deg2rad(Angle) + deg2rad(0 - ANGLE_OFFSET) + rotate;
-    double value1 = deg2rad(Angle + 5) + deg2rad(0 - ANGLE_OFFSET) + rotate;
-    double value2 = deg2rad(Angle - 5) + deg2rad(0 - ANGLE_OFFSET) + rotate;
+    double value1 = deg2rad(Angle + 5 * widthfactor) + deg2rad(0 - ANGLE_OFFSET) + rotate;
+    double value2 = deg2rad(Angle - 5 * widthfactor) + deg2rad(0 - ANGLE_OFFSET) + rotate;
 
     /*
     *           0
@@ -1646,12 +1663,16 @@ Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available
     wxPoint points[4];
     points[0].x = pp.x + (rad * 0.95 * cos(value));
     points[0].y = pp.y + (rad * 0.95 * sin(value));
-    points[1].x = pp.x + (rad * 1.15 * cos(value1));
+    points[1].x = pp.x + (rad * 1.15 * sizefactor * cos(value1));
+    points[1].y = pp.y + (rad * 1.15 * sizefactor * sin(value1));
+    points[2].x = pp.x + (rad * 1.15 * sizefactor * cos(value2));
+    points[2].y = pp.y + (rad * 1.15 * sizefactor * sin(value2));
+/*    points[1].x = pp.x + (rad * 1.15 * cos(value1));
     points[1].y = pp.y + (rad * 1.15 * sin(value1));
     points[2].x = pp.x + (rad * 1.15 * cos(value2));
-    points[2].y = pp.y + (rad * 1.15 * sin(value2));
-    if (color == _T("BLUE3")) glColor4ub(0, 0,255, 128);
-    else if (color == _T("URED"))glColor4ub(255, 0, 0, 128);
+    points[2].y = pp.y + (rad * 1.15 * sin(value2));*/
+    if (color == _T("BLUE3")) glColor4ub(0, 0, 255, 128);
+    else if (color == _T("URED")) glColor4ub(255, 0, 0, 128);
     else glColor4ub(255, 128, 0, 168);
 
     glLineWidth(1);
@@ -4687,20 +4708,20 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
       //correct HDT with Leeway
       //------------------------------------
 
-//         ^ Hdt, STW
-// Wind   /
-// -->   /        Leeway
-//      /
-//     /----------> CRS, STW (stw_corr)
-//     \
-//      \        Current
-//       \ COG,SOG
-//        V        
-// if wind is from port, heel & mLeeway will be positive (to starboard), adding degrees on the compass rose
-//  CRS = Hdt + Leeway
-//  if wind is from starboard, heel/mLeeway are negative (to port), mLeeway has to be substracted from Hdt
-//   As mLeeway is a signed double, so we can generally define : CRS = Hdt + mLeeway 
-      double CourseThroughWater = mHdt + mLeeway; 
+      //         ^ Hdt, STW
+      // Wind   /
+      // -->   /        Leeway
+      //      /
+      //     /----------> CRS, STW (stw_corr)
+      //     \
+      //      \        Current
+      //       \ COG,SOG
+      //        V        
+      // if wind is from port, heel & mLeeway will be positive (to starboard), adding degrees on the compass rose
+      //  CRS = Hdt + Leeway
+      //  if wind is from starboard, heel/mLeeway are negative (to port), mLeeway has to be substracted from Hdt
+      //   As mLeeway is a signed double, so we can generally define : CRS = Hdt + mLeeway 
+      double CourseThroughWater = mHdt + mLeeway;
       if (CourseThroughWater >= 360) CourseThroughWater -= 360;
       if (CourseThroughWater < 0) CourseThroughWater += 360;
       double CRSlat, CRSlon;
@@ -4710,19 +4731,19 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
       if (g_bCorrectSTWwithLeeway == true && g_bUseHeelSensor && !wxIsNaN(mLeeway) && !wxIsNaN(mheel)) //in this case STW is already corrected !!!
         stw_corr = stw_kts;
       else
-        stw_corr= stw_kts / cos(mLeeway *M_PI / 180.0); //we have to correct StW for CRS as well.
+        stw_corr = stw_kts / cos(mLeeway *M_PI / 180.0); //we have to correct StW for CRS as well.
       PositionBearingDistanceMercator_Plugin(mlat, mlon, CourseThroughWater, stw_corr, &CRSlat, &CRSlon);
 
       //calculate the Current vector with brg & speed from the 2 endpoints above
       double currdir = 0, currspd = 0;
       //currdir = local_bearing(StWlat, StWlon, COGlat, COGlon );
       //currspd = local_distance(COGlat, COGlon, StWlat, StWlon);
-       DistanceBearingMercator_Plugin(COGlat, COGlon, CRSlat, CRSlon, &currdir, &currspd);
+      DistanceBearingMercator_Plugin(COGlat, COGlon, CRSlat, CRSlon, &currdir, &currspd);
       // double exponential smoothing on currdir / currspd
       if (currspd < 0) currspd = 0;
-      if (m_ExpSmoothCurrSpd == -1)
+      if (wxIsNaN(m_ExpSmoothCurrSpd))
         m_ExpSmoothCurrSpd = currspd;
-      if (m_ExpSmoothCurrDir == -1)
+      if (wxIsNaN(m_ExpSmoothCurrDir))
         m_ExpSmoothCurrDir = currdir;
 
       double currdir_tan = currdir;
@@ -4739,7 +4760,11 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
       // temporary output of Currdir to file ...
       //str = wxString::Format(_T("%.2f;%.2f\n"), currdir, m_CurrentDirection);
       //out.WriteString(str);
-
+    } 
+    else{
+      m_CurrentDirection = NAN;
+      m_ExpSmoothCurrSpd = NAN;
+    }
       //distribute data to all instruments
       for (size_t i = 0; i < m_ArrayOfTacticsWindow.GetCount(); i++) {
         TacticsWindow *tactics_window = m_ArrayOfTacticsWindow.Item(i)->m_pTacticsWindow;
@@ -4748,7 +4773,7 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
           tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_CURRSPD, toUsrSpeed_Plugin(m_ExpSmoothCurrSpd, g_iDashSpeedUnit), getUsrSpeedUnit_Plugin(g_iDashSpeedUnit));
         }
       }
-    }
+   // }
   }
 }
 
@@ -4834,7 +4859,7 @@ void tactics_pi::ExportPerformanceData(void)
   if (g_bExpPerfData04 )
     createPNKEP_NMEA(4, mCMGoptAngle, mCMGGain, mVMGoptAngle, mVMGGain);  
   //current direction, current speed kts, current speed in km/h,
-  if (g_bExpPerfData05 && !wxIsNaN(m_CurrentDirection) && m_ExpSmoothCurrSpd >= 0){
+  if (g_bExpPerfData05 && !wxIsNaN(m_CurrentDirection) && !wxIsNaN(m_ExpSmoothCurrSpd)){
     createPNKEP_NMEA(5, m_CurrentDirection, m_ExpSmoothCurrSpd, m_ExpSmoothCurrSpd  * 1.852, 0);  }
 }
 /************************************************************************************

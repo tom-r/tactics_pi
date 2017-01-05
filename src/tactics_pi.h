@@ -178,7 +178,7 @@ public:
       void DrawWindBarb(wxPoint pp, PlugIn_ViewPort *vp);
       void DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle );
       //void DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle, double TargetAngle, wxString color, double rad);
-      void DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double Angle, wxString color, double rad);
+      void DrawTargetAngle(PlugIn_ViewPort *vp, wxPoint pp, double Angle, wxString color, int size, double rad);
       void ToggleLaylineRender(wxWindow* parent);
       void ToggleCurrentRender(wxWindow* parent);
       void TogglePolarRender(wxWindow* parent);

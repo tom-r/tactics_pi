@@ -64,8 +64,8 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 
 	LoadConfig();
 	m_Bearing = -1;
-	m_CurrDir = -1;
-	m_CurrSpeed = -1;
+	m_CurrDir = NAN;
+	m_CurrSpeed = NAN;
 	m_ExtraValueDTW = 0;
 	m_Leeway = 0;
 	m_AngleStart = 0;
@@ -401,18 +401,27 @@ void TacticsInstrument_BearingCompass::DrawTargetxMGAngle(wxGCDC* dc){
     // get Target VMG Angle from Polar
     TargetxMG tvmg_up = BoatPolar->GetTargetVMGUpwind(m_TWS);
     TargetxMG tvmg_dn = BoatPolar->GetTargetVMGDownwind(m_TWS);
-    if (tvmg_up.TargetAngle > 0) DrawTargetAngle(dc, tvmg_up.TargetAngle, _T("BLUE3"));
-    if (tvmg_dn.TargetAngle > 0) DrawTargetAngle(dc, tvmg_dn.TargetAngle, _T("BLUE3"));
+    TargetxMG TCMGMax;
+    TargetxMG TCMGMin;
+
+    if (tvmg_up.TargetAngle > 0){
+      DrawTargetAngle(dc, m_curTack == _T("\u00B0L") ? 360 - tvmg_up.TargetAngle : tvmg_up.TargetAngle, _T("BLUE3"), 2);
+    }
+    if (tvmg_dn.TargetAngle > 0) {
+      DrawTargetAngle(dc, m_curTack == _T("\u00B0L") ? 360 - tvmg_dn.TargetAngle : tvmg_dn.TargetAngle, _T("BLUE3"), 2);
+    }
     if (m_Bearing >= 0 && m_Bearing < 360 && !wxIsNaN(m_TWD)){
-       TargetxMG tcmg = BoatPolar->Calc_TargetCMG(m_TWS, m_TWD, m_Bearing);
-       DrawTargetAngle(dc, tcmg.TargetAngle, _T("URED"));
+//       TargetxMG tcmg = BoatPolar->Calc_TargetCMG(m_TWS, m_TWD, m_Bearing);
+      BoatPolar->Calc_TargetCMG2(m_TWS, m_TWD, m_Bearing,&TCMGMax,&TCMGMin);
+      if (!wxIsNaN(TCMGMax.TargetAngle))      DrawTargetAngle(dc, TCMGMax.TargetAngle, _T("URED"), 2);
+      if (!wxIsNaN(TCMGMin.TargetAngle))      DrawTargetAngle(dc, TCMGMin.TargetAngle, _T("URED"), 1);
     }
   }
 }
 /***************************************************************************************
 Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawTargetAngle(wxGCDC* dc, double TargetAngle, wxString color){
+void TacticsInstrument_BearingCompass::DrawTargetAngle(wxGCDC* dc, double TargetAngle, wxString color, int size){
     if (TargetAngle > 0){
       wxColour cl;
       dc->SetPen(*wxTRANSPARENT_PEN);
@@ -431,9 +440,9 @@ void TacticsInstrument_BearingCompass::DrawTargetAngle(wxGCDC* dc, double Target
 
       /* this is fix for a +/-180° round instrument, when m_MainValue is supplied as <0..180><L | R>
       * for example TWA & AWA */
-      if (m_curTack == _T("\u00B0L"))
+      /*if (m_curTack == _T("\u00B0L"))
         data = 360 - TwaCog;
-      else
+      else*/
         data = TwaCog;
 
       // The arrow should stay inside fixed limits
@@ -444,10 +453,19 @@ void TacticsInstrument_BearingCompass::DrawTargetAngle(wxGCDC* dc, double Target
         val = m_MainValueMax;
       else
         val = data;
+      double sizefactor, widthfactor;
+      if (size == 1) {
+        sizefactor = 0.935;
+        widthfactor = 0.90;
+      }
+      else{
+        sizefactor = 1;
+        widthfactor = 1;
+      }
 
       double value = deg2rad((val - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
-      double value1 = deg2rad((val + 5 - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
-      double value2 = deg2rad((val - 5 - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
+      double value1 = deg2rad((val + 5*widthfactor - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
+      double value2 = deg2rad((val - 5 * widthfactor - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
 
       /*
       *           0
@@ -461,10 +479,10 @@ void TacticsInstrument_BearingCompass::DrawTargetAngle(wxGCDC* dc, double Target
       wxPoint points[4];
       points[0].x = m_cx + (m_radius * 0.95 * cos(value));
       points[0].y = m_cy + (m_radius * 0.95 * sin(value));
-      points[1].x = m_cx + (m_radius * 1.15 * cos(value1));
-      points[1].y = m_cy + (m_radius * 1.15 * sin(value1));
-      points[2].x = m_cx + (m_radius * 1.15 * cos(value2));
-      points[2].y = m_cy + (m_radius * 1.15 * sin(value2));
+      points[1].x = m_cx + (m_radius * 1.15*sizefactor * cos(value1));
+      points[1].y = m_cy + (m_radius * 1.15*sizefactor * sin(value1));
+      points[2].x = m_cx + (m_radius * 1.15*sizefactor * cos(value2));
+      points[2].y = m_cy + (m_radius * 1.15*sizefactor * sin(value2));
       dc->DrawPolygon(3, points, 0, 0);
     //}
   }

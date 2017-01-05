@@ -155,6 +155,7 @@ public:
 	double Calc_CMG(double COG, double SOG, double BTM);
 	TargetxMG Calc_TargetVMG(double TWA, double TWS);
     TargetxMG Calc_TargetCMG(double TWS, double TWD, double BRG);
+    void Calc_TargetCMG2(double TWS, double TWD, double BRG, TargetxMG *TCMG1, TargetxMG*TCMG2);
 
 private:
 	wxDialog*	dlg;

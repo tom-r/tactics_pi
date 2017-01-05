@@ -91,7 +91,7 @@ class TacticsInstrument_BearingCompass : public TacticsInstrument_Dial
 			void DrawWindAngles(wxGCDC* dc);
             void DrawPolar(wxGCDC* dc);
             void DrawTargetxMGAngle(wxGCDC* dc);
-            void DrawTargetAngle(wxGCDC* dc, double TargetAngle, wxString color);
+            void DrawTargetAngle(wxGCDC* dc, double TargetAngle, wxString color1, int size);
             void DrawCurrent(wxGCDC* dc);
 			void DrawLaylines(wxGCDC* dc);
 			virtual void DrawData(wxGCDC* dc, double value, wxString unit, wxString format, DialPositionOption position);
