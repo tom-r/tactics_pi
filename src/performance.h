@@ -152,7 +152,7 @@ public:
     TargetxMG GetTargetVMGDownwind(double TWS);
     double GetAvgPolarSpeed(double twa, double tws);
 	double Calc_VMG(double TWA, double StW);
-	double Calc_CMG(double COG, double SOG, double BTM);
+    double Calc_CMG(double heading, double speed, double Brg);
 	TargetxMG Calc_TargetVMG(double TWA, double TWS);
     TargetxMG Calc_TargetCMG(double TWS, double TWD, double BRG);
     void Calc_TargetCMG2(double TWS, double TWD, double BRG, TargetxMG *TCMG1, TargetxMG*TCMG2);

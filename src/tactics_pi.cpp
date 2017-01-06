@@ -142,7 +142,7 @@ enum {
   ID_DBP_D_TWD, ID_DBP_I_HDM, ID_DBP_D_HDT, ID_DBP_D_WDH, ID_DBP_I_TWAMARK, ID_DBP_D_MDA, ID_DBP_I_MDA, ID_DBP_D_BPH, ID_DBP_I_FOS,
   ID_DBP_M_COG, ID_DBP_I_PITCH, ID_DBP_I_HEEL, ID_DBP_D_AWA_TWA, ID_DBP_I_LEEWAY, ID_DBP_I_CURRDIR,
   ID_DBP_I_CURRSPD, ID_DBP_D_BRG, ID_DBP_I_POLSPD, ID_DBP_I_POLVMG, ID_DBP_I_POLTVMG,
-  ID_DBP_I_POLTVMGANGLE, ID_DBP_I_POLCMG, ID_DBP_I_POLTCMG, ID_DBP_I_POLTCMGANGLE, ID_DBP_D_POLPERF, ID_DBP_D_AVGWIND,
+  ID_DBP_I_POLTVMGANGLE, ID_DBP_I_POLCMG, ID_DBP_I_POLTCMG, ID_DBP_I_POLTCMGANGLE, ID_DBP_D_POLPERF, ID_DBP_D_AVGWIND, ID_DBP_D_POLCOMP,
   ID_DBP_LAST_ENTRY //this has a reference in one of the routines; defining a "LAST_ENTRY" and setting the reference to it, is one codeline less to change (and find) when adding new instruments :-)
 };
 
@@ -281,7 +281,7 @@ wxString getInstrumentCaption( unsigned int id )
 		case ID_DBP_D_BRG :
 			return _("Bearing Compass");
 		case	ID_DBP_I_POLSPD:
-			return _("Polarspeed");
+			return _("Polar Speed");
 		case	ID_DBP_I_POLVMG:
 			return _("Actual VMG");
 		case	ID_DBP_I_POLTVMG:
@@ -295,9 +295,11 @@ wxString getInstrumentCaption( unsigned int id )
 		case	ID_DBP_I_POLTCMGANGLE:
 			return _("Target CMG-Angle");
         case ID_DBP_D_POLPERF:
-          return _("Polar performance");
+          return _("Polar Performance");
         case ID_DBP_D_AVGWIND:
           return _("Average Wind");
+        case ID_DBP_D_POLCOMP:
+          return _("Polar Compass");
 
 	}
     return _T("");
@@ -369,7 +371,8 @@ void getListItemForInstrument( wxListItem &item, unsigned int id )
 		case ID_DBP_D_BRG:
         case ID_DBP_D_POLPERF:
         case ID_DBP_D_AVGWIND:
-            item.SetImage( 1 );
+        case ID_DBP_D_POLCOMP:
+          item.SetImage(1);
             break;
     }
 }
@@ -470,6 +473,7 @@ int tactics_pi::Init( void )
     mBRG_Watchdog = 2;
     mTWS_Watchdog = 2;
     mTWD_Watchdog = 2;
+    mAWS_Watchdog = 2;
     //************TR
 	alpha_currspd = 0.2;  //smoothing constant for current speed
 	alpha_CogHdt = 0.1; // smoothing constant for diff. btw. Cog & Hdt
@@ -679,6 +683,11 @@ void tactics_pi::Notify()
     if (mTWD_Watchdog <= 0) {
       SendSentenceToAllInstruments(OCPN_DBP_STC_TWD, NAN, _T("\u00B0"));
     }
+    mAWS_Watchdog--;
+    if (mAWS_Watchdog <= 0) {
+      SendSentenceToAllInstruments(OCPN_DBP_STC_AWS, NAN, _T(""));
+    }
+
     ExportPerformanceData();
 }
 //*********************************************************************************
@@ -730,7 +739,7 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
       //Correct AWS with heel if global variable set and heel is available
       //correction only makes sense if you use a heel sensor 
       //AWS_corrected = AWS_measured * cos(AWA_measured) / cos(AWA_corrected)
-      if (g_bCorrectAWwithHeel == true && g_bUseHeelSensor && !wxIsNaN(mheel))
+      if (g_bCorrectAWwithHeel == true && g_bUseHeelSensor && !wxIsNaN(mheel) && !wxIsNaN(value))
         value = value / cos(mheel*M_PI / 180.);
     }
     if (st == OCPN_DBP_STC_STW){
@@ -765,8 +774,9 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
     }
     //}
 
-  if (g_bForceTrueWindCalculation && (st == OCPN_DBP_STC_TWS || st == OCPN_DBP_STC_TWA || st == OCPN_DBP_STC_TWD)){
-    //do nothing, calculated in "else"; just easier to read this way round ...
+    if (g_bForceTrueWindCalculation && ((st == OCPN_DBP_STC_TWS && !wxIsNaN(value)) || st == OCPN_DBP_STC_TWA || st == OCPN_DBP_STC_TWD)){
+    //do nothing, if we force TW calculation-> the distribution to the plugin instruments is done in CalculateTrueWind()
+    //for all other sentences and usage of the original NMEA-TW, see else ...
     ;
   }
   else{
@@ -775,10 +785,10 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
       if (tactics_window)   tactics_window->SendSentenceToAllInstruments(st, value, unit);
     }
   }
-	// calculate some data and distrubute to all instruments as well
+	// calculate some data and distribute to all instruments as well
 	SetCalcVariables(st, value, unit);
-	CalculateTrueWind(st, value, unit);
-	CalculateLeeway(st, value, unit);
+    CalculateTrueWind(st, value, unit);
+    CalculateLeeway(st, value, unit);
 	CalculateCurrent(st, value, unit);
 	CalculateLaylineDegreeRange();
     CalculatePerformanceData();
@@ -2091,6 +2101,8 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
                             SendSentenceToAllInstruments( OCPN_DBP_STC_AWS,
                               toUsrSpeed_Plugin(m_NMEA0183.Mwv.WindSpeed * m_wSpeedFactor, g_iDashWindSpeedUnit),
                                     getUsrSpeedUnit_Plugin( g_iDashWindSpeedUnit ) );
+                            mAWS_Watchdog = gps_watchdog_timeout_ticks;
+
                         }
                     } else if( m_NMEA0183.Mwv.Reference == _T("T") ) // Theoretical (aka True)
                     {
@@ -2325,6 +2337,8 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
                             m_NMEA0183.Vwr.WindDirectionMagnitude, awaunit );
                     SendSentenceToAllInstruments(OCPN_DBP_STC_AWS, toUsrSpeed_Plugin(m_NMEA0183.Vwr.WindSpeedKnots, g_iDashWindSpeedUnit),
                             getUsrSpeedUnit_Plugin( g_iDashWindSpeedUnit ) );
+                    mAWS_Watchdog = gps_watchdog_timeout_ticks;
+
                     /*
                      double m_NMEA0183.Vwr.WindSpeedms;
                      double m_NMEA0183.Vwr.WindSpeedKmh;
@@ -3332,6 +3346,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
 		wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer06->Add(itemStaticText23a, 0, wxEXPAND | wxALL, border_size);
     m_LeewayFactor = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 20, g_dLeewayFactor, 0.01);
+    m_LeewayFactor->SetToolTip(_("Leeway='Drift' of boat due to heel\nLow values mean high performance of hull\nLeeway = (LeewayFactor * Heel) / STW²;"));
+
     itemFlexGridSizer06->Add(m_LeewayFactor, 0, wxALIGN_LEFT | wxALL, 0);
     m_LeewayFactor->SetValue(g_dLeewayFactor);
 	//--------------------
@@ -3344,6 +3360,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
 	m_ButtonFixedLeeway = new wxRadioButton(itemPanelNotebook03, wxID_ANY, _("fixed/max Leeway [\u00B0]:"), wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer06->Add(m_ButtonFixedLeeway, 0, wxALL, 5);
 	m_ButtonFixedLeeway->SetValue(g_bUseFixedLeeway);
+    m_ButtonFixedLeeway->SetToolTip(_("Dual purpose !\nIf Radiobutton is NOT set, then it's used to limit Leeway to a max value.\n If Radiobutton is set, then it fixes Leeway to this constant value."));
+
     m_ButtonFixedLeeway->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(TacticsPreferencesDialog::OnManualHeelUpdate), NULL, this);
 
     m_fixedLeeway = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 30, g_dfixedLeeway, 0.01);
@@ -3466,7 +3484,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     m_AlphaCurrDir = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS | wxSP_WRAP, 1, 400, g_dalpha_currdir * 1000);
     itemFlexGridSizer08->Add(m_AlphaCurrDir, 0, wxALIGN_LEFT, 0);
     m_AlphaCurrDir->SetValue(g_dalpha_currdir*1000);
-    
+    m_AlphaCurrDir->SetToolTip(_("Low values mean high damping"));
 /*    int ialphaCurrDir = g_dalpha_currdir*2000;wxBOTTOM | wxEXPAND | wxLEFT | wxRIGHT | wxTOP
     m_AlphaCurrDir = new wxSlider(itemPanelNotebook03, wxID_ANY, ialphaCurrDir, 2, 800, wxDefaultPosition, wxSize(200, 20));
     itemFlexGridSizer08->Add(m_AlphaCurrDir, 1, wxALL | wxEXPAND, 2);
@@ -4361,7 +4379,7 @@ void TacticsWindow::SetInstrumentList( wxArrayInt list )
 				instrument = new TacticsInstrument_Single(this, wxID_ANY,
 					getInstrumentCaption(id), OCPN_DBP_STC_LEEWAY, _T("%2.1f"));
 				break;
-			case ID_DBP_D_BRG:
+			case ID_DBP_D_BRG:  // Bearing Compass
 				instrument = new TacticsInstrument_BearingCompass(this, wxID_ANY,
 					getInstrumentCaption(id), OCPN_DBP_STC_COG | OCPN_DBP_STC_BRG | OCPN_DBP_STC_CURRDIR | OCPN_DBP_STC_CURRSPD
 					| OCPN_DBP_STC_TWA | OCPN_DBP_STC_LEEWAY | OCPN_DBP_STC_HDT | OCPN_DBP_STC_LAT | OCPN_DBP_STC_LON
@@ -4374,6 +4392,19 @@ void TacticsWindow::SetInstrumentList( wxArrayInt list )
 					OCPN_DBP_STC_DTW, _T("%.2f"), DIAL_POSITION_TOPLEFT);
 //				OCPN_DBP_STC_DTW | OCPN_DBP_STC_DCV, _T("%.2f"), DIAL_POSITION_TOPLEFT);
 				break;
+            case ID_DBP_D_POLCOMP: // Polar Compass
+              instrument = new TacticsInstrument_PolarCompass(this, wxID_ANY,
+                getInstrumentCaption(id), OCPN_DBP_STC_COG | OCPN_DBP_STC_BRG | OCPN_DBP_STC_CURRDIR | OCPN_DBP_STC_CURRSPD
+                | OCPN_DBP_STC_TWA | OCPN_DBP_STC_LEEWAY | OCPN_DBP_STC_HDT | OCPN_DBP_STC_LAT | OCPN_DBP_STC_LON
+                | OCPN_DBP_STC_STW | OCPN_DBP_STC_AWA | OCPN_DBP_STC_TWS | OCPN_DBP_STC_TWD);
+              ((TacticsInstrument_Dial *)instrument)->SetOptionMarker(5,
+                DIAL_MARKER_SIMPLE, 2);
+              ((TacticsInstrument_Dial *)instrument)->SetOptionLabel(30,
+                DIAL_LABEL_ROTATED);
+              ((TacticsInstrument_Dial *)instrument)->SetOptionExtraValue(
+                OCPN_DBP_STC_DTW, _T("%.2f"), DIAL_POSITION_TOPLEFT);
+              //				OCPN_DBP_STC_DTW | OCPN_DBP_STC_DCV, _T("%.2f"), DIAL_POSITION_TOPLEFT);
+              break;
             case ID_DBP_I_TWAMARK:
               instrument = new TacticsInstrument_PerformanceSingle(this, wxID_ANY,
                 getInstrumentCaption(id), OCPN_DBP_STC_BRG | OCPN_DBP_STC_TWD | OCPN_DBP_STC_LAT | OCPN_DBP_STC_LON, _T("%5.0f"));
@@ -4583,7 +4614,7 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
       //  Calculate TWS (from AWS and StW/SOG)
       spdval = (g_bUseSOGforTWCalc) ? mSOG : mStW ;
       // only start calculating if we have a full set of data
-      if ((!m_bTrueWind_available || g_bForceTrueWindCalculation) && mAWA >= 0 && mAWS >= 0 && spdval >= 0 && mAWAUnit != _("")) {
+      if ((!m_bTrueWind_available || g_bForceTrueWindCalculation) && mAWA >= 0 && mAWS>=0  && spdval >= 0 && mAWAUnit != _("")) {
         //we have to do the calculation in knots
         double aws_kts = fromUsrSpeed_Plugin(mAWS, g_iDashWindSpeedUnit);
         spdval = fromUsrSpeed_Plugin(spdval, g_iDashSpeedUnit);
@@ -4627,6 +4658,12 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
             mTWD_Watchdog = gps_watchdog_timeout_ticks;
           }
         }
+      }
+      else{
+        m_calcTWS = mTWS = NAN;
+        m_calcTWD = mTWD = NAN;
+        m_calcTWA = mTWA = NAN;
+
       }
     }
 }
@@ -4814,7 +4851,8 @@ void tactics_pi::CalculatePerformanceData(void)
     if (mTWA > 90){
        mPercentTargetVMGdownwind = fabs(VMG / tvmg.TargetSpeed * 100.);
     }
-    mVMGGain = 100.0 - mStW/tvmg.TargetSpeed  * 100.;
+    //mVMGGain = 100.0 - mStW/tvmg.TargetSpeed  * 100.;
+    mVMGGain = 100.0 - VMG / tvmg.TargetSpeed  * 100.; 
   }
   else
   {
@@ -4829,7 +4867,9 @@ void tactics_pi::CalculatePerformanceData(void)
 
   if (mBRG>=0){
     tcmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
-    mCMGGain = (tcmg.TargetSpeed >0) ? (100.0 - mStW / tcmg.TargetSpeed *100.) : 0.0;
+    double actcmg = BoatPolar->Calc_CMG(mHdt, mStW, mBRG);
+   // mCMGGain = (tcmg.TargetSpeed >0) ? (100.0 - mStW / tcmg.TargetSpeed *100.) : 0.0;
+    mCMGGain = (tcmg.TargetSpeed >0) ? (100.0 - actcmg / tcmg.TargetSpeed *100.) : 0.0;
     if (tcmg.TargetAngle >= 0 && tcmg.TargetAngle < 360) {
       mCMGoptAngle = getSignedDegRange(mTWA, tcmg.TargetAngle);
     }

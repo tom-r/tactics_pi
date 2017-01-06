@@ -256,15 +256,18 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
 
 			}
 			else if (m_displaytype == POLARTARGETCMG){
-              TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
-              if (!wxIsNaN(targetCMG.TargetSpeed) && targetCMG.TargetSpeed > 0) {
+              //TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
+              TargetxMG TCMGMax, TCMGMin;
+              BoatPolar->Calc_TargetCMG2(mTWS, mTWD, mBRG, &TCMGMax, &TCMGMin);
+              //if (!wxIsNaN(targetCMG.TargetSpeed) && targetCMG.TargetSpeed > 0) {
+              if (!wxIsNaN(TCMGMax.TargetSpeed) && TCMGMax.TargetSpeed > 0) {
 					double cmg = BoatPolar->Calc_CMG(mHDT, mSTW, mBRG);
                     if (!wxIsNaN(cmg) )//&& cmg >=0)
                     {
                       //double percent = fabs(cmg / targetCMG.TargetSpeed * 100.);
-                      double percent = cmg / targetCMG.TargetSpeed * 100.;
-                      targetCMG.TargetSpeed = toUsrSpeed_Plugin(targetCMG.TargetSpeed, g_iDashSpeedUnit);
-                      m_data = wxString::Format("%d", wxRound(percent)) + _T(" % / ") + wxString::Format("%.2f", targetCMG.TargetSpeed) + _T(" ") + stwunit;
+                      double percent = cmg / TCMGMax.TargetSpeed * 100.;
+                      TCMGMax.TargetSpeed = toUsrSpeed_Plugin(TCMGMax.TargetSpeed, g_iDashSpeedUnit);
+                      m_data = wxString::Format("%d", wxRound(percent)) + _T(" % / ") + wxString::Format("%.2f", TCMGMax.TargetSpeed) + _T(" ") + stwunit;
                     }
                     else
                       m_data = _T("--- % / --- ") + stwunit;
@@ -278,11 +281,14 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
               /*if (cmg < 0)
                 m_data = _T("moving away");
               else{*/
-              TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
-              if (!wxIsNaN(targetCMG.TargetAngle))
-                    m_data = wxString::Format("%.0f", targetCMG.TargetAngle) + _T("\u00B0");
-                else
-                  m_data = _T("no polar data");
+              //TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
+              TargetxMG TCMGMax, TCMGMin;
+              BoatPolar->Calc_TargetCMG2(mTWS, mTWD, mBRG, &TCMGMax, &TCMGMin);
+
+              if (!wxIsNaN(TCMGMax.TargetAngle))
+                m_data = wxString::Format("%.0f", TCMGMax.TargetAngle) + _T("\u00B0");
+              else
+                m_data = _T("no polar data");
               //}
 			}
             else if (m_displaytype == TWAMARK){
@@ -561,7 +567,7 @@ void Polar::setValue(wxString s, int dir, int spd)
       {
 		windsp[spd].winddir[dir] = speed;
 		windsp[spd].isfix[dir] = true;
-//TR temp. for cmg test: fill the second half of the polar
+//for cmg : fill the second half of the polar
         windsp[spd].winddir[360-dir] = speed;
         windsp[spd].isfix[360- dir] = true;
     }
@@ -825,57 +831,6 @@ Calculate opt. CMG (angle & speed) for up- and downwind courses with bearing to 
 ************************************************************************************/
 
 /*
-TargetxMG Polar::Calc_TargetCMG(double TWS, double TWD, double BRG)
-{
-  TargetxMG TCMG;
-  double pol_speed, max_speed = 0;
-  int pol_TWA = -1, max_TWA = -1;
-  int i_wspd = wxRound(TWS);
-
-  //double Course_WA = TWD - BRG;                 // determine if upwind or downwind to mark
-  double Course_WA = getDegRange(TWD, BRG);
-  //wxLogMessage("Course_WA=%f", Course_WA);
-  if (Course_WA < 30) {
-
-  };
-
-  if (Course_WA < 90) { // Tacking - approach from 0
-    for (int j_wdir = 0; j_wdir < 90; j_wdir++)  // 0-90 deg TWA
-    {
-      pol_speed = windsp[i_wspd].winddir[j_wdir];//Master_pol[i_wspd].boat_speed[j_wdir];
-      pol_TWA = j_wdir;
-
-      double CMG = Calc_VMG(pol_TWA, pol_speed);             //VMG_C to wind
-      //cmg = cos(heading - bearing)= cos(winkeldifferenz)
-      //vmg rechnet mit TWA;
-      //TWA ist der Winkel von heading zu TWD : heading + twa = twd --> heading = twd - twa;
-      // heading - bearing :  bearing auf TWD umrechnen,
-      // 
-      //double CMG = Calc_CMG(double heading, pol_speed, double Brg);
-      if (CMG > max_speed) {
-        max_speed = CMG;
-        max_TWA = pol_TWA;
-      }
-    }
-  }
-  else if (Course_WA > 90) {        // Running - approach from 180
-    for (int j_wdir = 180; j_wdir >= 90; j_wdir--) { // 180 -> 90 deg TWA
-      pol_speed = windsp[i_wspd].winddir[j_wdir];
-      pol_TWA = j_wdir;
-
-      double CMG = Calc_VMG(pol_TWA, pol_speed);             //VMG_C to wind
-      if (CMG > max_speed) {
-        max_speed = CMG;
-        max_TWA = pol_TWA;
-      }
-    }
-  }
-  TCMG.TargetAngle = max_TWA;
-  TCMG.TargetSpeed = max_speed;
-  return TCMG;
-}
-*/
-/*
   Calculate the target CMG (=VMC)
   The theoretical approach is to calculate the tangens from the bearing line to the polar curve.
   As this is not (easily) possible (or I don't know how to do), I use another approach :
@@ -903,62 +858,24 @@ TargetxMG Polar::Calc_TargetCMG(double TWS, double TWD,  double BRG)
     int start = 0;
     int polang;
     int iIargetAngle = -999;
-	/*if (absrange <90) { //upwind
-      start = vPolarAngle - 90; 
-      if (start < 0) start += 360;  // oder 180 ?
+    start = vPolarAngle - 90; 
+    if (start < 0) start += 360;  // oder 180 ?
+    for (k = 0; k <= 180; k++){
+      curAngle = k + start;
+      if (curAngle > 359) curAngle -= 360;
+      polang = curAngle;
+      diffAngle = curAngle - range;
+      if (diffAngle > 359) diffAngle -= 360;
+      if (diffAngle < -359) diffAngle += 360;
+      if (!wxIsNaN(windsp[i_tws].winddir[polang])){
+        cmg = windsp[i_tws].winddir[polang] * cos(diffAngle*M_PI / 180.);
+        if (cmg > TCMG.TargetSpeed) {
+          TCMG.TargetSpeed = cmg;
 
-      for (k = 0; k <= 180; k++){
-        curAngle = k + start;
-        if (curAngle > 359) curAngle -= 360;
-        //if (curAngle > 180) curAngle = 180-(curAngle - 180);
-        //int polang = curAngle < 0 ? -curAngle : curAngle;
-        polang = curAngle;
-        diffAngle = curAngle - range;
-        if (diffAngle > 359) diffAngle -= 360;
-        if (diffAngle < -359) diffAngle += 360;
-        if (!wxIsNaN(windsp[i_tws].winddir[polang])){
-          cmg = windsp[i_tws].winddir[polang] * cos(diffAngle*M_PI / 180.);
-          if (cmg > TCMG.TargetSpeed){
-            TCMG.TargetSpeed = cmg;
-            //TCMG.TargetAngle = diffAngle;
-            targetAngle = curAngle;
-//            TCMG.TargetAngle = absrange < 90 ? diffAngle : 180 - diffAngle;
-//            if (TCMG.TargetAngle > 180 || TCMG.TargetAngle < -180) TCMG.TargetAngle = 360 - TCMG.TargetAngle;
-          }
+          iIargetAngle = curAngle;
         }
       }
-	}
-	if (absrange >= 90) {  //downwind
-      //vPolarAngle += 180;
-      //if (vPolarAngle > 359) vPolarAngle -= 360;*/
-      start = vPolarAngle - 90; 
-      if (start < 0) start += 360;  // oder 180 ?
-      //wxLogMessage("************start =%d, TWS=%.2f, TWD=%.2f, BRG=%.2f ==> vPolarAngle=%d, range=%f", start, TWS, TWD, BRG, vPolarAngle, range);
-      for (k = 0; k <= 180; k++){
-        curAngle = k + start;
-        if (curAngle > 359) curAngle -= 360;
-        //if (curAngle > 180) curAngle = 180-(curAngle - 180);
-        //int polang = curAngle < 0 ? -curAngle : curAngle;
-        polang = curAngle;
-        diffAngle = curAngle - range;
-        if (diffAngle > 359) diffAngle -= 360;
-        if (diffAngle < -359) diffAngle += 360;
-        if (!wxIsNaN(windsp[i_tws].winddir[polang])){
-          cmg = windsp[i_tws].winddir[polang] * cos(diffAngle*M_PI / 180.);
-          //          wxLogMessage("k=%d, curAngle=%d, polarspeed=%f, curAngle-range=%f, cmg=%f", k, curAngle, windsp[i_tws].winddir[polang], diffAngle, cmg);
-          if (cmg > TCMG.TargetSpeed) {
-            TCMG.TargetSpeed = cmg;
-
-            iIargetAngle = curAngle;
-//            TCMG.TargetAngle = absrange > 90 ? 180 - diffAngle : diffAngle;
-//            if (TCMG.TargetAngle > 180 || TCMG.TargetAngle < -180) TCMG.TargetAngle = -360 + TCMG.TargetAngle;
-           // if (TCMG.TargetAngle < -180) TCMG.TargetAngle = 360 - TCMG.TargetAngle;
-            // wxLogMessage("k=%d, curAngle=%d, polarspeed=%f, curAngle-range=%f, cmg=%f", k, curAngle, windsp[i_tws].winddir[polang], diffAngle, cmg);
-            // wxLogMessage("-->TCMG.TargetSpeed =%f, TCMG.TargetAngle =%f", TCMG.TargetSpeed, TCMG.TargetAngle);
-          }
-        }
-      }
-	//}
+    }
     if (TCMG.TargetSpeed == -999)TCMG.TargetSpeed = NAN;
     if (iIargetAngle == -999)
       TCMG.TargetAngle = NAN;
@@ -966,11 +883,42 @@ TargetxMG Polar::Calc_TargetCMG(double TWS, double TWD,  double BRG)
       TCMG.TargetAngle = (double)iIargetAngle;
 
     if (TCMG.TargetAngle > 180) TCMG.TargetAngle = 360. - TCMG.TargetAngle;
-    //wxLogMessage("TWS=%f, TWD=%f, BRG=%f, range=%f, targetAngle =%d, vPolarAngle=%d, start=%d, TCMG.TargetSpeed=%f TCMG.TargetAngle=%f", TWS, TWD, BRG, range, targetAngle, vPolarAngle, start, TCMG.TargetSpeed, TCMG.TargetAngle);
-    //wxLogMessage("k=%d, curAngle=%d, polarspeed=%f, curAngle-range=%f, cmg=%f", k, curAngle, windsp[i_tws].winddir[polang], diffAngle, cmg);
-//    wxLogMessage("-->TCMG.TargetSpeed =%f, TCMG.TargetAngle =%f", TCMG.TargetSpeed, TCMG.TargetAngle);
 	return TCMG;
 }
+/**********************************************************************************
+in certain cases there exists a second, lower cmg on the other tack
+This routine returns both cmg's if available, otherwise NAN
+
+in the small chart below :
+cmg-max : is the higher of both cmg's, *TCMGMax in the routine below
+cmg-2   : the second possible cmg
+in general :
+cmg = boat_speed*cos(hdg - brg)
+
+HDG     : target - heading, based on polar
+BRG     : Bearing to waypoint
+TWD     : True Wind Direction
+
+boat_speed = boat_speed at target-hdg = speed from polar
+
+As the polar is rotated now (polar-0° is in TWD direction)--> hdg = polarangle + diffangle
+with diffangle = angle btw.TWD and BRG
+
+                ^
+       TWD      | BRG   / HDG
+         \      |______x______cmg-max
+cmg-min   \     |  *  /   *
+   __x_____\____|*   /      *
+  *     *   \  *|   /        *
+ *          *\* |  /         *
+ *            \ | /         *
+  *            \|/         *
+   *            \         *
+     *           \      *
+        *         *   *
+           *   *
+
+**********************************************************************************************/
 void Polar::Calc_TargetCMG2(double TWS, double TWD, double BRG, TargetxMG *TCMGMax, TargetxMG* TCMGMin)
 {
   TargetxMG* TCMG1 = new TargetxMG;
@@ -981,132 +929,78 @@ void Polar::Calc_TargetCMG2(double TWS, double TWD, double BRG, TargetxMG *TCMGM
   TCMG2->TargetSpeed = -999;
   double cmg = 0;
 
-  int i_tws = wxRound(TWS);
+  int i_tws = wxRound(TWS);  //still rounding here, not averaging ...to be done
   double range = getSignedDegRange(TWD, BRG);
-  double absrange = range < 0 ? -range : range;
   double diffAngle = 0;
-  int vPolarAngle = wxRound(range);  //polar is rotated by this angle, this is "vertical" now
+//  int vPolarAngle = wxRound(range);  //polar is rotated by this angle, this is "vertical" now
   int k = 0;
   int curAngle = 0;
-  int iTargetAngle1 = -999;
   int start = 0;
-  int polang;
-  int iIargetAngle2 = -999;
   //start = vPolarAngle - 180;
   start = 0;
-  if (start < 0) start += 360;  // oder 180 ?
-
+//  if (start < 0) start += 360;  // oder 180 ?
   for (k = 0; k <= 180; k++){
     curAngle = k + start;
     if (curAngle > 359) curAngle -= 360;
-    polang = curAngle;
     diffAngle = curAngle - range;
     if (diffAngle > 359) diffAngle -= 360;
     if (diffAngle < -359) diffAngle += 360;
-    if (!wxIsNaN(windsp[i_tws].winddir[polang])){
-      cmg = windsp[i_tws].winddir[polang] * cos(diffAngle*M_PI / 180.);
+    if (!wxIsNaN(windsp[i_tws].winddir[curAngle])){
+      cmg = windsp[i_tws].winddir[curAngle] * cos(diffAngle*M_PI / 180.);
       if (cmg > TCMG1->TargetSpeed){
         TCMG1->TargetSpeed = cmg;
-        //TCMG.TargetAngle = diffAngle;
-        iTargetAngle1 = curAngle;
-        //            TCMG.TargetAngle = absrange < 90 ? diffAngle : 180 - diffAngle;
-        //            if (TCMG.TargetAngle > 180 || TCMG.TargetAngle < -180) TCMG.TargetAngle = 360 - TCMG.TargetAngle;
-      }
+        TCMG1->TargetAngle = (double)curAngle;
+       }
     }
   }
-/*  if (TCMG1->TargetSpeed == -999) TCMG1->TargetSpeed = NAN;
-  if (iTargetAngle1 == -999)*/
   if (TCMG1->TargetSpeed <= 0){
-    TCMG1->TargetSpeed = NAN;
+    TCMG1->TargetSpeed = -999;
     TCMG1->TargetAngle = NAN;
   }
-  else
-    TCMG1->TargetAngle = (double)iTargetAngle1;
 
 //  start = vPolarAngle ;
   start = 180;
-  if (start < 0) start += 360;  // oder 180 ?
+//  if (start < 0) start += 360;  // oder 180 ?
   for (k = 0; k <= 180; k++){
     curAngle = k + start;
     if (curAngle > 359) curAngle -= 360;
-    //if (curAngle > 180) curAngle = 180-(curAngle - 180);
-    //int polang = curAngle < 0 ? -curAngle : curAngle;
-    polang = curAngle;
     diffAngle = curAngle - range;
     if (diffAngle > 359) diffAngle -= 360;
     if (diffAngle < -359) diffAngle += 360;
-    if (!wxIsNaN(windsp[i_tws].winddir[polang])){
-      cmg = windsp[i_tws].winddir[polang] * cos(diffAngle*M_PI / 180.);
-      //          wxLogMessage("k=%d, curAngle=%d, polarspeed=%f, curAngle-range=%f, cmg=%f", k, curAngle, windsp[i_tws].winddir[polang], diffAngle, cmg);
+    if (!wxIsNaN(windsp[i_tws].winddir[curAngle])){
+      cmg = windsp[i_tws].winddir[curAngle] * cos(diffAngle*M_PI / 180.);
       if (cmg > TCMG2->TargetSpeed) {
         TCMG2->TargetSpeed = cmg;
-        iIargetAngle2 = curAngle;
-        //            TCMG.TargetAngle = absrange > 90 ? 180 - diffAngle : diffAngle;
-        //            if (TCMG.TargetAngle > 180 || TCMG.TargetAngle < -180) TCMG.TargetAngle = -360 + TCMG.TargetAngle;
-        // if (TCMG.TargetAngle < -180) TCMG.TargetAngle = 360 - TCMG.TargetAngle;
-        // wxLogMessage("k=%d, curAngle=%d, polarspeed=%f, curAngle-range=%f, cmg=%f", k, curAngle, windsp[i_tws].winddir[polang], diffAngle, cmg);
-        // wxLogMessage("-->TCMG.TargetSpeed =%f, TCMG.TargetAngle =%f", TCMG.TargetSpeed, TCMG.TargetAngle);
+        TCMG2->TargetAngle = (double)curAngle;
       }
     }
   }
-/*  if (TCMG2->TargetSpeed == -999) TCMG2->TargetSpeed = NAN;
-  if (iIargetAngle2 == -999)
-    TCMG2->TargetAngle = NAN;*/
   if (TCMG2->TargetSpeed <= 0){
-    TCMG2->TargetSpeed = NAN;
+    TCMG2->TargetSpeed = -999;
     TCMG2->TargetAngle = NAN;
   }
-  else
-    TCMG2->TargetAngle = (double)iIargetAngle2;
-
-  //if (TCMG1.TargetAngle > 180) TCMG1.TargetAngle = 360. - TCMG1.TargetAngle;
-  //wxLogMessage("TWS=%f, TWD=%f, BRG=%f, range=%f, targetAngle =%d, vPolarAngle=%d, start=%d, TCMG.TargetSpeed=%f TCMG.TargetAngle=%f", TWS, TWD, BRG, range, targetAngle, vPolarAngle, start, TCMG.TargetSpeed, TCMG.TargetAngle);
-  //wxLogMessage("k=%d, curAngle=%d, polarspeed=%f, curAngle-range=%f, cmg=%f", k, curAngle, windsp[i_tws].winddir[polang], diffAngle, cmg);
-//  wxLogMessage("--");
-//  wxLogMessage("-->TCMG1.TargetSpeed =%f, TCMG1.TargetAngle =%f", TCMG1->TargetSpeed, TCMG1->TargetAngle);
-//  wxLogMessage("-->TCMG2.TargetSpeed =%f, TCMG2.TargetAngle =%f", TCMG2->TargetSpeed, TCMG2->TargetAngle);
   if (TCMG1->TargetSpeed > TCMG2->TargetSpeed){
     TCMGMax->TargetSpeed = TCMG1->TargetSpeed;
-    TCMGMin->TargetSpeed = TCMG2->TargetSpeed;
     TCMGMax->TargetAngle = TCMG1->TargetAngle;
     TCMGMin->TargetAngle = TCMG2->TargetAngle;
+    TCMGMin->TargetSpeed = TCMG2->TargetSpeed;
   }
   else {
     TCMGMax->TargetSpeed = TCMG2->TargetSpeed;
-    TCMGMin->TargetSpeed = TCMG1->TargetSpeed;
     TCMGMax->TargetAngle = TCMG2->TargetAngle;
     TCMGMin->TargetAngle = TCMG1->TargetAngle;
+    TCMGMin->TargetSpeed = TCMG1->TargetSpeed;
   }
-    wxLogMessage("--");
+  if (TCMGMax->TargetSpeed == -999) TCMGMax->TargetSpeed = NAN;
+  if (TCMGMin->TargetSpeed == -999) TCMGMin->TargetSpeed = NAN;
+ /* wxLogMessage("--");
+    wxLogMessage("TCMG1.TargetSpeed =%f, TCMG2.TargetSpeed =%f", TCMG1->TargetSpeed, TCMG2->TargetAngle);
     wxLogMessage("-->TCMGMax.TargetSpeed =%f, TCMGMax.TargetAngle =%f", TCMGMax->TargetSpeed, TCMGMax->TargetAngle);
     wxLogMessage("-->TCMGMin.TargetSpeed =%f, TCMGMin.TargetAngle =%f", TCMGMin->TargetSpeed, TCMGMin->TargetAngle);
-
+    */
 }
-/*test
-//function return value = max of 2 possible cmg's
-//cmg2 : the second possible cmg
-
-cmg = boat_speed*cos(hdg-brg)
-
-hdg = target-hdg, based on polar
-boat_speed = boat_speed at target-hdg = speed from polar
-
-As the polar is rotated now (0° in TWD direction) --> hdg = polarangle+diffangle
-
-with diffangle = angle btw. TWD and BRG
-       | BRG
-\ TWD  |______x______  
- \     |   * /   *  
- _\|   |*   /      *
-*  \  *|   /  hdg   *
-   *\* |  /          *
-     \ | /          *
-      \|/          *
-       \         *
-*       \      *
-   *     *  * 
-       *  
-*/
+/*
+test, doesn't work ...
 /*
 TargetxMG Polar::Calc_TargetCMG2(double TWS, double TWD, double BRG, TargetxMG *cmg2)
 {

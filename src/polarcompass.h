@@ -25,8 +25,8 @@
 ***************************************************************************
 */
 
-#ifndef __BearingCompass_H__
-#define __BearingCompass_H__
+#ifndef __PolarCompass_H__
+#define __PolarCompass_H__
 
 // For compilers that support precompilation, includes "wx/wx.h".
 #include <wx/wxprec.h>
@@ -51,28 +51,29 @@ class DoubleExpSmooth;
 //+------------------------------------------------------------------------------
 //|
 //| CLASS:
-//|    TacticsInstrument_BearingCompass
+//|    TacticsInstrument_PolarCompass
 //|
 //| DESCRIPTION:
 //|    This class creates a compass style control with Bearing Pointer
 //|
 //+------------------------------------------------------------------------------
 
-class TacticsInstrument_BearingCompass : public TacticsInstrument_Dial
+class TacticsInstrument_PolarCompass : public TacticsInstrument_Dial
 {
       public:
-		  TacticsInstrument_BearingCompass(wxWindow *parent, wxWindowID id, wxString title, int cap_flag);
+		  TacticsInstrument_PolarCompass(wxWindow *parent, wxWindowID id, wxString title, int cap_flag);
 
-		  ~TacticsInstrument_BearingCompass(void){ SaveConfig(); }
+		  ~TacticsInstrument_PolarCompass(void){ SaveConfig(); }
 
             void SetData(int, double, wxString);
 			bool SaveConfig(void);
 			double m_Bearing,  m_ExtraValueDTW, m_CurrDir, m_CurrSpeed, m_currAngleStart, m_TWA, m_TWD, m_AWA,m_TWS, m_Hdt, m_Leeway;
+            double m_PolSpd,m_PolSpd_Percent;
             //double m_RMBlat, m_RMBlon;
 			double m_diffCogHdt;
 			double m_lat, m_lon,m_StW,m_predictedSog;
 			//double m_AngleStart;
-            wxString m_BearingUnit, m_ExtraValueDTWUnit,  m_ToWpt, m_CurrDirUnit, m_CurrSpeedUnit, m_curTack, m_targetTack, m_LeewayUnit;
+            wxString m_BearingUnit, m_ExtraValueDTWUnit, m_ToWpt, m_CurrDirUnit, m_CurrSpeedUnit, m_StWUnit, m_curTack, m_targetTack, m_LeewayUnit;
 			//double m_ExpSmoothDegRange, m_oldExpSmoothDegRange, m_alphaDeltaCog, alpha_diffCogHdt ;
 			double m_ExpSmoothDegRange, alpha_diffCogHdt;
 			//double m_LaylineDegRange, m_minLaylineDegRange, m_maxLaylineDegRange, m_COGRange[COGRANGE], m_Cog;
@@ -89,15 +90,15 @@ class TacticsInstrument_BearingCompass : public TacticsInstrument_Dial
 			void DrawForeground(wxGCDC* dc);
 			void DrawBearing(wxGCDC* dc);
 			void DrawWindAngles(wxGCDC* dc);
-            //void DrawPolar(wxGCDC* dc);
+            void DrawBoat(wxGCDC* dc, int cx, int cy, int radius);
+            void DrawPolar(wxGCDC* dc);
             void DrawTargetxMGAngle(wxGCDC* dc);
             void DrawTargetAngle(wxGCDC* dc, double TargetAngle, wxString color1, int size);
-            void DrawCurrent(wxGCDC* dc);
 			void DrawLaylines(wxGCDC* dc);
 			virtual void DrawData(wxGCDC* dc, double value, wxString unit, wxString format, DialPositionOption position);
 			virtual void Draw(wxGCDC* dc);
 			void CalculateLaylineDegreeRange(void);
 };
 
-#endif // __BearingCompass_H__
+#endif // __PolarCompass_H__
 

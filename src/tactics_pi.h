@@ -68,6 +68,7 @@
 #include "performance.h"
 #include "bearingcompass.h"
 #include "avg_wind.h"
+#include "polarcompass.h"
 
 class TacticsWindow;
 class TacticsWindowContainer;
@@ -220,6 +221,7 @@ private:
       int                  mBRG_Watchdog;
       int                  mTWD_Watchdog;
       int                  mTWS_Watchdog;
+      int                  mAWS_Watchdog;
 
 	  // TR : bearing compass + TWA/TWD calculation
 	  wxMenu               *m_pmenu;

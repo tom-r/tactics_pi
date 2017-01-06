@@ -51,6 +51,8 @@ SET(SRC_TACTICS
 	src/avg_wind.cpp
     src/bearingcompass.cpp
     src/bearingcompass.h
+	src/polarcompass.cpp
+    src/polarcompass.h
     src/performance.cpp
     src/performance.h
     src/instrument.cpp
@@ -84,7 +86,6 @@ SET(SRC_TACTICS
     src/wxJSON/jsonval.cpp
     src/wxJSON/jsonreader.cpp
     src/ocpn_plugin.h
-
 )
 
 SET(SRC_NMEA0183
