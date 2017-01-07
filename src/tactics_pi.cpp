@@ -782,7 +782,8 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
     }
     //}
 
-    if (g_bForceTrueWindCalculation && ((st == OCPN_DBP_STC_TWS && !wxIsNaN(value)) || st == OCPN_DBP_STC_TWA || st == OCPN_DBP_STC_TWD)){
+//    if (g_bForceTrueWindCalculation && ((st == OCPN_DBP_STC_TWS && !wxIsNaN(value)) || st == OCPN_DBP_STC_TWA || st == OCPN_DBP_STC_TWD)){
+    if (g_bForceTrueWindCalculation && ((st == OCPN_DBP_STC_TWS || st == OCPN_DBP_STC_TWA || st == OCPN_DBP_STC_TWD) && !wxIsNaN(value))){
     //do nothing, if we force TW calculation-> the distribution to the plugin instruments is done in CalculateTrueWind()
     //for all other sentences and usage of the original NMEA-TW, see else ...
     ;

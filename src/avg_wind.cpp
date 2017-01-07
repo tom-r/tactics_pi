@@ -283,7 +283,7 @@ void TacticsInstrument_AvgWindDir::DrawForeground(wxGCDC* dc)
   dc->SetFont(*g_pFontData);
   col = wxColour(255, 0, 0, 255); //red, solid
   dc->SetTextForeground(col);
-  if (!m_IsRunning)
+  if (!m_IsRunning || wxIsNaN(m_WindDir))
     avgWindAngle = _T("---");
   else {
     dir = wxRound(m_AvgWindDir);
@@ -364,14 +364,19 @@ void TacticsInstrument_AvgWindDir::DrawForeground(wxGCDC* dc)
   // wind speed
   //---------------------------------------------------------------------------------
   dc->SetFont(*g_pFontData);
-  if (!m_IsRunning){
+  if (!m_IsRunning || wxIsNaN(m_WindDir)){
     minAngle = _T("---");
     maxAngle = _T("---");
   }
   else{
     double leftAngle = wxRound(m_AvgWindDir + m_DegRangePort);
+    while (leftAngle > 360) leftAngle -= 360;
+    while (leftAngle <0) leftAngle += 360;
+
     minAngle = wxString::Format(_T("%3.0f"), leftAngle) + DEGREE_SIGN;
     double rightAngle = wxRound(m_AvgWindDir + m_DegRangeStb);
+    while (rightAngle > 360) rightAngle -= 360;
+    while (rightAngle <0) rightAngle += 360;
     maxAngle = wxString::Format(_T("%3.0f"), rightAngle) + DEGREE_SIGN;
   }
   dc->GetTextExtent(minAngle, &degw, &degh, 0, 0, g_pFontData);

@@ -99,8 +99,12 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 	// Labels are set static because we've no logic to display them this way
 	wxString labels[] = { _T(""), _T("30"), _T("60"), _T("90"), _T("120"), _T("150"), _T(""), _T("150"), _T("120"), _T("90"), _T("60"), _T("30") };
 	SetOptionLabel(30, DIAL_LABEL_HORIZONTAL, wxArrayString(12, labels));
-    m_TWD = 0;
+    m_TWD = NAN;
     m_TWDUnit = _T("");
+    m_MainValueApp = NAN;
+    m_ExtraValueApp = NAN;
+    m_MainValueTrue = NAN;
+    m_ExtraValueTrue = NAN;
 }
 
 void TacticsInstrument_AppTrueWindAngle::DrawBackground(wxGCDC* dc)
@@ -120,12 +124,12 @@ void TacticsInstrument_AppTrueWindAngle::SetData(int st, double data, wxString u
 		m_MainValueAppUnit = unit;
 		m_MainValueOption1 = DIAL_POSITION_TOPLEFT;
 	}
-    else if (st == OCPN_DBP_STC_AWS && data < 200.0){
+    else if (st == OCPN_DBP_STC_AWS /*&& data < 200.0*/){  // &&data <  200 ???Removed. otherwise check on NAN fails (intruments off)
 		m_ExtraValueApp = data;
 		m_ExtraValueAppUnit = unit;
 		m_ExtraValueOption1 = DIAL_POSITION_TOPRIGHT;
 	}
-    else if (st == OCPN_DBP_STC_TWS && data < 200.0){
+    else if (st == OCPN_DBP_STC_TWS /*&& data < 200.0*/){  // &&data <  200 ??? Removed. otherwise check on NAN fails (intruments off)
 		m_ExtraValueTrue = data;
 		m_ExtraValueTrueUnit = unit;
 		m_ExtraValueOption2 = DIAL_POSITION_BOTTOMRIGHT;
@@ -134,6 +138,10 @@ void TacticsInstrument_AppTrueWindAngle::SetData(int st, double data, wxString u
       m_TWD = data;
       m_TWDUnit = unit;
     }
+    //if AWS == NAN, also reset AWA; we have a watchdog for AWS and use it here ...
+    if (wxIsNaN(m_ExtraValueApp)) m_MainValueApp = NAN;
+    //if TWS == NAN, also reset TWA; we have a watchdog for TWS and use it here ...
+    if (wxIsNaN(m_ExtraValueTrue)) m_MainValueTrue = NAN;
     Refresh();
 }
 void TacticsInstrument_AppTrueWindAngle::Draw(wxGCDC* bdc)
@@ -163,8 +171,7 @@ void TacticsInstrument_AppTrueWindAngle::Draw(wxGCDC* bdc)
 	DrawData(bdc, m_ExtraValueApp, m_ExtraValueAppUnit, m_ExtraValueFormat, m_ExtraValueOption1);
 	DrawData(bdc, m_ExtraValueTrue, m_ExtraValueTrueUnit, m_ExtraValueFormat, m_ExtraValueOption2);
     DrawData(bdc, m_TWD, m_MainValueTrueUnit, _T("TWD:%.0f"), DIAL_POSITION_INSIDE);
-
-	DrawForeground(bdc);
+    DrawForeground(bdc);
 }
 void TacticsInstrument_AppTrueWindAngle::DrawForeground(wxGCDC* dc)
 {
@@ -188,70 +195,73 @@ void TacticsInstrument_AppTrueWindAngle::DrawForeground(wxGCDC* dc)
 	dc->DrawCircle(m_cx, m_cy, m_radius / 8);
 
 	/*True Wind*/
-	dc->SetPen(*wxTRANSPARENT_PEN);
+    if (!wxIsNaN(m_ExtraValueTrue)){  //m_ExtraValueTrue = True Wind Angle; we have a watchdog for TWS; if TWS becomes NAN, TWA must be NAN as well
+      dc->SetPen(*wxTRANSPARENT_PEN);
 
-	GetGlobalColor(_T("BLUE3"), &cl);
-	wxBrush brush2;
-	brush2.SetStyle(wxSOLID);
-	brush2.SetColour(cl);
-	dc->SetBrush(brush2);
+      GetGlobalColor(_T("BLUE3"), &cl);
+      wxBrush brush2;
+      brush2.SetStyle(wxSOLID);
+      brush2.SetColour(cl);
+      dc->SetBrush(brush2);
 
-	/* this is fix for a +/-180° round instrument, when m_MainValue is supplied as <0..180><L | R>
-	* for example TWA & AWA */
-	if (m_MainValueTrueUnit == _T("\u00B0L"))
-		data = 360 - m_MainValueTrue;
-	else
-		data = m_MainValueTrue;
+      /* this is fix for a +/-180° round instrument, when m_MainValue is supplied as <0..180><L | R>
+      * for example TWA & AWA */
+      if (m_MainValueTrueUnit == _T("\u00B0L"))
+        data = 360 - m_MainValueTrue;
+      else
+        data = m_MainValueTrue;
 
-	// The arrow should stay inside fixed limits
-	if (data < m_MainValueMin) val = m_MainValueMin;
-	else if (data > m_MainValueMax) val = m_MainValueMax;
-	else val = data;
+      // The arrow should stay inside fixed limits
+      if (data < m_MainValueMin) val = m_MainValueMin;
+      else if (data > m_MainValueMax) val = m_MainValueMax;
+      else val = data;
 
-	value = deg2rad((val - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(m_AngleStart - ANGLE_OFFSET);
+      value = deg2rad((val - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(m_AngleStart - ANGLE_OFFSET);
 
-	points[0].x = m_cx + (m_radius * 0.95 * cos(value - .010));
-	points[0].y = m_cy + (m_radius * 0.95 * sin(value - .010));
-	points[1].x = m_cx + (m_radius * 0.95 * cos(value + .015));
-	points[1].y = m_cy + (m_radius * 0.95 * sin(value + .015));
-	points[2].x = m_cx + (m_radius * 0.22 * cos(value + 2.8));
-	points[2].y = m_cy + (m_radius * 0.22 * sin(value + 2.8));
-	points[3].x = m_cx + (m_radius * 0.22 * cos(value - 2.8));
-	points[3].y = m_cy + (m_radius * 0.22 * sin(value - 2.8));
-	dc->DrawPolygon(4, points, 0, 0);
-
+      points[0].x = m_cx + (m_radius * 0.95 * cos(value - .010));
+      points[0].y = m_cy + (m_radius * 0.95 * sin(value - .010));
+      points[1].x = m_cx + (m_radius * 0.95 * cos(value + .015));
+      points[1].y = m_cy + (m_radius * 0.95 * sin(value + .015));
+      points[2].x = m_cx + (m_radius * 0.22 * cos(value + 2.8));
+      points[2].y = m_cy + (m_radius * 0.22 * sin(value + 2.8));
+      points[3].x = m_cx + (m_radius * 0.22 * cos(value - 2.8));
+      points[3].y = m_cy + (m_radius * 0.22 * sin(value - 2.8));
+      dc->DrawPolygon(4, points, 0, 0);
+    }
 	/* Apparent Wind*/
-	dc->SetPen(*wxTRANSPARENT_PEN);
+    if (!wxIsNaN(m_ExtraValueApp)){ //m_ExtraValueApp=AWA; we have a watchdog for AWS; if AWS becomes NAN, AWA will also be NAN ...
+      dc->SetPen(*wxTRANSPARENT_PEN);
 
-	GetGlobalColor(_T("DASHN"), &cl);
-	wxBrush brush;
-	brush.SetStyle(wxSOLID);
-	brush.SetColour(cl);
-	dc->SetBrush(brush);
+      GetGlobalColor(_T("DASHN"), &cl);
+      wxBrush brush;
+      brush.SetStyle(wxSOLID);
+      brush.SetColour(cl);
+      dc->SetBrush(brush);
 
-	/* this is fix for a +/-180° round instrument, when m_MainValue is supplied as <0..180><L | R>
-	* for example TWA & AWA */
-	if (m_MainValueAppUnit == _T("\u00B0L"))
-		data = 360 - m_MainValueApp;
-	else
-		data = m_MainValueApp;
+      /* this is fix for a +/-180° round instrument, when m_MainValue is supplied as <0..180><L | R>
+      * for example TWA & AWA */
+      if (m_MainValueAppUnit == _T("\u00B0L"))
+        data = 360 - m_MainValueApp;
+      else
+        data = m_MainValueApp;
 
-	// The arrow should stay inside fixed limits
-	if (data < m_MainValueMin) val = m_MainValueMin;
-	else if (data > m_MainValueMax) val = m_MainValueMax;
-	else val = data;
+      // The arrow should stay inside fixed limits
+      if (data < m_MainValueMin) val = m_MainValueMin;
+      else if (data > m_MainValueMax) val = m_MainValueMax;
+      else val = data;
 
-	value = deg2rad((val - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(m_AngleStart - ANGLE_OFFSET);
+      value = deg2rad((val - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(m_AngleStart - ANGLE_OFFSET);
 
-	points[0].x = m_cx + (m_radius * 0.95 * cos(value - .010));
-	points[0].y = m_cy + (m_radius * 0.95 * sin(value - .010));
-	points[1].x = m_cx + (m_radius * 0.95 * cos(value + .015));
-	points[1].y = m_cy + (m_radius * 0.95 * sin(value + .015));
-	points[2].x = m_cx + (m_radius * 0.22 * cos(value + 2.8));
-	points[2].y = m_cy + (m_radius * 0.22 * sin(value + 2.8));
-	points[3].x = m_cx + (m_radius * 0.22 * cos(value - 2.8));
-	points[3].y = m_cy + (m_radius * 0.22 * sin(value - 2.8));
-	dc->DrawPolygon(4, points, 0, 0);
+      points[0].x = m_cx + (m_radius * 0.95 * cos(value - .010));
+      points[0].y = m_cy + (m_radius * 0.95 * sin(value - .010));
+      points[1].x = m_cx + (m_radius * 0.95 * cos(value + .015));
+      points[1].y = m_cy + (m_radius * 0.95 * sin(value + .015));
+      points[2].x = m_cx + (m_radius * 0.22 * cos(value + 2.8));
+      points[2].y = m_cy + (m_radius * 0.22 * sin(value + 2.8));
+      points[3].x = m_cx + (m_radius * 0.22 * cos(value - 2.8));
+      points[3].y = m_cy + (m_radius * 0.22 * sin(value - 2.8));
+      dc->DrawPolygon(4, points, 0, 0);
+    }
 }
 void TacticsInstrument_AppTrueWindAngle::DrawData(wxGCDC* dc, double value,
 	wxString unit, wxString format, DialPositionOption position)
