@@ -63,17 +63,17 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 	m_pconfig = GetOCPNConfigObject();
 
 	LoadConfig();
-	m_Bearing = -1;
+	m_Bearing = NAN;
 	m_CurrDir = NAN;
 	m_CurrSpeed = NAN;
-	m_ExtraValueDTW = 0;
+	m_ExtraValueDTW = NAN;
 	m_Leeway = 0;
 	m_AngleStart = 0;
 	mExpSmDegRange = new ExpSmooth(g_dalphaDeltCoG);
 	m_Cog = -999;
 	m_Hdt = -999;
 	m_diffCogHdt = 0;
-	m_predictedSog = 0.0;
+	m_predictedSog = NAN;
 	m_TWA = NAN;
 	m_AWA = -999;
 	m_TWS = NAN;
@@ -168,16 +168,13 @@ void TacticsInstrument_BearingCompass::SetData(int st, double data, wxString uni
       m_ExtraValueDTWUnit = getUsrDistanceUnit_Plugin(g_iDashDistanceUnit);
       m_BearingUnit = _T("\u00B0");
     }
-    if (!m_pMark && m_Bearing < 0){
+    if (!m_pMark && wxIsNaN(m_Bearing)){
       m_ToWpt = _T("---");
-      m_ExtraValueDTW = 0;
-      m_predictedSog = 0;
+      m_ExtraValueDTW = NAN;
+      m_predictedSog = NAN;
       m_ExtraValueDTWUnit = getUsrDistanceUnit_Plugin(g_iDashDistanceUnit);
       m_BearingUnit = _T("\u00B0");
     }
-
-
-
 	CalculateLaylineDegreeRange();
 }
 /***************************************************************************************
@@ -204,10 +201,12 @@ void TacticsInstrument_BearingCompass::Draw(wxGCDC* bdc)
 	DrawFrame(bdc);
 	DrawMarkers(bdc);
 	DrawBackground(bdc);
-	if (m_Bearing >= 0) DrawData(bdc, m_Bearing, m_BearingUnit, _T("BRG:%.f"), DIAL_POSITION_TOPLEFT);
-	DrawData(bdc, 0, m_ToWpt, _T(""), DIAL_POSITION_TOPRIGHT);
+    if (!wxIsNaN(m_Bearing)){
+      DrawData(bdc, m_Bearing, m_BearingUnit, _T("BRG:%.f"), DIAL_POSITION_TOPLEFT);
+      DrawData(bdc, 0, m_ToWpt, _T(""), DIAL_POSITION_TOPRIGHT);
+    }
 	DrawData(bdc, m_CurrSpeed, m_CurrSpeedUnit, _T("Curr:%.2f"), DIAL_POSITION_INSIDE);
-	DrawData(bdc, m_ExtraValueDTW, m_ExtraValueDTWUnit, _T("DTW:%.1f"), DIAL_POSITION_BOTTOMLEFT);
+    if (!wxIsNaN(m_ExtraValueDTW)) DrawData(bdc, m_ExtraValueDTW, m_ExtraValueDTWUnit, _T("DTW:%.1f"), DIAL_POSITION_BOTTOMLEFT);
 	if (m_CurrDir >= 0 && m_CurrDir < 360)
 		DrawCurrent(bdc);
 	DrawForeground(bdc);
@@ -216,7 +215,7 @@ void TacticsInstrument_BearingCompass::Draw(wxGCDC* bdc)
 	DrawData(bdc, m_MainValue, m_MainValueUnit, _T("%.0f"), DIAL_POSITION_TOPINSIDE);
 
 //	DrawData(bdc, m_predictedSog, _T("kn "), _T("prd.SOG: ~%.1f"), DIAL_POSITION_BOTTOMRIGHT);
-    DrawData(bdc, m_predictedSog, getUsrSpeedUnit_Plugin(g_iDashSpeedUnit), _T("prd.SOG: ~%.1f"), DIAL_POSITION_BOTTOMRIGHT);
+    if (!wxIsNaN(m_predictedSog)) DrawData(bdc, m_predictedSog, getUsrSpeedUnit_Plugin(g_iDashSpeedUnit), _T("prd.SOG: ~%.1f"), DIAL_POSITION_BOTTOMRIGHT);
 
 
 }
@@ -411,11 +410,13 @@ void TacticsInstrument_BearingCompass::DrawTargetxMGAngle(wxGCDC* dc){
     if (tvmg_dn.TargetAngle > 0) {
       DrawTargetAngle(dc, m_curTack == _T("\u00B0L") ? 360 - tvmg_dn.TargetAngle : tvmg_dn.TargetAngle, _T("BLUE3"), 2);
     }
-    if (m_Bearing >= 0 && m_Bearing < 360 && !wxIsNaN(m_TWD)){
-//       TargetxMG tcmg = BoatPolar->Calc_TargetCMG(m_TWS, m_TWD, m_Bearing);
-      BoatPolar->Calc_TargetCMG2(m_TWS, m_TWD, m_Bearing,&TCMGMax,&TCMGMin);
-      if (!wxIsNaN(TCMGMax.TargetAngle))      DrawTargetAngle(dc, 360 - TCMGMax.TargetAngle, _T("URED"), 2);
-      if (!wxIsNaN(TCMGMin.TargetAngle))      DrawTargetAngle(dc, 360 - TCMGMin.TargetAngle , _T("URED"), 1);
+    if (!wxIsNaN(m_Bearing)){
+      if (m_Bearing >= 0 && m_Bearing < 360 && !wxIsNaN(m_TWD)){
+        //       TargetxMG tcmg = BoatPolar->Calc_TargetCMG(m_TWS, m_TWD, m_Bearing);
+        BoatPolar->Calc_TargetCMG2(m_TWS, m_TWD, m_Bearing, &TCMGMax, &TCMGMin);
+        if (!wxIsNaN(TCMGMax.TargetAngle))      DrawTargetAngle(dc, 360 - TCMGMax.TargetAngle, _T("URED"), 2);
+        if (!wxIsNaN(TCMGMin.TargetAngle))      DrawTargetAngle(dc, 360 - TCMGMin.TargetAngle, _T("URED"), 1);
+      }
     }
   }
 }
@@ -492,7 +493,7 @@ void TacticsInstrument_BearingCompass::DrawTargetAngle(wxGCDC* dc, double Target
 ****************************************************************************************/
 void TacticsInstrument_BearingCompass::DrawForeground(wxGCDC* dc)
 {
-	if (m_Bearing >= 0)  
+	if (!wxIsNaN(m_Bearing))  
 		DrawBearing(dc);
     if (!wxIsNaN(m_TWS) && !wxIsNaN(m_TWA)) {
       //DrawPolar(dc);

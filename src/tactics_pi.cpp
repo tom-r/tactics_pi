@@ -517,7 +517,7 @@ int tactics_pi::Init( void )
 	mheel = NAN;
 	mLeeway = NAN;
     mPolarTargetSpeed = NAN;
-    mBRG = -1; // -1 due to Watchdog sending out -1 in case of failure
+    mBRG = NAN; 
     mVMGGain= mCMGGain= mVMGoptAngle= mCMGoptAngle = 0.0;
     mPredictedCoG = NAN;
 	for (int i = 0; i < COGRANGE; i++) m_COGRange[i] = NAN;
@@ -673,7 +673,7 @@ void tactics_pi::Notify()
     }
     mBRG_Watchdog--;
     if (mBRG_Watchdog <= 0) {
-      SendSentenceToAllInstruments(OCPN_DBP_STC_BRG, -1, _T("\u00B0"));
+      SendSentenceToAllInstruments(OCPN_DBP_STC_BRG, NAN, _T("\u00B0"));
     }
     mTWS_Watchdog--;
     if (mTWS_Watchdog <= 0) {
@@ -747,6 +747,14 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
       //correction only makes sense if you use a heel sensor 
       if (g_bCorrectSTWwithLeeway == true && g_bUseHeelSensor && !wxIsNaN(mLeeway) && !wxIsNaN(mheel))
         value = value / cos(mLeeway *M_PI / 180.0);
+    }
+    if (st == OCPN_DBP_STC_BRG){
+      if (m_pMark) {
+        double dist;
+        DistanceBearingMercator_Plugin(m_pMark->m_lat, m_pMark->m_lon, mlat, mlon, &value, &dist);
+        unit = _T("TacticsWP");
+        //m_BearingUnit = _T("\u00B0");
+      }
     }
     if (st == OCPN_DBP_STC_AWA){
       if (g_bCorrectAWwithHeel == true && g_bUseHeelSensor && !wxIsNaN(mLeeway) && !wxIsNaN(mheel)){
@@ -1539,12 +1547,9 @@ Polar is normalized (always same size)
 What should be drawn:
 * the actual polar curve for the actual TWS 
 * 0/360° point (directly upwind)
-* the first 'real' polar point
-* the last 'real' polar point
-* each of the 3 points for Target-VMG up- & downwind and Target-CMG
-* the rest of the polar currently in 1° steps ( but 5° should be good enough ...)
+* the rest of the polar currently in 2° steps
 **********************************************************************************/
-#define STEPS  360 //72
+#define STEPS  180 //72
 
 void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
 {
@@ -1557,23 +1562,19 @@ void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
     if (mTWS > 0){
       TargetxMG vmg_up = BoatPolar->GetTargetVMGUpwind(mTWS);
       TargetxMG vmg_dn = BoatPolar->GetTargetVMGDownwind(mTWS);
-//      TargetxMG cmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
-      //TargetxMG cmg2;
       TargetxMG CmGMax,CmGMin;
-      BoatPolar->Calc_TargetCMG2(mTWS, mTWD, mBRG, &CmGMax, &CmGMin);  //cmg = the higher value, cmg2 the lower cmg value
-//      wxLogMessage("cmg.TargetAngle=%f, cmg.TargetSpeed=%f,cmg1.TargetAngle=%f, cmg1.TargetSpeed=%f, cmg2.TargetAngle=%f, cmg2.TargetSpeed=%f", cmg.TargetAngle, cmg.TargetSpeed, cmg1.TargetAngle, cmg1.TargetSpeed, cmg2.TargetAngle, cmg2.TargetSpeed);
+      BoatPolar->Calc_TargetCMG2(mTWS, mTWD, mBRG, &CmGMax, &CmGMin);  //CmGMax = the higher value, CmGMin the lower cmg value
 
       for (i = 0; i < STEPS/2; i++){ //0...179
-        polval[i] = BoatPolar->GetPolarSpeed(i+1, mTWS); //polar data is 1...180 !!!
+        polval[i] = BoatPolar->GetPolarSpeed(i*2+1, mTWS); //polar data is 1...180 !!! i*2 : draw in 2° steps
         polval[STEPS-1 - i] = polval[i];
-        //if (wxIsNaN(polval[i])) polval[i] = 0.0;
+        //if (wxIsNaN(polval[i])) polval[i] = polval[STEPS-1 - i] = 0.0;
         if (polval[i]>max) max = polval[i];
       }
       wxPoint currpoints[STEPS];
       double rad, anglevalue;
       for (i = 0; i < STEPS; i++){
-//        anglevalue = deg2rad(PolarAngle + i * 5) + deg2rad(0. - ANGLE_OFFSET);
-        anglevalue = deg2rad(PolarAngle + i) + deg2rad(0. - ANGLE_OFFSET);
+        anglevalue = deg2rad(PolarAngle + i*2) + deg2rad(0. - ANGLE_OFFSET); //i*2 : draw in 2° steps
         rad = 81 * polval[i] / max;
         currpoints[i].x = pp.x + (rad * cos(anglevalue));
         currpoints[i].y = pp.y + (rad * sin(anglevalue));
@@ -1594,12 +1595,6 @@ void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
         }
       }
       glVertex2d(currpoints[0].x, currpoints[0].y); //close the curve
-
- /*     if (wxIsNaN(polval[i])) //
-        glVertex2d(pp.x, pp.y);
-      else
-        glVertex2d(currpoints[i].x, currpoints[i].y);
-*/
 
       //dc->DrawPolygon(STEPS, currpoints, 0, 0);
       glEnd();
@@ -1654,8 +1649,8 @@ Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available
       widthfactor = 1.05;
     }
     else{
-      sizefactor = 1.15;
-      widthfactor = 2;
+      sizefactor = 1.12;
+      widthfactor = 1.4;
     }
     double value = deg2rad(Angle) + deg2rad(0 - ANGLE_OFFSET) + rotate;
     double value1 = deg2rad(Angle + 5 * widthfactor) + deg2rad(0 - ANGLE_OFFSET) + rotate;

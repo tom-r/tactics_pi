@@ -63,17 +63,17 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 	m_pconfig = GetOCPNConfigObject();
 
 	LoadConfig();
-	m_Bearing = -1;
+	m_Bearing = NAN;
 	m_CurrDir = NAN;
 	m_CurrSpeed = NAN;
-	m_ExtraValueDTW = 0;
+	m_ExtraValueDTW = NAN;
 	m_Leeway = 0;
 	m_AngleStart = 0;
 	mExpSmDegRange = new ExpSmooth(g_dalphaDeltCoG);
 	m_Cog = -999;
 	m_Hdt = -999;
 	m_diffCogHdt = 0;
-	m_predictedSog = 0.0;
+	m_predictedSog = NAN;
 	m_TWA = NAN;
 	m_AWA = -999;
 	m_TWS = NAN;
@@ -145,7 +145,7 @@ void TacticsInstrument_PolarCompass::SetData(int st, double data, wxString unit)
 		m_diffCogHdt = m_Cog - m_Hdt;
     }
 	if (st == OCPN_DBP_STC_BRG) {
-		//if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)){
+//		if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)){
 			m_Bearing = data;
 			m_ToWpt = unit;
 		/*}
@@ -169,10 +169,10 @@ void TacticsInstrument_PolarCompass::SetData(int st, double data, wxString unit)
       m_ExtraValueDTWUnit = getUsrDistanceUnit_Plugin(g_iDashDistanceUnit);
       m_BearingUnit = _T("\u00B0");
     }
-    if (!m_pMark && m_Bearing < 0){
+    if (!m_pMark && wxIsNaN(m_Bearing)){
       m_ToWpt = _T("---");
-      m_ExtraValueDTW = 0;
-      m_predictedSog = 0;
+      m_ExtraValueDTW = NAN;
+      m_predictedSog = NAN;
       m_ExtraValueDTWUnit = getUsrDistanceUnit_Plugin(g_iDashDistanceUnit);
       m_BearingUnit = _T("\u00B0");
     }
@@ -202,21 +202,24 @@ void TacticsInstrument_PolarCompass::Draw(wxGCDC* bdc)
 	DrawFrame(bdc);
 	DrawBackground(bdc);
     DrawForeground(bdc);
-    if (m_Bearing >= 0) DrawData(bdc, m_Bearing, m_BearingUnit, _T("BRG:%.f"), DIAL_POSITION_TOPLEFT);
-	DrawData(bdc, 0, m_ToWpt, _T(""), DIAL_POSITION_TOPRIGHT);
+    if (!wxIsNaN(m_Bearing)){
+      //DrawData(bdc, m_Bearing, m_BearingUnit, _T("BRG:%.f"), DIAL_POSITION_TOPLEFT);
+      DrawData(bdc, m_ExtraValueDTW, m_ExtraValueDTWUnit, _T("DTW:%.1f"), DIAL_POSITION_TOPLEFT);
+      DrawData(bdc, 0, m_ToWpt, _T(""), DIAL_POSITION_TOPRIGHT);
+    }
     m_PolSpd = BoatPolar->GetPolarSpeed(m_TWA, m_TWS);
-     m_PolSpd_Percent = fromUsrSpeed_Plugin(m_StW, g_iDashSpeedUnit) / m_PolSpd * 100;
-    DrawData(bdc, m_StW, m_StWUnit, _T("%.2f"), DIAL_POSITION_INSIDE);
-    DrawData(bdc, toUsrSpeed_Plugin(m_PolSpd, g_iDashSpeedUnit), m_StWUnit, _T("%.1f"), DIAL_POSITION_BOTTOMLEFT);
+    m_PolSpd_Percent = fromUsrSpeed_Plugin(m_StW, g_iDashSpeedUnit) / m_PolSpd * 100;
+    DrawData(bdc, m_StW, m_StWUnit, _T("STW:%.1f"), DIAL_POSITION_INSIDE);
+    DrawData(bdc, toUsrSpeed_Plugin(m_PolSpd, g_iDashSpeedUnit), m_StWUnit, _T("T-PS:%.1f"), DIAL_POSITION_BOTTOMLEFT);
     DrawMarkers(bdc);
-    //DrawData(bdc, m_ExtraValueDTW, m_ExtraValueDTWUnit, _T("DTW:%.1f"), DIAL_POSITION_BOTTOMLEFT);
+    //if (!wxIsNaN(m_ExtraValueDTW)) DrawData(bdc, m_ExtraValueDTW, m_ExtraValueDTWUnit, _T("DTW:%.1f"), DIAL_POSITION_BOTTOMLEFT);
     //	if (m_CurrDir >= 0 && m_CurrDir < 360)
 //		DrawCurrent(bdc);
 
 	DrawLaylines(bdc);
 	//DrawData(bdc, m_MainValue, m_MainValueUnit, _T("%.0f"), DIAL_POSITION_TOPINSIDE);
 
-//	DrawData(bdc, m_predictedSog, _T("kn "), _T("prd.SOG: ~%.1f"), DIAL_POSITION_BOTTOMRIGHT);
+//	 if (!wxIsNaN(m_predictedSog)) DrawData(bdc, m_predictedSog, _T("kn "), _T("prd.SOG: ~%.1f"), DIAL_POSITION_BOTTOMRIGHT);
     DrawData(bdc, m_PolSpd_Percent, _T("%"), _T("%.0f"), DIAL_POSITION_BOTTOMRIGHT);
 
 
@@ -367,10 +370,12 @@ void TacticsInstrument_PolarCompass::DrawTargetxMGAngle(wxGCDC* dc){
       DrawTargetAngle(dc, tvmg_dn.TargetAngle, _T("BLUE3"), 2);
       DrawTargetAngle(dc, 360-tvmg_dn.TargetAngle, _T("BLUE3"), 2);
     }
-    if (m_Bearing >= 0 && m_Bearing < 360 && !wxIsNaN(m_TWD)){
-      BoatPolar->Calc_TargetCMG2(m_TWS, m_TWD, m_Bearing,&TCMGMax,&TCMGMin);
-      if (!wxIsNaN(TCMGMax.TargetAngle))      DrawTargetAngle(dc, TCMGMax.TargetAngle, _T("URED"), 2);
-      if (!wxIsNaN(TCMGMin.TargetAngle))      DrawTargetAngle(dc, TCMGMin.TargetAngle, _T("URED"), 1);
+    if (!wxIsNaN(m_Bearing)){
+      if (m_Bearing >= 0 && m_Bearing < 360 && !wxIsNaN(m_TWD)){
+        BoatPolar->Calc_TargetCMG2(m_TWS, m_TWD, m_Bearing, &TCMGMax, &TCMGMin);
+        if (!wxIsNaN(TCMGMax.TargetAngle))      DrawTargetAngle(dc, TCMGMax.TargetAngle, _T("URED"), 2);
+        if (!wxIsNaN(TCMGMin.TargetAngle))      DrawTargetAngle(dc, TCMGMin.TargetAngle, _T("URED"), 1);
+      }
     }
   }
 }
@@ -443,7 +448,7 @@ void TacticsInstrument_PolarCompass::DrawTargetAngle(wxGCDC* dc, double TargetAn
 ****************************************************************************************/
 void TacticsInstrument_PolarCompass::DrawForeground(wxGCDC* dc)
 {
-	if (m_Bearing >= 0)  
+  if (!wxIsNaN(m_Bearing))
 		DrawBearing(dc);
     if (!wxIsNaN(m_TWS) && !wxIsNaN(m_TWA)) {
       DrawPolar(dc);
@@ -486,7 +491,7 @@ void TacticsInstrument_PolarCompass::DrawBearing(wxGCDC* dc)
 }
 /***************************************************************************************
 ****************************************************************************************/
-#define POLSTEPS 360 //72
+#define POLSTEPS 180 //we draw in 2 degree steps
 void TacticsInstrument_PolarCompass::DrawPolar(wxGCDC*dc)
 {
   if (!wxIsNaN(m_TWS)) {
@@ -495,27 +500,24 @@ void TacticsInstrument_PolarCompass::DrawPolar(wxGCDC*dc)
     wxPen pen1;
     pen1.SetStyle(wxSOLID);
     pen1.SetColour(cl);
-    pen1.SetWidth(2);
+    pen1.SetWidth(1);
     dc->SetPen(pen1);
     double polval[POLSTEPS];
     double max = 0;
-    for (int i = 0; i < POLSTEPS; i++){
-      polval[i] = BoatPolar->GetPolarSpeed(i, m_TWS);
-      if (wxIsNaN(polval[i])) polval[i] = 0.0;
+    int i;
+    for (i = 0; i < POLSTEPS / 2; i++){ //0...179
+      polval[i] = BoatPolar->GetPolarSpeed(i*2 + 1, m_TWS); //polar data is 1...180 !!! i*2 : we draw in 2 degree steps
+      polval[POLSTEPS - 1 - i] = polval[i];
+      if (wxIsNaN(polval[i]))polval[i] = polval[POLSTEPS - 1 - i] = 0.0;
       if (polval[i]>max) max = polval[i];
     }
-    // double anglevalue = deg2rad(m_Bearing) + deg2rad(m_AngleStart - ANGLE_OFFSET);
     wxPoint currpoints[POLSTEPS];
     double rad, anglevalue;
-    for (int i = 0; i < POLSTEPS; i++){
-      //anglevalue = deg2rad(m_Bearing+i*5) + deg2rad(m_AngleStart - ANGLE_OFFSET);
-      anglevalue = deg2rad(m_TWD + i) + deg2rad(m_AngleStart - ANGLE_OFFSET);
+    for ( i = 0; i < POLSTEPS; i++){
+      anglevalue = deg2rad(m_TWD + i*2) + deg2rad(m_AngleStart - ANGLE_OFFSET);
       rad = m_radius*0.74*polval[i] / max;
-      // wxLogMessage("polval[%d]=%.2f, rad=%.2f",i,polval[i],rad);
-
       currpoints[i].x = m_cx + (rad * cos(anglevalue));
       currpoints[i].y = m_cy + (rad * sin(anglevalue));
-
     }
     wxBrush currbrush;
     currbrush.SetColour(wxColour(7, 107, 183, 0));
