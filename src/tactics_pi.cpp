@@ -3306,31 +3306,39 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
 	//--------------------
 	wxStaticText* itemStaticText20 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Layline width damping factor [0.025-1]:  "),
 		wxDefaultPosition, wxDefaultSize, 0);
+    itemStaticText20->SetToolTip(_("The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\nThe idea is to display the COG range where you're sailing to.\n Low values mean high damping."));
 	itemFlexGridSizer05->Add(itemStaticText20, 0, wxEXPAND | wxALL, border_size);
     m_alphaDeltCoG = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0.025, 1, g_dalphaDeltCoG, 0.001);
 	itemFlexGridSizer05->Add(m_alphaDeltCoG, 0, wxALIGN_LEFT, 0);
     m_alphaDeltCoG->SetValue(g_dalphaDeltCoG);
+    m_alphaDeltCoG->SetToolTip(_("Width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\nThe idea is to display the range where you're sailing to.\n Low values mean high damping."));
 
 	//--------------------
 	wxStaticText* itemStaticText19 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Layline length on Chart [nm]:  "),
 		wxDefaultPosition, wxDefaultSize, 0);
+    itemStaticText19->SetToolTip(_("Length of the boat laylines in [nm]"));
+
 	itemFlexGridSizer05->Add(itemStaticText19, 0, wxEXPAND | wxALL, border_size);
     m_pLaylineLength = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0.0, 20.0, g_dLaylineLengthonChart, 0.1);
     itemFlexGridSizer05->Add(m_pLaylineLength, 0, wxALIGN_LEFT | wxALL, 0);
     m_pLaylineLength->SetValue(g_dLaylineLengthonChart);
-
+    m_pLaylineLength->SetToolTip(_("Length of the boat laylines in [nm]"));
 	//--------------------
 	wxStaticText* itemStaticText21 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Min. Layline Width [\u00B0]:"),
 		wxDefaultPosition, wxDefaultSize, 0);
+    itemStaticText21->SetToolTip(_("Min. width of boat laylines in degrees."));
 	itemFlexGridSizer05->Add(itemStaticText21, 0, wxEXPAND | wxALL, border_size);
     m_minLayLineWidth = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 20, g_iMinLaylineWidth);
+    m_minLayLineWidth->SetToolTip(_("Min. width of boat laylines in degrees."));
     itemFlexGridSizer05->Add(m_minLayLineWidth, 0, wxALIGN_LEFT | wxALL, 0);
 
 	//--------------------
 	wxStaticText* itemStaticText22 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Max. Layline Width [\u00B0]:"),
 		wxDefaultPosition, wxDefaultSize, 0);
+    itemStaticText22->SetToolTip(_("Max. width of boat laylines in degrees."));
 	itemFlexGridSizer05->Add(itemStaticText22, 0, wxEXPAND | wxALL, border_size);
     m_maxLayLineWidth = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 30, g_iMaxLaylineWidth);
+    m_maxLayLineWidth->SetToolTip(_("Max. width of boat laylines in degrees."));
     itemFlexGridSizer05->Add(m_maxLayLineWidth, 0, wxALIGN_LEFT | wxALL, 0);
     //****************************************************************************************************
     wxStaticBox* itemStaticBox06 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Leeway"));
@@ -3342,11 +3350,11 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
 
 
 	//--------------------
-	wxStaticText* itemStaticText23a = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Boat's Leeway factor [0-20]:  "),
-		wxDefaultPosition, wxDefaultSize, 0);
-	itemFlexGridSizer06->Add(itemStaticText23a, 0, wxEXPAND | wxALL, border_size);
+	wxStaticText* itemStaticText23a = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Boat's Leeway factor [0-20]:  "),wxDefaultPosition, wxDefaultSize, 0);
+    itemStaticText23a->SetToolTip(_("Leeway='Drift' of boat due to heel/wind influence\nLow values mean high performance of hull\nLeeway = (LeewayFactor * Heel) / STW²;"));
+    itemFlexGridSizer06->Add(itemStaticText23a, 0, wxEXPAND | wxALL, border_size);
     m_LeewayFactor = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 20, g_dLeewayFactor, 0.01);
-    m_LeewayFactor->SetToolTip(_("Leeway='Drift' of boat due to heel\nLow values mean high performance of hull\nLeeway = (LeewayFactor * Heel) / STW²;"));
+    m_LeewayFactor->SetToolTip(_("Leeway='Drift' of boat due to heel/wind influence\nLow values mean high performance of hull\nLeeway = (LeewayFactor * Heel) / STW²;"));
 
     itemFlexGridSizer06->Add(m_LeewayFactor, 0, wxALIGN_LEFT | wxALL, 0);
     m_LeewayFactor->SetValue(g_dLeewayFactor);
@@ -3354,7 +3362,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
 	m_ButtonUseHeelSensor = new wxRadioButton(itemPanelNotebook03, wxID_ANY, _("Use Heel Sensor"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
 	itemFlexGridSizer06->Add(m_ButtonUseHeelSensor, 0, wxALL, 5);
 	m_ButtonUseHeelSensor->SetValue(g_bUseHeelSensor);
-	wxStaticText* itemStaticText23b = new wxStaticText(itemPanelNotebook03, wxID_ANY, _(""), wxDefaultPosition, wxDefaultSize, 0);
+    m_ButtonUseHeelSensor->SetToolTip(_("Use the internal heel sensor if available\nImportant for the correct calculation of the surface current."));
+    wxStaticText* itemStaticText23b = new wxStaticText(itemPanelNotebook03, wxID_ANY, _(""), wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer06->Add(itemStaticText23b, 0, wxEXPAND | wxALL, border_size);
 	//--------------------
 	m_ButtonFixedLeeway = new wxRadioButton(itemPanelNotebook03, wxID_ANY, _("fixed/max Leeway [\u00B0]:"), wxDefaultPosition, wxDefaultSize, 0);
@@ -3371,6 +3380,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
 	m_ButtonHeelInput = new wxRadioButton(itemPanelNotebook03, wxID_ANY, _("manual Heel input:"), wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer06->Add(m_ButtonHeelInput, 0, wxALL, 5);
 	m_ButtonHeelInput->SetValue(g_bManHeelInput);
+    m_ButtonHeelInput->SetToolTip(_("If no heel sensor is available, you can create a manual 'heel polar' here.\nJust read/enter the data from a mechanical heel sensor (e.g. on compass).\nUse True Wind Speed & Angle only !\nTake care: motoring w/o sails&heel will show wrong current data !!!"));
+
     m_ButtonHeelInput->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(TacticsPreferencesDialog::OnManualHeelUpdate), NULL, this);
 
 	wxStaticText* itemStaticText23c = new wxStaticText(itemPanelNotebook03, wxID_ANY, _(""),	wxDefaultPosition, wxDefaultSize, 0);
@@ -3480,11 +3491,12 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     itemFlexGridSizer08->Add(m_AlphaCurrDir, 0, wxBOTTOM | wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 0);
     m_AlphaCurrDir->SetValue(g_dalpha_currdir);*/
     wxStaticText* itemStaticText24 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Current damping factor [1-400]:  "), wxDefaultPosition, wxDefaultSize, 0);
+    itemStaticText24->SetToolTip(_("Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\nLow values mean high damping"));
     itemFlexGridSizer08->Add(itemStaticText24, 0, wxEXPAND | wxALL, border_size);
     m_AlphaCurrDir = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS | wxSP_WRAP, 1, 400, g_dalpha_currdir * 1000);
     itemFlexGridSizer08->Add(m_AlphaCurrDir, 0, wxALIGN_LEFT, 0);
     m_AlphaCurrDir->SetValue(g_dalpha_currdir*1000);
-    m_AlphaCurrDir->SetToolTip(_("Low values mean high damping"));
+    m_AlphaCurrDir->SetToolTip(_("Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\nLow values mean high damping"));
 /*    int ialphaCurrDir = g_dalpha_currdir*2000;wxBOTTOM | wxEXPAND | wxLEFT | wxRIGHT | wxTOP
     m_AlphaCurrDir = new wxSlider(itemPanelNotebook03, wxID_ANY, ialphaCurrDir, 2, 800, wxDefaultPosition, wxSize(200, 20));
     itemFlexGridSizer08->Add(m_AlphaCurrDir, 1, wxALL | wxEXPAND, 2);
@@ -3495,6 +3507,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     m_CurrentOnChart = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Display Current on Chart (OpenGL)"));
     itemFlexGridSizer08->Add(m_CurrentOnChart, 0, wxEXPAND, 5);
     m_CurrentOnChart->SetValue(g_bDisplayCurrentOnChart);
+    m_CurrentOnChart->SetToolTip(_("The default on program startup"));
     //****************************************************************************************************
     wxStaticBox* itemStaticBox10 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("True Wind"));
     wxStaticBoxSizer* itemStaticBoxSizer10 = new wxStaticBoxSizer(itemStaticBox10, wxHORIZONTAL);
@@ -3507,23 +3520,30 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     m_CorrectSTWwithLeeway = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Correct STW with Leeway"));
     itemFlexGridSizer10->Add(m_CorrectSTWwithLeeway, 0, wxEXPAND, 5);
     m_CorrectSTWwithLeeway->SetValue(g_bCorrectSTWwithLeeway);
+    m_CorrectSTWwithLeeway->SetToolTip(_("Apply a correction to your log speed throughout the plugin based on the calculated Leeway (via the heel sensor).\nOnly makes sense with a real heel sensor.\nMake sure your instruments do not already apply this correction !"));
     //--------------------
     m_CorrectAWwithHeel = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Correct AWS/AWA with Heel"));
     itemFlexGridSizer10->Add(m_CorrectAWwithHeel, 0, wxEXPAND, 5);
     m_CorrectAWwithHeel->SetValue(g_bCorrectAWwithHeel);
+    m_CorrectAWwithHeel->SetToolTip(_("Use with care, this is normally done by the instruments themselves as soon as you have an integrated, original equipment heel sensor"));
+
     m_CorrectAWwithHeel->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(TacticsPreferencesDialog::OnAWSAWACorrectionUpdated), NULL, this);
     //--------------------
     m_ForceTrueWindCalculation = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Force True Wind Calculation"));
     itemFlexGridSizer10->Add(m_ForceTrueWindCalculation, 0, wxEXPAND, 5);
     m_ForceTrueWindCalculation->SetValue(g_bForceTrueWindCalculation);
+    m_ForceTrueWindCalculation->SetToolTip(_("Internally calculates True Wind data (TWS,TWA,TWD) and uses it within the whole plugin even if there is True Wind data available via NMEA."));
+
     //--------------------
     m_UseSOGforTWCalc = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Use SOG instead of STW for True Wind Calc."));
     itemFlexGridSizer10->Add(m_UseSOGforTWCalc, 0, wxEXPAND, 5);
     m_UseSOGforTWCalc->SetValue(g_bUseSOGforTWCalc);
+    m_UseSOGforTWCalc->SetToolTip(_("Recommended. As True Wind blows over the earth surface, we should calc. it with Speed Over Ground.\nEliminates the influence of currents."));
 
     m_ShowWindbarbOnChart = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Show Wind Barb on Chart (OpenGL)"));
     itemFlexGridSizer10->Add(m_ShowWindbarbOnChart, 0, wxEXPAND, 5);
     m_ShowWindbarbOnChart->SetValue( g_bShowWindbarbOnChart);
+    m_ShowWindbarbOnChart->SetToolTip(_("The default on program startup"));
 
     //****************************************************************************************************
     wxStaticBox* itemStaticBox09 = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Polar"));
@@ -3546,7 +3566,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     m_ShowPolarOnChart = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Show Polar on Chart (OpenGL)"));
     itemFlexGridSizer09->Add(m_ShowPolarOnChart, 0, wxEXPAND, 5);
     m_ShowPolarOnChart->SetValue(g_bShowPolarOnChart);
-
+    m_ShowPolarOnChart->SetToolTip(_("The default on program startup"));
     //****************************************************************************************************
     wxStaticBox* itemStaticBoxExpData = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Export NMEA Performance Data"));
     wxStaticBoxSizer* itemStaticBoxSizerExpData = new wxStaticBoxSizer(itemStaticBoxExpData, wxHORIZONTAL);
@@ -3558,6 +3578,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     m_ButtonExpNKE = new wxRadioButton(itemPanelNotebook03, wxID_ANY, _("NKE format ($PNKEP)"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
     itemFlexGridSizerExpData->Add(m_ButtonExpNKE, 0, wxALL, 5);
     m_ButtonExpNKE->SetValue(true); // fixed value for now
+    m_ButtonExpNKE->SetToolTip(_("Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\nRead the manual how to set up the interface connection !"));
+
     wxStaticText* itemStaticTextDummy = new wxStaticText(itemPanelNotebook03, wxID_ANY, _(""), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizerExpData->Add(itemStaticTextDummy, 0, wxEXPAND | wxALL, border_size);
     //--------------------
