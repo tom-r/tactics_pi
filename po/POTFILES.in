@@ -1,11 +1,12 @@
+src\ocpn_plugin.h
 src\baro_history.cpp
 src\bearingcompass.cpp
 src\clock.cpp
 src\dial.cpp
 src\gps.cpp
 src\instrument.cpp
-src\ocpn_plugin.h
 src\performance.cpp
+src\polarcompass.cpp
 src\tactics_pi.cpp
 src\wind.cpp
 src\wind_history.cpp
