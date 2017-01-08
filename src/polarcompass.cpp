@@ -195,7 +195,7 @@ void TacticsInstrument_PolarCompass::Draw(wxGCDC* bdc)
 	bdc->GetTextExtent(_T("000"), &width, &height, 0, 0, g_pFontLabel);
 	m_cy = m_TitleHeight + 2;
 	m_cy += availableHeight / 2;
-	m_radius = availableHeight / 2. *0.85;
+	m_radius = availableHeight / 2. *0.80;
 
 
 	DrawLabels(bdc);
@@ -290,23 +290,10 @@ void TacticsInstrument_PolarCompass::DrawWindAngles(wxGCDC* dc)
 {
 	if (!wxIsNaN(m_TWA)) {
 		wxColour cl;
-		GetGlobalColor(_T("DASH2"), &cl);
-		wxPen pen1;
-		pen1.SetStyle(wxSOLID);
-		pen1.SetColour(cl);
-		pen1.SetWidth(2);
-		dc->SetPen(pen1);
-		GetGlobalColor(_T("DASH1"), &cl);
-		wxBrush brush1;
-		brush1.SetStyle(wxSOLID);
-		brush1.SetColour(cl);
-		dc->SetBrush(brush1);
-
-		dc->SetPen(*wxTRANSPARENT_PEN);
 
 		GetGlobalColor(_T("BLUE3"), &cl);
 		wxBrush brush;
-		brush.SetStyle(wxSOLID);
+		brush.SetStyle(wxTRANSPARENT);
 		brush.SetColour(cl);
 		dc->SetBrush(brush);
 
@@ -314,7 +301,6 @@ void TacticsInstrument_PolarCompass::DrawWindAngles(wxGCDC* dc)
 		* for example TWA & AWA */
 		double data, TwaCog;
 		// head-up = COG, but TWA is based on Hdt --> add the diff here for a correct display
-		//TwaCog = m_TWA - m_diffCogHdt; //alt: für COG
 		TwaCog = m_TWA; //neu, jetzt HDt 
 
 		/* this is fix for a +/-180° round instrument, when m_MainValue is supplied as <0..180><L | R>
@@ -338,8 +324,8 @@ void TacticsInstrument_PolarCompass::DrawWindAngles(wxGCDC* dc)
 		wxPoint brg[2];
         brg[0].x = m_cx - (m_radius *  cos(value));
         brg[0].y = m_cy - (m_radius *  sin(value));
-		brg[1].x = m_cx + (m_radius *  cos(value));
-		brg[1].y = m_cy + (m_radius *  sin(value));
+		brg[1].x = m_cx + (m_radius * 0.7* cos(value));
+		brg[1].y = m_cy + (m_radius * 0.7* sin(value));
 
 		wxPen pen2;
         pen2.SetStyle(wxPENSTYLE_DOT);
@@ -348,6 +334,29 @@ void TacticsInstrument_PolarCompass::DrawWindAngles(wxGCDC* dc)
 		dc->SetPen(pen2);
 
 		dc->DrawLine(brg[0], brg[1]);
+
+        double value1 = deg2rad((val + 5  - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
+        double value2 = deg2rad((val - 5  - m_MainValueMin) * m_AngleRange / (m_MainValueMax - m_MainValueMin)) + deg2rad(0 - ANGLE_OFFSET);
+
+        /*
+        *           0
+        *          /\
+        *         /  \
+        *        /    \
+        *     2 /_ __ _\ 1
+        *
+        *           X
+        */
+        wxPoint points[4];
+        points[0].x = m_cx + (m_radius * 0.7 * cos(value));
+        points[0].y = m_cy + (m_radius * 0.7 * sin(value));
+        points[1].x = m_cx + (m_radius * 0.8 * cos(value1));
+        points[1].y = m_cy + (m_radius * 0.8 * sin(value1));
+        points[2].x = m_cx + (m_radius * 0.8 * cos(value2));
+        points[2].y = m_cy + (m_radius * 0.8 * sin(value2));
+        dc->DrawPolygon(3, points, 0, 0);
+
+
 		dc->SetPen(*wxTRANSPARENT_PEN);
 	}
 }
@@ -472,7 +481,7 @@ void TacticsInstrument_PolarCompass::DrawBearing(wxGCDC* dc)
 
 	double value = deg2rad(m_Bearing) + deg2rad(m_AngleStart - ANGLE_OFFSET);
 
-	dc->DrawCircle(m_cx + (m_radius * 0.8 * cos(value)), m_cy + (m_radius * 0.8 * sin(value)), m_radius / 16);
+	dc->DrawCircle(m_cx + (m_radius * 0.8 * cos(value)), m_cy + (m_radius * 0.75 * sin(value)), m_radius / 16);
 	wxPoint brg[2];
 	brg[0].x = m_cx + (m_radius * 0.8 * cos(value));
 	brg[0].y = m_cy + (m_radius * 0.8 * sin(value));
@@ -515,7 +524,7 @@ void TacticsInstrument_PolarCompass::DrawPolar(wxGCDC*dc)
     double rad, anglevalue;
     for ( i = 0; i < POLSTEPS; i++){
       anglevalue = deg2rad(m_TWD + i*2) + deg2rad(m_AngleStart - ANGLE_OFFSET);
-      rad = m_radius*0.74*polval[i] / max;
+      rad = m_radius*0.69*polval[i] / max;
       currpoints[i].x = m_cx + (rad * cos(anglevalue));
       currpoints[i].y = m_cy + (rad * sin(anglevalue));
     }
@@ -741,20 +750,6 @@ void TacticsInstrument_PolarCompass::DrawLaylines(wxGCDC* dc)
 		********************************************************************************************/
 		dc->SetBrush(tackbrush);
         double predictedKdW; //==predicted Course Through Water
-		/*********************************************
-        Old: with BearingCompass Head-Up = COG
-		double diffCogHdt = m_Cog - m_Hdt;
-		m_oldExpSmoothDiffCogHdt = m_ExpSmoothDiffCogHdt;
-		m_ExpSmoothDiffCogHdt = alpha_diffCogHdt*diffCogHdt + (1 - alpha_diffCogHdt)*m_oldExpSmoothDiffCogHdt;
-
-		if (m_targetTack == _T("R")){ // currently wind is from port ...
-			predictedKdW = m_Cog - m_ExpSmoothDiffCogHdt - 2 * m_TWA - m_Leeway;
-		}
-		else if (m_targetTack == _T("L")){ //currently wind from starboard
-			predictedKdW = m_Cog + m_ExpSmoothDiffCogHdt + 2 * m_TWA + m_Leeway;
-		}
-        *******************************************/
-		//New: with BearingCompass in Head-Up mode = Hdt
         double Leeway = (m_LeewayUnit == _T("\u00B0L")) ? -m_Leeway : m_Leeway;
         if (m_targetTack == _T("R")){ // so currently wind is from port ...
 			//predictedKdW = m_Hdt - 2 * m_TWA - m_Leeway;
@@ -774,15 +769,10 @@ void TacticsInstrument_PolarCompass::DrawLaylines(wxGCDC* dc)
         //standard triangle calculation to get predicted CoG / SoG
         //get endpoint from boat-position by applying  KdW, StW
         PositionBearingDistanceMercator_Plugin(m_lat, m_lon, predictedKdW, fromUsrSpeed_Plugin(m_StW, g_iDashSpeedUnit), &predictedLatHdt, &predictedLonHdt);
-		   //wxLogMessage(_T("Step1: m_lat=%f,m_lon=%f, predictedKdW=%f,m_StW=%f --> predictedLatHdt=%f,predictedLonHdt=%f\n"), m_lat, m_lon, predictedKdW, m_StW, predictedLatHdt, predictedLonHdt);
         //apply surface current with direction & speed to endpoint from above
 		PositionBearingDistanceMercator_Plugin(predictedLatHdt, predictedLonHdt, m_CurrDir, m_CurrSpeed, &predictedLatCog, &predictedLonCog);
-		   //wxLogMessage(_T("Step2: predictedLatHdt=%f,predictedLonHdt=%f, m_CurrDir=%f,m_CurrSpeed=%f --> predictedLatCog=%f,predictedLonCog=%f\n"), predictedLatHdt, predictedLonHdt, m_CurrDir, m_CurrSpeed, predictedLatCog, predictedLonCog);
 		//now get predicted CoG & SoG as difference between the 2 endpoints (coordinates) from above
         DistanceBearingMercator_Plugin(predictedLatCog, predictedLonCog, m_lat, m_lon, &predictedCoG, &m_predictedSog);
-           //wxLogMessage("m_Leeway=%f, m_LeewayUnit=%s,m_targetTack=%s,predictedKdW=%.2f,predictedCoG=%f,predictedSog=%f ", m_Leeway, m_LeewayUnit, m_targetTack, predictedKdW, predictedCoG, m_predictedSog);
-           //wxLogMessage(_T("Step3: predictedLatCog=%f,predictedLonCog=%f, m_lat=%f,m_lon=%f --> predictedCoG=%f,predictedSog=%f, AngleStart=%d\n"), predictedLatCog, predictedLonCog, m_lat, m_lon, predictedCoG, m_predictedSog, m_AngleStart);
-
 
 		value1 = deg2rad(predictedCoG - m_ExpSmoothDegRange / 2.) + deg2rad(m_AngleStart - ANGLE_OFFSET);
 		value2 = deg2rad(predictedCoG + m_ExpSmoothDegRange / 2.) + deg2rad(m_AngleStart - ANGLE_OFFSET);
@@ -836,7 +826,7 @@ bool TacticsInstrument_PolarCompass::LoadConfig(void)
 	wxFileConfig *pConf = (wxFileConfig *)m_pconfig;
 
 	if (pConf) {
-		pConf->SetPath(_T("/PlugIns/Tactics/BearingCompass"));
+		pConf->SetPath(_T("/PlugIns/Tactics/PolarCompass"));
 
 		return true;
 	}
@@ -851,7 +841,7 @@ bool TacticsInstrument_PolarCompass::SaveConfig(void)
 
 	if (pConf)
 	{
-		pConf->SetPath(_T("/PlugIns/Tactics/BearingCompass"));
+		pConf->SetPath(_T("/PlugIns/Tactics/PolarCompass"));
 		return true;
 	}
 	else

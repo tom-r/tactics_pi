@@ -194,7 +194,7 @@ void TacticsInstrument_BearingCompass::Draw(wxGCDC* bdc)
 	bdc->GetTextExtent(_T("000"), &width, &height, 0, 0, g_pFontLabel);
 	m_cy = m_TitleHeight + 2;
 	m_cy += availableHeight / 2;
-	m_radius = availableHeight / 2 *0.85;
+	m_radius = availableHeight / 2 *0.80;
 
 
 	DrawLabels(bdc);
@@ -559,7 +559,7 @@ void TacticsInstrument_BearingCompass::DrawBearing(wxGCDC* dc)
     for (int i = 0; i < 72; i++){
       //anglevalue = deg2rad(m_Bearing+i*5) + deg2rad(m_AngleStart - ANGLE_OFFSET);
       anglevalue = deg2rad(m_Hdt + i * 5) + deg2rad(m_AngleStart - ANGLE_OFFSET);
-      rad = m_radius*0.74*polval[i] / max;
+      rad = m_radius*0.69*polval[i] / max;
       // wxLogMessage("polval[%d]=%.2f, rad=%.2f",i,polval[i],rad);
 
       currpoints[i].x = m_cx + (rad * cos(anglevalue));
