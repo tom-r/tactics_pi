@@ -2394,10 +2394,10 @@ void tactics_pi::SetNMEASentence( wxString &sentence )
 					// NKE style of XDR Pitch (=Bow up/down)
 					if (m_NMEA0183.Xdr.TransducerInfo[i].TransducerName == _T("PTCH")) {
 						if (m_NMEA0183.Xdr.TransducerInfo[i].MeasurementData > 0){
-							xdrunit = _T("\u00B0 Bow up");
+							xdrunit = _("\u00B0 Bow up");
 						}
 						else if (m_NMEA0183.Xdr.TransducerInfo[i].MeasurementData < 0) {
-							xdrunit = _T("\u00B0 Bow down");
+							xdrunit = _("\u00B0 Bow down");
 							xdrdata *= -1;
 						}
 						else {
@@ -3651,13 +3651,13 @@ void TacticsPreferencesDialog::OnAWSAWACorrectionUpdated(wxCommandEvent& event)
 { // check if heel is available
   //...
   if (!m_ButtonUseHeelSensor->GetValue()){
-    wxMessageBox(_T("This option makes only sense with a real heel sensor."));
+    wxMessageBox(_("This option makes only sense with a real heel sensor."));
     m_CorrectAWwithHeel->SetValue(false);
   }
   else{
     //display warning
     if (m_CorrectAWwithHeel->IsChecked()){
-      wxMessageBox(_T("Make sure your instruments do not internally correct AWS / AWA with heel.\nThis may result in wrong wind data."));
+      wxMessageBox(_("Make sure your instruments do not internally correct AWS / AWA with heel.\nThis may result in wrong wind data."));
     }
   }
 }
@@ -3665,7 +3665,7 @@ void TacticsPreferencesDialog::OnManualHeelUpdate(wxCommandEvent& event)
 {
   if (m_ButtonFixedLeeway->GetValue() || m_ButtonHeelInput->GetValue()){
     if (m_CorrectAWwithHeel->IsChecked()){
-      wxMessageBox(_T("This will also disable the AWA/AWS correction."));
+      wxMessageBox(_("This will also disable the AWA/AWS correction."));
       m_CorrectAWwithHeel->SetValue(false);
     }
   }
