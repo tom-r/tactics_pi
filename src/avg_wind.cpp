@@ -299,7 +299,7 @@ void TacticsInstrument_AvgWindDir::DrawForeground(wxGCDC* dc)
   // min und max Werte aus dem Array (0.. m_AvgTime) ergeben den horizontalen Zoomfaktor m_ratioW
   // Darzustellende Averagezeit m_AvgTime ergibt vertikalen Zoomfaktor ratioH
   m_ratioH = (double)(m_availableHeight) / (double)(m_AvgTime);// Höhe durch Anzahl Sekunden
- //nimm den gößeren von beiden Werten und verdopple, Average ist immer in der Mitte
+ //take the bigger value of both and double up, Average is always centered
   double maxDegRange = 2.* wxMax(m_DegRangeStb, abs(m_DegRangePort));
 
   m_ratioW = double(m_width) / maxDegRange;

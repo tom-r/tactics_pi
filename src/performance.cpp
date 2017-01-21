@@ -51,9 +51,6 @@ extern int g_iDashSpeedUnit;
 extern PlugIn_Waypoint *m_pMark;
 extern int g_iSpeedFormat;
 
-//double getDegRange(double max, double min);
-//double getSignedDegRange(double max, double min);
-//void createPNKEP_NMEA(int sentence, double data1, double data2, double data3, double data4);
 
 // ----------------------------------------------------------------
 //
