@@ -4851,6 +4851,10 @@ use of any instrument or setting
 **********************************************************************************/
 void tactics_pi::CalculatePerformanceData(void)
 {
+  if (wxIsNaN(mTWA) || wxIsNaN(mTWS)) {
+    return;
+  }
+
   mPolarTargetSpeed = BoatPolar->GetPolarSpeed(mTWA, mTWS);
   //transfer targetangle dependent on AWA, not TWA
   if (mAWA <=90)
