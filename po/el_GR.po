@@ -1,11 +1,11 @@
-#: src\tactics_pi.cpp:3053 src\tactics_pi.cpp:3070 src\tactics_pi.cpp:4220
-#: src\tactics_pi.cpp:4246
+#: src\tactics_pi.cpp:3362 src\tactics_pi.cpp:3383 src\tactics_pi.cpp:3579
+#: src\tactics_pi.cpp:4635 src\tactics_pi.cpp:4667
 msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 09:24+0200\n"
-"PO-Revision-Date: 2016-07-10 15:32-0400\n"
+"POT-Creation-Date: 2017-01-08 17:45+0100\n"
+"PO-Revision-Date: 2017-02-23 09:21-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -18,599 +18,776 @@ msgstr ""
 "X-Crowdin-Language: el\n"
 "X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 
-#: src\baro_history.cpp:288 src\performance.cpp:1452 src\wind_history.cpp:582
+#: src\baro_history.cpp:288 src\performance.cpp:1593 src\wind_history.cpp:647
 msgid "Max"
-msgstr ""
+msgstr "Μέγιστο"
 
-#: src\baro_history.cpp:289 src\performance.cpp:1453 src\wind_history.cpp:583
+#: src\baro_history.cpp:289 src\performance.cpp:1594 src\wind_history.cpp:648
 msgid "since"
-msgstr ""
+msgstr "από"
 
 #: src\baro_history.cpp:290
 msgid "Overall Max"
-msgstr ""
+msgstr "Ολικό μέγιστο"
 
 #: src\baro_history.cpp:291
 msgid "Min"
-msgstr ""
+msgstr "Ελάχιστο"
 
-#: src\bearingcompass.cpp:710
+#: src\bearingcompass.cpp:797 src\polarcompass.cpp:711
 msgid "R"
-msgstr ""
+msgstr "R"
 
-#: src\bearingcompass.cpp:715
+#: src\bearingcompass.cpp:802 src\polarcompass.cpp:716
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: src\clock.cpp:126 src\dial.cpp:524 src\gps.cpp:142 src\wind.cpp:65
-#: src\wind_history.cpp:435
+#: src\wind_history.cpp:500
 msgid "N"
 msgstr "Β (N)"
 
-#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:441
+#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:506
 msgid "NE"
 msgstr "ΒΑ (NE)"
 
-#: src\dial.cpp:524 src\gps.cpp:146 src\wind.cpp:65 src\wind_history.cpp:447
+#: src\dial.cpp:524 src\gps.cpp:146 src\wind.cpp:65 src\wind_history.cpp:512
 msgid "E"
 msgstr "Α (E)"
 
-#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:453
+#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:518
 msgid "SE"
 msgstr "ΝΑ (SE)"
 
-#: src\dial.cpp:524 src\gps.cpp:150 src\wind.cpp:65 src\wind_history.cpp:459
+#: src\dial.cpp:524 src\gps.cpp:150 src\wind.cpp:65 src\wind_history.cpp:524
 msgid "S"
 msgstr "Ν (S)"
 
-#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:465
+#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:530
 msgid "SW"
 msgstr "ΝΔ (SW)"
 
-#: src\dial.cpp:524 src\gps.cpp:154 src\wind.cpp:65 src\wind_history.cpp:471
+#: src\dial.cpp:524 src\gps.cpp:154 src\wind.cpp:65 src\wind_history.cpp:536
 msgid "W"
 msgstr "Δ (W)"
 
-#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:477
+#: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:542
 msgid "NW"
 msgstr "ΒΔ (NW)"
 
 #: src\instrument.cpp:256
 msgid " true"
-msgstr ""
+msgstr " αληθής"
 
 #: src\instrument.cpp:258
 msgid " mag"
-msgstr ""
+msgstr " μαγν."
 
-#: src\performance.cpp:385
+#: src\performance.cpp:394
 msgid "tactics_pi: Select a Polar-File"
-msgstr ""
+msgstr "tactics_pi: Επιλέξτε ένα αρχείο πολικών"
 
-#: src\performance.cpp:453
+#: src\performance.cpp:462
 msgid "Format in this file not recognised"
-msgstr ""
+msgstr "Άγνωστο φορμά αρχείου"
 
-#: src\performance.cpp:1454 src\wind_history.cpp:584
+#: src\performance.cpp:1595 src\wind_history.cpp:649
 msgid "Overall"
-msgstr ""
+msgstr "Συνολικά"
 
-#: src\tactics_pi.cpp:179
+#: src\tactics_pi.cpp:187
 msgid "Position"
 msgstr "Θέση (Συντεταγμένες)"
 
-#: src\tactics_pi.cpp:181
+#: src\tactics_pi.cpp:189
 msgid "SOG"
 msgstr "SOG(Ταχύτητα επί Εδάφους)"
 
-#: src\tactics_pi.cpp:183
+#: src\tactics_pi.cpp:191
 msgid "Speedometer"
 msgstr "Ταχύμετρο"
 
-#: src\tactics_pi.cpp:185
+#: src\tactics_pi.cpp:193
 msgid "COG"
 msgstr "COG(Πορεία επί Εδάφους)"
 
-#: src\tactics_pi.cpp:187
+#: src\tactics_pi.cpp:195
 msgid "Mag COG"
-msgstr ""
+msgstr "Μαγν. COG"
 
-#: src\tactics_pi.cpp:189
+#: src\tactics_pi.cpp:197
 msgid "GPS Compass"
-msgstr ""
+msgstr "Πυξίδα GPS"
 
-#: src\tactics_pi.cpp:191
+#: src\tactics_pi.cpp:199
 msgid "True Compass"
-msgstr ""
+msgstr "Αληθής πυξίδα"
 
-#: src\tactics_pi.cpp:193
+#: src\tactics_pi.cpp:201
 msgid "STW"
 msgstr "STW(Ταχύτητα επί Ύδατος)"
 
-#: src\tactics_pi.cpp:195
+#: src\tactics_pi.cpp:203
 msgid "True HDG"
-msgstr ""
+msgstr "Αληθής κατευθ. πορείας"
 
-#: src\tactics_pi.cpp:197
+#: src\tactics_pi.cpp:205
 msgid "Mag HDG"
-msgstr ""
-
-#: src\tactics_pi.cpp:200
-msgid "App. Wind Angle & Speed"
-msgstr ""
-
-#: src\tactics_pi.cpp:202
-msgid "App & True Wind Angle"
-msgstr ""
-
-#: src\tactics_pi.cpp:204 src\tactics_pi.cpp:206
-msgid "App. Wind Speed"
-msgstr ""
+msgstr "Μαγνητική κατευθ. πορείας"
 
 #: src\tactics_pi.cpp:208
-msgid "True Wind Angle & Speed"
-msgstr ""
+msgid "App. Wind Angle & Speed"
+msgstr "Γωνία/ταχύτητα φαιν. ανέμου"
 
-#: src\tactics_pi.cpp:210 src\tactics_pi.cpp:212
+#: src\tactics_pi.cpp:210
+msgid "App & True Wind Angle"
+msgstr "Φαιν. & πραγμ. γωνία ανέμου"
+
+#: src\tactics_pi.cpp:212 src\tactics_pi.cpp:214
+msgid "App. Wind Speed"
+msgstr "Ταχύτητα φαιν. ανέμου"
+
+#: src\tactics_pi.cpp:216
+msgid "True Wind Angle & Speed"
+msgstr "Γωνία/ταχύτητα πραγμ. ανέμου"
+
+#: src\tactics_pi.cpp:218 src\tactics_pi.cpp:220
 msgid "Depth"
 msgstr "Βάθος"
 
-#: src\tactics_pi.cpp:214 src\tactics_pi.cpp:216
+#: src\tactics_pi.cpp:222 src\tactics_pi.cpp:224
 msgid "Barometric pressure"
-msgstr ""
-
-#: src\tactics_pi.cpp:218
-msgid "Water Temp."
-msgstr ""
-
-#: src\tactics_pi.cpp:220
-msgid "Air Temp."
-msgstr ""
-
-#: src\tactics_pi.cpp:222
-msgid "App. Wind Angle"
-msgstr ""
-
-#: src\tactics_pi.cpp:224
-msgid "True Wind Angle"
-msgstr ""
+msgstr "Βαρομετρική πίεση"
 
 #: src\tactics_pi.cpp:226
-msgid "True Wind Direction"
-msgstr ""
+msgid "Water Temp."
+msgstr "Θερμ/σία νερού"
 
 #: src\tactics_pi.cpp:228
-msgid "True Wind Speed"
-msgstr ""
+msgid "Air Temp."
+msgstr "Θερμ/σία αέρος"
 
 #: src\tactics_pi.cpp:230
-msgid "True Wind Dir. & Speed"
-msgstr ""
+msgid "App. Wind Angle"
+msgstr "Γωνία φαιν. ανέμου"
 
-#: src\tactics_pi.cpp:232 src\tactics_pi.cpp:234
+#: src\tactics_pi.cpp:232
+msgid "True Wind Angle"
+msgstr "Γωνία πραγμ. ανέμου"
+
+#: src\tactics_pi.cpp:234
+msgid "True Wind Direction"
+msgstr "Κατεύθυνση πραγμ. ανέμου"
+
+#: src\tactics_pi.cpp:236
+msgid "True Wind Speed"
+msgstr "Ταχύτητα πραγμ. ανέμου"
+
+#: src\tactics_pi.cpp:238
+msgid "True Wind Dir. & Speed"
+msgstr "Κατεύθυνση/ταχύτητα πραγμ. ανέμου"
+
+#: src\tactics_pi.cpp:240 src\tactics_pi.cpp:242
 msgid "VMG"
 msgstr "VMG(Η επίκαιρη ταχύτητα του σκάφους)"
 
-#: src\tactics_pi.cpp:246
-msgid "Clock"
-msgstr ""
-
-#: src\tactics_pi.cpp:248
-msgid "Sunrise/Sunset"
-msgstr ""
-
-#: src\tactics_pi.cpp:252
-msgid "Wind history"
-msgstr ""
-
 #: src\tactics_pi.cpp:254
-msgid "Barometric history"
-msgstr ""
+msgid "Clock"
+msgstr "Ρολόι"
+
+#: src\tactics_pi.cpp:256
+msgid "Sunrise/Sunset"
+msgstr "Ανατολή/δύση ηλίου"
 
 #: src\tactics_pi.cpp:260
-msgid "TWA to Waypoint"
-msgstr ""
+msgid "Wind history"
+msgstr "Ιστορικό Ανέμου"
 
 #: src\tactics_pi.cpp:262
-msgid "From Ownship"
-msgstr ""
+msgid "Barometric history"
+msgstr "Ιστορικό πιέσεων"
 
-#: src\tactics_pi.cpp:264
-msgid "Pitch"
-msgstr ""
-
-#: src\tactics_pi.cpp:266 src\tactics_pi.cpp:3073
-msgid "Heel"
-msgstr ""
-
-#: src\tactics_pi.cpp:268 src\tactics_pi.cpp:3034
-msgid "Leeway"
-msgstr ""
+#: src\tactics_pi.cpp:268
+msgid "TWA to Waypoint"
+msgstr "Πραγμ. γωνία ανέμου προς το σημείο πορείας"
 
 #: src\tactics_pi.cpp:270
-msgid "Current Direction"
-msgstr ""
+msgid "From Ownship"
+msgstr "Από ίδιον πλοίο"
 
 #: src\tactics_pi.cpp:272
-msgid "Current Speed"
-msgstr ""
+msgid "Pitch"
+msgstr "Περιστροφή"
 
-#: src\tactics_pi.cpp:274
-msgid "Bearing Compass"
-msgstr ""
+#: src\tactics_pi.cpp:274 src\tactics_pi.cpp:3386
+msgid "Heel"
+msgstr "Γέρσιμο"
 
-#: src\tactics_pi.cpp:276
-msgid "Polarspeed"
-msgstr ""
+#: src\tactics_pi.cpp:276 src\tactics_pi.cpp:3340
+msgid "Leeway"
+msgstr "Έκπτωση"
 
 #: src\tactics_pi.cpp:278
-msgid "Actual VMG"
-msgstr ""
+msgid "Current Direction"
+msgstr "Κατεύθυνση ρεύματος"
 
 #: src\tactics_pi.cpp:280
-msgid "Target VMG"
-msgstr ""
+msgid "Current Speed"
+msgstr "Ταχύτητα ρεύματος"
 
 #: src\tactics_pi.cpp:282
-msgid "Target VMG-Angle"
-msgstr ""
+msgid "Bearing Compass"
+msgstr "Κατεύθυνση πυξίδας"
 
 #: src\tactics_pi.cpp:284
-msgid "Actual CMG"
-msgstr ""
+msgid "Polar Speed"
+msgstr "Θεωρητική ταχύτητα"
 
 #: src\tactics_pi.cpp:286
-msgid "Target CMG"
-msgstr ""
+msgid "Actual VMG"
+msgstr "Πραγματική VMG"
 
 #: src\tactics_pi.cpp:288
-msgid "Target CMG-Angle"
-msgstr ""
+msgid "Target VMG"
+msgstr "Στόχος VMG"
 
 #: src\tactics_pi.cpp:290
-msgid "Polar performance"
-msgstr ""
+msgid "Target VMG-Angle"
+msgstr "Στόχος γωνίας-VMG"
 
-#: src\tactics_pi.cpp:544 src\tactics_pi.cpp:682 src\tactics_pi.cpp:2551
-#: src\tactics_pi.cpp:2561 src\tactics_pi.cpp:2779 src\tactics_pi.cpp:2818
-#: src\tactics_pi.cpp:3449
+#: src\tactics_pi.cpp:292
+msgid "Actual CMG"
+msgstr "Πραγματική CMG"
+
+#: src\tactics_pi.cpp:294
+msgid "Target CMG"
+msgstr "Στόχος CMG"
+
+#: src\tactics_pi.cpp:296
+msgid "Target CMG-Angle"
+msgstr "Στόχος γωνίας-CMG"
+
+#: src\tactics_pi.cpp:298
+msgid "Polar Performance"
+msgstr "Θεωρητική απόδοση"
+
+#: src\tactics_pi.cpp:300
+msgid "Average Wind"
+msgstr "Μέσος άνεμος"
+
+#: src\tactics_pi.cpp:302
+msgid "Polar Compass"
+msgstr "Θεωρητική πυξίδα"
+
+#: src\tactics_pi.cpp:565 src\tactics_pi.cpp:721 src\tactics_pi.cpp:2825
+#: src\tactics_pi.cpp:2835 src\tactics_pi.cpp:3064 src\tactics_pi.cpp:3103
+#: src\tactics_pi.cpp:3818
 msgid "Tactics"
-msgstr ""
+msgstr "Τακτική"
 
-#: src\tactics_pi.cpp:687
+#: src\tactics_pi.cpp:726
 msgid "Tactics PlugIn for OpenCPN"
-msgstr ""
+msgstr "Πρόσθετο Τακτικής για το OpenCPN"
 
-#: src\tactics_pi.cpp:692
+#: src\tactics_pi.cpp:731
 msgid "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar file."
-msgstr ""
+msgstr "Πρόσθετο Τακτικής για το OpenCPN\n"
+"Δίνει τις επιδόσεις & δείχνει τα δεδομένα από πηγές NMEA και πολικά διαγράμματα."
 
-#: src\tactics_pi.cpp:1500
+#: src\tactics_pi.cpp:1737
 msgid "You have to turn on OpenGL to use chart overlay "
-msgstr ""
+msgstr "Θα πρέπει να ενεργοποιήσετε το OpenGL να χρησιμοποιήσετε την επικάλυψη στον χάρτη "
 
-#: src\tactics_pi.cpp:2754
+#: src\tactics_pi.cpp:2397
+msgid "° Bow up"
+msgstr "° Πλώρη προς τα πάνω"
+
+#: src\tactics_pi.cpp:2400
+msgid "° Bow down"
+msgstr "° Πλώρη προς τα κάτω"
+
+#: src\tactics_pi.cpp:3039
 msgid "Tactics preferences"
-msgstr ""
+msgstr "Επιλογές"
 
-#: src\tactics_pi.cpp:2825
+#: src\tactics_pi.cpp:3110
 msgid "show this tactics"
-msgstr ""
+msgstr "δείξτε αυτή την Τακτική"
 
-#: src\tactics_pi.cpp:2831
+#: src\tactics_pi.cpp:3116
 msgid "Caption:"
-msgstr ""
+msgstr "Λεζάντα:"
 
-#: src\tactics_pi.cpp:2839
+#: src\tactics_pi.cpp:3124
 msgid "Orientation:"
-msgstr ""
+msgstr "Προσανατολισμός:"
 
-#: src\tactics_pi.cpp:2843 src\tactics_pi.cpp:3642
+#: src\tactics_pi.cpp:3128 src\tactics_pi.cpp:4011
 msgid "Vertical"
-msgstr ""
+msgstr "Κατακόρυφα"
 
-#: src\tactics_pi.cpp:2844 src\tactics_pi.cpp:3644
+#: src\tactics_pi.cpp:3129 src\tactics_pi.cpp:4013
 msgid "Horizontal"
-msgstr ""
+msgstr "Οριζόντια"
 
-#: src\tactics_pi.cpp:2851 src\tactics_pi.cpp:2859 src\tactics_pi.cpp:3568
+#: src\tactics_pi.cpp:3136 src\tactics_pi.cpp:3144 src\tactics_pi.cpp:3937
 msgid "Instruments"
 msgstr "Όργανα"
 
-#: src\tactics_pi.cpp:2867
+#: src\tactics_pi.cpp:3152
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: src\tactics_pi.cpp:2880
+#: src\tactics_pi.cpp:3165
 msgid "Delete"
 msgstr "Διαγραφή"
 
-#: src\tactics_pi.cpp:2886
+#: src\tactics_pi.cpp:3171
 msgid "Up"
 msgstr "Επάνω"
 
-#: src\tactics_pi.cpp:2891
+#: src\tactics_pi.cpp:3176
 msgid "Down"
 msgstr "Κάτω"
 
-#: src\tactics_pi.cpp:2901
+#: src\tactics_pi.cpp:3186
 msgid "Appearance"
-msgstr ""
+msgstr "Εμφάνιση"
 
-#: src\tactics_pi.cpp:2903
+#: src\tactics_pi.cpp:3188
 msgid "Fonts"
 msgstr "Γραμματοσειρές"
 
-#: src\tactics_pi.cpp:2909
+#: src\tactics_pi.cpp:3194
 msgid "Title:"
 msgstr "Τίτλος:"
 
-#: src\tactics_pi.cpp:2915
+#: src\tactics_pi.cpp:3200
 msgid "Data:"
 msgstr "Στοιχεία:"
 
-#: src\tactics_pi.cpp:2921
+#: src\tactics_pi.cpp:3206
 msgid "Label:"
 msgstr "Ετικέτα:"
 
-#: src\tactics_pi.cpp:2927
+#: src\tactics_pi.cpp:3212
 msgid "Small:"
 msgstr "Στενό:"
 
-#: src\tactics_pi.cpp:2935
+#: src\tactics_pi.cpp:3220
 msgid "Units, Ranges, Formats"
-msgstr ""
+msgstr "Μονάδες, Όρια, Μορφή"
 
-#: src\tactics_pi.cpp:2941
+#: src\tactics_pi.cpp:3226
 msgid "Speedometer max value:"
-msgstr ""
+msgstr "Μέγ. τιμή δρομομέτρου:"
 
-#: src\tactics_pi.cpp:2946
+#: src\tactics_pi.cpp:3232
+msgid "Speed Over Ground Damping Factor:"
+msgstr "Συντ. απόσβεσης SOG:"
+
+#: src\tactics_pi.cpp:3238
+msgid "COG Damping Factor:"
+msgstr "Συντελεστής απόσβεσης COG:"
+
+#: src\tactics_pi.cpp:3244
 msgid "Boat speed units:"
-msgstr ""
+msgstr "Μονάδες ταχύτητας πλοίου:"
 
-#: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2967
+#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3265
 msgid "Honor OpenCPN settings"
-msgstr ""
+msgstr "Προεπιλεγμένες ρυθμίσεις"
 
-#: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2976
+#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "Kts"
-msgstr ""
+msgstr "Κόμβοι"
 
-#: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2976
+#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "mph"
-msgstr ""
+msgstr "μ.α.ώ."
 
-#: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2976
+#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "km/h"
-msgstr ""
+msgstr "km/h"
 
-#: src\tactics_pi.cpp:2949 src\tactics_pi.cpp:2976
+#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "m/s"
-msgstr ""
+msgstr "m/s"
 
-#: src\tactics_pi.cpp:2955
+#: src\tactics_pi.cpp:3253
 msgid "Depth units:"
-msgstr ""
+msgstr "Βαθυμετρικές μονάδες:"
 
-#: src\tactics_pi.cpp:2958 src\tactics_pi.cpp:2967
+#: src\tactics_pi.cpp:3256 src\tactics_pi.cpp:3265
 msgid "Meters"
-msgstr ""
+msgstr "Μέτρα"
 
-#: src\tactics_pi.cpp:2958
+#: src\tactics_pi.cpp:3256
 msgid "Feet"
-msgstr ""
+msgstr "Πόδια"
 
-#: src\tactics_pi.cpp:2958
+#: src\tactics_pi.cpp:3256
 msgid "Fathoms"
-msgstr ""
+msgstr "Οργιές"
 
-#: src\tactics_pi.cpp:2958
+#: src\tactics_pi.cpp:3256
 msgid "Centimeters"
-msgstr ""
+msgstr "﻿Εκατοστά"
 
-#: src\tactics_pi.cpp:2958
+#: src\tactics_pi.cpp:3256
 msgid "Inches"
-msgstr ""
+msgstr "Ίντσες"
 
-#: src\tactics_pi.cpp:2964
+#: src\tactics_pi.cpp:3262
 msgid "Distance units:"
-msgstr ""
+msgstr "Μονάδες απόστασης:"
 
-#: src\tactics_pi.cpp:2967
+#: src\tactics_pi.cpp:3265
 msgid "Nautical miles"
-msgstr ""
+msgstr "Ναυτικά μίλια"
 
-#: src\tactics_pi.cpp:2967
+#: src\tactics_pi.cpp:3265
 msgid "Statute miles"
-msgstr ""
+msgstr "Εγγλέζικα μίλια"
 
-#: src\tactics_pi.cpp:2967
+#: src\tactics_pi.cpp:3265
 msgid "Kilometers"
-msgstr ""
+msgstr "Χιλιόμετρα"
 
-#: src\tactics_pi.cpp:2973
+#: src\tactics_pi.cpp:3271
 msgid "Wind speed units:"
-msgstr ""
+msgstr "Μονάδες ταχύτητας ανέμου:"
 
-#: src\tactics_pi.cpp:2994
+#: src\tactics_pi.cpp:3292
 msgid "Performance Parameters"
-msgstr ""
+msgstr "Παράμετροι επίδοσης"
 
-#: src\tactics_pi.cpp:2996
+#: src\tactics_pi.cpp:3294
 msgid "Laylines"
-msgstr ""
+msgstr "Laylines"
 
-#: src\tactics_pi.cpp:3005
+#: src\tactics_pi.cpp:3303
 msgid "Layline width damping factor [0.025-1]:  "
-msgstr ""
+msgstr "Layline με συντ. απόσβεσης [0.025-1]:  "
 
-#: src\tactics_pi.cpp:3013
+#: src\tactics_pi.cpp:3305
+msgid "The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
+"The idea is to display the COG range where you're sailing to.\n"
+" Low values mean high damping."
+msgstr "Το πλάτος των laylines του σκάφους βασίζεται την παρέκκλιση από την πορεία του σκάφους (γύρω από τον κατακόρυφο άξονα), δηλαδή, η COG αλλάζει. \n"
+"Η ιδέα είναι να φανεί το εύρος της COG στο οποίο πλέετε. \n"
+"Χαμηλές τιμές σημαίνει υψηλή απόσβεση."
+
+#: src\tactics_pi.cpp:3310
+msgid "Width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
+"The idea is to display the range where you're sailing to.\n"
+" Low values mean high damping."
+msgstr "Το πλάτος των laylines του σκάφους βασίζεται την παρέκκλιση από την πορεία του σκάφους (γύρω από τον κατακόρυφο άξονα), δηλαδή, η COG αλλάζει. \n"
+"Η ιδέα είναι να φανεί το εύρος της COG στο οποίο πλέετε. \n"
+"Χαμηλές τιμές σημαίνει υψηλή απόσβεση."
+
+#: src\tactics_pi.cpp:3313
 msgid "Layline length on Chart [nm]:  "
-msgstr ""
+msgstr "Μήκος της layline [νμ] στον χάρτη:  "
 
-#: src\tactics_pi.cpp:3021
+#: src\tactics_pi.cpp:3315 src\tactics_pi.cpp:3321
+msgid "Length of the boat laylines in [nm]"
+msgstr "Μήκος των laylines του σκάφους σε [νμ]"
+
+#: src\tactics_pi.cpp:3323
 msgid "Min. Layline Width [°]:"
-msgstr ""
+msgstr "Ελάχ. πλάτος Layline [°]:"
 
-#: src\tactics_pi.cpp:3028
+#: src\tactics_pi.cpp:3325 src\tactics_pi.cpp:3328
+msgid "Min. width of boat laylines in degrees."
+msgstr "Ελάχ. πλάτος των laylines του σκάφους σε μοίρες."
+
+#: src\tactics_pi.cpp:3332
 msgid "Max. Layline Width [°]:"
-msgstr ""
+msgstr "Μεγ. πλάτος Layline [°]:"
 
-#: src\tactics_pi.cpp:3043
+#: src\tactics_pi.cpp:3334 src\tactics_pi.cpp:3337
+msgid "Max. width of boat laylines in degrees."
+msgstr "Μεγ. πλάτος των laylines του σκάφους σε μοίρες."
+
+#: src\tactics_pi.cpp:3349
 msgid "Boat's Leeway factor [0-20]:  "
-msgstr ""
+msgstr "Συντελεστής έκπτωσης σκάφους [0-20]:  "
 
-#: src\tactics_pi.cpp:3050
+#: src\tactics_pi.cpp:3350 src\tactics_pi.cpp:3353
+msgid "Leeway='Drift' of boat due to heel/wind influence\n"
+"Low values mean high performance of hull\n"
+"Leeway = (LeewayFactor * Heel) / STW²;"
+msgstr "Έκπτωση=Παράσυρση του πλοίου υπό την επίδραση της κλίσης/ανέμου\n"
+"Χαμηλές τιμές σημαίνουν γάστρα υψηλών επιδόσεων\n"
+"Έκπτωση = (ΣυντΈκπτωσης * Κλίση)/STW²."
+
+#: src\tactics_pi.cpp:3358
 msgid "Use Heel Sensor"
-msgstr ""
+msgstr "Χρήση κλισιομέτρου"
 
-#: src\tactics_pi.cpp:3056
+#: src\tactics_pi.cpp:3361
+msgid "Use the internal heel sensor if available\n"
+"Important for the correct calculation of the surface current."
+msgstr "Χρησιμοποιήστε το κλισιόμετρο, αν υπάρχει\n"
+"Σημαντικό για τον σωστό υπολογισμό του επιφανειακού ρεύματος."
+
+#: src\tactics_pi.cpp:3365
 msgid "fixed/max Leeway [°]:"
-msgstr ""
+msgstr "σταθ/μεγ. Έκπτωση[°]:"
 
-#: src\tactics_pi.cpp:3065
+#: src\tactics_pi.cpp:3368
+msgid "Dual purpose !\n"
+"If Radiobutton is NOT set, then it's used to limit Leeway to a max value.\n"
+" If Radiobutton is set, then it fixes Leeway to this constant value."
+msgstr "Όταν το διπλό !\n"
+"If Radiobutton ΔΕΝ έχει οριστεί, χρησιμοποιείται για να περιορίσει την έκπτωση μέχρι ένα μέγιστο.\n"
+" Εάν το Radiobutton έχει οριστεί, τότε θέτει την παρέκκλιση σε αυτήν την σταθερή τιμή."
+
+#: src\tactics_pi.cpp:3376
 msgid "manual Heel input:"
-msgstr ""
+msgstr "εισάγετε την κλίση:"
 
-#: src\tactics_pi.cpp:3080
+#: src\tactics_pi.cpp:3379
+msgid "If no heel sensor is available, you can create a manual 'heel polar' here.\n"
+"Just read/enter the data from a mechanical heel sensor (e.g. on compass).\n"
+"Use True Wind Speed & Angle only !\n"
+"Take care: motoring w/o sails&heel will show wrong current data !!!"
+msgstr "Εάν δεν υπάρχει κλισιόμετρο, μπορείτε να δημιουργήσετε ένα πολικό διάγραμμα κλίσης εδώ. \n"
+"Εισάγετε τις μετρήσεις ενός μηχανικού κλισιόμετρου (π.χ. στην πυξίδα). \n"
+"Χρησιμοποιήστε μόνο την αληθή ταχύτητα ανέμου & την γωνία! \n"
+"Προσέξτε: με τη μηχανή και χωρίς πανιά και κλίση θα δείξει λάθος ρεύματα!!!"
+
+#: src\tactics_pi.cpp:3393
 msgid "TWS/TWA "
-msgstr ""
+msgstr "TWS/TWA "
 
-#: src\tactics_pi.cpp:3082
+#: src\tactics_pi.cpp:3395
 msgid " 45°"
-msgstr ""
+msgstr " 45°"
 
-#: src\tactics_pi.cpp:3084
+#: src\tactics_pi.cpp:3397
 msgid " 90°"
-msgstr ""
+msgstr " 90°"
 
-#: src\tactics_pi.cpp:3086
+#: src\tactics_pi.cpp:3399
 msgid "135°"
-msgstr ""
+msgstr "135°"
 
-#: src\tactics_pi.cpp:3089
+#: src\tactics_pi.cpp:3402
 msgid "5 kn"
-msgstr ""
+msgstr "5 κ."
 
-#: src\tactics_pi.cpp:3103
+#: src\tactics_pi.cpp:3416
 msgid "10 kn"
-msgstr ""
+msgstr "10 κ."
 
-#: src\tactics_pi.cpp:3117
+#: src\tactics_pi.cpp:3430
 msgid "15 kn"
-msgstr ""
+msgstr "15 κ."
 
-#: src\tactics_pi.cpp:3132
+#: src\tactics_pi.cpp:3445
 msgid "20 kn"
-msgstr ""
+msgstr "20 κ."
 
-#: src\tactics_pi.cpp:3146
+#: src\tactics_pi.cpp:3459
 msgid "25 kn"
-msgstr ""
+msgstr "25 κ."
 
-#: src\tactics_pi.cpp:3162
+#: src\tactics_pi.cpp:3474
 msgid "Current"
-msgstr ""
+msgstr "Ρεύμα"
 
-#: src\tactics_pi.cpp:3177
+#: src\tactics_pi.cpp:3489
 msgid "Current damping factor [1-400]:  "
-msgstr ""
+msgstr "Συντελεστή απόσβεσης ρεύματος [1-400]:  "
 
-#: src\tactics_pi.cpp:3190
+#: src\tactics_pi.cpp:3490 src\tactics_pi.cpp:3495
+msgid "Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\n"
+"Low values mean high damping"
+msgstr "Σταθεροποιεί το «βέλος» του επιφανειακού ρεύματος στον χάρτη, στην κατεύθυνση της πυξίδας, και στα ψηφιακά όργανα\n"
+"Χαμηλές τιμές σημαίνουν υψηλή απόσβεση"
+
+#: src\tactics_pi.cpp:3503
 msgid "Display Current on Chart (OpenGL)"
-msgstr ""
+msgstr "Δείξε το ρεύμα στο χάρτη (OpenGL)"
 
-#: src\tactics_pi.cpp:3194
+#: src\tactics_pi.cpp:3506 src\tactics_pi.cpp:3542 src\tactics_pi.cpp:3565
+msgid "The default on program startup"
+msgstr "Η προεπιλογή στην εκκίνηση του προγράμματος"
+
+#: src\tactics_pi.cpp:3508
 msgid "True Wind"
-msgstr ""
+msgstr "Αληθής άνεμος"
 
-#: src\tactics_pi.cpp:3202
+#: src\tactics_pi.cpp:3516
 msgid "Correct STW with Leeway"
-msgstr ""
+msgstr "Διόρθωση του STW με την έκπτωση"
 
-#: src\tactics_pi.cpp:3206
+#: src\tactics_pi.cpp:3519
+msgid "Apply a correction to your log speed throughout the plugin based on the calculated Leeway (via the heel sensor).\n"
+"Only makes sense with a real heel sensor.\n"
+"Make sure your instruments do not already apply this correction !"
+msgstr "Εφαρμογή μιας διόρθωσης στην ταχύτητα βάσει της υπολογιζόμενης έκπτωσης (μέσω του κλισιομέτρου). \n"
+"Έχει νόημα μόνο με ένα πραγματικό κλισιόμετρο. \n"
+"Βεβαιωθείτε ότι τα όργανα δεν κάνουν ήδη αυτή η διόρθωση!"
+
+#: src\tactics_pi.cpp:3521
 msgid "Correct AWS/AWA with Heel"
-msgstr ""
+msgstr "Διόρθωση AWS/AWA με την κλίση"
 
-#: src\tactics_pi.cpp:3211
+#: src\tactics_pi.cpp:3524
+msgid "Use with care, this is normally done by the instruments themselves as soon as you have an integrated, original equipment heel sensor"
+msgstr "Προσοχή, αυτό κανονικά το κάνουν τα όργανα όταν έχετε ένα ηλεκτρονικό κλισιόμετρο"
+
+#: src\tactics_pi.cpp:3528
 msgid "Force True Wind Calculation"
-msgstr ""
+msgstr "Υπολογισμός αληθούς ανέμου"
 
-#: src\tactics_pi.cpp:3215
+#: src\tactics_pi.cpp:3531
+msgid "Internally calculates True Wind data (TWS,TWA,TWD) and uses it within the whole plugin even if there is True Wind data available via NMEA."
+msgstr "Υπολογίζει τα δεδομένα αληθούς ανέμου (TWS, TWA, TWD) και τα χρησιμοποιεί ακόμα και αν διατίθενται δεδομένα αληθούς ανέμου μέσω NMEA."
+
+#: src\tactics_pi.cpp:3534
 msgid "Use SOG instead of STW for True Wind Calc."
-msgstr ""
+msgstr "Χρησιμοποιήστε SOG αντί STW για τον υπολ. αληθούς ανέμου"
 
-#: src\tactics_pi.cpp:3219
+#: src\tactics_pi.cpp:3537
+msgid "Recommended. As True Wind blows over the earth surface, we should calc. it with Speed Over Ground.\n"
+"Eliminates the influence of currents."
+msgstr "Συνιστάται. Καθώς ο άνεμος φυσάει πάνω από την επιφάνεια της γης, θα πρέπει να τον υπολογίσουμε από την SOG. \n"
+"Εξαφανίζει την επιρροή των ρευμάτων."
+
+#: src\tactics_pi.cpp:3539
 msgid "Show Wind Barb on Chart (OpenGL)"
-msgstr ""
+msgstr "Εμφάνιση βέλων ανέμου στον χάρτη (OpenGL)"
 
-#: src\tactics_pi.cpp:3227
+#: src\tactics_pi.cpp:3545
 msgid "Polar"
-msgstr ""
+msgstr "Πολικό διάγραμμα"
 
-#: src\tactics_pi.cpp:3234
+#: src\tactics_pi.cpp:3552
 msgid "Polar :"
-msgstr ""
+msgstr "Πολικό διάγραμμα :"
 
-#: src\tactics_pi.cpp:3240
+#: src\tactics_pi.cpp:3558
 msgid "Load"
-msgstr ""
+msgstr "Φόρτωση"
 
-#: src\tactics_pi.cpp:3322
+#: src\tactics_pi.cpp:3562
+msgid "Show Polar on Chart (OpenGL)"
+msgstr "Εμφάνιση πολ. διαγράμματος στον χάρτη (OpenGL)"
+
+#: src\tactics_pi.cpp:3567
+msgid "Export NMEA Performance Data"
+msgstr "Εξαγωγή δεδομένων επιδόσεων NMEA"
+
+#: src\tactics_pi.cpp:3574
+msgid "NKE format ($PNKEP)"
+msgstr "Φορμάτ NKE ($PNKEP)"
+
+#: src\tactics_pi.cpp:3577
+msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
+"Read the manual how to set up the interface connection !"
+msgstr "Προς το παρόν μόνο για όργανα NKE. Εξάγει ένα προκαθορισμένο σύνολο με μέχρι 5 εγγραφές NMEA που είναι «αναγνωρίσιμες» από NKE όργανα και μπορεί να εμφανιστεί εκεί. \n"
+"Διαβάστε το εγχειρίδιο χρήσης του για τις διασυνδέσεις του !"
+
+#: src\tactics_pi.cpp:3583
+msgid "Target Polar Speed"
+msgstr "Στόχος πολ. διάγραμμα ταχύτητας"
+
+#: src\tactics_pi.cpp:3587
+msgid "CoG on other Tack"
+msgstr "CoG στο άλλο τακ"
+
+#: src\tactics_pi.cpp:3591
+msgid "Target-VMG angle + Perf. %"
+msgstr "Στόχος γωνίας VMG + επίδοση %"
+
+#: src\tactics_pi.cpp:3595
+msgid "Diff. angle to Target-VMG/-CMG + corresp. gain"
+msgstr "Διαφ. γωνίας στόχου-VMG/-CMG + αντίστ. όφελος"
+
+#: src\tactics_pi.cpp:3599
+msgid "Current Direction + Speed"
+msgstr "Κατεύθυνση + ταχύτητα ρεύματος"
+
+#: src\tactics_pi.cpp:3654
+msgid "This option makes only sense with a real heel sensor."
+msgstr "Αυτή η επιλογή έχει νόημα μόνο με ένα πραγματικό κλισιόμετρο."
+
+#: src\tactics_pi.cpp:3660
+msgid "Make sure your instruments do not internally correct AWS / AWA with heel.\n"
+"This may result in wrong wind data."
+msgstr "Βεβαιωθείτε ότι τα όργανα δεν διορθώνουν τις AWS/AWA με την κλίση. \n"
+"Αυτό μπορεί να οδηγήσει σε λάθος δεδομένα ανέμου."
+
+#: src\tactics_pi.cpp:3668
+msgid "This will also disable the AWA/AWS correction."
+msgstr "Επίσης, αυτό θα απενεργοποιήσει τη διόρθωση AWA/AWS."
+
+#: src\tactics_pi.cpp:3683
 msgid "Select a Polar-File"
-msgstr ""
+msgstr "Επιλέξτε ένα αρχείο πολικού διαγρ."
 
-#: src\tactics_pi.cpp:3551
+#: src\tactics_pi.cpp:3920
 msgid "Add instrument"
 msgstr "Πρόσθεσε Όργανο"
 
-#: src\tactics_pi.cpp:3557
+#: src\tactics_pi.cpp:3926
 msgid "Select instrument to add:"
 msgstr "Επέλεξε Όργανο για Προσθήκη:"
 
-#: src\tactics_pi.cpp:3651
+#: src\tactics_pi.cpp:4020
 msgid "Preferences..."
-msgstr ""
+msgstr "Προτιμήσεις..."
 
-#: src\tactics_pi.cpp:3653
+#: src\tactics_pi.cpp:4022
 msgid "Show Laylines"
-msgstr ""
+msgstr "Εμφάνιση Laylines"
 
-#: src\wind_history.cpp:108
-msgid "--"
-msgstr ""
+#: src\tactics_pi.cpp:4025
+msgid "Show Current"
+msgstr "Εμφάνιση ρευμάτων"
 
-#: src\wind_history.cpp:438
+#: src\tactics_pi.cpp:4028
+msgid "Show Windbarb"
+msgstr "Εμφάνιση βελών ανέμου"
+
+#: src\tactics_pi.cpp:4031
+msgid "Show Polar"
+msgstr "Εμφάνιση πολικού διαγρ."
+
+#: src\wind_history.cpp:503
 msgid "NNE"
-msgstr ""
+msgstr "ΒΒΑ"
 
-#: src\wind_history.cpp:444
+#: src\wind_history.cpp:509
 msgid "ENE"
-msgstr ""
+msgstr "ΑΒΑ"
 
-#: src\wind_history.cpp:450
+#: src\wind_history.cpp:515
 msgid "ESE"
-msgstr ""
+msgstr "ΑΝΑ"
 
-#: src\wind_history.cpp:456
+#: src\wind_history.cpp:521
 msgid "SSE"
-msgstr ""
+msgstr "ΝΝΑ"
 
-#: src\wind_history.cpp:462
+#: src\wind_history.cpp:527
 msgid "SSW"
-msgstr ""
+msgstr "ΝΝΔ"
 
-#: src\wind_history.cpp:468
+#: src\wind_history.cpp:533
 msgid "WSW"
-msgstr ""
+msgstr "ΔΝΔ"
 
-#: src\wind_history.cpp:474
+#: src\wind_history.cpp:539
 msgid "WNW"
-msgstr ""
+msgstr "ΔΒΔ"
 
-#: src\wind_history.cpp:480
+#: src\wind_history.cpp:545
 msgid "NNW"
-msgstr ""
+msgstr "ΒΒΔ"
 
