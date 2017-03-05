@@ -51,7 +51,6 @@ extern int g_iDashSpeedUnit;
 extern PlugIn_Waypoint *m_pMark;
 extern int g_iSpeedFormat;
 
-
 // ----------------------------------------------------------------
 //
 //    TacticsInstrument_Simple Implementation

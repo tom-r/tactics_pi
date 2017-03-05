@@ -106,6 +106,7 @@ bool g_bExpPerfData03;
 bool g_bExpPerfData04;
 bool g_bExpPerfData05;
 bool b_tactics_dc_message_shown=false;
+wxString g_sCMGSynonym, g_sVMGSynonym;
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;
@@ -237,9 +238,11 @@ wxString getInstrumentCaption( unsigned int id )
         case ID_DBP_D_TWD:
             return _("True Wind Dir. & Speed");
         case ID_DBP_I_VMG:
-            return _("VMG");
+//            return _("VMG");
+          return g_sVMGSynonym;
         case ID_DBP_D_VMG:
-            return _("VMG");
+//            return _("VMG");
+            return g_sVMGSynonym;
         //case ID_DBP_I_RSA:
         //    return _("Rudder Angle");
         //case ID_DBP_D_RSA:
@@ -283,17 +286,23 @@ wxString getInstrumentCaption( unsigned int id )
 		case	ID_DBP_I_POLSPD:
 			return _("Polar Speed");
 		case	ID_DBP_I_POLVMG:
-			return _("Actual VMG");
-		case	ID_DBP_I_POLTVMG:
-			return _("Target VMG");
+//			return _("Actual VMG");
+            return _("Actual ")+g_sVMGSynonym;
+        case	ID_DBP_I_POLTVMG:
+//          return _("Target VMG");
+          return _("Target ")+g_sVMGSynonym;
 		case	ID_DBP_I_POLTVMGANGLE:
-			return _("Target VMG-Angle");
-		case	ID_DBP_I_POLCMG:
-			return _("Actual CMG");
+//			return _("Target VMG-Angle");
+          return _("Target ") + g_sVMGSynonym + _("-Angle");
+        case	ID_DBP_I_POLCMG:
+//          return _("Actual CMG");
+          return _("Actual ") + g_sCMGSynonym;
 		case	ID_DBP_I_POLTCMG:
-			return _("Target CMG");
+//          return _("Target CMG");
+          return _("Target ") + g_sCMGSynonym;
 		case	ID_DBP_I_POLTCMGANGLE:
-			return _("Target CMG-Angle");
+//			return _("Target CMG-Angle");
+          return _("Target ") + g_sCMGSynonym + _("-Angle");
         case ID_DBP_D_POLPERF:
           return _("Polar Performance");
         case ID_DBP_D_AVGWIND:
@@ -2797,6 +2806,9 @@ bool tactics_pi::LoadConfig( void )
 		pConf->Read(_T("MaxLaylineWidth"), &g_iMaxLaylineWidth,30);
 		pConf->Read(_T("LaylineWidthDampingFactor"), &g_dalphaDeltCoG,0.25);
 		pConf->Read(_T("ShowCurrentOnChart"), &g_bDisplayCurrentOnChart,false);
+        pConf->Read(_T("CMGSynonym"), &g_sCMGSynonym, _T("CMG"));
+        pConf->Read(_T("VMGSynonym"), &g_sVMGSynonym, _T("VMG"));
+
         m_bDisplayCurrentOnChart = g_bDisplayCurrentOnChart;
         int d_cnt;
         pConf->Read( _T("TacticsCount"), &d_cnt, -1 );
@@ -2906,6 +2918,8 @@ bool tactics_pi::SaveConfig( void )
 		pConf->Write(_T("MaxLaylineWidth"), g_iMaxLaylineWidth);
 		pConf->Write(_T("LaylineWidthDampingFactor"), g_dalphaDeltCoG);
 		pConf->Write(_T("ShowCurrentOnChart"), g_bDisplayCurrentOnChart);
+        pConf->Write(_T("CMGSynonym"), g_sCMGSynonym);
+        pConf->Write(_T("VMGSynonym"), g_sVMGSynonym);
 		pConf->SetPath(_T("/PlugIns/Tactics/Performance"));
 		pConf->Write(_T("PolarFile"), g_path_to_PolarFile);
 		pConf->Write(_T("BoatLeewayFactor"), g_dLeewayFactor);
@@ -3588,11 +3602,13 @@ TacticsPreferencesDialog::TacticsPreferencesDialog( wxWindow *parent, wxWindowID
     itemFlexGridSizerExpData->Add(m_ExpPerfData02, 0, wxEXPAND, 5);
     m_ExpPerfData02->SetValue(g_bExpPerfData02);
     //--------------------
-    m_ExpPerfData03 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Target-VMG angle + Perf. %"));
+//    m_ExpPerfData03 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Target-VMG angle + Perf. %"));
+    m_ExpPerfData03 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Target-") + g_sVMGSynonym + _(" angle + Perf. %"));
     itemFlexGridSizerExpData->Add(m_ExpPerfData03, 0, wxEXPAND, 5);
     m_ExpPerfData03->SetValue(g_bExpPerfData03);
     //--------------------
-    m_ExpPerfData04 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Diff. angle to Target-VMG/-CMG + corresp. gain"));
+//    m_ExpPerfData04 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Diff. angle to Target-VMG/-CMG + corresp. gain"));
+    m_ExpPerfData04 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Diff. angle to Target-") + g_sVMGSynonym + _T("/-") + g_sCMGSynonym + _(" + corresp.gain"));
     itemFlexGridSizerExpData->Add(m_ExpPerfData04, 0, wxEXPAND, 5);
     m_ExpPerfData04->SetValue(g_bExpPerfData04);
     //--------------------
