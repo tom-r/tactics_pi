@@ -1563,7 +1563,8 @@ What should be drawn:
 
 void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
 {
-  if (m_bShowPolarOnChart && !wxIsNaN(mTWS)){
+  if (m_bShowPolarOnChart
+      && !wxIsNaN(mTWS) && !wxIsNaN(mTWD) && !wxIsNaN(mBRG)){
     glColor4ub(0, 0, 255, 192);	// red, green, blue,  alpha (byte values)
     double polval[STEPS];
     double max = 0;
@@ -1573,6 +1574,8 @@ void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
       TargetxMG vmg_up = BoatPolar->GetTargetVMGUpwind(mTWS);
       TargetxMG vmg_dn = BoatPolar->GetTargetVMGDownwind(mTWS);
       TargetxMG CmGMax,CmGMin;
+      // wxLogMessage("-- DrawPolar() - TargetCMG2() call ");
+      // wxLogMessage("DrawPolar() mTWS =%f mTWD=%f mBRG=%f", mTWS, mTWD, mBRG);
       BoatPolar->Calc_TargetCMG2(mTWS, mTWD, mBRG, &CmGMax, &CmGMin);  //CmGMax = the higher value, CmGMin the lower cmg value
 
       for (i = 0; i < STEPS/2; i++){ //0...179
