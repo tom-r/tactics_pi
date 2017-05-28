@@ -477,11 +477,11 @@ int tactics_pi::Init( void )
     m_config_version = -1;
     mHDx_Watchdog = 2;
     mHDT_Watchdog = 2;
-    mGPS_Watchdog = 2;
+    mGPS_Watchdog = 5;
     mVar_Watchdog = 2;
     mBRG_Watchdog = 2;
-    mTWS_Watchdog = 2;
-    mTWD_Watchdog = 2;
+    mTWS_Watchdog = 5;
+    mTWD_Watchdog = 5;
     mAWS_Watchdog = 2;
     //************TR
 	alpha_currspd = 0.2;  //smoothing constant for current speed
@@ -686,11 +686,15 @@ void tactics_pi::Notify()
     }
     mTWS_Watchdog--;
     if (mTWS_Watchdog <= 0) {
+      mTWS = NAN;
       SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, NAN, _T(""));
     }
     mTWD_Watchdog--;
     if (mTWD_Watchdog <= 0) {
+      mTWD = NAN;
+      mTWA = NAN;
       SendSentenceToAllInstruments(OCPN_DBP_STC_TWD, NAN, _T("\u00B0"));
+      SendSentenceToAllInstruments(OCPN_DBP_STC_TWA, NAN, _T("\u00B0"));
     }
     mAWS_Watchdog--;
     if (mAWS_Watchdog <= 0) {
@@ -1125,8 +1129,9 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 			glVertex2d(tackpoints[1].x, tackpoints[1].y);
 			glVertex2d(tackpoints[2].x, tackpoints[2].y);
 			glEnd();
-            //wxLogMessage("TWS=%f, STW=%f,currspd=%f,predictedCoG=%f, mTWA=%f,mLeeway=%f, g_iDashSpeedUnit=%d", tws_kts, stw_kts, currspd_kts, predictedCoG, mTWA, mLeeway,g_iDashSpeedUnit);
-			//wxString GUID = _T("TacticsWP");
+//            wxLogMessage("mlat=%f, mlon=%f,currspd=%f,predictedCoG=%f, mTWA=%f,mLeeway=%f, g_iDashSpeedUnit=%d", mlat, mlon, currspd_kts, mPredictedCoG, mTWA, mLeeway,g_iDashSpeedUnit);
+            //wxLogMessage("tackpoints[0].x=%d, tackpoints[0].y=%d,tackpoints[1].x=%d, tackpoints[1].y=%d,tackpoints[2].x=%d, tackpoints[2].y=%d", tackpoints[0].x, tackpoints[0].y, tackpoints[1].x, tackpoints[1].y, tackpoints[2].x, tackpoints[2].y);
+            //wxString GUID = _T("TacticsWP");
 			//if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)) m_pMark = NULL;
 			if (m_pMark)
 			{   
@@ -4694,9 +4699,12 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
         }
       }
       else{
-        m_calcTWS = mTWS = NAN;
-        m_calcTWD = mTWD = NAN;
-        m_calcTWA = mTWA = NAN;
+//        m_calcTWS = mTWS = NAN;
+//        m_calcTWD = mTWD = NAN;
+        //m_calcTWA = mTWA = NAN;
+        m_calcTWS = NAN;
+        m_calcTWD = NAN;
+        m_calcTWA = NAN;
 
       }
     }
