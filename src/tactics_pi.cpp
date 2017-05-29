@@ -461,29 +461,31 @@ tactics_pi::~tactics_pi(void)
 
 int tactics_pi::Init(void)
 {
-	AddLocaleCatalog(_T("opencpn-tactics_pi"));
+
+    AddLocaleCatalog( _T("opencpn-tactics_pi") );
 
 
-	mVar = NAN;
-	mPriPosition = 99;
-	mPriCOGSOG = 99;
-	mPriHeadingT = 99; // True heading
-	mPriHeadingM = 99; // Magnetic heading
-	mPriVar = 99;
-	mPriDateTime = 99;
-	mPriAWA = 99; // Relative wind
-	mPriTWA = 99; // True wind
-	mPriDepth = 99;
-	m_config_version = -1;
-	mHDx_Watchdog = 2;
-	mHDT_Watchdog = 2;
-	mGPS_Watchdog = 5;
-	mVar_Watchdog = 2;
-	mBRG_Watchdog = 2;
-	mTWS_Watchdog = 5;
-	mTWD_Watchdog = 5;
-	mAWS_Watchdog = 2;
-	//************TR
+    mVar = NAN;
+    mPriPosition = 99;
+    mPriCOGSOG = 99;
+    mPriHeadingT = 99; // True heading
+    mPriHeadingM = 99; // Magnetic heading
+    mPriVar = 99;
+    mPriDateTime = 99;
+    mPriAWA = 99; // Relative wind
+    mPriTWA = 99; // True wind
+    mPriDepth = 99;
+    m_config_version = -1;
+    mHDx_Watchdog = 2;
+    mHDT_Watchdog = 2;
+    mGPS_Watchdog = 5;
+    mVar_Watchdog = 2;
+    mBRG_Watchdog = 2;
+    mTWS_Watchdog = 5;
+    mTWD_Watchdog = 5;
+    mAWS_Watchdog = 2;
+    //************TR
+
 	alpha_currspd = 0.2;  //smoothing constant for current speed
 	alpha_CogHdt = 0.1; // smoothing constant for diff. btw. Cog & Hdt
 	m_alphaLaylineCog = 0.2; //0.1
@@ -655,53 +657,55 @@ void tactics_pi::Notify()
 	mHDT_Watchdog--;
 	if (mHDT_Watchdog <= 0) {
 		mHdt = NAN;
-		SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, NAN, _T("\u00B0T"));
-	}
 
-	mVar_Watchdog--;
-	if (mVar_Watchdog <= 0) {
-		mVar = NAN;
-		mPriVar = 99;
-		SendSentenceToAllInstruments(OCPN_DBP_STC_HMV, NAN, _T("\u00B0T"));
-	}
+        SendSentenceToAllInstruments( OCPN_DBP_STC_HDT, NAN, _T("\u00B0T") );
+    }
 
-	mGPS_Watchdog--;
-	if (mGPS_Watchdog <= 0) {
-		SAT_INFO sats[4];
-		for (int i = 0; i < 4; i++) {
-			sats[i].SatNumber = 0;
-			sats[i].SignalToNoiseRatio = 0;
-		}
-		SendSatInfoToAllInstruments(0, 1, sats);
-		SendSatInfoToAllInstruments(0, 2, sats);
-		SendSatInfoToAllInstruments(0, 3, sats);
+    mVar_Watchdog--;
+    if( mVar_Watchdog <= 0 ) {
+        mVar = NAN;
+        mPriVar = 99;
+        SendSentenceToAllInstruments( OCPN_DBP_STC_HMV, NAN, _T("\u00B0T") );
+    }
 
-		mSatsInView = 0;
-		//SendSentenceToAllInstruments( OCPN_DBP_STC_SAT, 0, _T("") );
+    mGPS_Watchdog--;
+    if( mGPS_Watchdog <= 0 ) {
+        SAT_INFO sats[4];
+        for(int i=0 ; i < 4 ; i++) {
+            sats[i].SatNumber = 0;
+            sats[i].SignalToNoiseRatio = 0;
+        }
+        SendSatInfoToAllInstruments( 0, 1, sats );
+        SendSatInfoToAllInstruments( 0, 2, sats );
+        SendSatInfoToAllInstruments( 0, 3, sats );
 
-	}
-	mBRG_Watchdog--;
-	if (mBRG_Watchdog <= 0) {
-		SendSentenceToAllInstruments(OCPN_DBP_STC_BRG, NAN, _T("\u00B0"));
-	}
-	mTWS_Watchdog--;
-	if (mTWS_Watchdog <= 0) {
-		mTWS = NAN;
-		SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, NAN, _T(""));
-	}
-	mTWD_Watchdog--;
-	if (mTWD_Watchdog <= 0) {
-		mTWD = NAN;
-		mTWA = NAN;
-		SendSentenceToAllInstruments(OCPN_DBP_STC_TWD, NAN, _T("\u00B0"));
-		SendSentenceToAllInstruments(OCPN_DBP_STC_TWA, NAN, _T("\u00B0"));
-	}
-	mAWS_Watchdog--;
-	if (mAWS_Watchdog <= 0) {
-		SendSentenceToAllInstruments(OCPN_DBP_STC_AWS, NAN, _T(""));
-	}
+        mSatsInView = 0;
+        //SendSentenceToAllInstruments( OCPN_DBP_STC_SAT, 0, _T("") );
+		
+    }
+    mBRG_Watchdog--;
+    if (mBRG_Watchdog <= 0) {
+      SendSentenceToAllInstruments(OCPN_DBP_STC_BRG, NAN, _T("\u00B0"));
+    }
+    mTWS_Watchdog--;
+    if (mTWS_Watchdog <= 0) {
+      mTWS = NAN;
+      SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, NAN, _T(""));
+    }
+    mTWD_Watchdog--;
+    if (mTWD_Watchdog <= 0) {
+      mTWD = NAN;
+      mTWA = NAN;
+      SendSentenceToAllInstruments(OCPN_DBP_STC_TWD, NAN, _T("\u00B0"));
+      SendSentenceToAllInstruments(OCPN_DBP_STC_TWA, NAN, _T("\u00B0"));
+    }
+    mAWS_Watchdog--;
+    if (mAWS_Watchdog <= 0) {
+      SendSentenceToAllInstruments(OCPN_DBP_STC_AWS, NAN, _T(""));
+    }
 
-	ExportPerformanceData();
+    ExportPerformanceData();
+
 }
 //*********************************************************************************
 int tactics_pi::GetAPIVersionMajor()
@@ -1130,9 +1134,11 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 			glVertex2d(tackpoints[1].x, tackpoints[1].y);
 			glVertex2d(tackpoints[2].x, tackpoints[2].y);
 			glEnd();
-			//            wxLogMessage("mlat=%f, mlon=%f,currspd=%f,predictedCoG=%f, mTWA=%f,mLeeway=%f, g_iDashSpeedUnit=%d", mlat, mlon, currspd_kts, mPredictedCoG, mTWA, mLeeway,g_iDashSpeedUnit);
-			//wxLogMessage("tackpoints[0].x=%d, tackpoints[0].y=%d,tackpoints[1].x=%d, tackpoints[1].y=%d,tackpoints[2].x=%d, tackpoints[2].y=%d", tackpoints[0].x, tackpoints[0].y, tackpoints[1].x, tackpoints[1].y, tackpoints[2].x, tackpoints[2].y);
-			//wxString GUID = _T("TacticsWP");
+
+//            wxLogMessage("mlat=%f, mlon=%f,currspd=%f,predictedCoG=%f, mTWA=%f,mLeeway=%f, g_iDashSpeedUnit=%d", mlat, mlon, currspd_kts, mPredictedCoG, mTWA, mLeeway,g_iDashSpeedUnit);
+            //wxLogMessage("tackpoints[0].x=%d, tackpoints[0].y=%d,tackpoints[1].x=%d, tackpoints[1].y=%d,tackpoints[2].x=%d, tackpoints[2].y=%d", tackpoints[0].x, tackpoints[0].y, tackpoints[1].x, tackpoints[1].y, tackpoints[2].x, tackpoints[2].y);
+            //wxString GUID = _T("TacticsWP");
+
 			//if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)) m_pMark = NULL;
 			if (m_pMark)
 			{
@@ -4668,65 +4674,66 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
 	if (st == OCPN_DBP_STC_TWA || st == OCPN_DBP_STC_TWS || st == OCPN_DBP_STC_TWD) {
 		m_bTrueWind_available = true;
 	}
-	if (st == OCPN_DBP_STC_AWS){
-		//  Calculate TWS (from AWS and StW/SOG)
-		spdval = (g_bUseSOGforTWCalc) ? mSOG : mStW;
-		// only start calculating if we have a full set of data
-		if ((!m_bTrueWind_available || g_bForceTrueWindCalculation) && mAWA >= 0 && mAWS >= 0 && spdval >= 0 && mAWAUnit != _("")) {
-			//we have to do the calculation in knots
-			double aws_kts = fromUsrSpeed_Plugin(mAWS, g_iDashWindSpeedUnit);
-			spdval = fromUsrSpeed_Plugin(spdval, g_iDashSpeedUnit);
 
-			mTWA = 0;
-			mTWD = 0.;
-			if (mAWA < 180.) {
-				mTWA = 90. - (180. / M_PI*atan((aws_kts*cos(mAWA*M_PI / 180.) - spdval) / (aws_kts*sin(mAWA*M_PI / 180.))));
-			}
-			else if (mAWA > 180.) {
-				mTWA = 360. - (90. - (180. / M_PI*atan((aws_kts*cos((180. - (mAWA - 180.))*M_PI / 180.) - spdval) / (aws_kts*sin((180. - (mAWA - 180.))*M_PI / 180.)))));
-			}
-			else {
-				mTWA = 180.;
-			}
-			mTWS = sqrt(pow((aws_kts*cos(mAWA*M_PI / 180.)) - spdval, 2) + pow(aws_kts*sin(mAWA*M_PI / 180.), 2));
-			/* ToDo: adding leeway needs to be reviewed, as the direction of the bow is still based in the magnetic compass,
-			no matter if leeway or not ...
-			if (!wxIsNaN(mLeeway) && g_bUseHeelSensor) { //correct TWD with Leeway if heel is available. Makes only sense with heel sensor
-			mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA + mLeeway : mHdt - mTWA + mLeeway;
-			}
-			else*/
-			mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA : mHdt - mTWA;
-			//endif
-			if (mTWD >= 360) mTWD -= 360;
-			if (mTWD < 0) mTWD += 360;
-			//convert mTWS back to user wind speed settings
-			mTWS = toUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
-			m_calcTWS = mTWS;
-			m_calcTWD = mTWD;
-			m_calcTWA = mTWA;
-			if (mAWSUnit == _("")) mAWSUnit = mAWAUnit;
-			//distribute data to all instruments
-			for (size_t i = 0; i < m_ArrayOfTacticsWindow.GetCount(); i++) {
-				TacticsWindow *tactics_window = m_ArrayOfTacticsWindow.Item(i)->m_pTacticsWindow;
-				if (tactics_window){
-					tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWA, mTWA, mAWAUnit);
-					tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, mTWS, mAWSUnit);
-					mTWS_Watchdog = gps_watchdog_timeout_ticks;
-					tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWD, mTWD, _T("\u00B0T"));
-					mTWD_Watchdog = gps_watchdog_timeout_ticks;
-				}
-			}
-		}
-		else{
-			//        m_calcTWS = mTWS = NAN;
-			//        m_calcTWD = mTWD = NAN;
-			//m_calcTWA = mTWA = NAN;
-			m_calcTWS = NAN;
-			m_calcTWD = NAN;
-			m_calcTWA = NAN;
+    if (st == OCPN_DBP_STC_AWS){
+      //  Calculate TWS (from AWS and StW/SOG)
+      spdval = (g_bUseSOGforTWCalc) ? mSOG : mStW ;
+      // only start calculating if we have a full set of data
+      if ((!m_bTrueWind_available || g_bForceTrueWindCalculation) && mAWA >= 0 && mAWS>=0  && spdval >= 0 && mAWAUnit != _("")) {
+        //we have to do the calculation in knots
+        double aws_kts = fromUsrSpeed_Plugin(mAWS, g_iDashWindSpeedUnit);
+        spdval = fromUsrSpeed_Plugin(spdval, g_iDashSpeedUnit);
 
-		}
-	}
+        mTWA = 0;
+        mTWD = 0.;
+        if (mAWA < 180.) {
+          mTWA = 90. - (180. / M_PI*atan((aws_kts*cos(mAWA*M_PI / 180.) - spdval) / (aws_kts*sin(mAWA*M_PI / 180.))));
+        }
+        else if (mAWA > 180.) {
+          mTWA = 360. - (90. - (180. / M_PI*atan((aws_kts*cos((180. - (mAWA - 180.))*M_PI / 180.) - spdval) / (aws_kts*sin((180. - (mAWA - 180.))*M_PI / 180.)))));
+        }
+        else {
+          mTWA = 180.;
+        }
+        mTWS = sqrt(pow((aws_kts*cos(mAWA*M_PI / 180.)) - spdval, 2) + pow(aws_kts*sin(mAWA*M_PI / 180.), 2));
+      /* ToDo: adding leeway needs to be reviewed, as the direction of the bow is still based in the magnetic compass,
+               no matter if leeway or not ...
+      if (!wxIsNaN(mLeeway) && g_bUseHeelSensor) { //correct TWD with Leeway if heel is available. Makes only sense with heel sensor
+        mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA + mLeeway : mHdt - mTWA + mLeeway;
+        }
+        else*/
+          mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA : mHdt - mTWA;
+        //endif
+        if (mTWD >= 360) mTWD -= 360;
+        if (mTWD < 0) mTWD += 360;
+        //convert mTWS back to user wind speed settings
+        mTWS = toUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
+        m_calcTWS = mTWS;
+        m_calcTWD = mTWD;
+        m_calcTWA = mTWA;
+        if (mAWSUnit == _("")) mAWSUnit = mAWAUnit;
+        //distribute data to all instruments
+        for (size_t i = 0; i < m_ArrayOfTacticsWindow.GetCount(); i++) {
+          TacticsWindow *tactics_window = m_ArrayOfTacticsWindow.Item(i)->m_pTacticsWindow;
+          if (tactics_window){
+            tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWA, mTWA, mAWAUnit);
+            tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, mTWS, mAWSUnit);
+            mTWS_Watchdog = gps_watchdog_timeout_ticks;
+            tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWD, mTWD, _T("\u00B0T"));
+            mTWD_Watchdog = gps_watchdog_timeout_ticks;
+          }
+        }
+      }
+      else{
+//        m_calcTWS = mTWS = NAN;
+//        m_calcTWD = mTWD = NAN;
+        //m_calcTWA = mTWA = NAN;
+        m_calcTWS = NAN;
+        m_calcTWD = NAN;
+        m_calcTWA = NAN;
+
+      }
+    }
 }
 /*********************************************************************************
 Calculate Leeway from heel
