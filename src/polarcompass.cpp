@@ -77,8 +77,10 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 	m_TWA = NAN;
 	m_AWA = -999;
 	m_TWS = NAN;
-    m_TWD = NAN;
-    m_StW = 0.0;
+	m_TWD = NAN;
+	m_StW = 0.0;
+	m_PolSpd = NAN;
+	m_PolSpd_Percent = NAN;
 	alpha_diffCogHdt = 0.1;
 	m_ExpSmoothDiffCogHdt = 0;
 	m_oldExpSmoothDiffCogHdt = 0;
@@ -207,7 +209,11 @@ void TacticsInstrument_PolarCompass::Draw(wxGCDC* bdc)
       DrawData(bdc, m_ExtraValueDTW, m_ExtraValueDTWUnit, _T("DTW:%.1f"), DIAL_POSITION_TOPLEFT);
       DrawData(bdc, 0, m_ToWpt, _T(""), DIAL_POSITION_TOPRIGHT);
     }
-    m_PolSpd = BoatPolar->GetPolarSpeed(m_TWA, m_TWS);
+  //wxLogMessage("-- ..PolarCompass-Draw() - m_TWA=%f m_TWS=%f", m_TWA, m_TWS);
+    if (!wxIsNaN(m_TWA) && !wxIsNaN(m_TWS))
+      m_PolSpd = BoatPolar->GetPolarSpeed(m_TWA, m_TWS);
+    else
+      
     m_PolSpd_Percent = fromUsrSpeed_Plugin(m_StW, g_iDashSpeedUnit) / m_PolSpd * 100;
     DrawData(bdc, m_StW, m_StWUnit, _T("STW:%.1f"), DIAL_POSITION_INSIDE);
     DrawData(bdc, toUsrSpeed_Plugin(m_PolSpd, g_iDashSpeedUnit), m_StWUnit, _T("T-PS:%.1f"), DIAL_POSITION_BOTTOMLEFT);
@@ -515,6 +521,7 @@ void TacticsInstrument_PolarCompass::DrawPolar(wxGCDC*dc)
     double max = 0;
     int i;
     for (i = 0; i < POLSTEPS / 2; i++){ //0...179
+    //wxLogMessage("-- ..PolarCompass-DrawPolar() - i=%d m_TWS=%f", i, m_TWS);
       polval[i] = BoatPolar->GetPolarSpeed(i*2 + 1, m_TWS); //polar data is 1...180 !!! i*2 : we draw in 2 degree steps
       polval[POLSTEPS - 1 - i] = polval[i];
       if (wxIsNaN(polval[i]))polval[i] = polval[POLSTEPS - 1 - i] = 0.0;

@@ -177,7 +177,7 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
 
                 }
               }*/
-            }
+			}
 			else if (st == OCPN_DBP_STC_TWS){
               //mTWS = data;
               //convert to knots
@@ -254,7 +254,10 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
 			else if (m_displaytype == POLARTARGETCMG){
               //TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
               TargetxMG TCMGMax, TCMGMin;
-              BoatPolar->Calc_TargetCMG2(mTWS, mTWD, mBRG, &TCMGMax, &TCMGMin);
+	      TCMGMax.TargetSpeed = NAN;
+	      if (!wxIsNaN(mTWS) && !wxIsNaN(mTWD) && !wxIsNaN(mBRG))
+		BoatPolar->Calc_TargetCMG2 (mTWS, mTWD, mBRG,
+					    &TCMGMax, &TCMGMin);
               //if (!wxIsNaN(targetCMG.TargetSpeed) && targetCMG.TargetSpeed > 0) {
               if (!wxIsNaN(TCMGMax.TargetSpeed) && TCMGMax.TargetSpeed > 0) {
 					double cmg = BoatPolar->Calc_CMG(mHDT, mSTW, mBRG);
@@ -279,8 +282,10 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
               else{*/
               //TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
               TargetxMG TCMGMax, TCMGMin;
-              BoatPolar->Calc_TargetCMG2(mTWS, mTWD, mBRG, &TCMGMax, &TCMGMin);
-
+	      TCMGMax.TargetAngle = NAN;
+	      if (!wxIsNaN(mTWS) && !wxIsNaN(mTWD) && !wxIsNaN(mBRG))
+		BoatPolar->Calc_TargetCMG2 (mTWS, mTWD, mBRG,
+					    &TCMGMax, &TCMGMin);
               if (!wxIsNaN(TCMGMax.TargetAngle))
                 m_data = wxString::Format("%.0f", TCMGMax.TargetAngle) + _T("\u00B0");
               else
@@ -717,6 +722,9 @@ double Polar::GetPolarSpeed(double twa, double tws)
   double  fws, avspd1, avspd2;
   int twsmin, i_twa;
 
+//wxLogMessage("-- GetPolarSpeed() - twa=%f tws=%f", twa, tws);
+  if (wxIsNaN(twa) || wxIsNaN(tws))
+      return NAN;
   // to do : limits to be checked (0°, 180°, etc.)
   i_twa = wxRound(twa); //the next lower full true wind angle value of the polar array
   twsmin = (int)tws; //the next lower full true wind speed value of the polar array
@@ -926,7 +934,9 @@ void Polar::Calc_TargetCMG2(double TWS, double TWD, double BRG, TargetxMG *TCMGM
   double cmg = 0;
 
   int i_tws = wxRound(TWS);  //still rounding here, not averaging ...to be done
+  // wxLogMessage("-- Calc_TargetCMG2() - range?");
   double range = getSignedDegRange(TWD, BRG);
+  // wxLogMessage("range =%f", range);
   double diffAngle = 0;
 //  int vPolarAngle = wxRound(range);  //polar is rotated by this angle, this is "vertical" now
   int k = 0;
