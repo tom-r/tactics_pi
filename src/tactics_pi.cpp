@@ -1954,7 +1954,8 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 							mVar = m_NMEA0183.Hdg.MagneticVariationDegrees;
 						else if (m_NMEA0183.Hdg.MagneticVariationDirection == West)
 							mVar = -m_NMEA0183.Hdg.MagneticVariationDegrees;
-						SendSentenceToAllInstruments(OCPN_DBP_STC_HMV, mVar, _T("\u00B0"));
+                        if (!wxIsNaN(mVar) )
+						  SendSentenceToAllInstruments(OCPN_DBP_STC_HMV, mVar, _T("\u00B0"));
 					}
 
 				}
@@ -2263,8 +2264,8 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 							else if (m_NMEA0183.Rmc.MagneticVariationDirection == West)
 								mVar = -m_NMEA0183.Rmc.MagneticVariation;
 							mVar_Watchdog = gps_watchdog_timeout_ticks;
-
-							SendSentenceToAllInstruments(OCPN_DBP_STC_HMV, mVar, _T("\u00B0"));
+                            if (!wxIsNaN(mVar) )
+							  SendSentenceToAllInstruments(OCPN_DBP_STC_HMV, mVar, _T("\u00B0"));
 						}
 					}
 
