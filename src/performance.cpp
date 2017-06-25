@@ -254,12 +254,11 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
 			else if (m_displaytype == POLARTARGETCMG){
               //TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
               TargetxMG TCMGMax, TCMGMin;
-	      TCMGMax.TargetSpeed = NAN;
-	      if (!wxIsNaN(mTWS) && !wxIsNaN(mTWD) && !wxIsNaN(mBRG))
-		BoatPolar->Calc_TargetCMG2 (mTWS, mTWD, mBRG,
-					    &TCMGMax, &TCMGMin);
-              //if (!wxIsNaN(targetCMG.TargetSpeed) && targetCMG.TargetSpeed > 0) {
-              if (!wxIsNaN(TCMGMax.TargetSpeed) && TCMGMax.TargetSpeed > 0) {
+	          TCMGMax.TargetSpeed = NAN;
+              if (!wxIsNaN(mTWS) && !wxIsNaN(mTWD) && mBRG>=0)
+		        BoatPolar->Calc_TargetCMG2 (mTWS, mTWD, mBRG, &TCMGMax, &TCMGMin);
+                //if (!wxIsNaN(targetCMG.TargetSpeed) && targetCMG.TargetSpeed > 0) {
+              if (!wxIsNaN(TCMGMax.TargetSpeed) && TCMGMax.TargetSpeed > 0 && !wxIsNaN(mHDT)) {
 					double cmg = BoatPolar->Calc_CMG(mHDT, mSTW, mBRG);
                     if (!wxIsNaN(cmg) )//&& cmg >=0)
                     {
@@ -275,23 +274,21 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
 					m_data = _T("--- % / --- ") + stwunit;
 
 			}
-			else if (m_displaytype == POLARTARGETCMGANGLE){
-              double cmg = BoatPolar->Calc_CMG(mHDT, mSTW, mBRG);
-              /*if (cmg < 0)
-                m_data = _T("moving away");
-              else{*/
-              //TargetxMG targetCMG = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
-              TargetxMG TCMGMax, TCMGMin;
-	      TCMGMax.TargetAngle = NAN;
-	      if (!wxIsNaN(mTWS) && !wxIsNaN(mTWD) && !wxIsNaN(mBRG))
-		BoatPolar->Calc_TargetCMG2 (mTWS, mTWD, mBRG,
-					    &TCMGMax, &TCMGMin);
-              if (!wxIsNaN(TCMGMax.TargetAngle))
-                m_data = wxString::Format("%.0f", TCMGMax.TargetAngle) + _T("\u00B0");
+            else if (m_displaytype == POLARTARGETCMGANGLE){
+              if (!wxIsNaN(mSTW) && mBRG >= 0 && !wxIsNaN(mHDT)) {
+                double cmg = BoatPolar->Calc_CMG(mHDT, mSTW, mBRG);
+                TargetxMG TCMGMax, TCMGMin;
+                TCMGMax.TargetAngle = NAN;
+                if (!wxIsNaN(mTWS) && !wxIsNaN(mTWD) && mBRG >= 0)
+                  BoatPolar->Calc_TargetCMG2(mTWS, mTWD, mBRG, &TCMGMax, &TCMGMin);
+                if (!wxIsNaN(TCMGMax.TargetAngle))
+                  m_data = wxString::Format("%.0f", TCMGMax.TargetAngle) + _T("\u00B0");
+                else
+                  m_data = _T("no polar data");
+              }
               else
-                m_data = _T("no polar data");
-              //}
-			}
+                m_data = _T("no data");
+            }
             else if (m_displaytype == TWAMARK){
               if (mBRG>=0 && !wxIsNaN(mTWD)) {
                 double markBrG = getDegRange(mBRG, mTWD);

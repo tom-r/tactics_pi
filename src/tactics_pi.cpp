@@ -4680,7 +4680,7 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
       //  Calculate TWS (from AWS and StW/SOG)
       spdval = (g_bUseSOGforTWCalc) ? mSOG : mStW ;
       // only start calculating if we have a full set of data
-      if ((!m_bTrueWind_available || g_bForceTrueWindCalculation) && mAWA >= 0 && mAWS>=0  && spdval >= 0 && mAWAUnit != _("")) {
+      if ((!m_bTrueWind_available || g_bForceTrueWindCalculation) && mAWA >= 0 && mAWS>=0  && spdval >= 0 && mAWAUnit != _("") && !wxIsNaN(mHdt)) {
         //we have to do the calculation in knots
         double aws_kts = fromUsrSpeed_Plugin(mAWS, g_iDashWindSpeedUnit);
         spdval = fromUsrSpeed_Plugin(spdval, g_iDashSpeedUnit);
@@ -4938,7 +4938,7 @@ void tactics_pi::CalculatePerformanceData(void)
 	else
 		mVMGoptAngle = 0;
 
-	if (mBRG >= 0){
+    if (mBRG >= 0 && !wxIsNaN(mHdt) && !wxIsNaN(mStW)){
 		tcmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
 		double actcmg = BoatPolar->Calc_CMG(mHdt, mStW, mBRG);
 		// mCMGGain = (tcmg.TargetSpeed >0) ? (100.0 - mStW / tcmg.TargetSpeed *100.) : 0.0;
@@ -5124,32 +5124,33 @@ mPredictedCoG, mPredictedSoG
 void tactics_pi::CalculatePredictedCourse(void)
 {
 	double predictedKdW; //==predicted Course Through Water
-	//New: with BearingCompass in Head-Up mode = Hdt
-	double Leeway = (mHeelUnit == _T("\u00B0L")) ? -mLeeway : mLeeway;
-	//todo : assuming TWAunit = AWAunit ...
-	if (mAWAUnit == _T("\u00B0L")){ //currently wind is from port, target is from starboard ...
-		predictedKdW = mHdt - 2 * mTWA - Leeway;
-	}
-	else if (mAWAUnit == _T("\u00B0R")){ //so, currently wind from starboard
-		predictedKdW = mHdt + 2 * mTWA - Leeway;
-	}
-	else {
-		predictedKdW = (mTWA < 10) ? 180 : 0; // should never happen, but is this correct ???
-	}
-	if (predictedKdW >= 360) predictedKdW -= 360;
-	if (predictedKdW < 0) predictedKdW += 360;
-	double predictedLatHdt, predictedLonHdt, predictedLatCog, predictedLonCog;
-	//double predictedCoG;
-	//standard triangle calculation to get predicted CoG / SoG
-	//get endpoint from boat-position by applying  KdW, StW
-	PositionBearingDistanceMercator_Plugin(mlat, mlon, predictedKdW, mStW, &predictedLatHdt, &predictedLonHdt);
-	//wxLogMessage(_T("Step1: m_lat=%f,m_lon=%f, predictedKdW=%f,m_StW=%f --> predictedLatHdt=%f,predictedLonHdt=%f\n"), m_lat, m_lon, predictedKdW, m_StW, predictedLatHdt, predictedLonHdt);
-	//apply surface current with direction & speed to endpoint from above
-	PositionBearingDistanceMercator_Plugin(predictedLatHdt, predictedLonHdt, m_CurrentDirection, m_ExpSmoothCurrSpd, &predictedLatCog, &predictedLonCog);
-	//wxLogMessage(_T("Step2: predictedLatHdt=%f,predictedLonHdt=%f, m_CurrDir=%f,m_CurrSpeed=%f --> predictedLatCog=%f,predictedLonCog=%f\n"), predictedLatHdt, predictedLonHdt, m_CurrDir, m_CurrSpeed, predictedLatCog, predictedLonCog);
-	//now get predicted CoG & SoG as difference between the 2 endpoints (coordinates) from above
-	DistanceBearingMercator_Plugin(predictedLatCog, predictedLonCog, mlat, mlon, &mPredictedCoG, &mPredictedSoG);
-
+    if (!wxIsNaN(mStW) && !wxIsNaN(mHdt) && !wxIsNaN(mTWA) && !wxIsNaN(mlat) && !wxIsNaN(mlon) && !wxIsNaN(mLeeway)){
+      //New: with BearingCompass in Head-Up mode = Hdt
+      double Leeway = (mHeelUnit == _T("\u00B0L")) ? -mLeeway : mLeeway;
+      //todo : assuming TWAunit = AWAunit ...
+      if (mAWAUnit == _T("\u00B0L")){ //currently wind is from port, target is from starboard ...
+        predictedKdW = mHdt - 2 * mTWA - Leeway;
+      }
+      else if (mAWAUnit == _T("\u00B0R")){ //so, currently wind from starboard
+        predictedKdW = mHdt + 2 * mTWA - Leeway;
+      }
+      else {
+        predictedKdW = (mTWA < 10) ? 180 : 0; // should never happen, but is this correct ???
+      }
+      if (predictedKdW >= 360) predictedKdW -= 360;
+      if (predictedKdW < 0) predictedKdW += 360;
+      double predictedLatHdt, predictedLonHdt, predictedLatCog, predictedLonCog;
+      //double predictedCoG;
+      //standard triangle calculation to get predicted CoG / SoG
+      //get endpoint from boat-position by applying  KdW, StW
+      PositionBearingDistanceMercator_Plugin(mlat, mlon, predictedKdW, mStW, &predictedLatHdt, &predictedLonHdt);
+      //wxLogMessage(_T("Step1: m_lat=%f,m_lon=%f, predictedKdW=%f,m_StW=%f --> predictedLatHdt=%f,predictedLonHdt=%f\n"), m_lat, m_lon, predictedKdW, m_StW, predictedLatHdt, predictedLonHdt);
+      //apply surface current with direction & speed to endpoint from above
+      PositionBearingDistanceMercator_Plugin(predictedLatHdt, predictedLonHdt, m_CurrentDirection, m_ExpSmoothCurrSpd, &predictedLatCog, &predictedLonCog);
+      //wxLogMessage(_T("Step2: predictedLatHdt=%f,predictedLonHdt=%f, m_CurrDir=%f,m_CurrSpeed=%f --> predictedLatCog=%f,predictedLonCog=%f\n"), predictedLatHdt, predictedLonHdt, m_CurrDir, m_CurrSpeed, predictedLatCog, predictedLonCog);
+      //now get predicted CoG & SoG as difference between the 2 endpoints (coordinates) from above
+      DistanceBearingMercator_Plugin(predictedLatCog, predictedLonCog, mlat, mlon, &mPredictedCoG, &mPredictedSoG);
+    }
 }
 /************************************************************************************
 Calculates the gain for VMG & CMG and stores it in the variables
