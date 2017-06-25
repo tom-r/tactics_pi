@@ -1043,7 +1043,7 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 	}
 
 	if (m_bLaylinesIsVisible){
-		if (!wxIsNaN(mlat) && !wxIsNaN(mlon) && !wxIsNaN(mCOG) && !wxIsNaN(mHdt)) {
+      if (!wxIsNaN(mlat) && !wxIsNaN(mlon) && !wxIsNaN(mCOG) && !wxIsNaN(mHdt) && !wxIsNaN(mStW) && !wxIsNaN(mTWS)) {
 			if (wxIsNaN(m_LaylineSmoothedCog)) m_LaylineSmoothedCog = mCOG;
 			/*****************************************************************************************
 			Draw the boat laylines, independent from the "Temp. Tactics WP"
@@ -4676,7 +4676,7 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
 		m_bTrueWind_available = true;
 	}
 
-    if (st == OCPN_DBP_STC_AWS){
+    if (st == OCPN_DBP_STC_AWS && !wxIsNaN(mStW) && !wxIsNaN(mSOG)){
       //  Calculate TWS (from AWS and StW/SOG)
       spdval = (g_bUseSOGforTWCalc) ? mSOG : mStW ;
       // only start calculating if we have a full set of data
@@ -4915,7 +4915,7 @@ void tactics_pi::CalculatePerformanceData(void)
 
 	// get Target VMG Angle from Polar
 	//tvmg = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
-	if (tvmg.TargetSpeed > 0) {
+    if (tvmg.TargetSpeed > 0 && !wxIsNaN(mStW)) {
 		double VMG = BoatPolar->Calc_VMG(mTWA, mStW);
 		mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0;
 		if (mTWA < 90){

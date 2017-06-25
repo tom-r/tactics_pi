@@ -258,7 +258,7 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
               if (!wxIsNaN(mTWS) && !wxIsNaN(mTWD) && mBRG>=0)
 		        BoatPolar->Calc_TargetCMG2 (mTWS, mTWD, mBRG, &TCMGMax, &TCMGMin);
                 //if (!wxIsNaN(targetCMG.TargetSpeed) && targetCMG.TargetSpeed > 0) {
-              if (!wxIsNaN(TCMGMax.TargetSpeed) && TCMGMax.TargetSpeed > 0 && !wxIsNaN(mHDT)) {
+              if (!wxIsNaN(TCMGMax.TargetSpeed) && TCMGMax.TargetSpeed > 0 && !wxIsNaN(mHDT) && !wxIsNaN(mSTW)) {
 					double cmg = BoatPolar->Calc_CMG(mHDT, mSTW, mBRG);
                     if (!wxIsNaN(cmg) )//&& cmg >=0)
                     {
