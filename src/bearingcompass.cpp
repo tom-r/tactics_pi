@@ -64,12 +64,15 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 
 	LoadConfig();
 	m_Bearing = NAN;
+    m_lat = NAN;
+    m_lon = NAN;
 	m_CurrDir = NAN;
 	m_CurrSpeed = NAN;
 	m_ExtraValueDTW = NAN;
 	m_Leeway = 0;
 	m_AngleStart = 0;
-	mExpSmDegRange = new ExpSmooth(g_dalphaDeltCoG);
+    m_ExpSmoothDegRange = 0;
+    mExpSmDegRange = new ExpSmooth(g_dalphaDeltCoG);
 	m_Cog = -999;
 	m_Hdt = -999;
 	m_diffCogHdt = 0;
@@ -160,7 +163,7 @@ void TacticsInstrument_BearingCompass::SetData(int st, double data, wxString uni
 		m_BearingUnit = _T("\u00B0");
 	}
     if (!GetSingleWaypoint(_T("TacticsWP"), m_pMark)) m_pMark = NULL;
-    if (m_pMark) {
+    if (m_pMark && !wxIsNaN(m_lat) && !wxIsNaN(m_lon)) {
       double dist;
       DistanceBearingMercator_Plugin(m_pMark->m_lat, m_pMark->m_lon, m_lat, m_lon, &m_Bearing, &dist);
       m_ToWpt = _T("TacticsWP");
@@ -205,9 +208,9 @@ void TacticsInstrument_BearingCompass::Draw(wxGCDC* bdc)
       DrawData(bdc, m_Bearing, m_BearingUnit, _T("BRG:%.f"), DIAL_POSITION_TOPLEFT);
       DrawData(bdc, 0, m_ToWpt, _T(""), DIAL_POSITION_TOPRIGHT);
     }
-	DrawData(bdc, m_CurrSpeed, m_CurrSpeedUnit, _T("Curr:%.2f"), DIAL_POSITION_INSIDE);
+    if (!wxIsNaN(m_CurrSpeed)) DrawData(bdc, m_CurrSpeed, m_CurrSpeedUnit, _T("Curr:%.2f"), DIAL_POSITION_INSIDE);
     if (!wxIsNaN(m_ExtraValueDTW)) DrawData(bdc, m_ExtraValueDTW, m_ExtraValueDTWUnit, _T("DTW:%.1f"), DIAL_POSITION_BOTTOMLEFT);
-	if (m_CurrDir >= 0 && m_CurrDir < 360)
+    if (!wxIsNaN(m_CurrDir) && m_CurrDir >= 0 && m_CurrDir < 360)
 		DrawCurrent(bdc);
 	DrawForeground(bdc);
 
@@ -397,7 +400,7 @@ void TacticsInstrument_BearingCompass::DrawWindAngles(wxGCDC* dc)
 Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
 ****************************************************************************************/
 void TacticsInstrument_BearingCompass::DrawTargetxMGAngle(wxGCDC* dc){
-  if (!wxIsNaN(m_TWS) && !wxIsNaN(m_TWA)) {
+  if (!wxIsNaN(m_TWS)) {
     // get Target VMG Angle from Polar
     TargetxMG tvmg_up = BoatPolar->GetTargetVMGUpwind(m_TWS);
     TargetxMG tvmg_dn = BoatPolar->GetTargetVMGDownwind(m_TWS);
@@ -766,7 +769,7 @@ void TacticsInstrument_BearingCompass::DrawData(wxGCDC* dc, double value,
 ****************************************************************************************/
 void TacticsInstrument_BearingCompass::DrawLaylines(wxGCDC* dc)
 {
-	if (!wxIsNaN(m_Cog) && !wxIsNaN(m_Hdt)){
+  if (!wxIsNaN(m_Cog) && !wxIsNaN(m_Hdt) && !wxIsNaN(m_lat) && !wxIsNaN(m_lon) && !wxIsNaN(m_TWA) && !wxIsNaN(m_CurrDir) && !wxIsNaN(m_CurrSpeed)){
 
 
 		wxColour cl;

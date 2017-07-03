@@ -505,6 +505,7 @@ int tactics_pi::Init(void)
 	mExpSmoothSog = new DoubleExpSmooth(0.4);
 	mExpSmSinCog = new ExpSmooth(m_alphaLaylineCog);
 	mExpSmCosCog = new ExpSmooth(m_alphaLaylineCog);
+    m_ExpSmoothDegRange = 0;
 	mExpSmDegRange = new ExpSmooth(g_dalphaDeltCoG);
 	mExpSmDegRange->SetInitVal(g_iMinLaylineWidth);
 	mExpSmDiffCogHdt = new ExpSmooth(alpha_CogHdt);
@@ -766,7 +767,7 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
 			value = value / cos(mLeeway *M_PI / 180.0);
 	}
 	if (st == OCPN_DBP_STC_BRG){
-		if (m_pMark) {
+      if (m_pMark && !wxIsNaN(mlat) && !wxIsNaN(mlon)) {
 			double dist;
 			DistanceBearingMercator_Plugin(m_pMark->m_lat, m_pMark->m_lon, mlat, mlon, &value, &dist);
 			unit = _T("TacticsWP");
@@ -1019,6 +1020,7 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 		/*****************************************************************************************
 		Draw wind barb on boat position
 		******************************************************************************************/
+        //mTWD=NAN caught in subroutines
 		DrawWindBarb(boat, vp);
 		DrawPolar(vp, boat, mTWD);
 	}
@@ -1043,8 +1045,9 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 	}
 
 	if (m_bLaylinesIsVisible){
-		if (!wxIsNaN(mlat) && !wxIsNaN(mlon) && !wxIsNaN(mCOG) && !wxIsNaN(mHdt)) {
+      if (!wxIsNaN(mlat) && !wxIsNaN(mlon) && !wxIsNaN(mCOG) && !wxIsNaN(mHdt) && !wxIsNaN(mStW) && !wxIsNaN(mTWS) && !wxIsNaN(mTWA)) {
 			if (wxIsNaN(m_LaylineSmoothedCog)) m_LaylineSmoothedCog = mCOG;
+            if (wxIsNaN(mLeeway)) mLeeway = 0.0;
 			/*****************************************************************************************
 			Draw the boat laylines, independent from the "Temp. Tactics WP"
 
@@ -1467,100 +1470,102 @@ Basics taken from tackandlay_pi and adopted
 **********************************************************************************/
 void tactics_pi::DrawWindBarb(wxPoint pp, PlugIn_ViewPort *vp)
 {
-	if (m_bShowWindbarbOnChart && mTWD >= 0 && mTWD < 360 && !wxIsNaN(mTWS)){
-		glColor4ub(0, 0, 255, 192);	// red, green, blue,  alpha (byte values)
-		double rad_angle;
-		double shaft_x, shaft_y;
-		double barb_0_x, barb_0_y, barb_1_x, barb_1_y;
-		double barb_2_x, barb_2_y;
-		double barb_length_0_x, barb_length_0_y, barb_length_1_x, barb_length_1_y;
-		double barb_length_2_x, barb_length_2_y;
-		double barb_3_x, barb_3_y, barb_4_x, barb_4_y, barb_length_3_x, barb_length_3_y, barb_length_4_x, barb_length_4_y;
-		double tws_kts = fromUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
+  if (m_bShowWindbarbOnChart && !wxIsNaN(mTWD) && !wxIsNaN(mTWS)){
+    if (mTWD >= 0 && mTWD < 360){
+      glColor4ub(0, 0, 255, 192);	// red, green, blue,  alpha (byte values)
+      double rad_angle;
+      double shaft_x, shaft_y;
+      double barb_0_x, barb_0_y, barb_1_x, barb_1_y;
+      double barb_2_x, barb_2_y;
+      double barb_length_0_x, barb_length_0_y, barb_length_1_x, barb_length_1_y;
+      double barb_length_2_x, barb_length_2_y;
+      double barb_3_x, barb_3_y, barb_4_x, barb_4_y, barb_length_3_x, barb_length_3_y, barb_length_4_x, barb_length_4_y;
+      double tws_kts = fromUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
 
-		double barb_length[50] = {
-			0, 0, 0, 0, 0,    //  0 knots
-			0, 0, 0, 0, 5,    //  5 knots
-			0, 0, 0, 0, 10,    // 10 knots
-			0, 0, 0, 5, 10,    // 15 knots
-			0, 0, 0, 10, 10,   // 20 knots
-			0, 0, 5, 10, 10,   // 25 knots
-			0, 0, 10, 10, 10,  // 30 knots
-			0, 5, 10, 10, 10,  // 35 knots
-			0, 10, 10, 10, 10,  // 40 knots
-			5, 10, 10, 10, 10  // 45 knots
-		};
+      double barb_length[50] = {
+        0, 0, 0, 0, 0,    //  0 knots
+        0, 0, 0, 0, 5,    //  5 knots
+        0, 0, 0, 0, 10,    // 10 knots
+        0, 0, 0, 5, 10,    // 15 knots
+        0, 0, 0, 10, 10,   // 20 knots
+        0, 0, 5, 10, 10,   // 25 knots
+        0, 0, 10, 10, 10,  // 30 knots
+        0, 5, 10, 10, 10,  // 35 knots
+        0, 10, 10, 10, 10,  // 40 knots
+        5, 10, 10, 10, 10  // 45 knots
+      };
 
-		int p = 0;
-		if (tws_kts < 3.)
-			p = 0;
-		else if (tws_kts >= 3. && tws_kts < 8.)
-			p = 1;
-		else if (tws_kts >= 8. && tws_kts < 13.)
-			p = 2;
-		else if (tws_kts >= 13. && tws_kts < 18.)
-			p = 3;
-		else if (tws_kts >= 18. && tws_kts < 23.)
-			p = 4;
-		else if (tws_kts >= 23. && tws_kts < 28.)
-			p = 5;
-		else if (tws_kts >= 28. && tws_kts < 33.)
-			p = 6;
-		else if (tws_kts >= 33. && tws_kts < 38.)
-			p = 7;
-		else if (tws_kts >= 38. && tws_kts < 43.)
-			p = 8;
-		else if (tws_kts >= 43. && tws_kts < 48.)
-			p = 9;
-		else if (tws_kts >= 48.)
-			p = 9;
-		//wxLogMessage("mTWS=%.2f --> p=%d", mTWS, p);
-		p = 5 * p;
+      int p = 0;
+      if (tws_kts < 3.)
+        p = 0;
+      else if (tws_kts >= 3. && tws_kts < 8.)
+        p = 1;
+      else if (tws_kts >= 8. && tws_kts < 13.)
+        p = 2;
+      else if (tws_kts >= 13. && tws_kts < 18.)
+        p = 3;
+      else if (tws_kts >= 18. && tws_kts < 23.)
+        p = 4;
+      else if (tws_kts >= 23. && tws_kts < 28.)
+        p = 5;
+      else if (tws_kts >= 28. && tws_kts < 33.)
+        p = 6;
+      else if (tws_kts >= 33. && tws_kts < 38.)
+        p = 7;
+      else if (tws_kts >= 38. && tws_kts < 43.)
+        p = 8;
+      else if (tws_kts >= 43. && tws_kts < 48.)
+        p = 9;
+      else if (tws_kts >= 48.)
+        p = 9;
+      //wxLogMessage("mTWS=%.2f --> p=%d", mTWS, p);
+      p = 5 * p;
 
-		double rotate = vp->rotation;
-		rad_angle = ((mTWD - 90.) * M_PI / 180) + rotate;
+      double rotate = vp->rotation;
+      rad_angle = ((mTWD - 90.) * M_PI / 180) + rotate;
 
-		shaft_x = cos(rad_angle) * 90;
-		shaft_y = sin(rad_angle) * 90;
+      shaft_x = cos(rad_angle) * 90;
+      shaft_y = sin(rad_angle) * 90;
 
-		barb_0_x = pp.x + .6 * shaft_x;
-		barb_0_y = (pp.y + .6 * shaft_y);
-		barb_1_x = pp.x + .7 * shaft_x;
-		barb_1_y = (pp.y + .7 * shaft_y);
-		barb_2_x = pp.x + .8 * shaft_x;
-		barb_2_y = (pp.y + .8 * shaft_y);
-		barb_3_x = pp.x + .9 * shaft_x;
-		barb_3_y = (pp.y + .9 * shaft_y);
-		barb_4_x = pp.x + shaft_x;
-		barb_4_y = (pp.y + shaft_y);
+      barb_0_x = pp.x + .6 * shaft_x;
+      barb_0_y = (pp.y + .6 * shaft_y);
+      barb_1_x = pp.x + .7 * shaft_x;
+      barb_1_y = (pp.y + .7 * shaft_y);
+      barb_2_x = pp.x + .8 * shaft_x;
+      barb_2_y = (pp.y + .8 * shaft_y);
+      barb_3_x = pp.x + .9 * shaft_x;
+      barb_3_y = (pp.y + .9 * shaft_y);
+      barb_4_x = pp.x + shaft_x;
+      barb_4_y = (pp.y + shaft_y);
 
-		barb_length_0_x = cos(rad_angle + M_PI / 4) * barb_length[p] * 3;
-		barb_length_0_y = sin(rad_angle + M_PI / 4) * barb_length[p] * 3;
-		barb_length_1_x = cos(rad_angle + M_PI / 4) * barb_length[p + 1] * 3;
-		barb_length_1_y = sin(rad_angle + M_PI / 4) * barb_length[p + 1] * 3;
-		barb_length_2_x = cos(rad_angle + M_PI / 4) * barb_length[p + 2] * 3;
-		barb_length_2_y = sin(rad_angle + M_PI / 4) * barb_length[p + 2] * 3;
-		barb_length_3_x = cos(rad_angle + M_PI / 4) * barb_length[p + 3] * 3;
-		barb_length_3_y = sin(rad_angle + M_PI / 4) * barb_length[p + 3] * 3;
-		barb_length_4_x = cos(rad_angle + M_PI / 4) * barb_length[p + 4] * 3;
-		barb_length_4_y = sin(rad_angle + M_PI / 4) * barb_length[p + 4] * 3;
+      barb_length_0_x = cos(rad_angle + M_PI / 4) * barb_length[p] * 3;
+      barb_length_0_y = sin(rad_angle + M_PI / 4) * barb_length[p] * 3;
+      barb_length_1_x = cos(rad_angle + M_PI / 4) * barb_length[p + 1] * 3;
+      barb_length_1_y = sin(rad_angle + M_PI / 4) * barb_length[p + 1] * 3;
+      barb_length_2_x = cos(rad_angle + M_PI / 4) * barb_length[p + 2] * 3;
+      barb_length_2_y = sin(rad_angle + M_PI / 4) * barb_length[p + 2] * 3;
+      barb_length_3_x = cos(rad_angle + M_PI / 4) * barb_length[p + 3] * 3;
+      barb_length_3_y = sin(rad_angle + M_PI / 4) * barb_length[p + 3] * 3;
+      barb_length_4_x = cos(rad_angle + M_PI / 4) * barb_length[p + 4] * 3;
+      barb_length_4_y = sin(rad_angle + M_PI / 4) * barb_length[p + 4] * 3;
 
-		glLineWidth(2);
-		glBegin(GL_LINES);
-		glVertex2d(pp.x, pp.y);
-		glVertex2d(pp.x + shaft_x, pp.y + shaft_y);
-		glVertex2d(barb_0_x, barb_0_y);
-		glVertex2d(barb_0_x + barb_length_0_x, barb_0_y + barb_length_0_y);
-		glVertex2d(barb_1_x, barb_1_y);
-		glVertex2d(barb_1_x + barb_length_1_x, barb_1_y + barb_length_1_y);
-		glVertex2d(barb_2_x, barb_2_y);
-		glVertex2d(barb_2_x + barb_length_2_x, barb_2_y + barb_length_2_y);
-		glVertex2d(barb_3_x, barb_3_y);
-		glVertex2d(barb_3_x + barb_length_3_x, barb_3_y + barb_length_3_y);
-		glVertex2d(barb_4_x, barb_4_y);
-		glVertex2d(barb_4_x + barb_length_4_x, barb_4_y + barb_length_4_y);
-		glEnd();
-	}
+      glLineWidth(2);
+      glBegin(GL_LINES);
+      glVertex2d(pp.x, pp.y);
+      glVertex2d(pp.x + shaft_x, pp.y + shaft_y);
+      glVertex2d(barb_0_x, barb_0_y);
+      glVertex2d(barb_0_x + barb_length_0_x, barb_0_y + barb_length_0_y);
+      glVertex2d(barb_1_x, barb_1_y);
+      glVertex2d(barb_1_x + barb_length_1_x, barb_1_y + barb_length_1_y);
+      glVertex2d(barb_2_x, barb_2_y);
+      glVertex2d(barb_2_x + barb_length_2_x, barb_2_y + barb_length_2_y);
+      glVertex2d(barb_3_x, barb_3_y);
+      glVertex2d(barb_3_x + barb_length_3_x, barb_3_y + barb_length_3_y);
+      glVertex2d(barb_4_x, barb_4_y);
+      glVertex2d(barb_4_x + barb_length_4_x, barb_4_y + barb_length_4_y);
+      glEnd();
+    }
+  }
 }
 
 /*********************************************************************************
@@ -1575,8 +1580,7 @@ What should be drawn:
 
 void tactics_pi::DrawPolar(PlugIn_ViewPort *vp, wxPoint pp, double PolarAngle)
 {
-	if (m_bShowPolarOnChart
-		&& !wxIsNaN(mTWS) && !wxIsNaN(mTWD) && !wxIsNaN(mBRG)){
+	if (m_bShowPolarOnChart && !wxIsNaN(mTWS) && !wxIsNaN(mTWD) && !wxIsNaN(mBRG)){
 		glColor4ub(0, 0, 255, 192);	// red, green, blue,  alpha (byte values)
 		double polval[STEPS];
 		double max = 0;
@@ -1769,41 +1773,43 @@ void tactics_pi::CalculateLaylineDegreeRange(void)
 {
 	//calculate degree-range for laylines
 	//do some exponential smoothing on degree range of COGs and  COG itself
-	if (!wxIsNaN(mCOG) && mCOG != m_COGRange[0]){
-		if (wxIsNaN(m_ExpSmoothSinCog)) m_ExpSmoothSinCog = 0;
-		if (wxIsNaN(m_ExpSmoothCosCog)) m_ExpSmoothCosCog = 0;
+  if (!wxIsNaN(mCOG)){
+    if (mCOG != m_COGRange[0]){
+      if (wxIsNaN(m_ExpSmoothSinCog)) m_ExpSmoothSinCog = 0;
+      if (wxIsNaN(m_ExpSmoothCosCog)) m_ExpSmoothCosCog = 0;
 
 
-		double mincog = 360, maxcog = 0;
-		for (int i = 0; i < COGRANGE; i++){
-			if (!wxIsNaN(m_COGRange[i])){
-				mincog = wxMin(mincog, m_COGRange[i]);
-				maxcog = wxMax(maxcog, m_COGRange[i]);
-			}
-		}
-		m_LaylineDegRange = getDegRange(maxcog, mincog);
-		for (int i = 0; i < COGRANGE - 1; i++) m_COGRange[i + 1] = m_COGRange[i];
-		m_COGRange[0] = mCOG;
-		if (m_LaylineDegRange < g_iMinLaylineWidth){
-			m_LaylineDegRange = g_iMinLaylineWidth;
-		}
-		else if (m_LaylineDegRange > g_iMaxLaylineWidth){
-			m_LaylineDegRange = g_iMaxLaylineWidth;
-		}
+      double mincog = 360, maxcog = 0;
+      for (int i = 0; i < COGRANGE; i++){
+        if (!wxIsNaN(m_COGRange[i])){
+          mincog = wxMin(mincog, m_COGRange[i]);
+          maxcog = wxMax(maxcog, m_COGRange[i]);
+        }
+      }
+      m_LaylineDegRange = getDegRange(maxcog, mincog);
+      for (int i = 0; i < COGRANGE - 1; i++) m_COGRange[i + 1] = m_COGRange[i];
+      m_COGRange[0] = mCOG;
+      if (m_LaylineDegRange < g_iMinLaylineWidth){
+        m_LaylineDegRange = g_iMinLaylineWidth;
+      }
+      else if (m_LaylineDegRange > g_iMaxLaylineWidth){
+        m_LaylineDegRange = g_iMaxLaylineWidth;
+      }
 
-		//shifting
-		double rad = (90 - mCOG)*M_PI / 180.;
-		mExpSmSinCog->SetAlpha(m_alphaLaylineCog);
-		mExpSmCosCog->SetAlpha(m_alphaLaylineCog);
-		m_ExpSmoothSinCog = mExpSmSinCog->GetSmoothVal(sin(rad));
-		m_ExpSmoothCosCog = mExpSmCosCog->GetSmoothVal(cos(rad));
+      //shifting
+      double rad = (90 - mCOG)*M_PI / 180.;
+      mExpSmSinCog->SetAlpha(m_alphaLaylineCog);
+      mExpSmCosCog->SetAlpha(m_alphaLaylineCog);
+      m_ExpSmoothSinCog = mExpSmSinCog->GetSmoothVal(sin(rad));
+      m_ExpSmoothCosCog = mExpSmCosCog->GetSmoothVal(cos(rad));
 
-		m_LaylineSmoothedCog = (int)(90. - (atan2(m_ExpSmoothSinCog, m_ExpSmoothCosCog)*180. / M_PI) + 360.) % 360;
+      m_LaylineSmoothedCog = (int)(90. - (atan2(m_ExpSmoothSinCog, m_ExpSmoothCosCog)*180. / M_PI) + 360.) % 360;
 
 
-		mExpSmDegRange->SetAlpha(g_dalphaDeltCoG);
-		m_ExpSmoothDegRange = mExpSmDegRange->GetSmoothVal(m_LaylineDegRange);
-	}
+      mExpSmDegRange->SetAlpha(g_dalphaDeltCoG);
+      m_ExpSmoothDegRange = mExpSmDegRange->GetSmoothVal(m_LaylineDegRange);
+    }
+  }
 }
 
 void tactics_pi::SendUtcTimeToAllInstruments(wxDateTime value)
@@ -2245,7 +2251,7 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 							else {
 								//                                dMagneticCOG = m_NMEA0183.Rmc.TrackMadeGoodDegreesTrue + m_NMEA0183.Rmc.MagneticVariation;
 								dMagneticCOG = mCOGFilter.get() + m_NMEA0183.Rmc.MagneticVariation;
-								if (dMagneticCOG > 360.0) dMagneticCOG = dMagneticCOG - 360.0;
+								if (dMagneticCOG >= 360.0) dMagneticCOG = dMagneticCOG - 360.0;
 							}
 							//mCOG = dMagneticCOG;
 							SendSentenceToAllInstruments(OCPN_DBP_STC_MCOG,
@@ -4659,10 +4665,10 @@ void tactics_pi::SetCalcVariables(int st, double value, wxString unit)
 		mheel = heel1 + twafact*(heel2 - heel1);
 		if (mHeelUnit == _T("\u00B0l")) mheel = -mheel;
 	}
-
-	if (mLeeway >= -90 && mLeeway <= 90)
-		m_LeewayOK = true;
-
+    if (!wxIsNaN(mLeeway)){
+      if (mLeeway >= -90 && mLeeway <= 90)
+        m_LeewayOK = true;
+    }
 }
 
 /*********************************************************************************
@@ -4676,11 +4682,11 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
 		m_bTrueWind_available = true;
 	}
 
-    if (st == OCPN_DBP_STC_AWS){
+    if (st == OCPN_DBP_STC_AWS && !wxIsNaN(mStW) && !wxIsNaN(mSOG)){
       //  Calculate TWS (from AWS and StW/SOG)
       spdval = (g_bUseSOGforTWCalc) ? mSOG : mStW ;
       // only start calculating if we have a full set of data
-      if ((!m_bTrueWind_available || g_bForceTrueWindCalculation) && mAWA >= 0 && mAWS>=0  && spdval >= 0 && mAWAUnit != _("")) {
+      if ((!m_bTrueWind_available || g_bForceTrueWindCalculation) && mAWA >= 0 && mAWS>=0  && spdval >= 0 && mAWAUnit != _("") && !wxIsNaN(mHdt)) {
         //we have to do the calculation in knots
         double aws_kts = fromUsrSpeed_Plugin(mAWS, g_iDashWindSpeedUnit);
         spdval = fromUsrSpeed_Plugin(spdval, g_iDashSpeedUnit);
@@ -4800,7 +4806,7 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
 	if (st == OCPN_DBP_STC_HDT) {
 
 		// ... and only start calculating if we have a full set of data
-		if (!wxIsNaN(mheel) && m_LeewayOK && !wxIsNaN(mCOG) && !wxIsNaN(mSOG) && !wxIsNaN(mStW) && !wxIsNaN(mHdt) && !wxIsNaN(mlat) && !wxIsNaN(mlon)) {
+      if (!wxIsNaN(mheel) && m_LeewayOK && !wxIsNaN(mCOG) && !wxIsNaN(mSOG) && !wxIsNaN(mStW) && !wxIsNaN(mHdt) && !wxIsNaN(mlat) && !wxIsNaN(mlon) && !wxIsNaN(mLeeway)) {
 
 			double COGlon, COGlat;
 			//we have to do the calculation in knots ...
@@ -4915,7 +4921,7 @@ void tactics_pi::CalculatePerformanceData(void)
 
 	// get Target VMG Angle from Polar
 	//tvmg = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
-	if (tvmg.TargetSpeed > 0) {
+    if (tvmg.TargetSpeed > 0 && !wxIsNaN(mStW)) {
 		double VMG = BoatPolar->Calc_VMG(mTWA, mStW);
 		mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0;
 		if (mTWA < 90){
@@ -4938,7 +4944,7 @@ void tactics_pi::CalculatePerformanceData(void)
 	else
 		mVMGoptAngle = 0;
 
-	if (mBRG >= 0){
+    if (mBRG >= 0 && !wxIsNaN(mHdt) && !wxIsNaN(mStW) && !wxIsNaN(mTWD)){
 		tcmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
 		double actcmg = BoatPolar->Calc_CMG(mHdt, mStW, mBRG);
 		// mCMGGain = (tcmg.TargetSpeed >0) ? (100.0 - mStW / tcmg.TargetSpeed *100.) : 0.0;
@@ -5124,32 +5130,33 @@ mPredictedCoG, mPredictedSoG
 void tactics_pi::CalculatePredictedCourse(void)
 {
 	double predictedKdW; //==predicted Course Through Water
-	//New: with BearingCompass in Head-Up mode = Hdt
-	double Leeway = (mHeelUnit == _T("\u00B0L")) ? -mLeeway : mLeeway;
-	//todo : assuming TWAunit = AWAunit ...
-	if (mAWAUnit == _T("\u00B0L")){ //currently wind is from port, target is from starboard ...
-		predictedKdW = mHdt - 2 * mTWA - Leeway;
-	}
-	else if (mAWAUnit == _T("\u00B0R")){ //so, currently wind from starboard
-		predictedKdW = mHdt + 2 * mTWA - Leeway;
-	}
-	else {
-		predictedKdW = (mTWA < 10) ? 180 : 0; // should never happen, but is this correct ???
-	}
-	if (predictedKdW >= 360) predictedKdW -= 360;
-	if (predictedKdW < 0) predictedKdW += 360;
-	double predictedLatHdt, predictedLonHdt, predictedLatCog, predictedLonCog;
-	//double predictedCoG;
-	//standard triangle calculation to get predicted CoG / SoG
-	//get endpoint from boat-position by applying  KdW, StW
-	PositionBearingDistanceMercator_Plugin(mlat, mlon, predictedKdW, mStW, &predictedLatHdt, &predictedLonHdt);
-	//wxLogMessage(_T("Step1: m_lat=%f,m_lon=%f, predictedKdW=%f,m_StW=%f --> predictedLatHdt=%f,predictedLonHdt=%f\n"), m_lat, m_lon, predictedKdW, m_StW, predictedLatHdt, predictedLonHdt);
-	//apply surface current with direction & speed to endpoint from above
-	PositionBearingDistanceMercator_Plugin(predictedLatHdt, predictedLonHdt, m_CurrentDirection, m_ExpSmoothCurrSpd, &predictedLatCog, &predictedLonCog);
-	//wxLogMessage(_T("Step2: predictedLatHdt=%f,predictedLonHdt=%f, m_CurrDir=%f,m_CurrSpeed=%f --> predictedLatCog=%f,predictedLonCog=%f\n"), predictedLatHdt, predictedLonHdt, m_CurrDir, m_CurrSpeed, predictedLatCog, predictedLonCog);
-	//now get predicted CoG & SoG as difference between the 2 endpoints (coordinates) from above
-	DistanceBearingMercator_Plugin(predictedLatCog, predictedLonCog, mlat, mlon, &mPredictedCoG, &mPredictedSoG);
-
+    if (!wxIsNaN(mStW) && !wxIsNaN(mHdt) && !wxIsNaN(mTWA) && !wxIsNaN(mlat) && !wxIsNaN(mlon) && !wxIsNaN(mLeeway) && !wxIsNaN(m_CurrentDirection) && !wxIsNaN(m_ExpSmoothCurrSpd)){
+      //New: with BearingCompass in Head-Up mode = Hdt
+      double Leeway = (mHeelUnit == _T("\u00B0L")) ? -mLeeway : mLeeway;
+      //todo : assuming TWAunit = AWAunit ...
+      if (mAWAUnit == _T("\u00B0L")){ //currently wind is from port, target is from starboard ...
+        predictedKdW = mHdt - 2 * mTWA - Leeway;
+      }
+      else if (mAWAUnit == _T("\u00B0R")){ //so, currently wind from starboard
+        predictedKdW = mHdt + 2 * mTWA - Leeway;
+      }
+      else {
+        predictedKdW = (mTWA < 10) ? 180 : 0; // should never happen, but is this correct ???
+      }
+      if (predictedKdW >= 360) predictedKdW -= 360;
+      if (predictedKdW < 0) predictedKdW += 360;
+      double predictedLatHdt, predictedLonHdt, predictedLatCog, predictedLonCog;
+      //double predictedCoG;
+      //standard triangle calculation to get predicted CoG / SoG
+      //get endpoint from boat-position by applying  KdW, StW
+      PositionBearingDistanceMercator_Plugin(mlat, mlon, predictedKdW, mStW, &predictedLatHdt, &predictedLonHdt);
+      //wxLogMessage(_T("Step1: m_lat=%f,m_lon=%f, predictedKdW=%f,m_StW=%f --> predictedLatHdt=%f,predictedLonHdt=%f\n"), m_lat, m_lon, predictedKdW, m_StW, predictedLatHdt, predictedLonHdt);
+      //apply surface current with direction & speed to endpoint from above
+      PositionBearingDistanceMercator_Plugin(predictedLatHdt, predictedLonHdt, m_CurrentDirection, m_ExpSmoothCurrSpd, &predictedLatCog, &predictedLonCog);
+      //wxLogMessage(_T("Step2: predictedLatHdt=%f,predictedLonHdt=%f, m_CurrDir=%f,m_CurrSpeed=%f --> predictedLatCog=%f,predictedLonCog=%f\n"), predictedLatHdt, predictedLonHdt, m_CurrDir, m_CurrSpeed, predictedLatCog, predictedLonCog);
+      //now get predicted CoG & SoG as difference between the 2 endpoints (coordinates) from above
+      DistanceBearingMercator_Plugin(predictedLatCog, predictedLonCog, mlat, mlon, &mPredictedCoG, &mPredictedSoG);
+    }
 }
 /************************************************************************************
 Calculates the gain for VMG & CMG and stores it in the variables
