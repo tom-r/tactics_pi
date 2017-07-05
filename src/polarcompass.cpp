@@ -83,6 +83,7 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 	m_TWD = NAN;
 	m_StW = 0.0;
 	m_PolSpd = NAN;
+    m_ToWpt = _T("---");
 	m_PolSpd_Percent = NAN;
 	alpha_diffCogHdt = 0.1;
 	m_ExpSmoothDiffCogHdt = 0;
@@ -215,12 +216,14 @@ void TacticsInstrument_PolarCompass::Draw(wxGCDC* bdc)
   //wxLogMessage("-- ..PolarCompass-Draw() - m_TWA=%f m_TWS=%f", m_TWA, m_TWS);
     if (!wxIsNaN(m_TWA) && !wxIsNaN(m_TWS) ){
       m_PolSpd = BoatPolar->GetPolarSpeed(m_TWA, m_TWS);
-      m_PolSpd_Percent = fromUsrSpeed_Plugin(m_StW, g_iDashSpeedUnit) / m_PolSpd * 100;
+      if (!wxIsNaN(m_PolSpd) )
+         m_PolSpd_Percent = fromUsrSpeed_Plugin(m_StW, g_iDashSpeedUnit) / m_PolSpd * 100;
+      else
+         m_PolSpd = m_PolSpd_Percent = 0;
     }
     else{
       m_PolSpd = m_PolSpd_Percent = 0;
     }
-
     DrawData(bdc, m_StW, m_StWUnit, _T("STW:%.1f"), DIAL_POSITION_INSIDE);
     DrawData(bdc, toUsrSpeed_Plugin(m_PolSpd, g_iDashSpeedUnit), m_StWUnit, _T("T-PS:%.1f"), DIAL_POSITION_BOTTOMLEFT);
     DrawMarkers(bdc);
