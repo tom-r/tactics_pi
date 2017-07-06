@@ -4865,14 +4865,18 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
 
 			double rad = (90 - currdir_tan)*M_PI / 180.;
 			mSinCurrDir->SetAlpha(g_dalpha_currdir);
+			m_ExpSmoothSinCurrDir = mSinCurrDir->GetSmoothVal(currspd * sin(rad));
 			mCosCurrDir->SetAlpha(g_dalpha_currdir);
-			m_ExpSmoothSinCurrDir = mSinCurrDir->GetSmoothVal(sin(rad));
-			m_ExpSmoothCosCurrDir = mCosCurrDir->GetSmoothVal(cos(rad));
+			m_ExpSmoothCosCurrDir = mCosCurrDir->GetSmoothVal(currspd * cos(rad));
+			mExpSmoothCurrSpd->SetAlpha(alpha_currspd);
+			m_ExpSmoothCurrSpd = mExpSmoothCurrSpd->GetSmoothVal(sqrt(m_ExpSmoothSinCurrDir * m_ExpSmoothSinCurrDir + m_ExpSmoothCosCurrDir * m_ExpSmoothCosCurrDir));
+
 			m_CurrentDirection = (90. - (atan2(m_ExpSmoothSinCurrDir, m_ExpSmoothCosCurrDir)*180. / M_PI) + 360.);
 			while (m_CurrentDirection >= 360) m_CurrentDirection -= 360;
+
 			// temporary output of Currdir to file ...
-			//str = wxString::Format(_T("%.2f;%.2f\n"), currdir, m_CurrentDirection);
-			//out.WriteString(str);
+			wxString str = wxString::Format(_T("%.2f;%.2f\n"), currdir, m_CurrentDirection);
+			wxLogMessage(str);
 		}
 		else{
 			m_CurrentDirection = NAN;
