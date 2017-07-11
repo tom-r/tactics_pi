@@ -69,6 +69,7 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 	m_CurrDir = NAN;
 	m_CurrSpeed = NAN;
 	m_ExtraValueDTW = NAN;
+    m_MainValue = NAN;
 	m_Leeway = 0;
 	m_AngleStart = 0;
     m_ExpSmoothDegRange = 0;
@@ -82,6 +83,7 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
 	m_TWS = NAN;
     m_TWD = NAN;
     m_StW = 0.0;
+    m_ToWpt = _T("---");
 	alpha_diffCogHdt = 0.1;
 	m_ExpSmoothDiffCogHdt = 0;
 	m_oldExpSmoothDiffCogHdt = 0;
@@ -95,9 +97,9 @@ void TacticsInstrument_BearingCompass::SetData(int st, double data, wxString uni
 		m_Cog = data;
 	}
 	else if (st == OCPN_DBP_STC_HDT) {
-		m_AngleStart = -data; //neu
-		m_MainValue = data; //neu
-		m_MainValueUnit = unit;//neu
+		m_AngleStart = -data; 
+		m_MainValue = data; 
+		m_MainValueUnit = unit;
 		m_Hdt = data;
 	}
 	else if (st == OCPN_DBP_STC_CURRDIR) {
@@ -215,9 +217,8 @@ void TacticsInstrument_BearingCompass::Draw(wxGCDC* bdc)
 	DrawForeground(bdc);
 
 	DrawLaylines(bdc);
-	DrawData(bdc, m_MainValue, m_MainValueUnit, _T("%.0f"), DIAL_POSITION_TOPINSIDE);
+    if (!wxIsNaN(m_MainValue)) DrawData(bdc, m_MainValue, m_MainValueUnit, _T("%.0f"), DIAL_POSITION_TOPINSIDE);
 
-//	DrawData(bdc, m_predictedSog, _T("kn "), _T("prd.SOG: ~%.1f"), DIAL_POSITION_BOTTOMRIGHT);
     if (!wxIsNaN(m_predictedSog)) DrawData(bdc, m_predictedSog, getUsrSpeedUnit_Plugin(g_iDashSpeedUnit), _T("prd.SOG: ~%.1f"), DIAL_POSITION_BOTTOMRIGHT);
 
 
