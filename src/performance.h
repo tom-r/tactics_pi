@@ -91,7 +91,7 @@ protected:
 	wxString          m_format;
 	int               m_DataHeight;
 	
-	void Draw(wxGCDC* dc);
+	void Draw(myDC* dc);
 private :
 	wxFileConfig     *m_pconfig;
 
@@ -287,13 +287,13 @@ protected:
   int m_currSec, m_lastSec, m_SpdCntperSec, m_DirCntperSec;
   double m_cntSpd, m_cntDir, m_avgSpd, m_avgDir;
 
-  void Draw(wxGCDC* dc);
-  void DrawBackground(wxGCDC* dc);
-  void DrawForeground(wxGCDC* dc);
+  void Draw(myDC* dc);
+  void DrawBackground(myDC* dc);
+  void DrawForeground(myDC* dc);
   void SetMinMaxWindScale();
-  //void DrawWindDirScale(wxGCDC* dc);
-  void DrawBoatSpeedScale(wxGCDC* dc);
-  void DrawPercentSpeedScale(wxGCDC* dc);
+  //void DrawWindDirScale(myDC* dc);
+  void DrawBoatSpeedScale(myDC* dc);
+  void DrawPercentSpeedScale(myDC* dc);
   //wxString GetWindDirStr(wxString WindDir);
 };
 #endif

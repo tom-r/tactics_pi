@@ -34,8 +34,10 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-#if !wxUSE_GRAPHICS_CONTEXT
-#define wxGCDC wxDC
+#if !defined(__WXGTK__) && (wxUSE_GRAPHICS_CONTEXT == 1)
+#define myDC wxGCDC
+#else
+#define myDC wxDC
 #endif
 
 // Required GetGlobalColor
@@ -125,7 +127,7 @@ protected:
       int               m_TitleHeight;
       wxString          m_title;
 
-      virtual void Draw(wxGCDC* dc) = 0;
+      virtual void Draw(myDC* dc) = 0;
 private:
     bool m_drawSoloInPane;
 };
@@ -144,7 +146,7 @@ protected:
       wxString          m_format;
       int               m_DataHeight;
 
-      void Draw(wxGCDC* dc);
+      void Draw(myDC* dc);
 };
 
 class TacticsInstrument_Position : public TacticsInstrument
@@ -163,7 +165,7 @@ protected:
       int               m_cap_flag2;
       int               m_DataHeight;
 
-      void Draw(wxGCDC* dc);
+      void Draw(myDC* dc);
 };
 
 #endif

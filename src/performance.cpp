@@ -95,7 +95,7 @@ wxSize TacticsInstrument_PerformanceSingle::GetSize(int orient, wxSize hint)
 /***********************************************************************************
 
 ************************************************************************************/
-void TacticsInstrument_PerformanceSingle::Draw(wxGCDC* dc)
+void TacticsInstrument_PerformanceSingle::Draw(myDC* dc)
 {
 	wxColour cl;
 #ifdef __WXMSW__
@@ -1308,7 +1308,7 @@ void TacticsInstrument_PolarPerformance::SetData(int st, double data, wxString u
     }
   }
 }
-void TacticsInstrument_PolarPerformance::Draw(wxGCDC* dc)
+void TacticsInstrument_PolarPerformance::Draw(myDC* dc)
 {
   m_WindowRect = GetClientRect();
   m_DrawAreaRect = GetClientRect();
@@ -1321,7 +1321,7 @@ void TacticsInstrument_PolarPerformance::Draw(wxGCDC* dc)
 //*********************************************************************************
 // draw boat speed legend (right side)
 //*********************************************************************************
-void  TacticsInstrument_PolarPerformance::DrawBoatSpeedScale(wxGCDC* dc)
+void  TacticsInstrument_PolarPerformance::DrawBoatSpeedScale(myDC* dc)
 {
   wxString label1, label2, label3, label4, label5;
   wxColour cl;
@@ -1386,7 +1386,7 @@ void  TacticsInstrument_PolarPerformance::DrawBoatSpeedScale(wxGCDC* dc)
 //*********************************************************************************
 // draw percent boat speed scale (left side)
 //*********************************************************************************
-void  TacticsInstrument_PolarPerformance::DrawPercentSpeedScale(wxGCDC* dc)
+void  TacticsInstrument_PolarPerformance::DrawPercentSpeedScale(myDC* dc)
 {
   wxString label1, label2, label3, label4, label5;
   wxColour cl;
@@ -1469,7 +1469,7 @@ void  TacticsInstrument_PolarPerformance::DrawPercentSpeedScale(wxGCDC* dc)
 //*********************************************************************************
 //draw background
 //*********************************************************************************
-void TacticsInstrument_PolarPerformance::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_PolarPerformance::DrawBackground(myDC* dc)
 {
   wxString label, label1, label2, label3, label4, label5;
   wxColour cl;
@@ -1503,7 +1503,7 @@ void TacticsInstrument_PolarPerformance::DrawBackground(wxGCDC* dc)
 //*********************************************************************************
 //draw foreground
 //*********************************************************************************
-void TacticsInstrument_PolarPerformance::DrawForeground(wxGCDC* dc)
+void TacticsInstrument_PolarPerformance::DrawForeground(myDC* dc)
 {
   wxColour col;
   double ratioH;

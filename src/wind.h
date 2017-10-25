@@ -62,7 +62,7 @@ class TacticsInstrument_Wind: public TacticsInstrument_Dial
       private:
 
       protected:
-            void DrawBackground(wxGCDC* dc);
+            void DrawBackground(myDC* dc);
 };
 
 class TacticsInstrument_WindCompass: public TacticsInstrument_Dial
@@ -75,7 +75,7 @@ class TacticsInstrument_WindCompass: public TacticsInstrument_Dial
       private:
 
       protected:
-            void DrawBackground(wxGCDC* dc);
+            void DrawBackground(myDC* dc);
 };
 
 class TacticsInstrument_TrueWindAngle: public TacticsInstrument_Dial
@@ -89,7 +89,7 @@ class TacticsInstrument_TrueWindAngle: public TacticsInstrument_Dial
 
       protected:
 
-            void DrawBackground(wxGCDC* dc);
+            void DrawBackground(myDC* dc);
 };
 /*****************************************************************************
 Apparent & True wind angle combined in one dial instrument
@@ -113,10 +113,10 @@ protected:
     wxString m_TWDUnit;
 	wxString m_ExtraValueAppUnit, m_ExtraValueTrueUnit, m_MainValueAppUnit, m_MainValueTrueUnit;
 	DialPositionOption m_MainValueOption1, m_MainValueOption2, m_ExtraValueOption1, m_ExtraValueOption2;
-	void DrawBackground(wxGCDC* dc);
-	virtual void Draw(wxGCDC* dc);
-	virtual void DrawForeground(wxGCDC* dc);
-	virtual void DrawData(wxGCDC* dc, double value, wxString unit, wxString format, DialPositionOption position);
+	void DrawBackground(myDC* dc);
+	virtual void Draw(myDC* dc);
+	virtual void DrawForeground(myDC* dc);
+	virtual void DrawData(myDC* dc, double value, wxString unit, wxString format, DialPositionOption position);
 
 
 };

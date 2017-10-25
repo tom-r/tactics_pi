@@ -47,7 +47,7 @@ TacticsInstrument_FromOwnship::TacticsInstrument_FromOwnship(wxWindow *pparent, 
     s_lon = 99999999;
 }
 
-void TacticsInstrument_FromOwnship::Draw(wxGCDC* dc)
+void TacticsInstrument_FromOwnship::Draw(myDC* dc)
 {
     wxColour cl;
 

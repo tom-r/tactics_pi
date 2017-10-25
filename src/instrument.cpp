@@ -49,7 +49,8 @@ TacticsInstrument::TacticsInstrument(wxWindow *pparent, wxWindowID id, wxString 
 
       SetBackgroundStyle( wxBG_STYLE_CUSTOM );
       SetDrawSoloInPane(false);
-      wxClientDC dc(this);
+
+      wxClientDC dc( this );
       int width;
       dc.GetTextExtent(m_title, &width, &m_TitleHeight, 0, 0, g_pFontTitle);
 
@@ -113,7 +114,7 @@ void TacticsInstrument::OnPaint( wxPaintEvent& WXUNUSED(event) )
 //    bm.UseAlpha();
 //#endif
 //    wxMemoryDC mdc( bm );
-#if wxUSE_GRAPHICS_CONTEXT
+#if !defined(__WXGTK__) && (wxUSE_GRAPHICS_CONTEXT == 1)
     wxGCDC dc( pdc );
 #else
     wxDC &dc( pdc );
@@ -201,7 +202,7 @@ TacticsInstrument_Single::TacticsInstrument_Single(wxWindow *pparent, wxWindowID
 
 wxSize TacticsInstrument_Single::GetSize( int orient, wxSize hint )
 {
-      wxClientDC dc(this);
+      wxClientDC dc( this );
       int w;
       dc.GetTextExtent(m_title, &w, &m_TitleHeight, 0, 0, g_pFontTitle);
       dc.GetTextExtent(_T("000"), &w, &m_DataHeight, 0, 0, g_pFontData);
@@ -213,7 +214,7 @@ wxSize TacticsInstrument_Single::GetSize( int orient, wxSize hint )
       }
 }
 
-void TacticsInstrument_Single::Draw(wxGCDC* dc)
+void TacticsInstrument_Single::Draw(myDC* dc)
 {
       wxColour cl;
 #ifdef __WXMSW__
@@ -303,7 +304,7 @@ TacticsInstrument_Position::TacticsInstrument_Position(wxWindow *pparent, wxWind
 
 wxSize TacticsInstrument_Position::GetSize( int orient, wxSize hint )
 {
-      wxClientDC dc(this);
+      wxClientDC dc( this );
       int w;
       dc.GetTextExtent(m_title, &w, &m_TitleHeight, 0, 0, g_pFontTitle);
       dc.GetTextExtent(_T("000  00.0000 W"), &w, &m_DataHeight, 0, 0, g_pFontData);
@@ -315,7 +316,7 @@ wxSize TacticsInstrument_Position::GetSize( int orient, wxSize hint )
       }
 }
 
-void TacticsInstrument_Position::Draw(wxGCDC* dc)
+void TacticsInstrument_Position::Draw(myDC* dc)
 {
       wxColour cl;
 

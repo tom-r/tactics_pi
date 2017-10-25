@@ -86,17 +86,17 @@ class TacticsInstrument_PolarCompass : public TacticsInstrument_Dial
 		  wxFileConfig     *m_pconfig;
 
       protected:
-            void DrawBackground(wxGCDC* dc);
-			void DrawForeground(wxGCDC* dc);
-			void DrawBearing(wxGCDC* dc);
-			void DrawWindAngles(wxGCDC* dc);
-            void DrawBoat(wxGCDC* dc, int cx, int cy, int radius);
-            void DrawPolar(wxGCDC* dc);
-            void DrawTargetxMGAngle(wxGCDC* dc);
-            void DrawTargetAngle(wxGCDC* dc, double TargetAngle, wxString color1, int size);
-			void DrawLaylines(wxGCDC* dc);
-			virtual void DrawData(wxGCDC* dc, double value, wxString unit, wxString format, DialPositionOption position);
-			virtual void Draw(wxGCDC* dc);
+            void DrawBackground(myDC* dc);
+			void DrawForeground(myDC* dc);
+			void DrawBearing(myDC* dc);
+			void DrawWindAngles(myDC* dc);
+            void DrawBoat(myDC* dc, int cx, int cy, int radius);
+            void DrawPolar(myDC* dc);
+            void DrawTargetxMGAngle(myDC* dc);
+            void DrawTargetAngle(myDC* dc, double TargetAngle, wxString color1, int size);
+			void DrawLaylines(myDC* dc);
+			virtual void DrawData(myDC* dc, double value, wxString unit, wxString format, DialPositionOption position);
+			virtual void Draw(myDC* dc);
 			void CalculateLaylineDegreeRange(void);
 };
 

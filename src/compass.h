@@ -65,8 +65,8 @@ class TacticsInstrument_Compass: public TacticsInstrument_Dial
       private:
 
       protected:
-            void DrawBackground(wxGCDC* dc);
-            void DrawForeground(wxGCDC* dc);
+            void DrawBackground(myDC* dc);
+            void DrawForeground(myDC* dc);
 };
 
 #endif // __Compass_H__

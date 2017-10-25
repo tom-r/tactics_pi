@@ -66,13 +66,13 @@ void TacticsInstrument_Compass::SetData(int st, double data, wxString unit)
       }
 }
 
-void TacticsInstrument_Compass::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_Compass::DrawBackground(myDC* dc)
 {
     DrawBoat( dc, m_cx, m_cy, m_radius );
     DrawCompassRose( dc, m_cx, m_cy, 0.7 * m_radius, m_AngleStart, true );
 }
 
-void TacticsInstrument_Compass::DrawForeground(wxGCDC* dc)
+void TacticsInstrument_Compass::DrawForeground(myDC* dc)
 {
       // We dont want the default foreground (arrow) drawn
 }

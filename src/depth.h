@@ -65,9 +65,9 @@ class TacticsInstrument_Depth: public TacticsInstrument
             wxString m_DepthUnit;
             wxString m_Temp;
 
-            void Draw(wxGCDC* dc);
-            void DrawBackground(wxGCDC* dc);
-            void DrawForeground(wxGCDC* dc);
+            void Draw(myDC* dc);
+            void DrawBackground(myDC* dc);
+            void DrawForeground(myDC* dc);
 };
 
 #endif // __DEPTH_H__

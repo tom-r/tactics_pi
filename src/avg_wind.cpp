@@ -183,7 +183,7 @@ void TacticsInstrument_AvgWindDir::CalcAvgWindDir(double CurWindDir)
  }
 }
 
-void TacticsInstrument_AvgWindDir::Draw(wxGCDC* dc)
+void TacticsInstrument_AvgWindDir::Draw(myDC* dc)
 {
   wxColour c1;
   GetGlobalColor(_T("DASHB"), &c1);
@@ -213,7 +213,7 @@ void TacticsInstrument_AvgWindDir::Draw(wxGCDC* dc)
 // *********************************************************************************
 //draw background
 // *********************************************************************************
-void TacticsInstrument_AvgWindDir::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_AvgWindDir::DrawBackground(myDC* dc)
 {
   wxString label;
   wxColour cl;
@@ -268,7 +268,7 @@ void TacticsInstrument_AvgWindDir::DrawBackground(wxGCDC* dc)
 //*********************************************************************************
 //draw foreground
 //*********************************************************************************
-void TacticsInstrument_AvgWindDir::DrawForeground(wxGCDC* dc)
+void TacticsInstrument_AvgWindDir::DrawForeground(myDC* dc)
 {
   wxColour col;
   int degw, degh;

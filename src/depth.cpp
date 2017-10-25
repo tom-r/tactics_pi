@@ -87,13 +87,13 @@ void TacticsInstrument_Depth::SetData(int st, double data, wxString unit)
       }
 }
 
-void TacticsInstrument_Depth::Draw(wxGCDC* dc)
+void TacticsInstrument_Depth::Draw(myDC* dc)
 {
       DrawBackground(dc);
       DrawForeground(dc);
 }
 
-void TacticsInstrument_Depth::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_Depth::DrawBackground(myDC* dc)
 {
       wxSize size = GetClientSize();
       wxColour cl;
@@ -145,7 +145,7 @@ void TacticsInstrument_Depth::DrawBackground(wxGCDC* dc)
       dc->DrawText(label, size.x-width-1, size.y-height);
 }
 
-void TacticsInstrument_Depth::DrawForeground(wxGCDC* dc)
+void TacticsInstrument_Depth::DrawForeground(myDC* dc)
 {
       wxSize size = GetClientSize();
       wxColour cl;
