@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-08 17:45+0100\n"
-"PO-Revision-Date: 2017-02-12 03:40-0500\n"
+"PO-Revision-Date: 2018-03-11 10:37-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -493,7 +493,7 @@ msgstr "Asetuslinjan pituus kartalla [nm]:  "
 
 #: src\tactics_pi.cpp:3315 src\tactics_pi.cpp:3321
 msgid "Length of the boat laylines in [nm]"
-msgstr ""
+msgstr "Veneen asetuslinjojen pituus [nm]"
 
 #: src\tactics_pi.cpp:3323
 msgid "Min. Layline Width [°]:"
@@ -501,7 +501,7 @@ msgstr "Min. asetuslinjan leveys [°]:"
 
 #: src\tactics_pi.cpp:3325 src\tactics_pi.cpp:3328
 msgid "Min. width of boat laylines in degrees."
-msgstr ""
+msgstr "Veneen asetuslinjojen min. väli asteina."
 
 #: src\tactics_pi.cpp:3332
 msgid "Max. Layline Width [°]:"
@@ -509,7 +509,7 @@ msgstr "Max. asetuslinjan leveys [°]:"
 
 #: src\tactics_pi.cpp:3334 src\tactics_pi.cpp:3337
 msgid "Max. width of boat laylines in degrees."
-msgstr ""
+msgstr "Veneen asetuslinjojen maks. väli asteina."
 
 #: src\tactics_pi.cpp:3349
 msgid "Boat's Leeway factor [0-20]:  "
@@ -519,7 +519,9 @@ msgstr "Veneen pelivarakerroin [0-20]:  "
 msgid "Leeway='Drift' of boat due to heel/wind influence\n"
 "Low values mean high performance of hull\n"
 "Leeway = (LeewayFactor * Heel) / STW²;"
-msgstr ""
+msgstr "Suojasiirtymä=Veneen 'ajautuma' kallistuksen/tuulen vaikutuksesta\n"
+"Pienet arvot johtuvat rungon hyvästä suorituskyvystä\n"
+"Suojasiirtymä = (LeewayFactor * Heel) /STWP²;"
 
 #: src\tactics_pi.cpp:3358
 msgid "Use Heel Sensor"
@@ -528,7 +530,8 @@ msgstr "Käytä kallistus anturia"
 #: src\tactics_pi.cpp:3361
 msgid "Use the internal heel sensor if available\n"
 "Important for the correct calculation of the surface current."
-msgstr ""
+msgstr "Käytä sisäistä kallistusanturia, jos käytettävissä\n"
+"tärkeä virheettömän pintavirtauksen laskennassa."
 
 #: src\tactics_pi.cpp:3365
 msgid "fixed/max Leeway [°]:"
@@ -538,7 +541,9 @@ msgstr "kiinteä/max pelivara [°]:"
 msgid "Dual purpose !\n"
 "If Radiobutton is NOT set, then it's used to limit Leeway to a max value.\n"
 " If Radiobutton is set, then it fixes Leeway to this constant value."
-msgstr ""
+msgstr "Kaksoismerkitys!\n"
+"jos radionappia ei ole asetettu, niin sitä käytetään rajoittamaan suojanpuolen max arvoa.\n"
+" Jos radionappi on asetettu niin se asettaa suojanpuolen vakioarvoon."
 
 #: src\tactics_pi.cpp:3376
 msgid "manual Heel input:"
@@ -549,7 +554,10 @@ msgid "If no heel sensor is available, you can create a manual 'heel polar' here
 "Just read/enter the data from a mechanical heel sensor (e.g. on compass).\n"
 "Use True Wind Speed & Angle only !\n"
 "Take care: motoring w/o sails&heel will show wrong current data !!!"
-msgstr ""
+msgstr "Jos ei kallistusanturi ei ole käytettävissä, voit asettaa manuaalisen kallistuspolarin täällä.\n"
+"Lue/kirjoita tiedot mekaanisesta kallistusanturista (esimerkiksi kompassi).\n"
+"Käytä vain todellisia tuulen nopeuksia & kulmia!\n"
+"Huolehdi: moottoriajo ilman purjeita & kallistusta näyttää väärin nykyiset tiedot !!!"
 
 #: src\tactics_pi.cpp:3393
 msgid "TWS/TWA "
@@ -598,7 +606,8 @@ msgstr "Nykyinen vaimennus tekijä [1-400]:  "
 #: src\tactics_pi.cpp:3490 src\tactics_pi.cpp:3495
 msgid "Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\n"
 "Low values mean high damping"
-msgstr ""
+msgstr "Stabiloi 'pintavirtausnuolen' karttapeitekuvassa, suuntimakompassin ja numeeriset mittaristot\n"
+"Alhaiset arvot tarkoittavat suurta vaimennusta"
 
 #: src\tactics_pi.cpp:3503
 msgid "Display Current on Chart (OpenGL)"
@@ -606,7 +615,7 @@ msgstr "Näyttää nykyisen karttalla (OpenGL)"
 
 #: src\tactics_pi.cpp:3506 src\tactics_pi.cpp:3542 src\tactics_pi.cpp:3565
 msgid "The default on program startup"
-msgstr ""
+msgstr "Oletukset ohjelmaa käynnistettäessä"
 
 #: src\tactics_pi.cpp:3508
 msgid "True Wind"
@@ -620,7 +629,9 @@ msgstr "Korjaa STW pelivaralla"
 msgid "Apply a correction to your log speed throughout the plugin based on the calculated Leeway (via the heel sensor).\n"
 "Only makes sense with a real heel sensor.\n"
 "Make sure your instruments do not already apply this correction !"
-msgstr ""
+msgstr "Lisää korjaus lokin nopeuteen suojanpuolilaskennan perusteella (tehty kallistusanturin avulla). \n"
+"On järkevää vain oikealla kallistusanturilla.\n"
+"Varmista, että mittaristot eivät jo lisää tätä korjausta!"
 
 #: src\tactics_pi.cpp:3521
 msgid "Correct AWS/AWA with Heel"
@@ -628,7 +639,7 @@ msgstr "Korjaa AWS/AWA kallistuksella"
 
 #: src\tactics_pi.cpp:3524
 msgid "Use with care, this is normally done by the instruments themselves as soon as you have an integrated, original equipment heel sensor"
-msgstr ""
+msgstr "Käytä harkiten, mittaristo hoitaa nämä itsenäisesti, jos sinulla on integroitu, alkuperäinen laitteiston kallistusanturi"
 
 #: src\tactics_pi.cpp:3528
 msgid "Force True Wind Calculation"
@@ -636,7 +647,7 @@ msgstr "Pakota tosituulilaskenta"
 
 #: src\tactics_pi.cpp:3531
 msgid "Internally calculates True Wind data (TWS,TWA,TWD) and uses it within the whole plugin even if there is True Wind data available via NMEA."
-msgstr ""
+msgstr "Sisäisesti lasketaan tosi tuuli tiedot (TWA, TWS TWD) ja niitä käytetään pluginin sisäisesti, jos tosi tuulitietoja saadaan NMEAn kautta."
 
 #: src\tactics_pi.cpp:3534
 msgid "Use SOG instead of STW for True Wind Calc."
@@ -645,7 +656,8 @@ msgstr "Käytä SOG STW:n sijaan tosituulen laskennassa."
 #: src\tactics_pi.cpp:3537
 msgid "Recommended. As True Wind blows over the earth surface, we should calc. it with Speed Over Ground.\n"
 "Eliminates the influence of currents."
-msgstr ""
+msgstr "Suositeltavaa. Kun tosi tuuli puhaltaa maan pinnalla, meidän olisi laskettava se nopeutena pohjan suhteen.\n"
+"Eliminoi virtausten vaikutuksen."
 
 #: src\tactics_pi.cpp:3539
 msgid "Show Wind Barb on Chart (OpenGL)"
@@ -665,53 +677,55 @@ msgstr "Lataa"
 
 #: src\tactics_pi.cpp:3562
 msgid "Show Polar on Chart (OpenGL)"
-msgstr ""
+msgstr "Näytä Polar kartalla (OpenGL)"
 
 #: src\tactics_pi.cpp:3567
 msgid "Export NMEA Performance Data"
-msgstr ""
+msgstr "Vie NMEA suorituskyky tiedot"
 
 #: src\tactics_pi.cpp:3574
 msgid "NKE format ($PNKEP)"
-msgstr ""
+msgstr "NKE muodossa ($PNKEP)"
 
 #: src\tactics_pi.cpp:3577
 msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
 "Read the manual how to set up the interface connection !"
-msgstr ""
+msgstr "Tällä hetkellä asetukset vain NKE mittaristoille. Vie ennalta asetetun joukon, jopa 5 NMEA tidostoa, jotka ovat ”tunnettu” NKE mittareissa ja voidaan näyttää niissä. \n"
+"Lue käsikirjasta liityntärajapinnan asetukset!"
 
 #: src\tactics_pi.cpp:3583
 msgid "Target Polar Speed"
-msgstr ""
+msgstr "Kohde Polar Speed"
 
 #: src\tactics_pi.cpp:3587
 msgid "CoG on other Tack"
-msgstr ""
+msgstr "CoG toisella halssilla"
 
 #: src\tactics_pi.cpp:3591
 msgid "Target-VMG angle + Perf. %"
-msgstr ""
+msgstr "Kohde VMG kulma + Perf. %"
 
 #: src\tactics_pi.cpp:3595
 msgid "Diff. angle to Target-VMG/-CMG + corresp. gain"
-msgstr ""
+msgstr "Diff. angle to Target-VMG/-CMG + corresp. gain"
 
 #: src\tactics_pi.cpp:3599
 msgid "Current Direction + Speed"
-msgstr ""
+msgstr "Nykyinen suunta + nopeus"
 
 #: src\tactics_pi.cpp:3654
 msgid "This option makes only sense with a real heel sensor."
-msgstr ""
+msgstr "Tämä on vaihtoehto vain aidolla kallistussensorilla."
 
 #: src\tactics_pi.cpp:3660
 msgid "Make sure your instruments do not internally correct AWS / AWA with heel.\n"
 "This may result in wrong wind data."
-msgstr ""
+msgstr "Varmista, että mittarit eivät sisäisesti korjaa AWS / AWA kallistuksella.\n"
+"Tämä voi johtaa väärään tuuli tietoon."
 
 #: src\tactics_pi.cpp:3668
 msgid "This will also disable the AWA/AWS correction."
-msgstr ""
+msgstr "Tämä myös estää AWA/AWS korjauksen."
 
 #: src\tactics_pi.cpp:3683
 msgid "Select a Polar-File"
@@ -735,15 +749,15 @@ msgstr "Näytä asetuslinjat"
 
 #: src\tactics_pi.cpp:4025
 msgid "Show Current"
-msgstr ""
+msgstr "Näytä virrta"
 
 #: src\tactics_pi.cpp:4028
 msgid "Show Windbarb"
-msgstr ""
+msgstr "Näytä tuuliväkäset"
 
 #: src\tactics_pi.cpp:4031
 msgid "Show Polar"
-msgstr ""
+msgstr "Näytä Polar"
 
 #: src\wind_history.cpp:503
 msgid "NNE"

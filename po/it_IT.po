@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-08 17:45+0100\n"
-"PO-Revision-Date: 2017-02-23 09:22-0500\n"
+"PO-Revision-Date: 2018-03-11 10:38-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -292,7 +292,8 @@ msgstr "Plugin Tactics per OpenCPN"
 #: src\tactics_pi.cpp:731
 msgid "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar file."
-msgstr ""
+msgstr "PlugIn Tattiche per OpenCPN\n"
+"Fornisce dati sulle prestazioni e visualizzazione dello strumento dalla sorgente NMEA e dal file polare."
 
 #: src\tactics_pi.cpp:1737
 msgid "You have to turn on OpenGL to use chart overlay "
@@ -474,13 +475,17 @@ msgstr ""
 msgid "The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
 "The idea is to display the COG range where you're sailing to.\n"
 " Low values mean high damping."
-msgstr ""
+msgstr "La larghezza delle layline dell'imbarcazione si basa sulla imbardata della barca (asse verticale), cioè le modifiche del COG.\n"
+"L'idea è di visualizzare l'intervallo COG verso il quale stai navigando.\n"
+" I valori bassi indicano uno smorzamento elevato."
 
 #: src\tactics_pi.cpp:3310
 msgid "Width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
 "The idea is to display the range where you're sailing to.\n"
 " Low values mean high damping."
-msgstr ""
+msgstr "La larghezza delle layline dell'imbarcazione si basa sulla imbardata della barca (asse verticale), cioè le modifiche del COG.\n"
+"L'idea è di visualizzare l'intervallo COG verso il quale stai navigando.\n"
+" I valori bassi indicano uno smorzamento elevato."
 
 #: src\tactics_pi.cpp:3313
 msgid "Layline length on Chart [nm]:  "
@@ -523,7 +528,8 @@ msgstr "Uso sensore di inclinazione laterale"
 #: src\tactics_pi.cpp:3361
 msgid "Use the internal heel sensor if available\n"
 "Important for the correct calculation of the surface current."
-msgstr ""
+msgstr "Utilizzare il sensore interno del tallone, se disponibile\n"
+"Importante per il calcolo corretto della corrente superficiale."
 
 #: src\tactics_pi.cpp:3365
 msgid "fixed/max Leeway [°]:"
@@ -533,7 +539,9 @@ msgstr "fisso/max angolo d'inclinazione laterale [°]:"
 msgid "Dual purpose !\n"
 "If Radiobutton is NOT set, then it's used to limit Leeway to a max value.\n"
 " If Radiobutton is set, then it fixes Leeway to this constant value."
-msgstr ""
+msgstr "Doppio scopo!\n"
+"Se Radiobutton NON è impostato, viene utilizzato per limitare il Leeway ad un valore massimo. \n"
+" Se è impostato Radiobutton, allora fissa Leeway a questo valore costante."
 
 #: src\tactics_pi.cpp:3376
 msgid "manual Heel input:"
@@ -544,7 +552,10 @@ msgid "If no heel sensor is available, you can create a manual 'heel polar' here
 "Just read/enter the data from a mechanical heel sensor (e.g. on compass).\n"
 "Use True Wind Speed & Angle only !\n"
 "Take care: motoring w/o sails&heel will show wrong current data !!!"
-msgstr ""
+msgstr "Se non è disponibile il sensore tallone, qui puoi creare un 'tallone polare' manuale.\n"
+"Devi leggere/inserire i dati da un sensore meccanico del tallone (ad esempio sulla bussola).\n"
+"Usare solo la Velocità del Vento Reale e l'Angolo!\n"
+"Abbi Cura: motorizzazione senza vele e talloni mostrerà dati correnti errati !!!"
 
 #: src\tactics_pi.cpp:3393
 msgid "TWS/TWA "
@@ -593,7 +604,8 @@ msgstr ""
 #: src\tactics_pi.cpp:3490 src\tactics_pi.cpp:3495
 msgid "Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\n"
 "Low values mean high damping"
-msgstr ""
+msgstr "Stabilizza la \"freccia\" della corrente di superficie nel grafico sovrapposto, nella bussola del rilevamento ed anche negli strumenti numerici.\n"
+"I valori bassi indicano un forte smorzamento"
 
 #: src\tactics_pi.cpp:3503
 msgid "Display Current on Chart (OpenGL)"
@@ -615,7 +627,9 @@ msgstr ""
 msgid "Apply a correction to your log speed throughout the plugin based on the calculated Leeway (via the heel sensor).\n"
 "Only makes sense with a real heel sensor.\n"
 "Make sure your instruments do not already apply this correction !"
-msgstr ""
+msgstr "Applica una correzione alla velocità del tuo log tramite il plug-in basandosi sulla Leeway calcolata (tramite il sensore tallone).\n"
+"Ha senso solo con un vero sensore del tallone.\n"
+"Assicurati che i tuoi strumenti non applichino già questa correzione!"
 
 #: src\tactics_pi.cpp:3521
 msgid "Correct AWS/AWA with Heel"
@@ -623,7 +637,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3524
 msgid "Use with care, this is normally done by the instruments themselves as soon as you have an integrated, original equipment heel sensor"
-msgstr ""
+msgstr "Usare con cautela, questo è normalmente fatto dagli strumenti stessi non appena si dispone di un sensore tallone integrato ed originale"
 
 #: src\tactics_pi.cpp:3528
 msgid "Force True Wind Calculation"
@@ -631,7 +645,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3531
 msgid "Internally calculates True Wind data (TWS,TWA,TWD) and uses it within the whole plugin even if there is True Wind data available via NMEA."
-msgstr ""
+msgstr "Calcola internamente i dati True Wind (TWS, TWA, TWD) e li utilizza all'interno dell'intero plug-in anche se sono disponibili dati True Wind via NMEA."
 
 #: src\tactics_pi.cpp:3534
 msgid "Use SOG instead of STW for True Wind Calc."
@@ -640,7 +654,8 @@ msgstr ""
 #: src\tactics_pi.cpp:3537
 msgid "Recommended. As True Wind blows over the earth surface, we should calc. it with Speed Over Ground.\n"
 "Eliminates the influence of currents."
-msgstr ""
+msgstr "Consigliato. Come il vento vero soffia sulla superficie terrestre, lo dovremmo calcolare con Velocità Effettiva.\n"
+"Elimina l'influenza delle correnti."
 
 #: src\tactics_pi.cpp:3539
 msgid "Show Wind Barb on Chart (OpenGL)"
@@ -656,7 +671,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3558
 msgid "Load"
-msgstr ""
+msgstr "Carica"
 
 #: src\tactics_pi.cpp:3562
 msgid "Show Polar on Chart (OpenGL)"
@@ -673,7 +688,8 @@ msgstr ""
 #: src\tactics_pi.cpp:3577
 msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
 "Read the manual how to set up the interface connection !"
-msgstr ""
+msgstr "Attualmente impostato solo per gli strumenti NKE. Esporta un set predefinito di massimo 5 record NMEA che sono \"noti\" dagli strumenti NKE e possono essere visualizzati lì.\n"
+"Leggi il manuale su come impostare la connessione dell'interfaccia!"
 
 #: src\tactics_pi.cpp:3583
 msgid "Target Polar Speed"
@@ -702,7 +718,8 @@ msgstr ""
 #: src\tactics_pi.cpp:3660
 msgid "Make sure your instruments do not internally correct AWS / AWA with heel.\n"
 "This may result in wrong wind data."
-msgstr ""
+msgstr "Assicurati che i tuoi strumenti non correggano internamente AWS / AWA con il tallone.\n"
+"Ciò potrebbe causare dati di vento errati."
 
 #: src\tactics_pi.cpp:3668
 msgid "This will also disable the AWA/AWS correction."

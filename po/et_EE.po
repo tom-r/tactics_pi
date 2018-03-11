@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-08 17:45+0100\n"
-"PO-Revision-Date: 2017-01-27 16:14-0500\n"
+"PO-Revision-Date: 2018-03-03 08:23-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
@@ -483,7 +483,9 @@ msgstr "Paadi paudiliini laius põhineb paadi seegamisel (vertikaalne telg), nt 
 msgid "Width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
 "The idea is to display the range where you're sailing to.\n"
 " Low values mean high damping."
-msgstr ""
+msgstr "Paadi paudiliini laius põhineb paadi seegamisel (vertikaalne telg), nt su COG muutub.\n"
+"Idee on näidata vahemikku, mida purjetamisel hoida.\n"
+"Madalad väärtused tähendavad suurt summutamist."
 
 #: src\tactics_pi.cpp:3313
 msgid "Layline length on Chart [nm]:  "
@@ -627,7 +629,9 @@ msgstr "Õienda STW"
 msgid "Apply a correction to your log speed throughout the plugin based on the calculated Leeway (via the heel sensor).\n"
 "Only makes sense with a real heel sensor.\n"
 "Make sure your instruments do not already apply this correction !"
-msgstr ""
+msgstr "Lisa logi veaparandus läbi plugina kasutades arvestatud triivi (via kreenisensor).\n"
+"On mõttekas ainult koos tegeliku kreenisensoriga.\n"
+"Kindlasti veendu, et su seadmed juba ei lisa seda parandust !"
 
 #: src\tactics_pi.cpp:3521
 msgid "Correct AWS/AWA with Heel"
@@ -686,7 +690,8 @@ msgstr "NKE-formaat ($PNKEP)"
 #: src\tactics_pi.cpp:3577
 msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
 "Read the manual how to set up the interface connection !"
-msgstr ""
+msgstr "Praegu saetud ainult NKE instrumentidele. Ekspordi eeldefineeritud hulk kuni 5-st NMEA-kirjest, mida NKe instrumendid \"tunnevad\" ja suudavad seal kuvada.\n"
+"Loe juhendit, kuidas liidese ühendust teostada !"
 
 #: src\tactics_pi.cpp:3583
 msgid "Target Polar Speed"
@@ -702,7 +707,7 @@ msgstr "Eesmärk-VMG nurk + perf. %"
 
 #: src\tactics_pi.cpp:3595
 msgid "Diff. angle to Target-VMG/-CMG + corresp. gain"
-msgstr ""
+msgstr "Erinevad nurgad märgini-VMG/-CMG + vastav kasu"
 
 #: src\tactics_pi.cpp:3599
 msgid "Current Direction + Speed"

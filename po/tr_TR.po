@@ -5,14 +5,14 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-08 17:45+0100\n"
-"PO-Revision-Date: 2017-01-27 16:18-0500\n"
+"PO-Revision-Date: 2018-03-03 08:26-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: tr\n"
@@ -28,19 +28,19 @@ msgstr "bu yana"
 
 #: src\baro_history.cpp:290
 msgid "Overall Max"
-msgstr ""
+msgstr "Genel Max"
 
 #: src\baro_history.cpp:291
 msgid "Min"
-msgstr ""
+msgstr "Beni"
 
 #: src\bearingcompass.cpp:797 src\polarcompass.cpp:711
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: src\bearingcompass.cpp:802 src\polarcompass.cpp:716
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: src\clock.cpp:126 src\dial.cpp:524 src\gps.cpp:142 src\wind.cpp:65
 #: src\wind_history.cpp:500
@@ -85,15 +85,15 @@ msgstr "Manyetik"
 
 #: src\performance.cpp:394
 msgid "tactics_pi: Select a Polar-File"
-msgstr ""
+msgstr "tactics_pi: Bir Polar Dosyası Seç"
 
 #: src\performance.cpp:462
 msgid "Format in this file not recognised"
-msgstr ""
+msgstr "Bu dosyadaki biçim tanınmadı"
 
 #: src\performance.cpp:1595 src\wind_history.cpp:649
 msgid "Overall"
-msgstr ""
+msgstr "Tüm"
 
 #: src\tactics_pi.cpp:187
 msgid "Position"
@@ -101,7 +101,7 @@ msgstr "Mevki"
 
 #: src\tactics_pi.cpp:189
 msgid "SOG"
-msgstr ""
+msgstr "SOG"
 
 #: src\tactics_pi.cpp:191
 msgid "Speedometer"
@@ -109,11 +109,11 @@ msgstr "Hızölçer"
 
 #: src\tactics_pi.cpp:193
 msgid "COG"
-msgstr ""
+msgstr "COG"
 
 #: src\tactics_pi.cpp:195
 msgid "Mag COG"
-msgstr ""
+msgstr "İçin"
 
 #: src\tactics_pi.cpp:197
 msgid "GPS Compass"
@@ -121,11 +121,11 @@ msgstr "GPS Pusula"
 
 #: src\tactics_pi.cpp:199
 msgid "True Compass"
-msgstr ""
+msgstr "Gerçek Pusula"
 
 #: src\tactics_pi.cpp:201
 msgid "STW"
-msgstr ""
+msgstr "STW"
 
 #: src\tactics_pi.cpp:203
 msgid "True HDG"
@@ -141,7 +141,7 @@ msgstr "Görünen Rüzgar Açısı ve Hızı"
 
 #: src\tactics_pi.cpp:210
 msgid "App & True Wind Angle"
-msgstr ""
+msgstr "Uygulama ve Gerçek Rüzgar Açısı"
 
 #: src\tactics_pi.cpp:212 src\tactics_pi.cpp:214
 msgid "App. Wind Speed"
@@ -157,7 +157,7 @@ msgstr "Derinlik"
 
 #: src\tactics_pi.cpp:222 src\tactics_pi.cpp:224
 msgid "Barometric pressure"
-msgstr ""
+msgstr "Barometre basıncı"
 
 #: src\tactics_pi.cpp:226
 msgid "Water Temp."
@@ -189,7 +189,7 @@ msgstr "Gerçek Rüzgar Yönü ve Hızı"
 
 #: src\tactics_pi.cpp:240 src\tactics_pi.cpp:242
 msgid "VMG"
-msgstr ""
+msgstr "VMG"
 
 #: src\tactics_pi.cpp:254
 msgid "Clock"
@@ -205,94 +205,94 @@ msgstr "Rüzgar Gemişi"
 
 #: src\tactics_pi.cpp:262
 msgid "Barometric history"
-msgstr ""
+msgstr "Baromatik öykü"
 
 #: src\tactics_pi.cpp:268
 msgid "TWA to Waypoint"
-msgstr ""
+msgstr "TWA'dan Waypoint'e"
 
 #: src\tactics_pi.cpp:270
 msgid "From Ownship"
-msgstr ""
+msgstr "Sahiplikten"
 
 #: src\tactics_pi.cpp:272
 msgid "Pitch"
-msgstr ""
+msgstr "Eğim"
 
 #: src\tactics_pi.cpp:274 src\tactics_pi.cpp:3386
 msgid "Heel"
-msgstr ""
+msgstr "Alçak"
 
 #: src\tactics_pi.cpp:276 src\tactics_pi.cpp:3340
 msgid "Leeway"
-msgstr ""
+msgstr "Gecikme"
 
 #: src\tactics_pi.cpp:278
 msgid "Current Direction"
-msgstr ""
+msgstr "Mevcut Yön"
 
 #: src\tactics_pi.cpp:280
 msgid "Current Speed"
-msgstr ""
+msgstr "Geçerli hız"
 
 #: src\tactics_pi.cpp:282
 msgid "Bearing Compass"
-msgstr ""
+msgstr "Kerteriz pusulası"
 
 #: src\tactics_pi.cpp:284
 msgid "Polar Speed"
-msgstr ""
+msgstr "Polar Hızı"
 
 #: src\tactics_pi.cpp:286
 msgid "Actual VMG"
-msgstr ""
+msgstr "Gerçek VMG"
 
 #: src\tactics_pi.cpp:288
 msgid "Target VMG"
-msgstr ""
+msgstr "Hedef VMG"
 
 #: src\tactics_pi.cpp:290
 msgid "Target VMG-Angle"
-msgstr ""
+msgstr "VMG açısı hedefleme"
 
 #: src\tactics_pi.cpp:292
 msgid "Actual CMG"
-msgstr ""
+msgstr "Gerçek CMG"
 
 #: src\tactics_pi.cpp:294
 msgid "Target CMG"
-msgstr ""
+msgstr "CMG yi hedefleyin"
 
 #: src\tactics_pi.cpp:296
 msgid "Target CMG-Angle"
-msgstr ""
+msgstr "CMG açısı hedefleme"
 
 #: src\tactics_pi.cpp:298
 msgid "Polar Performance"
-msgstr ""
+msgstr "Polar performansı"
 
 #: src\tactics_pi.cpp:300
 msgid "Average Wind"
-msgstr ""
+msgstr "Ortalama rüzgar"
 
 #: src\tactics_pi.cpp:302
 msgid "Polar Compass"
-msgstr ""
+msgstr "Kutupsal pusula"
 
 #: src\tactics_pi.cpp:565 src\tactics_pi.cpp:721 src\tactics_pi.cpp:2825
 #: src\tactics_pi.cpp:2835 src\tactics_pi.cpp:3064 src\tactics_pi.cpp:3103
 #: src\tactics_pi.cpp:3818
 msgid "Tactics"
-msgstr ""
+msgstr "Taktik"
 
 #: src\tactics_pi.cpp:726
 msgid "Tactics PlugIn for OpenCPN"
-msgstr ""
+msgstr "Taktik eklentisi openCPN için"
 
 #: src\tactics_pi.cpp:731
 msgid "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar file."
-msgstr ""
+msgstr "Taktik, OpenCPN NMEA kaynağı ve kutup dosyasından performans verisi ve gösterge ekranı sağlar."
 
 #: src\tactics_pi.cpp:1737
 msgid "You have to turn on OpenGL to use chart overlay "
@@ -300,19 +300,19 @@ msgstr ""
 
 #: src\tactics_pi.cpp:2397
 msgid "° Bow up"
-msgstr ""
+msgstr "eğilin"
 
 #: src\tactics_pi.cpp:2400
 msgid "° Bow down"
-msgstr ""
+msgstr "boyun eğmek"
 
 #: src\tactics_pi.cpp:3039
 msgid "Tactics preferences"
-msgstr ""
+msgstr "Taktik tercihleri"
 
 #: src\tactics_pi.cpp:3110
 msgid "show this tactics"
-msgstr ""
+msgstr "bu taktikleri göster"
 
 #: src\tactics_pi.cpp:3116
 msgid "Caption:"
@@ -384,11 +384,11 @@ msgstr "Hızölçerin en yüksek değeri:"
 
 #: src\tactics_pi.cpp:3232
 msgid "Speed Over Ground Damping Factor:"
-msgstr ""
+msgstr "Zemin Üzerindeki Hız Sönümleme Faktörü:"
 
 #: src\tactics_pi.cpp:3238
 msgid "COG Damping Factor:"
-msgstr ""
+msgstr "COG sönüm faktörü:"
 
 #: src\tactics_pi.cpp:3244
 msgid "Boat speed units:"
@@ -416,7 +416,7 @@ msgstr "metre/saniye"
 
 #: src\tactics_pi.cpp:3253
 msgid "Depth units:"
-msgstr ""
+msgstr "Derinlik birimleri:"
 
 #: src\tactics_pi.cpp:3256 src\tactics_pi.cpp:3265
 msgid "Meters"
@@ -424,19 +424,19 @@ msgstr "Metre"
 
 #: src\tactics_pi.cpp:3256
 msgid "Feet"
-msgstr ""
+msgstr "Foot ölçüsü"
 
 #: src\tactics_pi.cpp:3256
 msgid "Fathoms"
-msgstr ""
+msgstr "Kulaç"
 
 #: src\tactics_pi.cpp:3256
 msgid "Centimeters"
-msgstr ""
+msgstr "Santimetre"
 
 #: src\tactics_pi.cpp:3256
 msgid "Inches"
-msgstr ""
+msgstr "İnç"
 
 #: src\tactics_pi.cpp:3262
 msgid "Distance units:"
@@ -460,11 +460,11 @@ msgstr "Rüzgar hız birimleri:"
 
 #: src\tactics_pi.cpp:3292
 msgid "Performance Parameters"
-msgstr ""
+msgstr "Performans Paremetreleri"
 
 #: src\tactics_pi.cpp:3294
 msgid "Laylines"
-msgstr ""
+msgstr "Ley hatları"
 
 #: src\tactics_pi.cpp:3303
 msgid "Layline width damping factor [0.025-1]:  "
@@ -474,7 +474,9 @@ msgstr ""
 msgid "The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
 "The idea is to display the COG range where you're sailing to.\n"
 " Low values mean high damping."
-msgstr ""
+msgstr "Tekne rötuşlarının genişliği teknenin yelpazesine (dikey eksene) dayalıdır, yani COG değişir. \n"
+" Önemli olan, yelken yaptığınız COG aralığını görüntülemektir. \n"
+" Düşük değerler, yüksek sönümlenme anlamına gelir."
 
 #: src\tactics_pi.cpp:3310
 msgid "Width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
@@ -488,23 +490,23 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3315 src\tactics_pi.cpp:3321
 msgid "Length of the boat laylines in [nm]"
-msgstr ""
+msgstr "Tekne boyu çizgileri [nm] cinsinden"
 
 #: src\tactics_pi.cpp:3323
 msgid "Min. Layline Width [°]:"
-msgstr ""
+msgstr "Min. Genişlik Genişliği [°]:"
 
 #: src\tactics_pi.cpp:3325 src\tactics_pi.cpp:3328
 msgid "Min. width of boat laylines in degrees."
-msgstr ""
+msgstr "Min. tekne ley çizgilerinin genişlik dereceleri."
 
 #: src\tactics_pi.cpp:3332
 msgid "Max. Layline Width [°]:"
-msgstr ""
+msgstr "Maks. Genişlik Genişliği [°]:"
 
 #: src\tactics_pi.cpp:3334 src\tactics_pi.cpp:3337
 msgid "Max. width of boat laylines in degrees."
-msgstr ""
+msgstr "Maks. tekne ley çizgilerinin genişlik dereceleri."
 
 #: src\tactics_pi.cpp:3349
 msgid "Boat's Leeway factor [0-20]:  "
@@ -518,16 +520,17 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3358
 msgid "Use Heel Sensor"
-msgstr ""
+msgstr "Topuk Sensörünü kullanın"
 
 #: src\tactics_pi.cpp:3361
 msgid "Use the internal heel sensor if available\n"
 "Important for the correct calculation of the surface current."
-msgstr ""
+msgstr "Mevcutsa, dahili topuk sensörünü kullanın \n"
+" Yüzey akımının doğru hesaplanması için önemlidir."
 
 #: src\tactics_pi.cpp:3365
 msgid "fixed/max Leeway [°]:"
-msgstr ""
+msgstr "sabit / maks Sönük [°]:"
 
 #: src\tactics_pi.cpp:3368
 msgid "Dual purpose !\n"
@@ -537,75 +540,79 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3376
 msgid "manual Heel input:"
-msgstr ""
+msgstr "manuel Topuk girişi:"
 
 #: src\tactics_pi.cpp:3379
 msgid "If no heel sensor is available, you can create a manual 'heel polar' here.\n"
 "Just read/enter the data from a mechanical heel sensor (e.g. on compass).\n"
 "Use True Wind Speed & Angle only !\n"
 "Take care: motoring w/o sails&heel will show wrong current data !!!"
-msgstr ""
+msgstr "Topuk sensörü yoksa, burada manuel bir 'topuk polaru' oluşturabilirsiniz. \n"
+" Sadece mekanik topuk sensöründen verileri okuyun / girin (örn. Pusula). \n"
+" Sağır Rüzgar Hızını ve Açısını Yalnızca kullanın! \n"
+"Sağlık bakımı: motorlu araç Yelkensiz ve topuksuz halihazırda yanlış veri gösterecektir !!!"
 
 #: src\tactics_pi.cpp:3393
 msgid "TWS/TWA "
-msgstr ""
+msgstr "TWS/TWA "
 
 #: src\tactics_pi.cpp:3395
 msgid " 45°"
-msgstr ""
+msgstr " 45°"
 
 #: src\tactics_pi.cpp:3397
 msgid " 90°"
-msgstr ""
+msgstr " 90°"
 
 #: src\tactics_pi.cpp:3399
 msgid "135°"
-msgstr ""
+msgstr "135°"
 
 #: src\tactics_pi.cpp:3402
 msgid "5 kn"
-msgstr ""
+msgstr "5 kn"
 
 #: src\tactics_pi.cpp:3416
 msgid "10 kn"
-msgstr ""
+msgstr "10 kn"
 
 #: src\tactics_pi.cpp:3430
 msgid "15 kn"
-msgstr ""
+msgstr "15 kn"
 
 #: src\tactics_pi.cpp:3445
 msgid "20 kn"
-msgstr ""
+msgstr "20 kn"
 
 #: src\tactics_pi.cpp:3459
 msgid "25 kn"
-msgstr ""
+msgstr "25 kn"
 
 #: src\tactics_pi.cpp:3474
 msgid "Current"
-msgstr ""
+msgstr "Şimdiki"
 
 #: src\tactics_pi.cpp:3489
 msgid "Current damping factor [1-400]:  "
-msgstr ""
+msgstr "Geçerli sönüm faktörü [1-400]:  "
 
 #: src\tactics_pi.cpp:3490 src\tactics_pi.cpp:3495
 msgid "Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\n"
 "Low values mean high damping"
-msgstr ""
+msgstr "Harita üstü katlamada, pusulaya ve sayısal aletlerde yüzey akımını 'ok' dengeler \n"
+"Önerilen değerler yüksek sönümleme anlamına gelir"
 
 #: src\tactics_pi.cpp:3503
 msgid "Display Current on Chart (OpenGL)"
-msgstr ""
+msgstr "Şimdiki Grafiği Görüntüle (OpenGL)"
 
 #: src\tactics_pi.cpp:3506 src\tactics_pi.cpp:3542 src\tactics_pi.cpp:3565
 msgid "The default on program startup"
-msgstr ""
+msgstr "Program başlatmada varsayılan"
 
 #: src\tactics_pi.cpp:3508
 msgid "True Wind"
-msgstr ""
+msgstr "Gerçek Rüzgar"
 
 #: src\tactics_pi.cpp:3516
 msgid "Correct STW with Leeway"
@@ -615,85 +622,89 @@ msgstr ""
 msgid "Apply a correction to your log speed throughout the plugin based on the calculated Leeway (via the heel sensor).\n"
 "Only makes sense with a real heel sensor.\n"
 "Make sure your instruments do not already apply this correction !"
-msgstr ""
+msgstr "Hesaplanan Leeway (topuk sensörü aracılığıyla) eklenti boyunca günlük hızınıza bir düzeltme uygulayın. \n"
+" Aynı zamanda gerçek bir topuk sensörü ile mantıklı olun. \n"
+" aletlerinizin bu düzeltmeyi henüz uygulamadığından emin olun!"
 
 #: src\tactics_pi.cpp:3521
 msgid "Correct AWS/AWA with Heel"
-msgstr ""
+msgstr "Topuklu AWS / AWA'yi düzeltin"
 
 #: src\tactics_pi.cpp:3524
 msgid "Use with care, this is normally done by the instruments themselves as soon as you have an integrated, original equipment heel sensor"
-msgstr ""
+msgstr "Dikkatli kullanın, bu normal olarak, entegre, orijinal ekipman topuk sansor sahip olduğunuzda enstrümanlar kendileri tarafından yapılır"
 
 #: src\tactics_pi.cpp:3528
 msgid "Force True Wind Calculation"
-msgstr ""
+msgstr "Gerçek Rüzgar Hesaplamasını Zorla"
 
 #: src\tactics_pi.cpp:3531
 msgid "Internally calculates True Wind data (TWS,TWA,TWD) and uses it within the whole plugin even if there is True Wind data available via NMEA."
-msgstr ""
+msgstr "Gerçek Rüzgar verilerini (TWS, TWA, TWD) dahili olarak hesaplar ve NMEA aracılığıyla True Wind True Rüzgar verisi mevcut olsa dahi, tüm eklenti içinde kullanır."
 
 #: src\tactics_pi.cpp:3534
 msgid "Use SOG instead of STW for True Wind Calc."
-msgstr ""
+msgstr "True Wind Calc için STW yerine SOG kullanın."
 
 #: src\tactics_pi.cpp:3537
 msgid "Recommended. As True Wind blows over the earth surface, we should calc. it with Speed Over Ground.\n"
 "Eliminates the influence of currents."
-msgstr ""
+msgstr "Tavsiye edilen. Gerçek Rüzgar toprak yüzeyine çarptığında hesaplamalıyız. Hız Üzerinde Hız ile. \n"
+" Akımların etkisini azaltır."
 
 #: src\tactics_pi.cpp:3539
 msgid "Show Wind Barb on Chart (OpenGL)"
-msgstr ""
+msgstr "Grafiğin Rüzgar Sopasını (OpenGL) Göster"
 
 #: src\tactics_pi.cpp:3545
 msgid "Polar"
-msgstr ""
+msgstr "Kutup"
 
 #: src\tactics_pi.cpp:3552
 msgid "Polar :"
-msgstr ""
+msgstr "Kutup:"
 
 #: src\tactics_pi.cpp:3558
 msgid "Load"
-msgstr ""
+msgstr "Yük"
 
 #: src\tactics_pi.cpp:3562
 msgid "Show Polar on Chart (OpenGL)"
-msgstr ""
+msgstr "Kutudaki Kutuyu Göster (OpenGL)"
 
 #: src\tactics_pi.cpp:3567
 msgid "Export NMEA Performance Data"
-msgstr ""
+msgstr "NMEA Performans Verilerini Dışa Aktar"
 
 #: src\tactics_pi.cpp:3574
 msgid "NKE format ($PNKEP)"
-msgstr ""
+msgstr "NKE biçimi ($PNKEP)"
 
 #: src\tactics_pi.cpp:3577
 msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
 "Read the manual how to set up the interface connection !"
-msgstr ""
+msgstr "Şu anda yalnızca NKE enstrümanları için ayar yapıyor. NKE enstrümanları tarafından 'bilinen' ve önceden görüntülenebilen 5 NMEA kaydı için önceden tanımlanmış bir set dışa aktarır ve orada görüntülenebilir. \n"
+"İletişim kutusunun arayüz bağlantısını nasıl ayarlayacağınızı kılavuzda okuyun!"
 
 #: src\tactics_pi.cpp:3583
 msgid "Target Polar Speed"
-msgstr ""
+msgstr "Polar Hızını Hedefleyin"
 
 #: src\tactics_pi.cpp:3587
 msgid "CoG on other Tack"
-msgstr ""
+msgstr "Diğer Çakma Maddelerinde CoG"
 
 #: src\tactics_pi.cpp:3591
 msgid "Target-VMG angle + Perf. %"
-msgstr ""
+msgstr "Hedef-VMG açısı + Perf. %"
 
 #: src\tactics_pi.cpp:3595
 msgid "Diff. angle to Target-VMG/-CMG + corresp. gain"
-msgstr ""
+msgstr "Diff. açısı Target-VMG / -CMG + korresp. kazanç"
 
 #: src\tactics_pi.cpp:3599
 msgid "Current Direction + Speed"
-msgstr ""
+msgstr "Mevcut Yön + Hız"
 
 #: src\tactics_pi.cpp:3654
 msgid "This option makes only sense with a real heel sensor."
@@ -706,11 +717,11 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3668
 msgid "This will also disable the AWA/AWS correction."
-msgstr ""
+msgstr "Bu aynı zamanda AWA / AWS düzeltmesini de devre dışı bırakacaktır."
 
 #: src\tactics_pi.cpp:3683
 msgid "Select a Polar-File"
-msgstr ""
+msgstr "Bir Polar Dosyası Seç"
 
 #: src\tactics_pi.cpp:3920
 msgid "Add instrument"
@@ -726,19 +737,19 @@ msgstr "Ayarlar"
 
 #: src\tactics_pi.cpp:4022
 msgid "Show Laylines"
-msgstr ""
+msgstr "Yatay Çizgileri Göster"
 
 #: src\tactics_pi.cpp:4025
 msgid "Show Current"
-msgstr ""
+msgstr "Şu Anda Göster"
 
 #: src\tactics_pi.cpp:4028
 msgid "Show Windbarb"
-msgstr ""
+msgstr "Windbarb'ı Göster"
 
 #: src\tactics_pi.cpp:4031
 msgid "Show Polar"
-msgstr ""
+msgstr "Polar'ı Göster"
 
 #: src\wind_history.cpp:503
 msgid "NNE"

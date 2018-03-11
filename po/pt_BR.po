@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-08 17:45+0100\n"
-"PO-Revision-Date: 2017-02-23 09:22-0500\n"
+"PO-Revision-Date: 2018-01-24 19:42-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -269,7 +269,7 @@ msgstr "CMG-ângulo do alvo"
 
 #: src\tactics_pi.cpp:298
 msgid "Polar Performance"
-msgstr "Rendimento Polar"
+msgstr "Desempenho Polar"
 
 #: src\tactics_pi.cpp:300
 msgid "Average Wind"
@@ -277,7 +277,7 @@ msgstr "Vento médio"
 
 #: src\tactics_pi.cpp:302
 msgid "Polar Compass"
-msgstr "Agulha Polar"
+msgstr "Bússola polar"
 
 #: src\tactics_pi.cpp:565 src\tactics_pi.cpp:721 src\tactics_pi.cpp:2825
 #: src\tactics_pi.cpp:2835 src\tactics_pi.cpp:3064 src\tactics_pi.cpp:3103
@@ -385,11 +385,11 @@ msgstr "Valor máximo do velocímetro:"
 
 #: src\tactics_pi.cpp:3232
 msgid "Speed Over Ground Damping Factor:"
-msgstr "Factor de Amortecimento da Velocidade Verdadeira:"
+msgstr "Velocidade sobre solo, fator de amortecimento:"
 
 #: src\tactics_pi.cpp:3238
 msgid "COG Damping Factor:"
-msgstr "Factor de Amortecimento do Rumo Verdadeiro (COG):"
+msgstr "COG Fator de amortecimento:"
 
 #: src\tactics_pi.cpp:3244
 msgid "Boat speed units:"
@@ -615,7 +615,7 @@ msgstr "Apresentar correntes na carta (OpenGL)"
 
 #: src\tactics_pi.cpp:3506 src\tactics_pi.cpp:3542 src\tactics_pi.cpp:3565
 msgid "The default on program startup"
-msgstr "Por omissão no inicio do programa"
+msgstr "O padrão na inicialização do programa"
 
 #: src\tactics_pi.cpp:3508
 msgid "True Wind"
@@ -685,7 +685,7 @@ msgstr "Exportar dados de performance NMEA"
 
 #: src\tactics_pi.cpp:3574
 msgid "NKE format ($PNKEP)"
-msgstr "formato NKE ($PNKEP)"
+msgstr "Formato NKE ($PNKEP)"
 
 #: src\tactics_pi.cpp:3577
 msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
@@ -695,7 +695,7 @@ msgstr "Correntemente apenas preparado para instrumentos NKE. Exporta um conjunt
 
 #: src\tactics_pi.cpp:3583
 msgid "Target Polar Speed"
-msgstr "Velocidade Polar alvo"
+msgstr "Velocidade Polar do alvo"
 
 #: src\tactics_pi.cpp:3587
 msgid "CoG on other Tack"
@@ -703,7 +703,7 @@ msgstr "Rumo verdadeiro (CoG) na outra amura"
 
 #: src\tactics_pi.cpp:3591
 msgid "Target-VMG angle + Perf. %"
-msgstr "Target-VMG angle + Perf. %"
+msgstr "Ângulo do alvo-VMG + Perf. %"
 
 #: src\tactics_pi.cpp:3595
 msgid "Diff. angle to Target-VMG/-CMG + corresp. gain"
@@ -711,7 +711,7 @@ msgstr "Diff. angle to Target-VMG/-CMG + corresp. gain"
 
 #: src\tactics_pi.cpp:3599
 msgid "Current Direction + Speed"
-msgstr "Direção e Velocidade da corrente"
+msgstr "Atual direção + velocidade"
 
 #: src\tactics_pi.cpp:3654
 msgid "This option makes only sense with a real heel sensor."
@@ -749,11 +749,11 @@ msgstr "Mostrar Laylines"
 
 #: src\tactics_pi.cpp:4025
 msgid "Show Current"
-msgstr "Mostrar currente"
+msgstr "Mostrar Correntes"
 
 #: src\tactics_pi.cpp:4028
 msgid "Show Windbarb"
-msgstr "Mostrar vento"
+msgstr "Mostrar barbela do vento"
 
 #: src\tactics_pi.cpp:4031
 msgid "Show Polar"

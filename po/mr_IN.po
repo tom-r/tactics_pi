@@ -5,22 +5,22 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-08 17:45+0100\n"
-"PO-Revision-Date: 2018-03-11 10:38-0400\n"
+"PO-Revision-Date: 2018-03-03 08:24-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
-"Language-Team: Japanese\n"
-"Language: ja_JP\n"
+"Language-Team: Marathi\n"
+"Language: mr_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
-"X-Crowdin-Language: ja\n"
+"X-Crowdin-Language: mr\n"
 "X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 
 #: src\baro_history.cpp:288 src\performance.cpp:1593 src\wind_history.cpp:647
 msgid "Max"
-msgstr "最大"
+msgstr ""
 
 #: src\baro_history.cpp:289 src\performance.cpp:1594 src\wind_history.cpp:648
 msgid "since"
@@ -32,7 +32,7 @@ msgstr ""
 
 #: src\baro_history.cpp:291
 msgid "Min"
-msgstr "最小"
+msgstr ""
 
 #: src\bearingcompass.cpp:797 src\polarcompass.cpp:711
 msgid "R"
@@ -77,7 +77,7 @@ msgstr ""
 
 #: src\instrument.cpp:256
 msgid " true"
-msgstr " 真"
+msgstr ""
 
 #: src\instrument.cpp:258
 msgid " mag"
@@ -97,7 +97,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:187
 msgid "Position"
-msgstr "位置"
+msgstr ""
 
 #: src\tactics_pi.cpp:189
 msgid "SOG"
@@ -105,7 +105,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:191
 msgid "Speedometer"
-msgstr "スピード メーター"
+msgstr ""
 
 #: src\tactics_pi.cpp:193
 msgid "COG"
@@ -117,7 +117,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:197
 msgid "GPS Compass"
-msgstr "GPS コンパス"
+msgstr ""
 
 #: src\tactics_pi.cpp:199
 msgid "True Compass"
@@ -137,55 +137,55 @@ msgstr ""
 
 #: src\tactics_pi.cpp:208
 msgid "App. Wind Angle & Speed"
-msgstr "見かけの風の角度と速度"
+msgstr ""
 
 #: src\tactics_pi.cpp:210
 msgid "App & True Wind Angle"
-msgstr "見かけと真の風の角度"
+msgstr ""
 
 #: src\tactics_pi.cpp:212 src\tactics_pi.cpp:214
 msgid "App. Wind Speed"
-msgstr "見かけの風速"
+msgstr ""
 
 #: src\tactics_pi.cpp:216
 msgid "True Wind Angle & Speed"
-msgstr "真の風の角度と速度"
+msgstr ""
 
 #: src\tactics_pi.cpp:218 src\tactics_pi.cpp:220
 msgid "Depth"
-msgstr "深度"
+msgstr ""
 
 #: src\tactics_pi.cpp:222 src\tactics_pi.cpp:224
 msgid "Barometric pressure"
-msgstr "気圧"
+msgstr ""
 
 #: src\tactics_pi.cpp:226
 msgid "Water Temp."
-msgstr "水温"
+msgstr ""
 
 #: src\tactics_pi.cpp:228
 msgid "Air Temp."
-msgstr "気温"
+msgstr ""
 
 #: src\tactics_pi.cpp:230
 msgid "App. Wind Angle"
-msgstr "見かけの風の角度"
+msgstr ""
 
 #: src\tactics_pi.cpp:232
 msgid "True Wind Angle"
-msgstr "真の風の角度"
+msgstr ""
 
 #: src\tactics_pi.cpp:234
 msgid "True Wind Direction"
-msgstr "真の風向"
+msgstr ""
 
 #: src\tactics_pi.cpp:236
 msgid "True Wind Speed"
-msgstr "真の風速"
+msgstr ""
 
 #: src\tactics_pi.cpp:238
 msgid "True Wind Dir. & Speed"
-msgstr "真の風向と風速"
+msgstr ""
 
 #: src\tactics_pi.cpp:240 src\tactics_pi.cpp:242
 msgid "VMG"
@@ -193,19 +193,19 @@ msgstr ""
 
 #: src\tactics_pi.cpp:254
 msgid "Clock"
-msgstr "時計"
+msgstr ""
 
 #: src\tactics_pi.cpp:256
 msgid "Sunrise/Sunset"
-msgstr "日の出/日の入り"
+msgstr ""
 
 #: src\tactics_pi.cpp:260
 msgid "Wind history"
-msgstr "風の記録"
+msgstr ""
 
 #: src\tactics_pi.cpp:262
 msgid "Barometric history"
-msgstr "気圧の記録"
+msgstr ""
 
 #: src\tactics_pi.cpp:268
 msgid "TWA to Waypoint"
@@ -213,31 +213,31 @@ msgstr ""
 
 #: src\tactics_pi.cpp:270
 msgid "From Ownship"
-msgstr "自船 から"
+msgstr ""
 
 #: src\tactics_pi.cpp:272
 msgid "Pitch"
-msgstr "ピッチ"
+msgstr ""
 
 #: src\tactics_pi.cpp:274 src\tactics_pi.cpp:3386
 msgid "Heel"
-msgstr "ヒール"
+msgstr ""
 
 #: src\tactics_pi.cpp:276 src\tactics_pi.cpp:3340
 msgid "Leeway"
-msgstr "リーウエイ"
+msgstr ""
 
 #: src\tactics_pi.cpp:278
 msgid "Current Direction"
-msgstr "現在の方向"
+msgstr ""
 
 #: src\tactics_pi.cpp:280
 msgid "Current Speed"
-msgstr "現在の速度"
+msgstr ""
 
 #: src\tactics_pi.cpp:282
 msgid "Bearing Compass"
-msgstr "方位コンパス"
+msgstr ""
 
 #: src\tactics_pi.cpp:284
 msgid "Polar Speed"
@@ -316,59 +316,59 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3116
 msgid "Caption:"
-msgstr "タイトル:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3124
 msgid "Orientation:"
-msgstr "配置方向"
+msgstr ""
 
 #: src\tactics_pi.cpp:3128 src\tactics_pi.cpp:4011
 msgid "Vertical"
-msgstr "縦"
+msgstr ""
 
 #: src\tactics_pi.cpp:3129 src\tactics_pi.cpp:4013
 msgid "Horizontal"
-msgstr "横"
+msgstr ""
 
 #: src\tactics_pi.cpp:3136 src\tactics_pi.cpp:3144 src\tactics_pi.cpp:3937
 msgid "Instruments"
-msgstr "計器"
+msgstr ""
 
 #: src\tactics_pi.cpp:3152
 msgid "Add"
-msgstr "追加"
+msgstr ""
 
 #: src\tactics_pi.cpp:3165
 msgid "Delete"
-msgstr "削除"
+msgstr ""
 
 #: src\tactics_pi.cpp:3171
 msgid "Up"
-msgstr "上へ"
+msgstr ""
 
 #: src\tactics_pi.cpp:3176
 msgid "Down"
-msgstr "下へ"
+msgstr ""
 
 #: src\tactics_pi.cpp:3186
 msgid "Appearance"
-msgstr "表示関連"
+msgstr ""
 
 #: src\tactics_pi.cpp:3188
 msgid "Fonts"
-msgstr "フォント"
+msgstr ""
 
 #: src\tactics_pi.cpp:3194
 msgid "Title:"
-msgstr "タイトル:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3200
 msgid "Data:"
-msgstr "データ:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3206
 msgid "Label:"
-msgstr "ラベル："
+msgstr ""
 
 #: src\tactics_pi.cpp:3212
 msgid "Small:"
@@ -376,11 +376,11 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3220
 msgid "Units, Ranges, Formats"
-msgstr "ユニット、範囲、フォーマット"
+msgstr ""
 
 #: src\tactics_pi.cpp:3226
 msgid "Speedometer max value:"
-msgstr "スピード メーターの最大値:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3232
 msgid "Speed Over Ground Damping Factor:"
@@ -392,7 +392,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3244
 msgid "Boat speed units:"
-msgstr "船の速度の単位:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3265
 msgid "Honor OpenCPN settings"
@@ -416,15 +416,15 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3253
 msgid "Depth units:"
-msgstr "深さの単位:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3256 src\tactics_pi.cpp:3265
 msgid "Meters"
-msgstr "メートル"
+msgstr ""
 
 #: src\tactics_pi.cpp:3256
 msgid "Feet"
-msgstr "フィート"
+msgstr ""
 
 #: src\tactics_pi.cpp:3256
 msgid "Fathoms"
@@ -432,43 +432,43 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3256
 msgid "Centimeters"
-msgstr "センチメートル"
+msgstr ""
 
 #: src\tactics_pi.cpp:3256
 msgid "Inches"
-msgstr "インチ"
+msgstr ""
 
 #: src\tactics_pi.cpp:3262
 msgid "Distance units:"
-msgstr "距離の単位:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3265
 msgid "Nautical miles"
-msgstr "海里"
+msgstr ""
 
 #: src\tactics_pi.cpp:3265
 msgid "Statute miles"
-msgstr "法定マイル"
+msgstr ""
 
 #: src\tactics_pi.cpp:3265
 msgid "Kilometers"
-msgstr "キロメートル"
+msgstr ""
 
 #: src\tactics_pi.cpp:3271
 msgid "Wind speed units:"
-msgstr "風速単位:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3292
 msgid "Performance Parameters"
-msgstr "パフォーマンス パラメーター"
+msgstr ""
 
 #: src\tactics_pi.cpp:3294
 msgid "Laylines"
-msgstr "レイライン"
+msgstr ""
 
 #: src\tactics_pi.cpp:3303
 msgid "Layline width damping factor [0.025-1]:  "
-msgstr "レイライン幅減衰係数 [0.025-1]:  "
+msgstr ""
 
 #: src\tactics_pi.cpp:3305
 msgid "The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
@@ -484,7 +484,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3313
 msgid "Layline length on Chart [nm]:  "
-msgstr "チャート上のレイライン長[nm]:  "
+msgstr ""
 
 #: src\tactics_pi.cpp:3315 src\tactics_pi.cpp:3321
 msgid "Length of the boat laylines in [nm]"
@@ -492,7 +492,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3323
 msgid "Min. Layline Width [°]:"
-msgstr "最小レイライン幅[°]:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3325 src\tactics_pi.cpp:3328
 msgid "Min. width of boat laylines in degrees."
@@ -500,7 +500,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3332
 msgid "Max. Layline Width [°]:"
-msgstr "最大レイライン幅[°]:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3334 src\tactics_pi.cpp:3337
 msgid "Max. width of boat laylines in degrees."
@@ -508,7 +508,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3349
 msgid "Boat's Leeway factor [0-20]:  "
-msgstr "ボートのリーウエイ ファクター[0-20]:  "
+msgstr ""
 
 #: src\tactics_pi.cpp:3350 src\tactics_pi.cpp:3353
 msgid "Leeway='Drift' of boat due to heel/wind influence\n"
@@ -518,7 +518,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3358
 msgid "Use Heel Sensor"
-msgstr "ヒールセンサー使用"
+msgstr ""
 
 #: src\tactics_pi.cpp:3361
 msgid "Use the internal heel sensor if available\n"
@@ -527,7 +527,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3365
 msgid "fixed/max Leeway [°]:"
-msgstr "固定/最大リーウェイ[°]:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3368
 msgid "Dual purpose !\n"
@@ -537,7 +537,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3376
 msgid "manual Heel input:"
-msgstr "手動ヒール入力"
+msgstr ""
 
 #: src\tactics_pi.cpp:3379
 msgid "If no heel sensor is available, you can create a manual 'heel polar' here.\n"
@@ -714,15 +714,15 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3920
 msgid "Add instrument"
-msgstr "機器を追加します。"
+msgstr ""
 
 #: src\tactics_pi.cpp:3926
 msgid "Select instrument to add:"
-msgstr "追加する計器を選択します。"
+msgstr ""
 
 #: src\tactics_pi.cpp:4020
 msgid "Preferences..."
-msgstr "設定"
+msgstr ""
 
 #: src\tactics_pi.cpp:4022
 msgid "Show Laylines"
