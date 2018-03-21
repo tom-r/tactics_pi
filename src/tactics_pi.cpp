@@ -1978,7 +1978,14 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 				if (!wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees)) {
 					if (!wxIsNaN(mVar) && (mPriHeadingT > 3)){
 						mPriHeadingT = 4;
-						SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, mHdm + mVar, _T("\u00B0"));
+						calmHdt = mHdm + mVar;
+						if (calmHdt < 0.0) {
+							calmHdt = calmHdt + 360.0;
+						}
+						else if (calmHdt >= 360.0) {
+							calmHdt = calmHdt - 360.0;
+						}
+						SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, calmHdt, _T("\u00B0"));
 						mHDT_Watchdog = gps_watchdog_timeout_ticks;
 					}
 				}
@@ -2000,7 +2007,14 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 				if (!wxIsNaN(m_NMEA0183.Hdm.DegreesMagnetic)) {
 					if (!wxIsNaN(mVar) && (mPriHeadingT > 2)){
 						mPriHeadingT = 3;
-						SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, mHdm + mVar, _T("\u00B0"));
+						calmHdt = mHdm + mVar;
+						if (calmHdt < 0.0) {
+							calmHdt = calmHdt + 360.0;
+						}
+						else if (calmHdt >= 360.0) {
+							calmHdt = calmHdt - 360.0;
+						}
+						SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, calmHdt, _T("\u00B0"));
 						mHDT_Watchdog = gps_watchdog_timeout_ticks;
 					}
 				}
