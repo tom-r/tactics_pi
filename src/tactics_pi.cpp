@@ -1450,10 +1450,22 @@ void tactics_pi::DoRenderCurrentGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 		currpoints[5].y = boat.y + (m_radius * .10 * sin(currvalue - 1.5));
 		currpoints[6].x = boat.x + (m_radius * .18 * cos(currvalue - 1.5));
 		currpoints[6].y = boat.y + (m_radius * .18 * sin(currvalue - 1.5));
+ //below 0.2 knots the current generally gets inaccurate, as the error level gets too high.
+        // as a hint, fade the current transparency below 0.25 knots...
+//        int curr_trans = 164;
+//        if (m_ExpSmoothCurrSpd <= 0.20) {
+//          fading : 0.2 * 5 = 1 --> we set full transp. >=0.2
+//          curr_trans = m_ExpSmoothCurrSpd * 5 * curr_trans;
+//          if (curr_trans < 50) curr_trans = 50;  //lower limit
+//        }
+//        GLubyte red(7), green(107), blue(183), alpha(curr_trans);
+//        glColor4ub(7, 107, 183, curr_trans);                 	// red, green, blue,  alpha
 
 		GLubyte red(7), green(107), blue(183), alpha(164);
 		glColor4ub(7, 107, 183, 164);                 	// red, green, blue,  alpha
-		glBegin(GL_POLYGON);
+//        glLineWidth(2);
+//		glBegin(GL_POLYGON | GL_LINES);
+        glBegin(GL_POLYGON);
 		glVertex2d(currpoints[0].x, currpoints[0].y);
 		glVertex2d(currpoints[1].x, currpoints[1].y);
 		glVertex2d(currpoints[2].x, currpoints[2].y);
