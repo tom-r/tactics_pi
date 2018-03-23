@@ -211,6 +211,7 @@ private:
       // FFU
       double               mSatsInView;
 	  double               mHdm;
+	  double               calmHdt;
       wxDateTime           mUTCDateTime;
       int                  m_config_version;
       wxString             m_VDO_accumulator;
