@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-08 17:45+0100\n"
-"PO-Revision-Date: 2017-02-23 09:21-0500\n"
+"PO-Revision-Date: 2018-03-11 10:37-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -277,7 +277,7 @@ msgstr "Vent moyen"
 
 #: src\tactics_pi.cpp:302
 msgid "Polar Compass"
-msgstr ""
+msgstr "Polaire de la boussole"
 
 #: src\tactics_pi.cpp:565 src\tactics_pi.cpp:721 src\tactics_pi.cpp:2825
 #: src\tactics_pi.cpp:2835 src\tactics_pi.cpp:3064 src\tactics_pi.cpp:3103
@@ -301,11 +301,11 @@ msgstr "Vous devez utiliser OpenGL ON pour utiliser la superposition de carte"
 
 #: src\tactics_pi.cpp:2397
 msgid "° Bow up"
-msgstr ""
+msgstr "° Proue en haut"
 
 #: src\tactics_pi.cpp:2400
 msgid "° Bow down"
-msgstr ""
+msgstr "° Proue en bas"
 
 #: src\tactics_pi.cpp:3039
 msgid "Tactics preferences"
@@ -606,7 +606,9 @@ msgstr "[1-400] Facteur d'amortissement du courant [1-400] :  "
 #: src\tactics_pi.cpp:3490 src\tactics_pi.cpp:3495
 msgid "Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\n"
 "Low values mean high damping"
-msgstr ""
+msgstr "Stabilise la «flèche» du courant de surface dans la superposition de cartes, le compas de relèvement et les instruments numériques \n"
+"\n"
+"Les faibles valeurs signifient un amortissement élevé."
 
 #: src\tactics_pi.cpp:3503
 msgid "Display Current on Chart (OpenGL)"
@@ -689,7 +691,8 @@ msgstr "Format NKE ($PNKEP)"
 #: src\tactics_pi.cpp:3577
 msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
 "Read the manual how to set up the interface connection !"
-msgstr ""
+msgstr "Actuellement, mis en place pour les instruments NKE. Exportation d'un ensemble prédéfini 5 phrases NMEA reconnues par les instruments NKE qui peuvent les afficher. \n"
+"Lire le manuel pour savoir comment configurer l’interface de connexion !"
 
 #: src\tactics_pi.cpp:3583
 msgid "Target Polar Speed"

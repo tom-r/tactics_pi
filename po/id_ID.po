@@ -7,97 +7,97 @@ msgstr ""
 "POT-Creation-Date: 2017-01-08 17:45+0100\n"
 "PO-Revision-Date: 2018-03-11 10:38-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
-"Language-Team: Japanese\n"
-"Language: ja_JP\n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
-"X-Crowdin-Language: ja\n"
+"X-Crowdin-Language: id\n"
 "X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
 
 #: src\baro_history.cpp:288 src\performance.cpp:1593 src\wind_history.cpp:647
 msgid "Max"
-msgstr "最大"
+msgstr "Maks"
 
 #: src\baro_history.cpp:289 src\performance.cpp:1594 src\wind_history.cpp:648
 msgid "since"
-msgstr ""
+msgstr "sejak"
 
 #: src\baro_history.cpp:290
 msgid "Overall Max"
-msgstr ""
+msgstr "Keseluruhan Max"
 
 #: src\baro_history.cpp:291
 msgid "Min"
-msgstr "最小"
+msgstr "Min"
 
 #: src\bearingcompass.cpp:797 src\polarcompass.cpp:711
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: src\bearingcompass.cpp:802 src\polarcompass.cpp:716
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: src\clock.cpp:126 src\dial.cpp:524 src\gps.cpp:142 src\wind.cpp:65
 #: src\wind_history.cpp:500
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:506
 msgid "NE"
-msgstr ""
+msgstr "NE"
 
 #: src\dial.cpp:524 src\gps.cpp:146 src\wind.cpp:65 src\wind_history.cpp:512
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:518
 msgid "SE"
-msgstr ""
+msgstr "SE"
 
 #: src\dial.cpp:524 src\gps.cpp:150 src\wind.cpp:65 src\wind_history.cpp:524
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:530
 msgid "SW"
-msgstr ""
+msgstr "SW"
 
 #: src\dial.cpp:524 src\gps.cpp:154 src\wind.cpp:65 src\wind_history.cpp:536
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:542
 msgid "NW"
-msgstr ""
+msgstr "NW"
 
 #: src\instrument.cpp:256
 msgid " true"
-msgstr " 真"
+msgstr " benar"
 
 #: src\instrument.cpp:258
 msgid " mag"
-msgstr ""
+msgstr " mag"
 
 #: src\performance.cpp:394
 msgid "tactics_pi: Select a Polar-File"
-msgstr ""
+msgstr "taktik_pi: Pilih Polar-File"
 
 #: src\performance.cpp:462
 msgid "Format in this file not recognised"
-msgstr ""
+msgstr "Format dalam file ini tidak dikenali"
 
 #: src\performance.cpp:1595 src\wind_history.cpp:649
 msgid "Overall"
-msgstr ""
+msgstr "Secara keseluruhan"
 
 #: src\tactics_pi.cpp:187
 msgid "Position"
-msgstr "位置"
+msgstr "Posisi"
 
 #: src\tactics_pi.cpp:189
 msgid "SOG"
@@ -105,11 +105,11 @@ msgstr ""
 
 #: src\tactics_pi.cpp:191
 msgid "Speedometer"
-msgstr "スピード メーター"
+msgstr "Pengukur kecepatan"
 
 #: src\tactics_pi.cpp:193
 msgid "COG"
-msgstr ""
+msgstr "COG"
 
 #: src\tactics_pi.cpp:195
 msgid "Mag COG"
@@ -117,11 +117,11 @@ msgstr ""
 
 #: src\tactics_pi.cpp:197
 msgid "GPS Compass"
-msgstr "GPS コンパス"
+msgstr "Kompas GPS"
 
 #: src\tactics_pi.cpp:199
 msgid "True Compass"
-msgstr ""
+msgstr "Kompas yang benar"
 
 #: src\tactics_pi.cpp:201
 msgid "STW"
@@ -137,55 +137,55 @@ msgstr ""
 
 #: src\tactics_pi.cpp:208
 msgid "App. Wind Angle & Speed"
-msgstr "見かけの風の角度と速度"
+msgstr "Aplikasi. Sudut Angin & Kecepatan"
 
 #: src\tactics_pi.cpp:210
 msgid "App & True Wind Angle"
-msgstr "見かけと真の風の角度"
+msgstr "Aplikasi & Sudut angin sebenarnya"
 
 #: src\tactics_pi.cpp:212 src\tactics_pi.cpp:214
 msgid "App. Wind Speed"
-msgstr "見かけの風速"
+msgstr "Aplikasi. Kecepatan angin"
 
 #: src\tactics_pi.cpp:216
 msgid "True Wind Angle & Speed"
-msgstr "真の風の角度と速度"
+msgstr "Sudut Angin Benar & Kecepatan"
 
 #: src\tactics_pi.cpp:218 src\tactics_pi.cpp:220
 msgid "Depth"
-msgstr "深度"
+msgstr "Kedalaman"
 
 #: src\tactics_pi.cpp:222 src\tactics_pi.cpp:224
 msgid "Barometric pressure"
-msgstr "気圧"
+msgstr "Tekanan barometrik"
 
 #: src\tactics_pi.cpp:226
 msgid "Water Temp."
-msgstr "水温"
+msgstr "Temp Air."
 
 #: src\tactics_pi.cpp:228
 msgid "Air Temp."
-msgstr "気温"
+msgstr "Udara temp."
 
 #: src\tactics_pi.cpp:230
 msgid "App. Wind Angle"
-msgstr "見かけの風の角度"
+msgstr "Aplikasi. Sudut angin"
 
 #: src\tactics_pi.cpp:232
 msgid "True Wind Angle"
-msgstr "真の風の角度"
+msgstr "Sudut Angin Benar"
 
 #: src\tactics_pi.cpp:234
 msgid "True Wind Direction"
-msgstr "真の風向"
+msgstr "Arah Angin Benar"
 
 #: src\tactics_pi.cpp:236
 msgid "True Wind Speed"
-msgstr "真の風速"
+msgstr "Kecepatan Angin Benar"
 
 #: src\tactics_pi.cpp:238
 msgid "True Wind Dir. & Speed"
-msgstr "真の風向と風速"
+msgstr "True Wind Dir. & Kecepatan"
 
 #: src\tactics_pi.cpp:240 src\tactics_pi.cpp:242
 msgid "VMG"
@@ -193,110 +193,111 @@ msgstr ""
 
 #: src\tactics_pi.cpp:254
 msgid "Clock"
-msgstr "時計"
+msgstr "Jam"
 
 #: src\tactics_pi.cpp:256
 msgid "Sunrise/Sunset"
-msgstr "日の出/日の入り"
+msgstr "Matahari terbit Matahari terbenam"
 
 #: src\tactics_pi.cpp:260
 msgid "Wind history"
-msgstr "風の記録"
+msgstr "Sejarah angin"
 
 #: src\tactics_pi.cpp:262
 msgid "Barometric history"
-msgstr "気圧の記録"
+msgstr "Sejarah barometrik"
 
 #: src\tactics_pi.cpp:268
 msgid "TWA to Waypoint"
-msgstr ""
+msgstr "TWA ke Waypoint"
 
 #: src\tactics_pi.cpp:270
 msgid "From Ownship"
-msgstr "自船 から"
+msgstr "Dari Ownship"
 
 #: src\tactics_pi.cpp:272
 msgid "Pitch"
-msgstr "ピッチ"
+msgstr "Nada"
 
 #: src\tactics_pi.cpp:274 src\tactics_pi.cpp:3386
 msgid "Heel"
-msgstr "ヒール"
+msgstr "Hak"
 
 #: src\tactics_pi.cpp:276 src\tactics_pi.cpp:3340
 msgid "Leeway"
-msgstr "リーウエイ"
+msgstr "Kelonggaran"
 
 #: src\tactics_pi.cpp:278
 msgid "Current Direction"
-msgstr "現在の方向"
+msgstr "Arah Terkini"
 
 #: src\tactics_pi.cpp:280
 msgid "Current Speed"
-msgstr "現在の速度"
+msgstr "Kecepatan saat ini"
 
 #: src\tactics_pi.cpp:282
 msgid "Bearing Compass"
-msgstr "方位コンパス"
+msgstr "Bantalan poros Kompas"
 
 #: src\tactics_pi.cpp:284
 msgid "Polar Speed"
-msgstr ""
+msgstr "Kecepatan Polar"
 
 #: src\tactics_pi.cpp:286
 msgid "Actual VMG"
-msgstr ""
+msgstr "Aktual VMG"
 
 #: src\tactics_pi.cpp:288
 msgid "Target VMG"
-msgstr ""
+msgstr "Targetkan VMG"
 
 #: src\tactics_pi.cpp:290
 msgid "Target VMG-Angle"
-msgstr ""
+msgstr "Targetkan VMG-Angle"
 
 #: src\tactics_pi.cpp:292
 msgid "Actual CMG"
-msgstr ""
+msgstr "CMG aktual"
 
 #: src\tactics_pi.cpp:294
 msgid "Target CMG"
-msgstr ""
+msgstr "Targetkan CMG"
 
 #: src\tactics_pi.cpp:296
 msgid "Target CMG-Angle"
-msgstr ""
+msgstr "Targetkan CMG-Angle"
 
 #: src\tactics_pi.cpp:298
 msgid "Polar Performance"
-msgstr ""
+msgstr "Kinerja Kutub"
 
 #: src\tactics_pi.cpp:300
 msgid "Average Wind"
-msgstr ""
+msgstr "Angin rata-rata"
 
 #: src\tactics_pi.cpp:302
 msgid "Polar Compass"
-msgstr ""
+msgstr "Kompas polar"
 
 #: src\tactics_pi.cpp:565 src\tactics_pi.cpp:721 src\tactics_pi.cpp:2825
 #: src\tactics_pi.cpp:2835 src\tactics_pi.cpp:3064 src\tactics_pi.cpp:3103
 #: src\tactics_pi.cpp:3818
 msgid "Tactics"
-msgstr ""
+msgstr "Taktik"
 
 #: src\tactics_pi.cpp:726
 msgid "Tactics PlugIn for OpenCPN"
-msgstr ""
+msgstr "Taktik PlugIn untuk OpenCPN"
 
 #: src\tactics_pi.cpp:731
 msgid "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar file."
-msgstr ""
+msgstr "Taktik PlugIn untuk OpenCPN\n"
+"Menyediakan data kinerja & instrumen tampilan dari NMEA sumber dan kutub file."
 
 #: src\tactics_pi.cpp:1737
 msgid "You have to turn on OpenGL to use chart overlay "
-msgstr ""
+msgstr "Anda harus mengaktifkan OpenGL menggunakan grafik overlay "
 
 #: src\tactics_pi.cpp:2397
 msgid "° Bow up"
@@ -308,123 +309,123 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3039
 msgid "Tactics preferences"
-msgstr ""
+msgstr "Taktik preferensi"
 
 #: src\tactics_pi.cpp:3110
 msgid "show this tactics"
-msgstr ""
+msgstr "tampilkan taktik"
 
 #: src\tactics_pi.cpp:3116
 msgid "Caption:"
-msgstr "タイトル:"
+msgstr "Keterangan:"
 
 #: src\tactics_pi.cpp:3124
 msgid "Orientation:"
-msgstr "配置方向"
+msgstr "Orientasi:"
 
 #: src\tactics_pi.cpp:3128 src\tactics_pi.cpp:4011
 msgid "Vertical"
-msgstr "縦"
+msgstr "Vertikal"
 
 #: src\tactics_pi.cpp:3129 src\tactics_pi.cpp:4013
 msgid "Horizontal"
-msgstr "横"
+msgstr "Horisontal"
 
 #: src\tactics_pi.cpp:3136 src\tactics_pi.cpp:3144 src\tactics_pi.cpp:3937
 msgid "Instruments"
-msgstr "計器"
+msgstr "Instrumen"
 
 #: src\tactics_pi.cpp:3152
 msgid "Add"
-msgstr "追加"
+msgstr "Tambah"
 
 #: src\tactics_pi.cpp:3165
 msgid "Delete"
-msgstr "削除"
+msgstr "Hapus"
 
 #: src\tactics_pi.cpp:3171
 msgid "Up"
-msgstr "上へ"
+msgstr "Atas"
 
 #: src\tactics_pi.cpp:3176
 msgid "Down"
-msgstr "下へ"
+msgstr "Bawah"
 
 #: src\tactics_pi.cpp:3186
 msgid "Appearance"
-msgstr "表示関連"
+msgstr "Penampilan"
 
 #: src\tactics_pi.cpp:3188
 msgid "Fonts"
-msgstr "フォント"
+msgstr "Huruf-huruf"
 
 #: src\tactics_pi.cpp:3194
 msgid "Title:"
-msgstr "タイトル:"
+msgstr "Judul:"
 
 #: src\tactics_pi.cpp:3200
 msgid "Data:"
-msgstr "データ:"
+msgstr "Data:"
 
 #: src\tactics_pi.cpp:3206
 msgid "Label:"
-msgstr "ラベル："
+msgstr "Label:"
 
 #: src\tactics_pi.cpp:3212
 msgid "Small:"
-msgstr ""
+msgstr "Kecil:"
 
 #: src\tactics_pi.cpp:3220
 msgid "Units, Ranges, Formats"
-msgstr "ユニット、範囲、フォーマット"
+msgstr "Unit, Rentang, Format"
 
 #: src\tactics_pi.cpp:3226
 msgid "Speedometer max value:"
-msgstr "スピード メーターの最大値:"
+msgstr "Nilai maks. Speedometer:"
 
 #: src\tactics_pi.cpp:3232
 msgid "Speed Over Ground Damping Factor:"
-msgstr ""
+msgstr "Faktor Kecepatan Peredam Darah Tinggi:"
 
 #: src\tactics_pi.cpp:3238
 msgid "COG Damping Factor:"
-msgstr ""
+msgstr "COG Damping Factor:"
 
 #: src\tactics_pi.cpp:3244
 msgid "Boat speed units:"
-msgstr "船の速度の単位:"
+msgstr "Unit kecepatan kapal:"
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3265
 msgid "Honor OpenCPN settings"
-msgstr ""
+msgstr "Kehormatan pengaturan OpenCPN"
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "Kts"
-msgstr ""
+msgstr "Kts"
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "mph"
-msgstr ""
+msgstr "mph"
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "km/h"
-msgstr ""
+msgstr "km/jam"
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "m/s"
-msgstr ""
+msgstr "m/dtk"
 
 #: src\tactics_pi.cpp:3253
 msgid "Depth units:"
-msgstr "深さの単位:"
+msgstr "Unit Kedalaman:"
 
 #: src\tactics_pi.cpp:3256 src\tactics_pi.cpp:3265
 msgid "Meters"
-msgstr "メートル"
+msgstr "Meter"
 
 #: src\tactics_pi.cpp:3256
 msgid "Feet"
-msgstr "フィート"
+msgstr "Kaki"
 
 #: src\tactics_pi.cpp:3256
 msgid "Fathoms"
@@ -432,151 +433,163 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3256
 msgid "Centimeters"
-msgstr "センチメートル"
+msgstr "Sentimeter"
 
 #: src\tactics_pi.cpp:3256
 msgid "Inches"
-msgstr "インチ"
+msgstr "Inci"
 
 #: src\tactics_pi.cpp:3262
 msgid "Distance units:"
-msgstr "距離の単位:"
+msgstr "Unit jarak jauh:"
 
 #: src\tactics_pi.cpp:3265
 msgid "Nautical miles"
-msgstr "海里"
+msgstr "Mil laut"
 
 #: src\tactics_pi.cpp:3265
 msgid "Statute miles"
-msgstr "法定マイル"
+msgstr "Mil statute"
 
 #: src\tactics_pi.cpp:3265
 msgid "Kilometers"
-msgstr "キロメートル"
+msgstr "Kilometer"
 
 #: src\tactics_pi.cpp:3271
 msgid "Wind speed units:"
-msgstr "風速単位:"
+msgstr "Unit kecepatan angin:"
 
 #: src\tactics_pi.cpp:3292
 msgid "Performance Parameters"
-msgstr "パフォーマンス パラメーター"
+msgstr "Parameter Kinerja"
 
 #: src\tactics_pi.cpp:3294
 msgid "Laylines"
-msgstr "レイライン"
+msgstr ""
 
 #: src\tactics_pi.cpp:3303
 msgid "Layline width damping factor [0.025-1]:  "
-msgstr "レイライン幅減衰係数 [0.025-1]:  "
+msgstr "Layline lebar faktor redaman [0.025-1]:  "
 
 #: src\tactics_pi.cpp:3305
 msgid "The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
 "The idea is to display the COG range where you're sailing to.\n"
 " Low values mean high damping."
-msgstr ""
+msgstr "Lebar perahu laylines didasarkan pada menguapnya perahu (sumbu vertikal), yaitu roda PENGGERAK perubahan.\n"
+" idenya Itu adalah untuk menampilkan COG jarak di mana anda akan berlayar ke.\n"
+" nilai-nilai Rendah berarti redaman tinggi."
 
 #: src\tactics_pi.cpp:3310
 msgid "Width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
 "The idea is to display the range where you're sailing to.\n"
 " Low values mean high damping."
-msgstr ""
+msgstr "Lebar kapal layangan didasarkan pada menguapnya perahu (sumbu vertikal), yaitu perubahan COG Anda.\n"
+" Idenya adalah untuk menampilkan berbagai mana Anda berlayar ke.\n"
+" Nilai rendah berarti redaman tinggi."
 
 #: src\tactics_pi.cpp:3313
 msgid "Layline length on Chart [nm]:  "
-msgstr "チャート上のレイライン長[nm]:  "
+msgstr "Panjang Layline pada Chart [nm]:  "
 
 #: src\tactics_pi.cpp:3315 src\tactics_pi.cpp:3321
 msgid "Length of the boat laylines in [nm]"
-msgstr ""
+msgstr "Panjang perahu laylines di [nm]"
 
 #: src\tactics_pi.cpp:3323
 msgid "Min. Layline Width [°]:"
-msgstr "最小レイライン幅[°]:"
+msgstr "Min. Lebar Layline [°]:"
 
 #: src\tactics_pi.cpp:3325 src\tactics_pi.cpp:3328
 msgid "Min. width of boat laylines in degrees."
-msgstr ""
+msgstr "Min. lebar perahu laylines dalam derajat."
 
 #: src\tactics_pi.cpp:3332
 msgid "Max. Layline Width [°]:"
-msgstr "最大レイライン幅[°]:"
+msgstr "Min. lebar layline [°]:"
 
 #: src\tactics_pi.cpp:3334 src\tactics_pi.cpp:3337
 msgid "Max. width of boat laylines in degrees."
-msgstr ""
+msgstr "Maks. lebar perahu laylines dalam derajat."
 
 #: src\tactics_pi.cpp:3349
 msgid "Boat's Leeway factor [0-20]:  "
-msgstr "ボートのリーウエイ ファクター[0-20]:  "
+msgstr "Faktor kursi perahu [0-20]:  "
 
 #: src\tactics_pi.cpp:3350 src\tactics_pi.cpp:3353
 msgid "Leeway='Drift' of boat due to heel/wind influence\n"
 "Low values mean high performance of hull\n"
 "Leeway = (LeewayFactor * Heel) / STW²;"
-msgstr ""
+msgstr "Leeway='Drift' kapal karena pengaruh tumit/angin\n"
+"Nilai rendah berarti kinerja lambung tinggi\n"
+"Leeway = (LeewayFactor * Heel) / STW²;"
 
 #: src\tactics_pi.cpp:3358
 msgid "Use Heel Sensor"
-msgstr "ヒールセンサー使用"
+msgstr "Gunakan Heel Sensor"
 
 #: src\tactics_pi.cpp:3361
 msgid "Use the internal heel sensor if available\n"
 "Important for the correct calculation of the surface current."
-msgstr ""
+msgstr "Gunakan sensor heel internal jika tersedia\n"
+" Penting untuk perhitungan arus permukaan yang benar."
 
 #: src\tactics_pi.cpp:3365
 msgid "fixed/max Leeway [°]:"
-msgstr "固定/最大リーウェイ[°]:"
+msgstr ""
 
 #: src\tactics_pi.cpp:3368
 msgid "Dual purpose !\n"
 "If Radiobutton is NOT set, then it's used to limit Leeway to a max value.\n"
 " If Radiobutton is set, then it fixes Leeway to this constant value."
-msgstr ""
+msgstr "Tujuan ganda !\n"
+" Jika Radiobutton TIDAK disetel, maka itu digunakan untuk membatasi Leeway ke nilai maksimal.\n"
+" Jika Radiobutton diset, maka akan memperbaiki Leeway ke nilai konstan ini."
 
 #: src\tactics_pi.cpp:3376
 msgid "manual Heel input:"
-msgstr "手動ヒール入力"
+msgstr "masukan Heel manual:"
 
 #: src\tactics_pi.cpp:3379
 msgid "If no heel sensor is available, you can create a manual 'heel polar' here.\n"
 "Just read/enter the data from a mechanical heel sensor (e.g. on compass).\n"
 "Use True Wind Speed & Angle only !\n"
 "Take care: motoring w/o sails&heel will show wrong current data !!!"
-msgstr ""
+msgstr "Jika tidak ada sensor heel yang ada, Anda bisa membuat manual 'heel polar' disini.\n"
+" Cukup baca / masukkan data dari sensor heel mekanis (misalnya di kompas).\n"
+" Gunakan True Wind Speed ​​& Angle only!\n"
+" Berhati-hatilah: motor w / o layar & tumit akan menunjukkan data yang salah !!!"
 
 #: src\tactics_pi.cpp:3393
 msgid "TWS/TWA "
-msgstr ""
+msgstr "TWS/TWA "
 
 #: src\tactics_pi.cpp:3395
 msgid " 45°"
-msgstr ""
+msgstr " 45°"
 
 #: src\tactics_pi.cpp:3397
 msgid " 90°"
-msgstr ""
+msgstr " 90°"
 
 #: src\tactics_pi.cpp:3399
 msgid "135°"
-msgstr ""
+msgstr "135°"
 
 #: src\tactics_pi.cpp:3402
 msgid "5 kn"
-msgstr ""
+msgstr "5 kn"
 
 #: src\tactics_pi.cpp:3416
 msgid "10 kn"
-msgstr ""
+msgstr "10 kn"
 
 #: src\tactics_pi.cpp:3430
 msgid "15 kn"
-msgstr ""
+msgstr "15 kn"
 
 #: src\tactics_pi.cpp:3445
 msgid "20 kn"
-msgstr ""
+msgstr "20 kn"
 
 #: src\tactics_pi.cpp:3459
 msgid "25 kn"
@@ -584,191 +597,197 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3474
 msgid "Current"
-msgstr ""
+msgstr "Terkini"
 
 #: src\tactics_pi.cpp:3489
 msgid "Current damping factor [1-400]:  "
-msgstr ""
+msgstr "Faktor redaman saat ini [1-400]:  "
 
 #: src\tactics_pi.cpp:3490 src\tactics_pi.cpp:3495
 msgid "Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\n"
 "Low values mean high damping"
-msgstr ""
+msgstr "Menstabilkan permukaan saat ini 'panah' dalam grafik overlay, bantalan kompas dan juga numerik instrumen\n"
+"Nilai-nilai rendah berarti redaman tinggi"
 
 #: src\tactics_pi.cpp:3503
 msgid "Display Current on Chart (OpenGL)"
-msgstr ""
+msgstr "Tampilan Terkini pada Bagan (OpenGL)"
 
 #: src\tactics_pi.cpp:3506 src\tactics_pi.cpp:3542 src\tactics_pi.cpp:3565
 msgid "The default on program startup"
-msgstr ""
+msgstr "Kegagalan ketika memulai program"
 
 #: src\tactics_pi.cpp:3508
 msgid "True Wind"
-msgstr ""
+msgstr "Angin sejati"
 
 #: src\tactics_pi.cpp:3516
 msgid "Correct STW with Leeway"
-msgstr ""
+msgstr "Benar STW dengan kelonggaran"
 
 #: src\tactics_pi.cpp:3519
 msgid "Apply a correction to your log speed throughout the plugin based on the calculated Leeway (via the heel sensor).\n"
 "Only makes sense with a real heel sensor.\n"
 "Make sure your instruments do not already apply this correction !"
-msgstr ""
+msgstr "Menerapkan koreksi untuk log anda, kecepatan angin dan semua kecepatan berdasarkan hasil perhitungan Kelonggaran (melalui tumit sensor).\n"
+"Hanya akal dengan tumit sensor yang nyata.\n"
+"pastikan instrumen anda belum menerapkan koreksi ini !"
 
 #: src\tactics_pi.cpp:3521
 msgid "Correct AWS/AWA with Heel"
-msgstr ""
+msgstr "Benar AWS/AWA dengan Heel"
 
 #: src\tactics_pi.cpp:3524
 msgid "Use with care, this is normally done by the instruments themselves as soon as you have an integrated, original equipment heel sensor"
-msgstr ""
+msgstr "Gunakan dengan hati-hati, hal ini biasanya dilakukan dengan alat-alat sendiri segera anda memiliki aplikasi yang terintegrasi, untuk sensor peralatan asli"
 
 #: src\tactics_pi.cpp:3528
 msgid "Force True Wind Calculation"
-msgstr ""
+msgstr "Kekuatan angin perhitungan benar"
 
 #: src\tactics_pi.cpp:3531
 msgid "Internally calculates True Wind data (TWS,TWA,TWD) and uses it within the whole plugin even if there is True Wind data available via NMEA."
-msgstr ""
+msgstr "Secara internal menghitung data True Wind (TWS, TWA, TWD) dan menggunakannya di dalam keseluruhan plugin meskipun ada data True Wind yang tersedia melalui NMEA."
 
 #: src\tactics_pi.cpp:3534
 msgid "Use SOG instead of STW for True Wind Calc."
-msgstr ""
+msgstr "Gunakan SOG bukan STW untuk True Wind Calc."
 
 #: src\tactics_pi.cpp:3537
 msgid "Recommended. As True Wind blows over the earth surface, we should calc. it with Speed Over Ground.\n"
 "Eliminates the influence of currents."
-msgstr ""
+msgstr "Direkomendasikan. Seperti true wind bertiup di atas permukaan bumi, kita harus calc. dengan Speed ​​Over Ground.\n"
+"Mengatur pengaruh arus."
 
 #: src\tactics_pi.cpp:3539
 msgid "Show Wind Barb on Chart (OpenGL)"
-msgstr ""
+msgstr "Tampilan wind bard pada grafik (OpenGL)"
 
 #: src\tactics_pi.cpp:3545
 msgid "Polar"
-msgstr ""
+msgstr "Kutub"
 
 #: src\tactics_pi.cpp:3552
 msgid "Polar :"
-msgstr ""
+msgstr "Kutub :"
 
 #: src\tactics_pi.cpp:3558
 msgid "Load"
-msgstr ""
+msgstr "Memuat"
 
 #: src\tactics_pi.cpp:3562
 msgid "Show Polar on Chart (OpenGL)"
-msgstr ""
+msgstr "Tampilan polar wind pada grafik (OpenGL)"
 
 #: src\tactics_pi.cpp:3567
 msgid "Export NMEA Performance Data"
-msgstr ""
+msgstr "Ekspor Data Kinerja NMEA"
 
 #: src\tactics_pi.cpp:3574
 msgid "NKE format ($PNKEP)"
-msgstr ""
+msgstr "Format nke ($PNKEP)"
 
 #: src\tactics_pi.cpp:3577
 msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
 "Read the manual how to set up the interface connection !"
-msgstr ""
+msgstr "Saat ini hanya disiapkan untuk instrumen NKE. Ekspor satu set standar sampai 5 catatan NMEA yang 'diketahui' oleh instrumen NKE dan dapat ditampilkan di sana. \n"
+" Baca manual bagaimana cara mengatur koneksi antarmuka!"
 
 #: src\tactics_pi.cpp:3583
 msgid "Target Polar Speed"
-msgstr ""
+msgstr "Kecepatan sasaran polar"
 
 #: src\tactics_pi.cpp:3587
 msgid "CoG on other Tack"
-msgstr ""
+msgstr "CoG di Tack lain"
 
 #: src\tactics_pi.cpp:3591
 msgid "Target-VMG angle + Perf. %"
-msgstr ""
+msgstr "Sisi target-VMG + Perf. %"
 
 #: src\tactics_pi.cpp:3595
 msgid "Diff. angle to Target-VMG/-CMG + corresp. gain"
-msgstr ""
+msgstr "Diff. sudut ke Target-VMG/-CMG + corresp. mendapatkan"
 
 #: src\tactics_pi.cpp:3599
 msgid "Current Direction + Speed"
-msgstr ""
+msgstr "Arah sebenarnya + Kecepatan"
 
 #: src\tactics_pi.cpp:3654
 msgid "This option makes only sense with a real heel sensor."
-msgstr ""
+msgstr "Pilihan ini hanya masuk akal dengan sensor hak yang nyata."
 
 #: src\tactics_pi.cpp:3660
 msgid "Make sure your instruments do not internally correct AWS / AWA with heel.\n"
 "This may result in wrong wind data."
-msgstr ""
+msgstr "Pastikan instrumen Anda tidak mengoreksi AWS / AWA secara internal dengan tumit.\n"
+"Ini dapat menyebabkan data angin salah."
 
 #: src\tactics_pi.cpp:3668
 msgid "This will also disable the AWA/AWS correction."
-msgstr ""
+msgstr "Ini juga akan menonaktifkan koreksi AWA/AWS."
 
 #: src\tactics_pi.cpp:3683
 msgid "Select a Polar-File"
-msgstr ""
+msgstr "Pilih polar-Berkas"
 
 #: src\tactics_pi.cpp:3920
 msgid "Add instrument"
-msgstr "機器を追加します。"
+msgstr "Tambahkan instrumen"
 
 #: src\tactics_pi.cpp:3926
 msgid "Select instrument to add:"
-msgstr "追加する計器を選択します。"
+msgstr "Pilih instrumen untuk ditambahkan:"
 
 #: src\tactics_pi.cpp:4020
 msgid "Preferences..."
-msgstr "設定"
+msgstr "Preferensi..."
 
 #: src\tactics_pi.cpp:4022
 msgid "Show Laylines"
-msgstr ""
+msgstr "Tampilkan Laylines"
 
 #: src\tactics_pi.cpp:4025
 msgid "Show Current"
-msgstr ""
+msgstr "Tampilkan Sekarang"
 
 #: src\tactics_pi.cpp:4028
 msgid "Show Windbarb"
-msgstr ""
+msgstr "Tampilkan Windbarb"
 
 #: src\tactics_pi.cpp:4031
 msgid "Show Polar"
-msgstr ""
+msgstr "Tampilkan Polar"
 
 #: src\wind_history.cpp:503
 msgid "NNE"
-msgstr ""
+msgstr "NNE"
 
 #: src\wind_history.cpp:509
 msgid "ENE"
-msgstr ""
+msgstr "ENE"
 
 #: src\wind_history.cpp:515
 msgid "ESE"
-msgstr ""
+msgstr "ESE"
 
 #: src\wind_history.cpp:521
 msgid "SSE"
-msgstr ""
+msgstr "SSE"
 
 #: src\wind_history.cpp:527
 msgid "SSW"
-msgstr ""
+msgstr "SSW"
 
 #: src\wind_history.cpp:533
 msgid "WSW"
-msgstr ""
+msgstr "WSW"
 
 #: src\wind_history.cpp:539
 msgid "WNW"
-msgstr ""
+msgstr "WNW"
 
 #: src\wind_history.cpp:545
 msgid "NNW"
-msgstr ""
+msgstr "NNW"
 

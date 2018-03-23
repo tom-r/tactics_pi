@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-08 17:45+0100\n"
-"PO-Revision-Date: 2017-02-23 09:22-0500\n"
+"PO-Revision-Date: 2018-03-03 08:25-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -20,19 +20,19 @@ msgstr ""
 
 #: src\baro_history.cpp:288 src\performance.cpp:1593 src\wind_history.cpp:647
 msgid "Max"
-msgstr ""
+msgstr "Maks"
 
 #: src\baro_history.cpp:289 src\performance.cpp:1594 src\wind_history.cpp:648
 msgid "since"
-msgstr ""
+msgstr "siden"
 
 #: src\baro_history.cpp:290
 msgid "Overall Max"
-msgstr ""
+msgstr "Gjennomsnitt maks"
 
 #: src\baro_history.cpp:291
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: src\bearingcompass.cpp:797 src\polarcompass.cpp:711
 msgid "R"
@@ -45,7 +45,7 @@ msgstr ""
 #: src\clock.cpp:126 src\dial.cpp:524 src\gps.cpp:142 src\wind.cpp:65
 #: src\wind_history.cpp:500
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:506
 msgid "NE"
@@ -61,7 +61,7 @@ msgstr "SØ"
 
 #: src\dial.cpp:524 src\gps.cpp:150 src\wind.cpp:65 src\wind_history.cpp:524
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: src\dial.cpp:524 src\wind.cpp:65 src\wind_history.cpp:530
 msgid "SW"
@@ -81,19 +81,19 @@ msgstr " virkelig"
 
 #: src\instrument.cpp:258
 msgid " mag"
-msgstr ""
+msgstr " mag"
 
 #: src\performance.cpp:394
 msgid "tactics_pi: Select a Polar-File"
-msgstr ""
+msgstr "tactics_pi: Velg en Polarfil"
 
 #: src\performance.cpp:462
 msgid "Format in this file not recognised"
-msgstr ""
+msgstr "Formatet til denne filen er ikke gjenkjent"
 
 #: src\performance.cpp:1595 src\wind_history.cpp:649
 msgid "Overall"
-msgstr ""
+msgstr "Totalt"
 
 #: src\tactics_pi.cpp:187
 msgid "Position"
@@ -101,19 +101,19 @@ msgstr "Posisjon"
 
 #: src\tactics_pi.cpp:189
 msgid "SOG"
-msgstr ""
+msgstr "SOG"
 
 #: src\tactics_pi.cpp:191
 msgid "Speedometer"
-msgstr ""
+msgstr "Fartsindikator"
 
 #: src\tactics_pi.cpp:193
 msgid "COG"
-msgstr ""
+msgstr "COG"
 
 #: src\tactics_pi.cpp:195
 msgid "Mag COG"
-msgstr ""
+msgstr "Mag COG"
 
 #: src\tactics_pi.cpp:197
 msgid "GPS Compass"
@@ -121,11 +121,11 @@ msgstr "GPS Kompass"
 
 #: src\tactics_pi.cpp:199
 msgid "True Compass"
-msgstr ""
+msgstr "Sann kompass"
 
 #: src\tactics_pi.cpp:201
 msgid "STW"
-msgstr ""
+msgstr "STW"
 
 #: src\tactics_pi.cpp:203
 msgid "True HDG"
@@ -133,7 +133,7 @@ msgstr "Virkelig HDG"
 
 #: src\tactics_pi.cpp:205
 msgid "Mag HDG"
-msgstr ""
+msgstr "Mag. HDG"
 
 #: src\tactics_pi.cpp:208
 msgid "App. Wind Angle & Speed"
@@ -141,7 +141,7 @@ msgstr "Tils. vindretn. & fart"
 
 #: src\tactics_pi.cpp:210
 msgid "App & True Wind Angle"
-msgstr ""
+msgstr "Rel. & virk. vindvinkel"
 
 #: src\tactics_pi.cpp:212 src\tactics_pi.cpp:214
 msgid "App. Wind Speed"
@@ -157,7 +157,7 @@ msgstr "Dybde"
 
 #: src\tactics_pi.cpp:222 src\tactics_pi.cpp:224
 msgid "Barometric pressure"
-msgstr ""
+msgstr "Lufttrykk"
 
 #: src\tactics_pi.cpp:226
 msgid "Water Temp."
@@ -189,7 +189,7 @@ msgstr "Virk. Vindretn. & fart"
 
 #: src\tactics_pi.cpp:240 src\tactics_pi.cpp:242
 msgid "VMG"
-msgstr ""
+msgstr "VMG"
 
 #: src\tactics_pi.cpp:254
 msgid "Clock"
@@ -205,114 +205,115 @@ msgstr "Vindhistogram"
 
 #: src\tactics_pi.cpp:262
 msgid "Barometric history"
-msgstr ""
+msgstr "Lufttrykk histogram"
 
 #: src\tactics_pi.cpp:268
 msgid "TWA to Waypoint"
-msgstr ""
+msgstr "TWA til veipunkt"
 
 #: src\tactics_pi.cpp:270
 msgid "From Ownship"
-msgstr ""
+msgstr "Fra eget skip"
 
 #: src\tactics_pi.cpp:272
 msgid "Pitch"
-msgstr ""
+msgstr "Helling"
 
 #: src\tactics_pi.cpp:274 src\tactics_pi.cpp:3386
 msgid "Heel"
-msgstr ""
+msgstr "Helling"
 
 #: src\tactics_pi.cpp:276 src\tactics_pi.cpp:3340
 msgid "Leeway"
-msgstr ""
+msgstr "Leeway"
 
 #: src\tactics_pi.cpp:278
 msgid "Current Direction"
-msgstr ""
+msgstr "Nåværende retning"
 
 #: src\tactics_pi.cpp:280
 msgid "Current Speed"
-msgstr ""
+msgstr "Nåværende fart"
 
 #: src\tactics_pi.cpp:282
 msgid "Bearing Compass"
-msgstr ""
+msgstr "Peilekompass"
 
 #: src\tactics_pi.cpp:284
 msgid "Polar Speed"
-msgstr ""
+msgstr "Polar fart"
 
 #: src\tactics_pi.cpp:286
 msgid "Actual VMG"
-msgstr ""
+msgstr "Faktisk VMG"
 
 #: src\tactics_pi.cpp:288
 msgid "Target VMG"
-msgstr ""
+msgstr "Ønsket VMG"
 
 #: src\tactics_pi.cpp:290
 msgid "Target VMG-Angle"
-msgstr ""
+msgstr "Ønsket VMG-vinkel"
 
 #: src\tactics_pi.cpp:292
 msgid "Actual CMG"
-msgstr ""
+msgstr "Faktisk CMG"
 
 #: src\tactics_pi.cpp:294
 msgid "Target CMG"
-msgstr ""
+msgstr "Ønsket CMG"
 
 #: src\tactics_pi.cpp:296
 msgid "Target CMG-Angle"
-msgstr ""
+msgstr "Ønsket CMG-vinkel"
 
 #: src\tactics_pi.cpp:298
 msgid "Polar Performance"
-msgstr ""
+msgstr "Polar ytelse"
 
 #: src\tactics_pi.cpp:300
 msgid "Average Wind"
-msgstr ""
+msgstr "Gjennomsnitts vind"
 
 #: src\tactics_pi.cpp:302
 msgid "Polar Compass"
-msgstr ""
+msgstr "Polar kompass"
 
 #: src\tactics_pi.cpp:565 src\tactics_pi.cpp:721 src\tactics_pi.cpp:2825
 #: src\tactics_pi.cpp:2835 src\tactics_pi.cpp:3064 src\tactics_pi.cpp:3103
 #: src\tactics_pi.cpp:3818
 msgid "Tactics"
-msgstr ""
+msgstr "Tactics"
 
 #: src\tactics_pi.cpp:726
 msgid "Tactics PlugIn for OpenCPN"
-msgstr ""
+msgstr "Taktikk utvidelse for OpenCPN"
 
 #: src\tactics_pi.cpp:731
 msgid "Tactics PlugIn for OpenCPN\n"
 "Provides performance data & instrument display from NMEA source and polar file."
-msgstr ""
+msgstr "Taktikk utvidelse for OpenCPN\n"
+"Leverer ytelses data og instrument visning av NMEA kilde og polarfil."
 
 #: src\tactics_pi.cpp:1737
 msgid "You have to turn on OpenGL to use chart overlay "
-msgstr ""
+msgstr "Du må aktivere OpenGL for å benytte kart-overlegg "
 
 #: src\tactics_pi.cpp:2397
 msgid "° Bow up"
-msgstr ""
+msgstr "° Baug opp"
 
 #: src\tactics_pi.cpp:2400
 msgid "° Bow down"
-msgstr ""
+msgstr "° Baug ned"
 
 #: src\tactics_pi.cpp:3039
 msgid "Tactics preferences"
-msgstr ""
+msgstr "Tactics innstillinger"
 
 #: src\tactics_pi.cpp:3110
 msgid "show this tactics"
-msgstr ""
+msgstr "vis denne taktikk"
 
 #: src\tactics_pi.cpp:3116
 msgid "Caption:"
@@ -364,7 +365,7 @@ msgstr "Tittel:"
 
 #: src\tactics_pi.cpp:3200
 msgid "Data:"
-msgstr ""
+msgstr "Data:"
 
 #: src\tactics_pi.cpp:3206
 msgid "Label:"
@@ -376,99 +377,99 @@ msgstr "Liten:"
 
 #: src\tactics_pi.cpp:3220
 msgid "Units, Ranges, Formats"
-msgstr ""
+msgstr "Enheter, Avstander, Formater"
 
 #: src\tactics_pi.cpp:3226
 msgid "Speedometer max value:"
-msgstr ""
+msgstr "Fartindikator maks verdi:"
 
 #: src\tactics_pi.cpp:3232
 msgid "Speed Over Ground Damping Factor:"
-msgstr ""
+msgstr "SOG dempefaktor:"
 
 #: src\tactics_pi.cpp:3238
 msgid "COG Damping Factor:"
-msgstr ""
+msgstr "COG dempefaktor:"
 
 #: src\tactics_pi.cpp:3244
 msgid "Boat speed units:"
-msgstr ""
+msgstr "Båtens fartsenhet:"
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3265
 msgid "Honor OpenCPN settings"
-msgstr ""
+msgstr "OpenCPN ære innstillinger"
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "Kts"
-msgstr ""
+msgstr "Kn"
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "mph"
-msgstr ""
+msgstr "mph"
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "km/h"
-msgstr ""
+msgstr "km/t"
 
 #: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
 msgid "m/s"
-msgstr ""
+msgstr "m/s"
 
 #: src\tactics_pi.cpp:3253
 msgid "Depth units:"
-msgstr ""
+msgstr "Dybde enheter:"
 
 #: src\tactics_pi.cpp:3256 src\tactics_pi.cpp:3265
 msgid "Meters"
-msgstr ""
+msgstr "Meter"
 
 #: src\tactics_pi.cpp:3256
 msgid "Feet"
-msgstr ""
+msgstr "Fot"
 
 #: src\tactics_pi.cpp:3256
 msgid "Fathoms"
-msgstr ""
+msgstr "Favner"
 
 #: src\tactics_pi.cpp:3256
 msgid "Centimeters"
-msgstr ""
+msgstr "Centimeter"
 
 #: src\tactics_pi.cpp:3256
 msgid "Inches"
-msgstr ""
+msgstr "Tommer"
 
 #: src\tactics_pi.cpp:3262
 msgid "Distance units:"
-msgstr ""
+msgstr "Distanseenheter:"
 
 #: src\tactics_pi.cpp:3265
 msgid "Nautical miles"
-msgstr ""
+msgstr "Nautiske mil"
 
 #: src\tactics_pi.cpp:3265
 msgid "Statute miles"
-msgstr ""
+msgstr "Statute mil"
 
 #: src\tactics_pi.cpp:3265
 msgid "Kilometers"
-msgstr ""
+msgstr "Kilometer"
 
 #: src\tactics_pi.cpp:3271
 msgid "Wind speed units:"
-msgstr ""
+msgstr "Fartsenhet for vind:"
 
 #: src\tactics_pi.cpp:3292
 msgid "Performance Parameters"
-msgstr ""
+msgstr "Ytelsesparametre"
 
 #: src\tactics_pi.cpp:3294
 msgid "Laylines"
-msgstr ""
+msgstr "Laylines"
 
 #: src\tactics_pi.cpp:3303
 msgid "Layline width damping factor [0.025-1]:  "
-msgstr ""
+msgstr "Dempefaktor for laylines [0.025-1]:  "
 
 #: src\tactics_pi.cpp:3305
 msgid "The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
@@ -518,7 +519,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3358
 msgid "Use Heel Sensor"
-msgstr ""
+msgstr "Bruk krengesensor"
 
 #: src\tactics_pi.cpp:3361
 msgid "Use the internal heel sensor if available\n"
@@ -537,79 +538,83 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3376
 msgid "manual Heel input:"
-msgstr ""
+msgstr "manuelle krenge data:"
 
 #: src\tactics_pi.cpp:3379
 msgid "If no heel sensor is available, you can create a manual 'heel polar' here.\n"
 "Just read/enter the data from a mechanical heel sensor (e.g. on compass).\n"
 "Use True Wind Speed & Angle only !\n"
 "Take care: motoring w/o sails&heel will show wrong current data !!!"
-msgstr ""
+msgstr "Hvis ingen krengesensor er tilgjengelig, da kan du opprette en manuell 'krenge polar' her.\n"
+"Bare les/skriv inn data fra en mekanisk krengesensor (f.eks. på kompass).\n"
+"Bruk kun virkelig vind hastighet og vinkel!\n"
+"Forsiktig: Crusing med motor uten seil & krengesensor vil vise feil strømdata !!!"
 
 #: src\tactics_pi.cpp:3393
 msgid "TWS/TWA "
-msgstr ""
+msgstr "TWS/TWA "
 
 #: src\tactics_pi.cpp:3395
 msgid " 45°"
-msgstr ""
+msgstr " 45°"
 
 #: src\tactics_pi.cpp:3397
 msgid " 90°"
-msgstr ""
+msgstr " 90°"
 
 #: src\tactics_pi.cpp:3399
 msgid "135°"
-msgstr ""
+msgstr "135°"
 
 #: src\tactics_pi.cpp:3402
 msgid "5 kn"
-msgstr ""
+msgstr "5 kn"
 
 #: src\tactics_pi.cpp:3416
 msgid "10 kn"
-msgstr ""
+msgstr "10 kn"
 
 #: src\tactics_pi.cpp:3430
 msgid "15 kn"
-msgstr ""
+msgstr "15 kn"
 
 #: src\tactics_pi.cpp:3445
 msgid "20 kn"
-msgstr ""
+msgstr "20 kn"
 
 #: src\tactics_pi.cpp:3459
 msgid "25 kn"
-msgstr ""
+msgstr "25 kn"
 
 #: src\tactics_pi.cpp:3474
 msgid "Current"
-msgstr ""
+msgstr "Strøm"
 
 #: src\tactics_pi.cpp:3489
 msgid "Current damping factor [1-400]:  "
-msgstr ""
+msgstr "Dempefaktor for strøm [1-400]:  "
 
 #: src\tactics_pi.cpp:3490 src\tactics_pi.cpp:3495
 msgid "Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\n"
 "Low values mean high damping"
-msgstr ""
+msgstr "Stabiliserer pilen for overflatestrøm i kart-overlegg, peilekompass og numeriske instrumenter\n"
+"Lave verdier betyr høy demping"
 
 #: src\tactics_pi.cpp:3503
 msgid "Display Current on Chart (OpenGL)"
-msgstr ""
+msgstr "Vis strøm over kart (OpenGL)"
 
 #: src\tactics_pi.cpp:3506 src\tactics_pi.cpp:3542 src\tactics_pi.cpp:3565
 msgid "The default on program startup"
-msgstr ""
+msgstr "Standard ved programstart"
 
 #: src\tactics_pi.cpp:3508
 msgid "True Wind"
-msgstr ""
+msgstr "Sann vind"
 
 #: src\tactics_pi.cpp:3516
 msgid "Correct STW with Leeway"
-msgstr ""
+msgstr "Riktig STW med Leeway"
 
 #: src\tactics_pi.cpp:3519
 msgid "Apply a correction to your log speed throughout the plugin based on the calculated Leeway (via the heel sensor).\n"
@@ -619,7 +624,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3521
 msgid "Correct AWS/AWA with Heel"
-msgstr ""
+msgstr "Riktig AWS/AWA med krengesensor"
 
 #: src\tactics_pi.cpp:3524
 msgid "Use with care, this is normally done by the instruments themselves as soon as you have an integrated, original equipment heel sensor"
@@ -627,7 +632,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3528
 msgid "Force True Wind Calculation"
-msgstr ""
+msgstr "Tving kalkulasjon av sann vind"
 
 #: src\tactics_pi.cpp:3531
 msgid "Internally calculates True Wind data (TWS,TWA,TWD) and uses it within the whole plugin even if there is True Wind data available via NMEA."
@@ -635,7 +640,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3534
 msgid "Use SOG instead of STW for True Wind Calc."
-msgstr ""
+msgstr "Bruk SOG i stedet for STW for kalkulering av sann vind."
 
 #: src\tactics_pi.cpp:3537
 msgid "Recommended. As True Wind blows over the earth surface, we should calc. it with Speed Over Ground.\n"
@@ -648,19 +653,19 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3545
 msgid "Polar"
-msgstr ""
+msgstr "Polar"
 
 #: src\tactics_pi.cpp:3552
 msgid "Polar :"
-msgstr ""
+msgstr "Polar :"
 
 #: src\tactics_pi.cpp:3558
 msgid "Load"
-msgstr ""
+msgstr "Last"
 
 #: src\tactics_pi.cpp:3562
 msgid "Show Polar on Chart (OpenGL)"
-msgstr ""
+msgstr "Vis polar på kart (OpenGL)"
 
 #: src\tactics_pi.cpp:3567
 msgid "Export NMEA Performance Data"
@@ -668,7 +673,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3574
 msgid "NKE format ($PNKEP)"
-msgstr ""
+msgstr "NKE format ($PNKEP)"
 
 #: src\tactics_pi.cpp:3577
 msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
@@ -677,11 +682,11 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3583
 msgid "Target Polar Speed"
-msgstr ""
+msgstr "Ønsket Polarfart"
 
 #: src\tactics_pi.cpp:3587
 msgid "CoG on other Tack"
-msgstr ""
+msgstr "COG på et annet Tack"
 
 #: src\tactics_pi.cpp:3591
 msgid "Target-VMG angle + Perf. %"
@@ -710,7 +715,7 @@ msgstr ""
 
 #: src\tactics_pi.cpp:3683
 msgid "Select a Polar-File"
-msgstr ""
+msgstr "Velg en polarfil"
 
 #: src\tactics_pi.cpp:3920
 msgid "Add instrument"
@@ -726,19 +731,19 @@ msgstr "Egenskaper..."
 
 #: src\tactics_pi.cpp:4022
 msgid "Show Laylines"
-msgstr ""
+msgstr "Vis Laylines"
 
 #: src\tactics_pi.cpp:4025
 msgid "Show Current"
-msgstr ""
+msgstr "Vis Strøm"
 
 #: src\tactics_pi.cpp:4028
 msgid "Show Windbarb"
-msgstr ""
+msgstr "Vis Vindpil"
 
 #: src\tactics_pi.cpp:4031
 msgid "Show Polar"
-msgstr ""
+msgstr "Vis Polar"
 
 #: src\wind_history.cpp:503
 msgid "NNE"
