@@ -75,6 +75,7 @@ int g_iDashDistanceUnit;  //0="Nautical miles", 1="Statute miles", 2="Kilometers
 int g_iDashWindSpeedUnit; //0="Kts", 1="mph", 2="km/h", 3="m/s"
 //TR
 double g_dalphaDeltCoG;
+double g_dalphaLaylinedDampFactor;
 double g_dLeewayFactor;
 double g_dfixedLeeway;
 double g_dalpha_currdir;
@@ -105,6 +106,7 @@ bool g_bExpPerfData02;
 bool g_bExpPerfData03;
 bool g_bExpPerfData04;
 bool g_bExpPerfData05;
+bool g_bNKE_TrueWindTableBug;//variable for NKE TrueWindTable-Bugfix
 bool b_tactics_dc_message_shown = false;
 wxString g_sCMGSynonym, g_sVMGSynonym;
 
@@ -485,10 +487,11 @@ int tactics_pi::Init(void)
     mTWD_Watchdog = 5;
     mAWS_Watchdog = 2;
     //************TR
-
+    m_bNKE_TrueWindTableBug = false;
+    m_VWR_AWA = 10;
 	alpha_currspd = 0.2;  //smoothing constant for current speed
 	alpha_CogHdt = 0.1; // smoothing constant for diff. btw. Cog & Hdt
-	m_alphaLaylineCog = 0.2; //0.1
+//	m_alphaLaylineCog = 0.15; //0.1 ;now via g_dalphaLaylinedDampFactor
 	m_ExpSmoothCurrSpd = NAN;
 	m_ExpSmoothCurrDir = NAN;
 	m_ExpSmoothSog = NAN;
@@ -503,8 +506,10 @@ int tactics_pi::Init(void)
 	mCosCurrDir = new DoubleExpSmooth(g_dalpha_currdir);
 	mExpSmoothCurrSpd = new ExpSmooth(alpha_currspd);
 	mExpSmoothSog = new DoubleExpSmooth(0.4);
-	mExpSmSinCog = new ExpSmooth(m_alphaLaylineCog);
-	mExpSmCosCog = new ExpSmooth(m_alphaLaylineCog);
+//    mExpSmSinCog = new DoubleExpSmooth(m_alphaLaylineCog);//prev. ExpSmooth(...
+//    mExpSmCosCog = new DoubleExpSmooth(m_alphaLaylineCog);//prev. ExpSmooth(...
+    mExpSmSinCog = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);//prev. ExpSmooth(...
+    mExpSmCosCog = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);//prev. ExpSmooth(...
     m_ExpSmoothDegRange = 0;
 	mExpSmDegRange = new ExpSmooth(g_dalphaDeltCoG);
 	mExpSmDegRange->SetInitVal(g_iMinLaylineWidth);
@@ -1810,8 +1815,8 @@ void tactics_pi::CalculateLaylineDegreeRange(void)
 
       //shifting
       double rad = (90 - mCOG)*M_PI / 180.;
-      mExpSmSinCog->SetAlpha(m_alphaLaylineCog);
-      mExpSmCosCog->SetAlpha(m_alphaLaylineCog);
+      mExpSmSinCog->SetAlpha(g_dalphaLaylinedDampFactor);
+      mExpSmCosCog->SetAlpha(g_dalphaLaylinedDampFactor);
       m_ExpSmoothSinCog = mExpSmSinCog->GetSmoothVal(sin(rad));
       m_ExpSmoothCosCog = mExpSmCosCog->GetSmoothVal(cos(rad));
 
@@ -2117,8 +2122,34 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 						_T("\u00B0M"));
 					mTWD_Watchdog = gps_watchdog_timeout_ticks;
 				}
-
-				SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, toUsrSpeed_Plugin(m_NMEA0183.Mwd.WindSpeedKnots, g_iDashWindSpeedUnit),
+                
+                // NKE has a bug in its TWS calculation with activated(!) "True Wind Tables" in combination of Multigraphic instrument and HR wind sensor
+                // this almost duplicates the TWS values delivered in MWD & VWT and destroys the Wind history view, showing weird peaks
+                // It is particularly annoying when @anchor and trying to record windspeeds ...
+                // It seems to happen only when 
+                // * VWR sentence --> AWA changes from "Left" to "Right" through 0° AWA
+                // * with low AWA values like 0...4 degrees
+                // NMEA stream looks like this:
+                //  $IIMWD,,,349,M,6.6,N,3.4,M*29                 6.6N TWS
+                //  $IIVWT, 3, R, 7.1, N, 3.7, M, 13.1, K * 63
+                //  $IIVWR, 0, R, 7.9, N, 4.1, M, 14.6, K * 6F    it seems to begin with 0°AWA ...
+                //  $IIMWD, , , 346, M, 15.3, N, 7.9, M * 18      jump from 6.6 to 15.3 TWS ...
+                //  $IIVWT, 7, R, 15.3, N, 7.9, M, 28.3, K * 56   VWT also has 15.3 TWS
+                //  $IIVWR, 1, L, 8.6, N, 4.4, M, 15.9, K * 7B     1°AWA
+                //  $IIMWD, , , 345, M, 15.8, N, 8.1, M * 17       still 15.8 TWS
+                //  $IIVWT, 1, L, 8.6, N, 4.4, M, 15.9, K * 7D     VWT now back to 8.6 TWS
+                //  $IIVWR, 0, R, 9.0, N, 4.6, M, 16.7, K * 6C     passing 0°AWA again
+                //  $IIMWD, , , 335, M, 17.6, N, 9.1, M * 1D       jump to 17.6 TWS
+                //  $IIVWT, 8, R, 17.6, N, 9.1, M, 32.6, K * 56    still 17.6 TWS 
+                //  $IIVWR, 4, R, 9.1, N, 4.7, M, 16.9, K * 66     VWR increasing to 4°AWA...
+                //  $IIMWD, , , 335, M, 9.0, N, 4.6, M*2E          and back to normal, 9 TWS
+                // trying to catch this here and simply drop the false speed values 
+               
+                if (m_bNKE_TrueWindTableBug && m_VWR_AWA < 8 && m_NMEA0183.Mwd.WindSpeedKnots > mTWS*1.7)
+                  ;//gotcha
+                //wxLogMessage("MWD-Sentence, MWD-Spd=%f,mTWS=%f,VWR_AWA=%f,NKE_BUG=%d", m_NMEA0183.Mwd.WindSpeedKnots, mTWS, m_VWR_AWA, m_bNKE_TrueWindTableBug);
+                else
+				  SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, toUsrSpeed_Plugin(m_NMEA0183.Mwd.WindSpeedKnots, g_iDashWindSpeedUnit),
 					getUsrSpeedUnit_Plugin(g_iDashWindSpeedUnit));
 				mTWS_Watchdog = gps_watchdog_timeout_ticks;
 
@@ -2175,7 +2206,7 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 							}
 							SendSentenceToAllInstruments(OCPN_DBP_STC_TWA,
 								m_twaangle, m_twaunit);
-							SendSentenceToAllInstruments(OCPN_DBP_STC_TWS,
+							  SendSentenceToAllInstruments(OCPN_DBP_STC_TWS,
 								toUsrSpeed_Plugin(m_NMEA0183.Mwv.WindSpeed * m_wSpeedFactor, g_iDashWindSpeedUnit),
 								getUsrSpeedUnit_Plugin(g_iDashWindSpeedUnit));
 							mTWS_Watchdog = gps_watchdog_timeout_ticks;
@@ -2386,11 +2417,13 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 		* to the vessel's heading, and wind speed measured relative to the moving vessel. */
 		else if (m_NMEA0183.LastSentenceIDReceived == _T("VWR")) {
 			if (m_NMEA0183.Parse()) {
+                m_VWR_AWA = m_NMEA0183.Vwr.WindDirectionMagnitude; //for NKE TrueWindTable-Bugfix, see MWD sentence
 				if (mPriAWA >= 2) {
 					mPriAWA = 2;
 
 					wxString awaunit;
 					awaunit = m_NMEA0183.Vwr.DirectionOfWind == Left ? _T("\u00B0L") : _T("\u00B0R");
+                    
 					SendSentenceToAllInstruments(OCPN_DBP_STC_AWA,
 						m_NMEA0183.Vwr.WindDirectionMagnitude, awaunit);
 					SendSentenceToAllInstruments(OCPN_DBP_STC_AWS, toUsrSpeed_Plugin(m_NMEA0183.Vwr.WindSpeedKnots, g_iDashWindSpeedUnit),
@@ -2417,7 +2450,11 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 					vwtunit = m_NMEA0183.Vwt.DirectionOfWind == Left ? _T("\u00B0L") : _T("\u00B0R");
 					SendSentenceToAllInstruments(OCPN_DBP_STC_TWA,
 						m_NMEA0183.Vwt.WindDirectionMagnitude, vwtunit);
-					SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, toUsrSpeed_Plugin(m_NMEA0183.Vwt.WindSpeedKnots, g_iDashWindSpeedUnit),
+                    if (m_bNKE_TrueWindTableBug &&  m_VWR_AWA < 5 && m_NMEA0183.Vwt.WindSpeedKnots > mTWS*1.7)
+                      ;//gotcha
+                   // wxLogMessage("VWT-Sentence, VWT-Spd=%f,mTWS=%f,VWR_AWA=%f,NKE_BUG=%d", m_NMEA0183.Vwt.WindSpeedKnots, mTWS, m_VWR_AWA, m_bNKE_TrueWindTableBug);
+                    else
+					  SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, toUsrSpeed_Plugin(m_NMEA0183.Vwt.WindSpeedKnots, g_iDashWindSpeedUnit),
 						getUsrSpeedUnit_Plugin(g_iDashWindSpeedUnit));
 					mTWS_Watchdog = gps_watchdog_timeout_ticks;
 					/*
@@ -2832,6 +2869,9 @@ bool tactics_pi::LoadConfig(void)
 		pConf->Read(_T("ExpTargetVMG"), &g_bExpPerfData03, false);
 		pConf->Read(_T("ExpVMG_CMG_Diff_Gain"), &g_bExpPerfData04, false);
 		pConf->Read(_T("ExpCurrent"), &g_bExpPerfData05, false);
+        pConf->Read(_T("NKE_TrueWindTableBug"), &g_bNKE_TrueWindTableBug, false);
+        m_bNKE_TrueWindTableBug = g_bNKE_TrueWindTableBug;
+
 		pConf->SetPath(_T("/PlugIns/Tactics"));
 
 		wxString version;
@@ -2856,6 +2896,7 @@ bool tactics_pi::LoadConfig(void)
 		pConf->Read(_T("DistanceUnit"), &g_iDashDistanceUnit, 0);
 		pConf->Read(_T("WindSpeedUnit"), &g_iDashWindSpeedUnit, 0);
 		pConf->Read(_T("CurrentDampingFactor"), &g_dalpha_currdir, 0.008);
+        pConf->Read(_T("LaylineDampingFactor"), &g_dalphaLaylinedDampFactor, 0.15);
 		pConf->Read(_T("LaylineLenghtonChart"), &g_dLaylineLengthonChart, 10.0);
 		pConf->Read(_T("MinLaylineWidth"), &g_iMinLaylineWidth, 4);
 		pConf->Read(_T("MaxLaylineWidth"), &g_iMaxLaylineWidth, 30);
@@ -2863,7 +2904,6 @@ bool tactics_pi::LoadConfig(void)
 		pConf->Read(_T("ShowCurrentOnChart"), &g_bDisplayCurrentOnChart, false);
 		pConf->Read(_T("CMGSynonym"), &g_sCMGSynonym, _T("CMG"));
 		pConf->Read(_T("VMGSynonym"), &g_sVMGSynonym, _T("VMG"));
-
 		m_bDisplayCurrentOnChart = g_bDisplayCurrentOnChart;
 		int d_cnt;
 		pConf->Read(_T("TacticsCount"), &d_cnt, -1);
@@ -2971,6 +3011,7 @@ bool tactics_pi::SaveConfig(void)
 		pConf->Write(_T("WindSpeedUnit"), g_iDashWindSpeedUnit);
 		pConf->Write(_T("TacticsCount"), (int)m_ArrayOfTacticsWindow.GetCount());
 		pConf->Write(_T("CurrentDampingFactor"), g_dalpha_currdir);
+        pConf->Write(_T("LaylineDampingFactor"), g_dalphaLaylinedDampFactor);
 		pConf->Write(_T("LaylineLenghtonChart"), g_dLaylineLengthonChart);
 		pConf->Write(_T("MinLaylineWidth"), g_iMinLaylineWidth);
 		pConf->Write(_T("MaxLaylineWidth"), g_iMaxLaylineWidth);
@@ -3374,7 +3415,17 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	itemFlexGridSizer05->AddGrowableCol(1);
 	itemStaticBoxSizer05->Add(itemFlexGridSizer05, 1, wxEXPAND | wxALL, 0);
 	wxString s;
-	//--------------------
+    //---Layline damping factor -----------------
+    wxStaticText* itemStaticText18 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Layline damping factor [0.025-1]:  "),
+      wxDefaultPosition, wxDefaultSize, 0);
+    itemStaticText18->SetToolTip(_("The layline damping factor determines how fast the  laylines react on your course changes, i.e. your COG changes.\n Low values mean high damping."));
+    itemFlexGridSizer05->Add(itemStaticText18, 0, wxEXPAND | wxALL, border_size);
+    m_alphaLaylineDampFactor = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0.025, 1, g_dalphaLaylinedDampFactor, 0.001);
+    itemFlexGridSizer05->Add(m_alphaLaylineDampFactor, 0, wxALIGN_LEFT, 0);
+    m_alphaLaylineDampFactor->SetValue(g_dalphaLaylinedDampFactor);
+    m_alphaLaylineDampFactor->SetToolTip(_("The layline damping factor determines how fast the  laylines react on your course changes, i.e. your COG changes.\n Low values mean high damping."));
+
+    //--------------------
 	wxStaticText* itemStaticText20 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Layline width damping factor [0.025-1]:  "),
 		wxDefaultPosition, wxDefaultSize, 0);
 	itemStaticText20->SetToolTip(_("The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\nThe idea is to display the COG range where you're sailing to.\n Low values mean high damping."));
@@ -3788,6 +3839,7 @@ void TacticsPreferencesDialog::SaveTacticsConfig()
 	g_dalpha_currdir = (double)m_AlphaCurrDir->GetValue() / 1000.0;
 	//    g_dalpha_currdir = m_AlphaCurrDir->GetValue();
 	g_dalphaDeltCoG = m_alphaDeltCoG->GetValue();
+    g_dalphaLaylinedDampFactor = m_alphaLaylineDampFactor->GetValue();
 	g_dLaylineLengthonChart = m_pLaylineLength->GetValue();
 	g_iMinLaylineWidth = m_minLayLineWidth->GetValue();
 	g_iMaxLaylineWidth = m_maxLayLineWidth->GetValue();
@@ -4117,7 +4169,7 @@ void TacticsWindow::OnContextMenuSelect(wxCommandEvent& event)
 {
 	if (event.GetId() < ID_DASH_PREFS) { // Toggle tactics visibility
 		m_plugin->ShowTactics(event.GetId() - 1, event.IsChecked());
-		if (m_plugin)
+//		if (m_plugin) adoption to dashboar_pi.cpp as of 19.02.2018
 			SetToolbarItemState(m_plugin->GetToolbarItemId(), m_plugin->GetTacticsWindowShownCount() != 0);
 	}
 

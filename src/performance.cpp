@@ -1212,6 +1212,7 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_STW | OCPN_DBP_STC_TWA | OCPN_
   m_MaxBoatSpd = 0;
   m_STWUnit = _T("--");
   m_PercentUnit = _T("%");
+  num_of_scales = 6;
   m_TotalMaxSpdPercent = 0;
   m_TopLineHeight = 30;
   m_SpdStartVal = -1;
@@ -1323,6 +1324,53 @@ void TacticsInstrument_PolarPerformance::Draw(wxGCDC* dc)
 //*********************************************************************************
 void  TacticsInstrument_PolarPerformance::DrawBoatSpeedScale(wxGCDC* dc)
 {
+  wxString label[41]; // max 800%
+  wxColour cl;
+  wxPen pen;
+  int width, height;
+  double BoatSpdScale;
+  int tmpval = (int)(m_MaxBoatSpd + 2) % 2;
+  m_MaxBoatSpdScale = (int)(m_MaxBoatSpd + 2 - tmpval);
+
+  cl = wxColour(204, 41, 41, 255); //red, opague
+
+  dc->SetTextForeground(cl);
+  dc->SetFont(*g_pFontSmall);
+  if (!m_IsRunning) {
+    for (int i = 0; i < num_of_scales; i++)
+      label[i].Printf(_T("--- %s"), m_STWUnit);
+  }
+  else {
+    /*we round the speed up to the next full knot ==> the top and bottom line have full numbers as legend (e.g. 23 kn -- 0 kn)
+    but the intermediate lines may have decimal values (e.g. center line : 23/2=11.5 or quarter line 23/4=5.75), so in worst case
+    we end up with 23 - 17.25 - 11.5 - 5.75 - 0
+    The goal is to draw the legend with decimals only, if we really have them !
+    */
+
+    // label 1 : legend for bottom line. By definition always w/o decimals
+    label[0].Printf(_T("%.0f %s"), toUsrSpeed_Plugin(m_MinBoatSpd, g_iDashSpeedUnit), m_STWUnit.c_str());
+    for (int i = 1; i < num_of_scales; i++){
+      // legend every 20 %
+      BoatSpdScale = m_MaxBoatSpdScale * i * 1. / (num_of_scales - 1);
+      label[i].Printf(_T("%.1f %s"), toUsrSpeed_Plugin(BoatSpdScale, g_iDashSpeedUnit), m_STWUnit.c_str());
+    }
+  }
+  //draw the legend with the labels; find the widest string and store it in m_RightLegend.
+  // m_RightLegend is the basis for the horizontal lines !
+  dc->GetTextExtent(label[num_of_scales - 1], &m_RightLegend, &height, 0, 0, g_pFontSmall);
+  for (int i = 0; i < (num_of_scales - 1); i++){
+    dc->GetTextExtent(label[i], &width, &height, 0, 0, g_pFontSmall);
+    m_RightLegend = wxMax(width, m_RightLegend);
+  }
+  m_RightLegend += 4; //leave some space to the edge
+  for (int i = 0; i < num_of_scales; i++)
+    dc->DrawText(label[i], m_WindowRect.width - m_RightLegend, (int)(m_TopLineHeight + m_DrawAreaRect.height - (m_DrawAreaRect.height* i * 1./(double)(num_of_scales-1)) - height / 2));
+}
+//*********************************************************************************
+// draw boat speed legend (right side)
+//*********************************************************************************
+/*void  TacticsInstrument_PolarPerformance::DrawBoatSpeedScale(wxGCDC* dc)
+{
   wxString label1, label2, label3, label4, label5;
   wxColour cl;
   wxPen pen;
@@ -1343,11 +1391,11 @@ void  TacticsInstrument_PolarPerformance::DrawBoatSpeedScale(wxGCDC* dc)
     label5 = label1;
   }
   else {
-    /*we round the speed up to the next full knot ==> the top and bottom line have full numbers as legend (e.g. 23 kn -- 0 kn)
-    but the intermediate lines may have decimal values (e.g. center line : 23/2=11.5 or quarter line 23/4=5.75), so in worst case
-    we end up with 23 - 17.25 - 11.5 - 5.75 - 0
-    The goal is to draw the legend with decimals only, if we really have them !
-    */
+    //we round the speed up to the next full knot ==> the top and bottom line have full numbers as legend (e.g. 23 kn -- 0 kn)
+    //but the intermediate lines may have decimal values (e.g. center line : 23/2=11.5 or quarter line 23/4=5.75), so in worst case
+    //we end up with 23 - 17.25 - 11.5 - 5.75 - 0
+    //The goal is to draw the legend with decimals only, if we really have them !
+    
     // label 1 : legend for bottom line. By definition always w/o decimals
     label1.Printf(_T("%.0f %s"), toUsrSpeed_Plugin(m_MinBoatSpd, g_iDashSpeedUnit), m_STWUnit.c_str());
     // label 2 : 1/4
@@ -1388,7 +1436,7 @@ void  TacticsInstrument_PolarPerformance::DrawBoatSpeedScale(wxGCDC* dc)
 //*********************************************************************************
 void  TacticsInstrument_PolarPerformance::DrawPercentSpeedScale(wxGCDC* dc)
 {
-  wxString label1, label2, label3, label4, label5;
+  wxString label1, label2, label3, label4, label5, label100;
   wxColour cl;
   int width, height;
   double val1;
@@ -1397,24 +1445,25 @@ void  TacticsInstrument_PolarPerformance::DrawPercentSpeedScale(wxGCDC* dc)
   cl = wxColour(61, 61, 204, 255);
   dc->SetTextForeground(cl);
   dc->SetFont(*g_pFontSmall);
-  //round maxWindSpd up to the next full knot; nicer view ...
-//  m_MaxPercentScale = (int)100;
-  //m_MaxPercentScale = (int)m_MaxPercent + 1;
   int tmpval = (int)(m_MaxPercent + 10) % 10;
   m_MaxPercentScale = (int)(m_MaxPercent + 10 - tmpval);
+  if (m_MaxPercentScale < 100.0)m_MaxPercentScale = 100.0;
   if (!m_IsRunning) {
     label1.Printf(_T("--- %s"), m_PercentUnit);
     label2 = label1;
     label3 = label1;
     label4 = label1;
     label5 = label1;
+    label100 = label1;
   }
   else {
-    /*we round the speed up to the next full knot ==> the top and bottom line have full numbers as legend (e.g. 23 kn -- 0 kn)
-    but the intermediate lines may have decimal values (e.g. center line : 23/2=11.5 or quarter line 23/4=5.75), so in worst case
-    we end up with 23 - 17.25 - 11.5 - 5.75 - 0
-    The goal is to draw the legend with decimals only, if we really have them !
-    */
+    //we round the speed up to the next full knot ==> the top and bottom line have full numbers as legend (e.g. 23 kn -- 0 kn)
+    //but the intermediate lines may have decimal values (e.g. center line : 23/2=11.5 or quarter line 23/4=5.75), so in worst case
+    //we end up with 23 - 17.25 - 11.5 - 5.75 - 0
+    //The goal is to draw the legend with decimals only, if we really have them !
+    //
+    // legend for 100 %
+    label100.Printf(_T("%.0f %s"), 100.0, m_PercentUnit);
     // top legend for max %
     label1.Printf(_T("%.0f %s"), m_MaxPercentScale, m_PercentUnit);
     // 3/4 legend
@@ -1449,6 +1498,10 @@ void  TacticsInstrument_PolarPerformance::DrawPercentSpeedScale(wxGCDC* dc)
     //bottom legend for min wind, always 0
     label5.Printf(_T("%.0f %s"), 0.0, m_PercentUnit);
   }
+  if (m_MaxPercentScale > 100.0){
+    dc->GetTextExtent(label100, &width, &height, 0, 0, g_pFontSmall);
+    dc->DrawText(label100, 4, (int)(m_TopLineHeight + m_DrawAreaRect.height * 100.0 / m_MaxPercentScale - height / 2));
+  }
   dc->GetTextExtent(label1, &m_LeftLegend, &height, 0, 0, g_pFontSmall);
   dc->DrawText(label1, 4, (int)(m_TopLineHeight - height / 2));
   dc->GetTextExtent(label2, &width, &height, 0, 0, g_pFontSmall);
@@ -1464,12 +1517,11 @@ void  TacticsInstrument_PolarPerformance::DrawPercentSpeedScale(wxGCDC* dc)
   dc->DrawText(label5, 4, (int)(m_TopLineHeight + m_DrawAreaRect.height - height / 2));
   m_LeftLegend = wxMax(width, m_LeftLegend);
   m_LeftLegend += 4;
-}
-
+}*/
 //*********************************************************************************
 //draw background
 //*********************************************************************************
-void TacticsInstrument_PolarPerformance::DrawBackground(wxGCDC* dc)
+/*void TacticsInstrument_PolarPerformance::DrawBackground(wxGCDC* dc)
 {
   wxString label, label1, label2, label3, label4, label5;
   wxColour cl;
@@ -1483,6 +1535,13 @@ void TacticsInstrument_PolarPerformance::DrawBackground(wxGCDC* dc)
   //---------------------------------------------------------------------------------
   // horizontal lines
   //---------------------------------------------------------------------------------
+  //100% line
+  if (m_MaxPercentScale > 100.0){
+    GetGlobalColor(_T("URED"), &cl);
+    pen.SetColour(cl);
+    dc->SetPen(pen);
+    dc->DrawLine(m_LeftLegend + 3, (int)(m_TopLineHeight + m_DrawAreaRect.height * 100.0 / m_MaxPercentScale), m_WindowRect.width - 3 - m_RightLegend, (int)(m_TopLineHeight + m_DrawAreaRect.height * 100.0 / m_MaxPercentScale));
+  }
   GetGlobalColor(_T("UBLCK"), &cl);
   pen.SetColour(cl);
   dc->SetPen(pen);
@@ -1497,6 +1556,79 @@ void TacticsInstrument_PolarPerformance::DrawBackground(wxGCDC* dc)
   dc->SetPen(pen);
 #endif  
   dc->DrawLine(m_LeftLegend + 3, (int)(m_TopLineHeight + m_DrawAreaRect.height*0.5), m_WindowRect.width - 3 - m_RightLegend, (int)(m_TopLineHeight + m_DrawAreaRect.height*0.5));
+}*/
+//*********************************************************************************
+// draw percent boat speed scale (left side)
+//*********************************************************************************
+void  TacticsInstrument_PolarPerformance::DrawPercentSpeedScale(wxGCDC* dc)
+{
+  wxString label[41],labeloor; // max 800%
+  wxColour cl;
+  int width, height;
+
+  cl = wxColour(61, 61, 204, 255);
+  dc->SetTextForeground(cl);
+  dc->SetFont(*g_pFontSmall);
+  int tmpval = (int)(m_MaxPercent + 20) % 20;
+  m_MaxPercentScale = (int)(m_MaxPercent + 20 - tmpval);
+  if (m_MaxPercentScale < 100.0){
+    m_MaxPercentScale = 100.0; //show min 100% 
+    num_of_scales = 6;
+  }else
+    num_of_scales = m_MaxPercentScale / 20 + 1;
+  if (num_of_scales > 41){
+    num_of_scales = 41; //avoid overrun of label[41]
+    dc->SetFont(*g_pFontData);
+    labeloor.Printf(_T("Polar data out of range"));
+    dc->GetTextExtent(labeloor, &width, &height, 0, 0, g_pFontData);
+    dc->DrawText(labeloor, 4 + m_DrawAreaRect.width/2 - width/2, (int)(m_TopLineHeight + m_DrawAreaRect.height / 2 - height / 2));
+  }
+  if (!m_IsRunning) {
+    for (int i = 0; i < num_of_scales; i++)
+      label[i].Printf(_T("--- %s"), m_PercentUnit);
+  }
+  else {
+    /*we round the speed up to the next full knot 
+    */
+    for (int i = 0; i < num_of_scales; i++)
+      // legend every 20 %
+      label[i].Printf(_T("%i %s"), (int)(i*20), m_PercentUnit);
+
+  }
+  dc->GetTextExtent(label[num_of_scales-1], &m_LeftLegend, &height, 0, 0, g_pFontSmall);
+  for (int i = 0; i < (num_of_scales - 1); i++){
+    dc->GetTextExtent(label[i], &width, &height, 0, 0, g_pFontSmall);
+    m_LeftLegend = wxMax(width, m_LeftLegend);
+  }
+  m_LeftLegend += 4;
+
+  for (int i = 0; i < num_of_scales; i++){
+    dc->DrawText(label[i], 4, (int)(m_TopLineHeight + m_DrawAreaRect.height - (m_DrawAreaRect.height* i *  1. / (num_of_scales - 1)) - height / 2));
+  }
+}
+
+//*********************************************************************************
+//draw background
+//*********************************************************************************
+void TacticsInstrument_PolarPerformance::DrawBackground(wxGCDC* dc)
+{
+  wxString label, label1, label2, label3, label4, label5;
+  wxColour cl;
+  wxPen pen;
+  //---------------------------------------------------------------------------------
+  // draw legends for speed and direction
+  //---------------------------------------------------------------------------------
+  DrawPercentSpeedScale(dc);
+  DrawBoatSpeedScale(dc);
+
+  //---------------------------------------------------------------------------------
+  // horizontal lines
+  //---------------------------------------------------------------------------------
+  GetGlobalColor(_T("UBLCK"), &cl);
+  pen.SetColour(cl);
+  dc->SetPen(pen);
+   for (int i = 0; i < num_of_scales; i++)
+    dc->DrawLine(m_LeftLegend + 3, (int)(m_TopLineHeight + m_DrawAreaRect.height - (m_DrawAreaRect.height* i *  1. / (num_of_scales - 1))), m_WindowRect.width - 3 - m_RightLegend, (int)(m_TopLineHeight + m_DrawAreaRect.height - (m_DrawAreaRect.height* i *  1. / (num_of_scales - 1))));
 }
 
 
