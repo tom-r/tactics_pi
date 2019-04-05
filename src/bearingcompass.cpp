@@ -184,7 +184,7 @@ void TacticsInstrument_BearingCompass::SetData(int st, double data, wxString uni
 }
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::Draw(wxGCDC* bdc)
+void TacticsInstrument_BearingCompass::Draw(myDC* bdc)
 {
 	wxColour c1;
 	GetGlobalColor(_T("DASHB"), &c1);
@@ -225,14 +225,14 @@ void TacticsInstrument_BearingCompass::Draw(wxGCDC* bdc)
 }
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_BearingCompass::DrawBackground(myDC* dc)
 {
     DrawCompassRose( dc, m_cx, m_cy, 0.7 * m_radius, m_AngleStart, true );
 	DrawBoat(dc, m_cx, m_cy, m_radius);
 }
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawWindAngles(wxGCDC* dc)
+void TacticsInstrument_BearingCompass::DrawWindAngles(myDC* dc)
 {
 	// draw the wind needles for AWA and TWA. We don't use the standard ones, as they are to big.
 	// 
@@ -400,7 +400,7 @@ void TacticsInstrument_BearingCompass::DrawWindAngles(wxGCDC* dc)
 /***************************************************************************************
 Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawTargetxMGAngle(wxGCDC* dc){
+void TacticsInstrument_BearingCompass::DrawTargetxMGAngle(myDC* dc){
   if (!wxIsNaN(m_TWS)) {
     // get Target VMG Angle from Polar
     TargetxMG tvmg_up = BoatPolar->GetTargetVMGUpwind(m_TWS);
@@ -427,7 +427,7 @@ void TacticsInstrument_BearingCompass::DrawTargetxMGAngle(wxGCDC* dc){
 /***************************************************************************************
 Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawTargetAngle(wxGCDC* dc, double TargetAngle, wxString color, int size){
+void TacticsInstrument_BearingCompass::DrawTargetAngle(myDC* dc, double TargetAngle, wxString color, int size){
     if (TargetAngle > 0){
       wxColour cl;
       dc->SetPen(*wxTRANSPARENT_PEN);
@@ -495,7 +495,7 @@ void TacticsInstrument_BearingCompass::DrawTargetAngle(wxGCDC* dc, double Target
 }
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawForeground(wxGCDC* dc)
+void TacticsInstrument_BearingCompass::DrawForeground(myDC* dc)
 {
 	if (!wxIsNaN(m_Bearing))  
 		DrawBearing(dc);
@@ -507,7 +507,7 @@ void TacticsInstrument_BearingCompass::DrawForeground(wxGCDC* dc)
 }
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawBearing(wxGCDC* dc)
+void TacticsInstrument_BearingCompass::DrawBearing(myDC* dc)
 {
 	wxColour cl;
 	// no border for the circle 
@@ -540,7 +540,7 @@ void TacticsInstrument_BearingCompass::DrawBearing(wxGCDC* dc)
 }
 /***************************************************************************************
 ****************************************************************************************/
-/*void TacticsInstrument_BearingCompass::DrawPolar(wxGCDC*dc)
+/*void TacticsInstrument_BearingCompass::DrawPolar(myDC*dc)
 {
   if (!wxIsNaN(m_TWS)) {
     wxColour cl;
@@ -579,7 +579,7 @@ void TacticsInstrument_BearingCompass::DrawBearing(wxGCDC* dc)
 }*/
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawCurrent(wxGCDC* dc)
+void TacticsInstrument_BearingCompass::DrawCurrent(myDC* dc)
 {
 	wxColour cl;
 
@@ -628,7 +628,7 @@ void TacticsInstrument_BearingCompass::DrawCurrent(wxGCDC* dc)
 
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawData(wxGCDC* dc, double value,
+void TacticsInstrument_BearingCompass::DrawData(myDC* dc, double value,
 	wxString unit, wxString format, DialPositionOption position)
 {
 	if (position == DIAL_POSITION_NONE)
@@ -768,7 +768,7 @@ void TacticsInstrument_BearingCompass::DrawData(wxGCDC* dc, double value,
 /***************************************************************************************
   Calculate & Draw the laylines for the bearing compass 
 ****************************************************************************************/
-void TacticsInstrument_BearingCompass::DrawLaylines(wxGCDC* dc)
+void TacticsInstrument_BearingCompass::DrawLaylines(myDC* dc)
 {
   if (!wxIsNaN(m_Cog) && !wxIsNaN(m_Hdt) && !wxIsNaN(m_lat) && !wxIsNaN(m_lon) && !wxIsNaN(m_TWA) && !wxIsNaN(m_CurrDir) && !wxIsNaN(m_CurrSpeed)){
 

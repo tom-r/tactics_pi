@@ -82,14 +82,14 @@ protected:
   int m_width, m_height, m_cx;
   wxSize size;
   int m_Legend;
-  void Draw(wxGCDC* dc);
-  void DrawBackground(wxGCDC* dc);
-  void DrawForeground(wxGCDC* dc);
+  void Draw(myDC* dc);
+  void DrawBackground(myDC* dc);
+  void DrawForeground(myDC* dc);
   double GetAvgWindDir();
   void OnAvgTimeSliderUpdated(wxCommandEvent& event);
   void CalcAvgWindDir(double CurWindDir);
   void OnAvgWindUpdTimer(wxTimerEvent & event);
-  //void DrawWindSpeedScale(wxGCDC* dc);
+  //void DrawWindSpeedScale(myDC* dc);
 };
 
 

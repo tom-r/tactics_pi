@@ -100,7 +100,7 @@ void TacticsInstrument_Moon::SetData( int st, double value, wxString format )
     }
 }
 
-void TacticsInstrument_Moon::Draw(wxGCDC* dc)
+void TacticsInstrument_Moon::Draw(myDC* dc)
 {
     if ( m_phase == -1 || m_hemisphere == _T("") ) return;
 
@@ -258,7 +258,7 @@ wxSize TacticsInstrument_Sun::GetSize( int orient, wxSize hint )
       }
 }
 
-void TacticsInstrument_Sun::Draw(wxGCDC* dc)
+void TacticsInstrument_Sun::Draw(myDC* dc)
 {
       wxColour cl;
 

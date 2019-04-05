@@ -53,7 +53,7 @@ TacticsInstrument_Wind::TacticsInstrument_Wind( wxWindow *parent, wxWindowID id,
       SetOptionLabel(30, DIAL_LABEL_HORIZONTAL, wxArrayString(12, labels));
 }
 
-void TacticsInstrument_Wind::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_Wind::DrawBackground(myDC* dc)
 {
     DrawBoat( dc, m_cx, m_cy, m_radius );
 }
@@ -66,7 +66,7 @@ TacticsInstrument_WindCompass::TacticsInstrument_WindCompass( wxWindow *parent, 
       SetOptionLabel(45, DIAL_LABEL_HORIZONTAL, wxArrayString(8, labels));
 }
 
-void TacticsInstrument_WindCompass::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_WindCompass::DrawBackground(myDC* dc)
 {
       DrawCompassRose(dc, m_cx, m_cy, m_radius * 0.85, m_AngleStart, false);
 }
@@ -83,7 +83,7 @@ TacticsInstrument_TrueWindAngle::TacticsInstrument_TrueWindAngle( wxWindow *pare
       SetOptionLabel(30, DIAL_LABEL_HORIZONTAL, wxArrayString(12, labels));
 }
 
-void TacticsInstrument_TrueWindAngle::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_TrueWindAngle::DrawBackground(myDC* dc)
 {
     DrawBoat( dc, m_cx, m_cy, m_radius );
 }
@@ -107,7 +107,7 @@ TacticsInstrument_Dial(parent, id, title, cap_flag, 0, 360, 0, 360)
     m_ExtraValueTrue = NAN;
 }
 
-void TacticsInstrument_AppTrueWindAngle::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_AppTrueWindAngle::DrawBackground(myDC* dc)
 {
 	DrawBoat(dc, m_cx, m_cy, m_radius);
 }
@@ -144,7 +144,7 @@ void TacticsInstrument_AppTrueWindAngle::SetData(int st, double data, wxString u
     if (wxIsNaN(m_ExtraValueTrue)) m_MainValueTrue = NAN;
     Refresh();
 }
-void TacticsInstrument_AppTrueWindAngle::Draw(wxGCDC* bdc)
+void TacticsInstrument_AppTrueWindAngle::Draw(myDC* bdc)
 {
 	wxColour c1;
 	GetGlobalColor(_T("DASHB"), &c1);
@@ -173,7 +173,7 @@ void TacticsInstrument_AppTrueWindAngle::Draw(wxGCDC* bdc)
     DrawData(bdc, m_TWD, m_MainValueTrueUnit, _T("TWD:%.0f"), DIAL_POSITION_INSIDE);
     DrawForeground(bdc);
 }
-void TacticsInstrument_AppTrueWindAngle::DrawForeground(wxGCDC* dc)
+void TacticsInstrument_AppTrueWindAngle::DrawForeground(myDC* dc)
 {
 	wxPoint points[4];
 	double data;
@@ -263,7 +263,7 @@ void TacticsInstrument_AppTrueWindAngle::DrawForeground(wxGCDC* dc)
       dc->DrawPolygon(4, points, 0, 0);
     }
 }
-void TacticsInstrument_AppTrueWindAngle::DrawData(wxGCDC* dc, double value,
+void TacticsInstrument_AppTrueWindAngle::DrawData(myDC* dc, double value,
 	wxString unit, wxString format, DialPositionOption position)
 {
 	if (position == DIAL_POSITION_NONE)

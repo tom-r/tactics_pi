@@ -257,7 +257,7 @@ void TacticsInstrument_WindDirHistory::SetData(int st, double data, wxString uni
   }
 }
 
-void TacticsInstrument_WindDirHistory::Draw(wxGCDC* dc)
+void TacticsInstrument_WindDirHistory::Draw(myDC* dc)
 {
   m_WindowRect = GetClientRect();
   m_DrawAreaRect = GetClientRect();
@@ -313,7 +313,7 @@ void TacticsInstrument_WindDirHistory::SetMinMaxWindScale()
 //*********************************************************************************
 // wind direction legend
 //*********************************************************************************
-void  TacticsInstrument_WindDirHistory::DrawWindDirScale(wxGCDC* dc)
+void  TacticsInstrument_WindDirHistory::DrawWindDirScale(myDC* dc)
 {
   wxString label1, label2, label3, label4, label5;
   wxColour cl;
@@ -381,7 +381,7 @@ void  TacticsInstrument_WindDirHistory::DrawWindDirScale(wxGCDC* dc)
 //*********************************************************************************
 // draw wind speed scale
 //*********************************************************************************
-void  TacticsInstrument_WindDirHistory::DrawWindSpeedScale(wxGCDC* dc)
+void  TacticsInstrument_WindDirHistory::DrawWindSpeedScale(myDC* dc)
 {
   wxString label1, label2, label3, label4, label5;
   wxColour cl;
@@ -461,7 +461,7 @@ void  TacticsInstrument_WindDirHistory::DrawWindSpeedScale(wxGCDC* dc)
 //*********************************************************************************
 //draw background
 //*********************************************************************************
-void TacticsInstrument_WindDirHistory::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_WindDirHistory::DrawBackground(myDC* dc)
 {
   wxString label, label1, label2, label3, label4, label5;
   wxColour cl;
@@ -550,7 +550,7 @@ wxString TacticsInstrument_WindDirHistory::GetWindDirStr(wxString WindDir)
 //*********************************************************************************
 //draw foreground
 //*********************************************************************************
-void TacticsInstrument_WindDirHistory::DrawForeground(wxGCDC* dc)
+void TacticsInstrument_WindDirHistory::DrawForeground(myDC* dc)
 {
   wxColour col;
   double ratioH;

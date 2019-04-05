@@ -55,8 +55,8 @@ class TacticsInstrument_RudderAngle: public TacticsInstrument_Dial
       private:
 
       protected:
-            void DrawFrame(wxGCDC* dc);
-            void DrawBackground(wxGCDC* dc);
+            void DrawFrame(myDC* dc);
+            void DrawBackground(myDC* dc);
 };
 
 #endif // __RudderAngle_H__

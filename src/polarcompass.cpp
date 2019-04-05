@@ -186,7 +186,7 @@ void TacticsInstrument_PolarCompass::SetData(int st, double data, wxString unit)
 }
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_PolarCompass::Draw(wxGCDC* bdc)
+void TacticsInstrument_PolarCompass::Draw(myDC* bdc)
 {
 	wxColour c1;
 	GetGlobalColor(_T("DASHB"), &c1);
@@ -241,14 +241,14 @@ void TacticsInstrument_PolarCompass::Draw(wxGCDC* bdc)
 }
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_PolarCompass::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_PolarCompass::DrawBackground(myDC* dc)
 {
 //    DrawCompassRose( dc, m_cx, m_cy, 0.7 * m_radius, m_AngleStart, true );
 	DrawBoat(dc, m_cx, m_cy, m_radius);
 }
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_PolarCompass::DrawBoat(wxGCDC* dc, int cx, int cy, int radius)
+void TacticsInstrument_PolarCompass::DrawBoat(myDC* dc, int cx, int cy, int radius)
 {
   // Now draw the boat
   wxColour cl;
@@ -301,7 +301,7 @@ void TacticsInstrument_PolarCompass::DrawBoat(wxGCDC* dc, int cx, int cy, int ra
  Just a simple line to avoid confusion with BearingCompass' placing the tip onto
  the VMG / CMG markers there.
 ****************************************************************************************/
-void TacticsInstrument_PolarCompass::DrawWindAngles(wxGCDC* dc)
+void TacticsInstrument_PolarCompass::DrawWindAngles(myDC* dc)
 {
 	if (!wxIsNaN(m_TWA)) {
 		wxColour cl;
@@ -378,7 +378,7 @@ void TacticsInstrument_PolarCompass::DrawWindAngles(wxGCDC* dc)
 /***************************************************************************************
 Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
 ****************************************************************************************/
-void TacticsInstrument_PolarCompass::DrawTargetxMGAngle(wxGCDC* dc){
+void TacticsInstrument_PolarCompass::DrawTargetxMGAngle(myDC* dc){
   if (!wxIsNaN(m_TWS)) {
     // get Target VMG Angle from Polar
     TargetxMG tvmg_up = BoatPolar->GetTargetVMGUpwind(m_TWS);
@@ -406,7 +406,7 @@ void TacticsInstrument_PolarCompass::DrawTargetxMGAngle(wxGCDC* dc){
 /***************************************************************************************
 Draw pointers for the optimum target VMG- and CMG Angle (if bearing is available)
 ****************************************************************************************/
-void TacticsInstrument_PolarCompass::DrawTargetAngle(wxGCDC* dc, double TargetAngle, wxString color, int size){
+void TacticsInstrument_PolarCompass::DrawTargetAngle(myDC* dc, double TargetAngle, wxString color, int size){
   if (TargetAngle > 0 && !wxIsNaN(m_Hdt) && !wxIsNaN(m_TWD)){
       wxColour cl;
       dc->SetPen(*wxTRANSPARENT_PEN);
@@ -470,7 +470,7 @@ void TacticsInstrument_PolarCompass::DrawTargetAngle(wxGCDC* dc, double TargetAn
 }
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_PolarCompass::DrawForeground(wxGCDC* dc)
+void TacticsInstrument_PolarCompass::DrawForeground(myDC* dc)
 {
   if (!wxIsNaN(m_Bearing))
 		DrawBearing(dc);
@@ -482,7 +482,7 @@ void TacticsInstrument_PolarCompass::DrawForeground(wxGCDC* dc)
 }
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_PolarCompass::DrawBearing(wxGCDC* dc)
+void TacticsInstrument_PolarCompass::DrawBearing(myDC* dc)
 {
 	wxColour cl;
 	// no border for the circle 
@@ -516,7 +516,7 @@ void TacticsInstrument_PolarCompass::DrawBearing(wxGCDC* dc)
 /***************************************************************************************
 ****************************************************************************************/
 #define POLSTEPS 180 //we draw in 2 degree steps
-void TacticsInstrument_PolarCompass::DrawPolar(wxGCDC*dc)
+void TacticsInstrument_PolarCompass::DrawPolar(myDC*dc)
 {
   if (!wxIsNaN(m_TWS) && !wxIsNaN(m_TWD)) {
     wxColour cl;
@@ -554,7 +554,7 @@ void TacticsInstrument_PolarCompass::DrawPolar(wxGCDC*dc)
 
 /***************************************************************************************
 ****************************************************************************************/
-void TacticsInstrument_PolarCompass::DrawData(wxGCDC* dc, double value,
+void TacticsInstrument_PolarCompass::DrawData(myDC* dc, double value,
 	wxString unit, wxString format, DialPositionOption position)
 {
 	if (position == DIAL_POSITION_NONE)
@@ -694,7 +694,7 @@ void TacticsInstrument_PolarCompass::DrawData(wxGCDC* dc, double value,
 /***************************************************************************************
   Calculate & Draw the laylines for the bearing compass 
 ****************************************************************************************/
-void TacticsInstrument_PolarCompass::DrawLaylines(wxGCDC* dc)
+void TacticsInstrument_PolarCompass::DrawLaylines(myDC* dc)
 {
   if (!wxIsNaN(m_Cog) && !wxIsNaN(m_Hdt) && !wxIsNaN(m_lat) && !wxIsNaN(m_lon) && !wxIsNaN(m_TWA) && !wxIsNaN(m_CurrDir) && !wxIsNaN(m_CurrSpeed)){
 

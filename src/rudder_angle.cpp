@@ -90,7 +90,7 @@ void TacticsInstrument_RudderAngle::SetData(int st, double data, wxString unit)
       else return;
 }
 
-void TacticsInstrument_RudderAngle::DrawFrame(wxGCDC* dc)
+void TacticsInstrument_RudderAngle::DrawFrame(myDC* dc)
 {
       // We don't need the upper part
       // Move center up
@@ -120,7 +120,7 @@ void TacticsInstrument_RudderAngle::DrawFrame(wxGCDC* dc)
       dc->DrawLine(x1, y1, x2, y2);
 }
 
-void TacticsInstrument_RudderAngle::DrawBackground(wxGCDC* dc)
+void TacticsInstrument_RudderAngle::DrawBackground(myDC* dc)
 {
       wxCoord x = m_cx - (m_radius * 0.3);
       wxCoord y = m_cy - (m_radius * 0.5);
