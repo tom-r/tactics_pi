@@ -62,7 +62,7 @@ private:
 
 protected:
   double alpha;
-  wxDateTime m_ArrayRecTime[AVG_WIND_RECORDS];
+  wxDateTime::Tm m_ArrayRecTime[AVG_WIND_RECORDS];
 
   double m_WindDirRange;
   double m_WindDir;
