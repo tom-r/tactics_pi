@@ -264,7 +264,7 @@ protected:
   double m_ArrayBoatSpdHistory[DATA_RECORD_COUNT];
   double m_ExpSmoothArrayBoatSpd[DATA_RECORD_COUNT];
   double m_ExpSmoothArrayPercentSpd[DATA_RECORD_COUNT];
-  wxDateTime m_ArrayRecTime[DATA_RECORD_COUNT];
+  wxDateTime::Tm m_ArrayRecTime[DATA_RECORD_COUNT];
 
   double m_MaxBoatSpd;
   double m_MinBoatSpd;
