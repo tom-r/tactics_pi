@@ -4138,6 +4138,12 @@ void TacticsWindow::OnContextMenu(wxContextMenuEvent& event)
 {
 	wxMenu* contextMenu = new wxMenu();
 
+    wxAuiPaneInfo& pane = m_pauimgr->GetPane( this );
+    if ( pane.IsOk( ) && pane.IsDocked( ) )
+    {
+        contextMenu->Append( ID_DASH_UNDOCK, _( "Undock" ) );
+    }
+
 	wxMenuItem* btnVertical = contextMenu->AppendRadioItem(ID_DASH_VERTICAL, _("Vertical"));
 	btnVertical->Check(itemBoxSizer->GetOrientation() == wxVERTICAL);
 	wxMenuItem* btnHorizontal = contextMenu->AppendRadioItem(ID_DASH_HORIZONTAL, _("Horizontal"));
@@ -4204,6 +4210,11 @@ void TacticsWindow::OnContextMenuSelect(wxCommandEvent& event)
 		m_plugin->ToggleWindbarbRender(this);
 		return; // Does it's own save.
 	}
+    case ID_DASH_UNDOCK:
+    {
+        ChangePaneOrientation( GetSizerOrientation( ), true );
+        return;     // Nothing changed so nothing need be saved
+    }
 
 	}
 	m_plugin->SaveConfig();

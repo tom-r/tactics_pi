@@ -80,7 +80,11 @@ void LATITUDE::Set( double position, const wxString& north_or_south )
 
    Latitude = position;
    wxString ts = north_or_south;
-
+   if( north_or_south.IsEmpty() )
+   {
+       Northing = NS_Unknown;
+       return;
+   }
    if ( ts.Trim(false)[ 0 ] == _T('N') )
    {
       Northing = North;

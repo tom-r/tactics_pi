@@ -394,7 +394,8 @@ enum
 	  ID_DASH_LAYLINE,
       ID_DASH_CURRENT,
       ID_DASH_POLAR,
-      ID_DASH_WINDBARB
+      ID_DASH_WINDBARB,
+      ID_DASH_UNDOCK
 };
 
 class TacticsWindow : public wxWindow
