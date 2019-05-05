@@ -36,7 +36,7 @@
 
 #define     PLUGIN_VERSION_MAJOR    1
 #define     PLUGIN_VERSION_MINOR    0
-#define     PLUGIN_VERSION_PATCH    8
+#define     PLUGIN_VERSION_PATCH    10
 
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    12
@@ -232,13 +232,15 @@ private:
 	  double               mAWA, mAWS, mTWA, mTWD, mTWS;
       bool                 m_bTrueWind_available, m_bLaylinesIsVisible, m_bDisplayCurrentOnChart, m_bShowWindbarbOnChart, m_bShowPolarOnChart;
 	  bool                 m_LeewayOK;
+      bool                 m_bNKE_TrueWindTableBug;
+      double               m_VWR_AWA;
 	  double               alpha_currspd, alpha_CogHdt;
 	  double               m_ExpSmoothCurrSpd, m_ExpSmoothCurrDir,m_ExpSmoothSog;
 	  double               m_ExpSmoothSinCurrDir, m_ExpSmoothCosCurrDir;
 	  double               m_tempSmoothedLaylineCOG;
 	  double			   m_ExpSmoothDiffCogHdt;
 	  double               m_LaylineDegRange, m_COGRange[COGRANGE], m_ExpSmoothDegRange, m_alphaDeltaCog;
-	  double               m_LaylineSmoothedCog, m_ExpSmoothSinCog, m_ExpSmoothCosCog, m_alphaLaylineCog;
+      double               m_LaylineSmoothedCog, m_ExpSmoothSinCog, m_ExpSmoothCosCog;// , m_alphaLaylineCog;
       //Performance Variables
       double               mPolarTargetSpeed, mPredictedHdG, mPredictedCoG, mPredictedSoG, mPercentTargetVMGupwind, mPercentTargetVMGdownwind;
       TargetxMG tvmg,tcmg;
@@ -251,8 +253,8 @@ private:
 	  DoubleExpSmooth *mCosCurrDir;
 	  ExpSmooth       *mExpSmoothCurrSpd;
 	  DoubleExpSmooth *mExpSmoothSog;
-	  ExpSmooth       *mExpSmSinCog;
-	  ExpSmooth       *mExpSmCosCog;
+      DoubleExpSmooth       *mExpSmSinCog;
+      DoubleExpSmooth       *mExpSmCosCog;
 	  ExpSmooth       *mExpSmDegRange;
 	  ExpSmooth       *mExpSmDiffCogHdt;
 
@@ -301,6 +303,7 @@ public:
       wxChoice                     *m_pChoiceWindSpeedUnit;
 
       wxSpinCtrlDouble             *m_alphaDeltCoG; //TR
+      wxSpinCtrlDouble             *m_alphaLaylineDampFactor;//TR
       wxSpinCtrl                   *m_minLayLineWidth;//TR
 	  wxSpinCtrl                   *m_maxLayLineWidth;//TR
       wxSpinCtrlDouble             *m_LeewayFactor;//TR

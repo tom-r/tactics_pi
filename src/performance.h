@@ -273,6 +273,7 @@ protected:
   double m_TotalMaxSpdPercent; // since O is started
   double m_TWA, m_TWS, m_STW, m_PolarSpeedPercent, m_PolarSpeed;
   double m_MaxPercentScale, m_MaxBoatSpdScale;
+  int num_of_scales;
   double m_ratioW;
   //double m_oldDirVal;
   bool m_IsRunning;
