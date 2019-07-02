@@ -1213,7 +1213,7 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_STW | OCPN_DBP_STC_TWA | OCPN_
   m_STWUnit = _T("--");
   m_PercentUnit = _T("%");
   num_of_scales = 6;
-  m_TotalMaxSpdPercent = 0;
+  m_AvgSpdPercent = 0;
   m_TopLineHeight = 30;
   m_SpdStartVal = -1;
   m_IsRunning = false;
@@ -1227,6 +1227,7 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_STW | OCPN_DBP_STC_TWA | OCPN_
     m_ArrayRecTime[idx].year = 999;
   }
   alpha = 0.01;  //smoothing constant
+  mExpSmAvgSpdPercent = new ExpSmooth(alpha);
   m_WindowRect = GetClientRect();
   m_DrawAreaRect = GetClientRect();
   m_DrawAreaRect.SetHeight(m_WindowRect.height - m_TopLineHeight - m_TitleHeight);
@@ -1269,7 +1270,10 @@ void TacticsInstrument_PolarPerformance::SetData(int st, double data, wxString u
         else if (m_PolarSpeed == 0)
           m_PercentUnit = _T("--");
         else {
-          m_PolarSpeedPercent = m_STW / m_PolarSpeed * 100;
+          double tmpspdpercent= m_STW / m_PolarSpeed * 100;
+          //skip value if >= 400%, unrealistic ...
+          if (tmpspdpercent < 400) m_PolarSpeedPercent = tmpspdpercent;
+          //m_PolarSpeedPercent = m_STW / m_PolarSpeed * 100;
           m_PercentUnit = _T("%");
         }
         m_STWUnit = unit;
@@ -1303,8 +1307,9 @@ void TacticsInstrument_PolarPerformance::SetData(int st, double data, wxString u
         m_MaxPercent = wxMax(m_PolarSpeedPercent, m_MaxPercent);
         m_MaxBoatSpd = wxMax(m_STW, m_MaxBoatSpd);
         //get the overall max Wind Speed
-        m_TotalMaxSpdPercent = wxMax(m_PolarSpeedPercent, m_TotalMaxSpdPercent);
-        //m_BoatSpeedRange = m_MaxBoatSpd - m_MinBoatSpd;
+        //m_MaxSpdPercent = wxMax(m_PolarSpeedPercent, m_MaxSpdPercent);
+        //show smoothed average percentage instead of "overall max percentage" which is not really useful, especially if it uses the unsmoothed values ...
+        m_AvgSpdPercent = mExpSmAvgSpdPercent->GetSmoothVal(m_PolarSpeedPercent);
       }
     }
   }
@@ -1728,9 +1733,9 @@ void TacticsInstrument_PolarPerformance::DrawForeground(wxGCDC* dc)
   // Single text var to facilitate correct translations:
   wxString s_Max = _("Max");
   wxString s_Since = _("since");
-  wxString s_OMax = _("Overall");
-  dc->DrawText(wxString::Format(_T("%s %.1f %s %s %02d:%02d  %s %.1f %s"), s_Max, m_MaxPercent, m_PercentUnit, s_Since, hour, min, s_OMax, m_TotalMaxSpdPercent, m_PercentUnit), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
-  //dc->DrawText(wxString::Format(_("Max %.1f %s since %02d:%02d  Overall %.1f %s"), m_MaxPercent, m_PercentUnit, hour, min, m_TotalMaxSpdPercent, m_PercentUnit), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
+  wxString s_Avg = _("Average");
+ // dc->DrawText(wxString::Format(_T("%s %.1f %s %s %02d:%02d  %s %.1f %s"), s_Max, m_MaxPercent, m_PercentUnit, s_Since, hour, min, s_OMax, m_TotalMaxSpdPercent, m_PercentUnit), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
+  dc->DrawText(wxString::Format(_T("%s %.1f %s %s %02d:%02d  %s %.1f %s"), s_Max, m_MaxPercent, m_PercentUnit, s_Since, hour, min, s_Avg, m_AvgSpdPercent, m_PercentUnit), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
   pen.SetStyle(wxPENSTYLE_SOLID);
   pen.SetColour(wxColour(61, 61, 204, 96)); //blue, transparent
   pen.SetWidth(1);

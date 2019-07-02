@@ -240,7 +240,11 @@ private:
 	  double               m_tempSmoothedLaylineCOG;
 	  double			   m_ExpSmoothDiffCogHdt;
 	  double               m_LaylineDegRange, m_COGRange[COGRANGE], m_ExpSmoothDegRange, m_alphaDeltaCog;
-      double               m_LaylineSmoothedCog, m_ExpSmoothSinCog, m_ExpSmoothCosCog;// , m_alphaLaylineCog;
+      //double exp.smoothing of predicted Cog for boat laylines
+      double               m_LaylineSmoothedCog, m_ExpSmoothSinCog, m_ExpSmoothCosCog; //foreward boat layline
+      double               m_SmoothedpredCog, m_ExpSmoothSinpredCog, m_ExpSmoothCospredCog; //other tack boat layline
+      //double exp.smoothing of predicted Cog for Tactics WP laylines
+      double               m_ExpSmcur_tacklinedir, m_ExpSmtarget_tacklinedir,m_ExpSmoothSincur_tacklinedir, m_ExpSmoothCoscur_tacklinedir, m_ExpSmoothSintarget_tacklinedir, m_ExpSmoothCostarget_tacklinedir; //TR20190623
       //Performance Variables
       double               mPolarTargetSpeed, mPredictedHdG, mPredictedCoG, mPredictedSoG, mPercentTargetVMGupwind, mPercentTargetVMGdownwind;
       TargetxMG tvmg,tcmg;
@@ -255,6 +259,15 @@ private:
 	  DoubleExpSmooth *mExpSmoothSog;
       DoubleExpSmooth       *mExpSmSinCog;
       DoubleExpSmooth       *mExpSmCosCog;
+      //double exp.smoothing of predicted Cog for boat laylines
+      DoubleExpSmooth       *mExpSmSinpredCog;
+      DoubleExpSmooth       *mExpSmCospredCog;
+      //double exp.smoothing of predicted Cog for Tactics WP laylines
+      DoubleExpSmooth       *mExpSmSincur_tacklinedir;
+      DoubleExpSmooth       *mExpSmCoscur_tacklinedir;
+      DoubleExpSmooth       *mExpSmSintarget_tacklinedir;
+      DoubleExpSmooth       *mExpSmCostarget_tacklinedir;
+
 	  ExpSmooth       *mExpSmDegRange;
 	  ExpSmooth       *mExpSmDiffCogHdt;
 
