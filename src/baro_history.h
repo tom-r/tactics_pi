@@ -72,9 +72,7 @@ class TacticsInstrument_BaroHistory: public TacticsInstrument
             double m_ArrayPressHistory[BARO_RECORD_COUNT];
             double m_ExpSmoothArrayPressure[BARO_RECORD_COUNT];
 
-            //wxDateTime::Tm m_ArrayRecTime[BARO_RECORD_COUNT];
-            wxDateTime m_ArrayRecTime[BARO_RECORD_COUNT];
-
+            wxDateTime::Tm m_ArrayRecTime[BARO_RECORD_COUNT];
 
             double m_MaxPress;  //...in array
             double m_MinPress;  //...in array
