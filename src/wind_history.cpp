@@ -643,7 +643,7 @@ void TacticsInstrument_WindDirHistory::DrawForeground(wxGCDC* dc)
   else {
     wxDateTime localTime( m_ArrayRecTime[i] );
     min = localTime.GetMinute( );
-    hour=localTime.GetMinute( );
+    hour=localTime.GetHour( );
   }
   //Single text var to facilitate correct translations:
   wxString s_Max = _("Max");
