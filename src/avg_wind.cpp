@@ -68,9 +68,7 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_TWD)
    }
    mDblsinExpSmoothWindDir = new DoubleExpSmooth(0.06);
    mDblcosExpSmoothWindDir = new DoubleExpSmooth(0.06);
-   /* for (int idx = 0; idx < AVG_WIND_RECORDS; idx++) {
-    m_ArrayRecTime[idx] = wxDateTime::Now().GetTm( );
-  }*/
+
   alpha = 0.1;  //smoothing constant
   wxSize size = GetClientSize();
   m_cx = size.x / 2;

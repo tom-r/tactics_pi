@@ -69,6 +69,7 @@ TacticsInstrument_BaroHistory::TacticsInstrument_BaroHistory( wxWindow *parent, 
         m_ExpSmoothArrayPressure[idx] = -1;
         m_ArrayRecTime[idx] = wxDateTime::Now( ).GetTm( );
         m_ArrayRecTime[idx].year = 999;
+
       }
       alpha=0.01;  //smoothing constant
       m_WindowRect=GetClientRect();
@@ -273,9 +274,9 @@ void TacticsInstrument_BaroHistory::DrawForeground(wxGCDC* dc)
   //determine the time range of the available data (=oldest data value)
   int i=0;
   while(m_ArrayRecTime[i].year == 999 && i<BARO_RECORD_COUNT-1) i++;
-  if (i == BARO_RECORD_COUNT -1) {  min=0;
+  if (i == BARO_RECORD_COUNT -1) {  
+    min=0;
     hour=0;
-
   }
   else {
     wxDateTime localTime( m_ArrayRecTime[i] );
@@ -354,11 +355,11 @@ void TacticsInstrument_BaroHistory::DrawForeground(wxGCDC* dc)
   int done=-1;
   wxPoint pointTime;
   for (int idx = 0; idx < BARO_RECORD_COUNT; idx++) {
-    wxDateTime localTime( m_ArrayRecTime[i] );
-    min=localTime.GetMinute( );
-    hour=localTime.GetHour( );
-    sec=localTime.GetSecond( );
-    if(m_ArrayRecTime[idx].year != 999) {
+    if (m_ArrayRecTime[idx].year != 999) {
+      wxDateTime localTime( m_ArrayRecTime[idx] );
+      min=localTime.GetMinute( );
+      hour=localTime.GetHour( );
+      sec=localTime.GetSecond( );
       if ( (hour*100+min) != done && (min % 5 == 0 ) && (sec == 0 || sec == 1) ) {
         pointTime.x = idx * m_ratioW + 3 + m_LeftLegend;
         dc->DrawLine( pointTime.x, m_TopLineHeight+1, pointTime.x,(m_TopLineHeight+m_DrawAreaRect.height+1) );

@@ -74,8 +74,6 @@ class TacticsInstrument_BaroHistory: public TacticsInstrument
 
             wxDateTime::Tm m_ArrayRecTime[BARO_RECORD_COUNT];
 
-
-
             double m_MaxPress;  //...in array
             double m_MinPress;  //...in array
             double m_TotalMaxPress; // since O is started

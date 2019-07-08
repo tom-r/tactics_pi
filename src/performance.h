@@ -270,7 +270,8 @@ protected:
   double m_MinBoatSpd;
   double m_BoatSpeedRange;
   double m_MaxPercent;  //...in array
-  double m_TotalMaxSpdPercent; // since O is started
+  double m_AvgSpdPercent;
+  ExpSmooth  *mExpSmAvgSpdPercent;
   double m_TWA, m_TWS, m_STW, m_PolarSpeedPercent, m_PolarSpeed;
   double m_MaxPercentScale, m_MaxBoatSpdScale;
   int num_of_scales;
