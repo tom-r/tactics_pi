@@ -24,7 +24,7 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
 ***************************************************************************
 */
-
+#include <wx/fileconf.h>
 #include "wind_history.h"
 #include "wx28compat.h"
 
@@ -42,6 +42,12 @@
 #endif
 
 extern int g_iDashWindSpeedUnit;
+extern wxString g_sDataExportSeparator;
+#define ID_EXPORTRATE_1   11201
+#define ID_EXPORTRATE_5   11205
+#define ID_EXPORTRATE_10  11210
+#define ID_EXPORTRATE_20  11220
+#define ID_EXPORTRATE_60  11260
 //************************************************************************************************************************
 // History of wind direction
 //************************************************************************************************************************
@@ -59,7 +65,7 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_TWD | OCPN_DBP_STC_TWS)
   m_WindSpeedUnit = _T("--");
   m_TotalMaxWindSpd = 0;
   m_WindSpd = 0;
-  m_TopLineHeight = 30;
+  m_TopLineHeight = 35;
   m_SpdRecCnt = 0;
   m_DirRecCnt = 0;
   m_SpdStartVal = -1;
@@ -82,7 +88,47 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_TWD | OCPN_DBP_STC_TWS)
   m_DrawAreaRect.SetHeight(m_WindowRect.height - m_TopLineHeight - m_TitleHeight);
   m_WindHistUpdTimer.Start(1000, wxTIMER_CONTINUOUS);
   m_WindHistUpdTimer.Connect(wxEVT_TIMER, wxTimerEventHandler(TacticsInstrument_WindDirHistory::OnWindHistUpdTimer), NULL, this);
+  //data export
+  m_isExporting = false;
+  wxPoint pos;
+  pos.x = pos.y = 0;
+  m_LogButton = new wxButton(this, wxID_ANY, _(">"), pos, wxDefaultSize,  wxBU_TOP | wxBU_EXACTFIT | wxFULL_REPAINT_ON_RESIZE | wxBORDER_NONE);
+  m_LogButton->SetToolTip(_("'>' starts data export and creates a new or appends to an existing file,\n'X' stops data export"));
+  m_LogButton->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TacticsInstrument_WindDirHistory::OnLogDataButtonPressed), NULL, this);
+  m_pconfig = GetOCPNConfigObject();
+  if (LoadConfig() == false) {
+    m_exportInterval = 5;
+    SaveConfig();
+  }
+  m_pExportmenu = new wxMenu();
+  btn1Sec = m_pExportmenu->AppendRadioItem(ID_EXPORTRATE_1, _("Exportrate 1 Second"));
+  btn5Sec = m_pExportmenu->AppendRadioItem(ID_EXPORTRATE_5, _("Exportrate 5 Seconds"));
+  btn10Sec = m_pExportmenu->AppendRadioItem(ID_EXPORTRATE_10, _("Exportrate 10 Seconds"));
+  btn20Sec = m_pExportmenu->AppendRadioItem(ID_EXPORTRATE_20, _("Exportrate 20 Seconds"));
+  btn60Sec = m_pExportmenu->AppendRadioItem(ID_EXPORTRATE_60, _("Exportrate 60 Seconds"));
+
+  if (m_exportInterval == 1) btn1Sec->Check(true);
+  if (m_exportInterval == 5) btn5Sec->Check(true);
+  if (m_exportInterval == 10) btn10Sec->Check(true);
+  if (m_exportInterval == 20) btn20Sec->Check(true);
+  if (m_exportInterval == 60) btn60Sec->Check(true);
+
+//m_pExportmenu->Connect(wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(TacticsInstrument_WindDirHistory::OnContextMenuSelect), NULL, this); 
+
 }
+TacticsInstrument_WindDirHistory::~TacticsInstrument_WindDirHistory(void) {
+  if(m_isExporting)
+     m_ostreamlogfile.Close();
+}
+/*void TacticsInstrument_WindDirHistory::OnContextMenuSelect(wxCommandEvent& event) {
+  int id= event.GetId();
+  if (id == ID_EXPORTRATE_1)  m_exportInterval = 1;
+  if (id == ID_EXPORTRATE_5)  m_exportInterval = 5;
+  if (id == ID_EXPORTRATE_10)  m_exportInterval = 10;
+  if (id == ID_EXPORTRATE_20)  m_exportInterval = 20;
+  if (id == ID_EXPORTRATE_60)  m_exportInterval = 60;
+}*/
+
 void TacticsInstrument_WindDirHistory::OnWindHistUpdTimer(wxTimerEvent & event)
 {
   if (!wxIsNaN(m_TrueWindDir) && !wxIsNaN(m_TrueWindSpd)){
@@ -135,6 +181,8 @@ void TacticsInstrument_WindDirHistory::OnWindHistUpdTimer(wxTimerEvent & event)
       m_MaxWindSpd = wxMax(m_WindSpd, m_MaxWindSpd);
       //get the overall max Wind Speed
       m_TotalMaxWindSpd = wxMax(m_WindSpd, m_TotalMaxWindSpd);
+      // Data export  
+      ExportData();
 
       // set wind angle scale to full +/- 90° depending on the real max/min value recorded
       SetMinMaxWindScale();
@@ -165,34 +213,8 @@ void TacticsInstrument_WindDirHistory::SetData(int st, double data, wxString uni
       }
     }
     if (st == OCPN_DBP_STC_TWS && data < 200.0) {
-      //m_WindSpd = data;
       //convert to knots first
       m_TrueWindSpd = fromUsrSpeed_Plugin(data, g_iDashWindSpeedUnit);
-      // if unit changes, reset everything ...
-     /* if (unit != m_WindSpeedUnit && m_WindSpeedUnit != _("--")) {
-        m_MaxWindDir = -1;
-        m_WindDir = -1;
-        m_WindDirRange = 90;
-        m_MaxWindSpd = 0;
-        m_TotalMaxWindSpd = 0;
-        m_WindSpd = 0;
-        m_SpdRecCnt = 0;
-        m_DirRecCnt = 0;
-        m_SpdStartVal = -1;
-        m_DirStartVal = -1;
-        m_IsRunning = false;
-        m_SampleCount = 0;
-        m_LeftLegend = 3;
-        m_RightLegend = 3;
-        for (int idx = 0; idx < WIND_RECORD_COUNT; idx++) {
-          m_ArrayWindDirHistory[idx] = -1;
-          m_ArrayWindSpdHistory[idx] = -1;
-          m_ExpSmoothArrayWindSpd[idx] = -1;
-          m_ExpSmoothArrayWindDir[idx] = -1;
-          m_ArrayRecTime[idx] = wxDateTime::Now();
-          m_ArrayRecTime[idx].SetYear(999);
-        }
-      }*/
       m_WindSpeedUnit = unit;
       if (m_SpdRecCnt <= 3){
         m_SpdStartVal += data;
@@ -204,57 +226,6 @@ void TacticsInstrument_WindDirHistory::SetData(int st, double data, wxString uni
       m_TrueWindDir = m_DirStartVal / 3;
       m_oldDirVal = m_TrueWindDir; // make sure we don't get a diff > or <180 in the initial run
     }
-    /*  put this code to the timer fuction ...
-    //start working after we collected 5 records each, as start values for the smoothed curves
-    if (m_SpdRecCnt > 3 && m_DirRecCnt > 3) {
-      m_IsRunning = true;
-      m_SampleCount = m_SampleCount<WIND_RECORD_COUNT ? m_SampleCount + 1 : WIND_RECORD_COUNT;
-      m_MaxWindDir = 0;
-      m_MinWindDir = 360;
-      m_MaxWindSpd = 0;
-      //data shifting
-      for (int idx = 1; idx < WIND_RECORD_COUNT; idx++) {
-        if (WIND_RECORD_COUNT - m_SampleCount <= idx)
-          m_MinWindDir = wxMin(m_ArrayWindDirHistory[idx], m_MinWindDir);
-        m_MaxWindDir = wxMax(m_ArrayWindDirHistory[idx - 1], m_MaxWindDir);
-        m_MaxWindSpd = wxMax(m_ArrayWindSpdHistory[idx - 1], m_MaxWindSpd);
-        m_ArrayWindDirHistory[idx - 1] = m_ArrayWindDirHistory[idx];
-        m_ArrayWindSpdHistory[idx - 1] = m_ArrayWindSpdHistory[idx];
-        m_ExpSmoothArrayWindSpd[idx - 1] = m_ExpSmoothArrayWindSpd[idx];
-        m_ExpSmoothArrayWindDir[idx - 1] = m_ExpSmoothArrayWindDir[idx];
-        m_ArrayRecTime[idx - 1] = m_ArrayRecTime[idx];
-      }
-      double diff = m_WindDir - m_oldDirVal;
-      if (diff < -270) {
-        m_WindDir += 360;
-      }
-      else
-        if (diff > 270) {
-          m_WindDir -= 360;
-        }
-      m_ArrayWindDirHistory[WIND_RECORD_COUNT - 1] = m_WindDir;
-      m_ArrayWindSpdHistory[WIND_RECORD_COUNT - 1] = m_WindSpd;
-      if (m_SampleCount<2) {
-        m_ArrayWindSpdHistory[WIND_RECORD_COUNT - 2] = m_WindSpd;
-        m_ExpSmoothArrayWindSpd[WIND_RECORD_COUNT - 2] = m_WindSpd;
-        m_ArrayWindDirHistory[WIND_RECORD_COUNT - 2] = m_WindDir;
-        m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT - 2] = m_WindDir;
-      }
-      m_ExpSmoothArrayWindSpd[WIND_RECORD_COUNT - 1] = alpha*m_ArrayWindSpdHistory[WIND_RECORD_COUNT - 2] + (1 - alpha)*m_ExpSmoothArrayWindSpd[WIND_RECORD_COUNT - 2];
-      m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT - 1] = alpha*m_ArrayWindDirHistory[WIND_RECORD_COUNT - 2] + (1 - alpha)*m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT - 2];
-
-      m_ArrayRecTime[WIND_RECORD_COUNT - 1] = wxDateTime::Now();
-      m_oldDirVal = m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT - 1];
-      //include the new/latest value in the max/min value test too
-      m_MaxWindDir = wxMax(m_WindDir, m_MaxWindDir);
-      m_MinWindDir = wxMin(m_WindDir, m_MinWindDir);
-      m_MaxWindSpd = wxMax(m_WindSpd, m_MaxWindSpd);
-      //get the overall max Wind Speed
-      m_TotalMaxWindSpd = wxMax(m_WindSpd, m_TotalMaxWindSpd);
-
-      // set wind angle scale to full +/- 90° depending on the real max/min value recorded
-      SetMinMaxWindScale();
-    }*/
   }
 }
 
@@ -264,7 +235,6 @@ void TacticsInstrument_WindDirHistory::Draw(wxGCDC* dc)
   m_DrawAreaRect = GetClientRect();
   m_DrawAreaRect.SetHeight(m_WindowRect.height - m_TopLineHeight - m_TitleHeight);
   m_DrawAreaRect.SetX(m_LeftLegend + 3);
-//  wxLogMessage("WindHist: m_WindowRect.height=%d,m_DrawAreaRect.height=%d,m_TopLineHeight=%d,m_TitleHeight=%d", m_WindowRect.height, m_DrawAreaRect.height, m_TopLineHeight, m_TitleHeight);
   DrawBackground(dc);
   DrawForeground(dc);
 }
@@ -592,11 +562,9 @@ void TacticsInstrument_WindDirHistory::DrawForeground(wxGCDC* dc)
   wxPoint points[WIND_RECORD_COUNT + 2], pointAngle_old;
   pointAngle_old.x = 3 + m_LeftLegend;
   pointAngle_old.y = m_TopLineHeight + m_DrawAreaRect.height - (m_ArrayWindDirHistory[0] - m_MinWindDir) * ratioH;
- // wxLogMessage("Live:pointAngle_old.x=%d, pointAngle_old.y=%d", pointAngle_old.x, pointAngle_old.y);
   for (int idx = 1; idx < WIND_RECORD_COUNT; idx++) {
     points[idx].x = idx * m_ratioW + 3 + m_LeftLegend;
     points[idx].y = m_TopLineHeight + m_DrawAreaRect.height - (m_ArrayWindDirHistory[idx] - m_MinWindDir) * ratioH;
-  //  wxLogMessage("Live:points[%d].y=%d", idx, points[idx].y);
     if (WIND_RECORD_COUNT - m_SampleCount <= idx && points[idx].y > m_TopLineHeight && pointAngle_old.y> m_TopLineHeight && points[idx].y <= m_TopLineHeight + m_DrawAreaRect.height && pointAngle_old.y <= m_TopLineHeight + m_DrawAreaRect.height)
       dc->DrawLine(pointAngle_old.x, pointAngle_old.y, points[idx].x, points[idx].y);
     pointAngle_old.x = points[idx].x;
@@ -612,11 +580,9 @@ void TacticsInstrument_WindDirHistory::DrawForeground(wxGCDC* dc)
   dc->SetPen(pen);
   pointAngle_old.x = 3 + m_LeftLegend;
   pointAngle_old.y = m_TopLineHeight + m_DrawAreaRect.height - (m_ExpSmoothArrayWindDir[0] - m_MinWindDir) * ratioH;
-//  wxLogMessage("Smoothed:pointAngle_old.x=%d, pointAngle_old.y=%d", pointAngle_old.x, pointAngle_old.y);
   for (int idx = 1; idx < WIND_RECORD_COUNT; idx++) {
     points[idx].x = idx * m_ratioW + 3 + m_LeftLegend;
     points[idx].y = m_TopLineHeight + m_DrawAreaRect.height - (m_ExpSmoothArrayWindDir[idx] - m_MinWindDir) * ratioH;
-  //  wxLogMessage("Smoothed:points[%d].y=%d", idx,points[idx].y);
     if (WIND_RECORD_COUNT - m_SampleCount <= idx && points[idx].y > m_TopLineHeight && pointAngle_old.y > m_TopLineHeight && points[idx].y <= m_TopLineHeight + m_DrawAreaRect.height && pointAngle_old.y <= m_TopLineHeight + m_DrawAreaRect.height)
       dc->DrawLine(pointAngle_old.x, pointAngle_old.y, points[idx].x, points[idx].y);
     pointAngle_old.x = points[idx].x;
@@ -649,8 +615,7 @@ void TacticsInstrument_WindDirHistory::DrawForeground(wxGCDC* dc)
   wxString s_Max = _("Max");
   wxString s_Since = _("since");
   wxString s_OMax = _("Overall");
-  dc->DrawText(wxString::Format(_T("%s %.1f %s %s %02d:%02d  %s %.1f %s"), s_Max, toUsrSpeed_Plugin(m_MaxWindSpd, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str(), s_Since, hour, min, s_OMax, toUsrSpeed_Plugin(m_TotalMaxWindSpd, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str()), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
-  //dc->DrawText(wxString::Format(_("Max %.1f %s since %02d:%02d  Overall %.1f %s"), m_MaxWindSpd, m_WindSpeedUnit.c_str(), hour, min, m_TotalMaxWindSpd, m_WindSpeedUnit.c_str()), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 5);
+  dc->DrawText(wxString::Format(_T("%s %.1f %s %s %02d:%02d  %s %.1f %s"), s_Max, toUsrSpeed_Plugin(m_MaxWindSpd, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str(), s_Since, hour, min, s_OMax, toUsrSpeed_Plugin(m_TotalMaxWindSpd, g_iDashWindSpeedUnit), m_WindSpeedUnit.c_str()), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh +2);
   pen.SetStyle(wxPENSTYLE_SOLID);
   pen.SetColour(wxColour(61, 61, 204, 96)); //blue, transparent
   pen.SetWidth(1);
@@ -715,6 +680,84 @@ void TacticsInstrument_WindDirHistory::DrawForeground(wxGCDC* dc)
         dc->DrawText(label, pointTime.x - width / 2, m_WindowRect.height - height);
         done = hour * 100 + min;
       }
+    }
+  }
+}
+void TacticsInstrument_WindDirHistory::OnLogDataButtonPressed(wxCommandEvent& event) {
+ 
+  if (m_isExporting == false) {
+    wxPoint pos;
+    m_LogButton->GetSize(&pos.x, &pos.y);
+    pos.x = 0;
+    this->PopupMenu(m_pExportmenu, pos);
+    if(btn1Sec->IsChecked()) m_exportInterval=1;
+    if (btn5Sec->IsChecked()) m_exportInterval = 5;
+    if (btn10Sec->IsChecked()) m_exportInterval = 10;
+    if (btn20Sec->IsChecked()) m_exportInterval = 20;
+    if (btn60Sec->IsChecked()) m_exportInterval = 60;
+
+    wxFileDialog fdlg(GetOCPNCanvasWindow(), _("Choose a new or existing file"), wxT(""), m_logfile, wxT("*.*"), wxFD_SAVE);
+    if (fdlg.ShowModal() != wxID_OK) {
+      return;
+    }
+    m_logfile.Clear();
+    m_logfile = fdlg.GetPath();
+    bool exists = m_ostreamlogfile.Exists(m_logfile);
+    m_ostreamlogfile.Open(m_logfile, wxFile::write_append);
+    if (!exists) {
+      wxString str = wxString::Format(_T("%s%s%s%s%s%s%s%s%s%s%s\n"), "Date", g_sDataExportSeparator, "Time", g_sDataExportSeparator, "TWD", g_sDataExportSeparator, "TWS", g_sDataExportSeparator, "smoothed TWD", g_sDataExportSeparator, "smoothed TWS");
+      m_ostreamlogfile.Write(str);
+    }
+    SaveConfig(); //save the new export-rate &filename to opencpn.ini
+    m_isExporting = true;
+    m_LogButton->SetLabel(_("X"));
+    m_LogButton->Refresh();
+  }
+  else if (m_isExporting == true) {
+    m_isExporting = false;
+    m_ostreamlogfile.Close();
+    m_LogButton->SetLabel(_(">"));
+    m_LogButton->Refresh();
+  }
+}
+/***************************************************************************************
+****************************************************************************************/
+bool TacticsInstrument_WindDirHistory::LoadConfig(void)
+{
+  wxFileConfig *pConf = (wxFileConfig *)m_pconfig;
+
+  if (pConf) {
+    pConf->SetPath(_T("/PlugIns/Tactics/Windhistory"));
+    pConf->Read(_T("Exportrate"), &m_exportInterval, 5);
+    pConf->Read(_T("WindhistoryExportfile"), &m_logfile,wxEmptyString);
+    return true;
+  }
+  else
+    return false;
+}
+/***************************************************************************************
+****************************************************************************************/
+bool TacticsInstrument_WindDirHistory::SaveConfig(void)
+{
+  wxFileConfig *pConf = (wxFileConfig *)m_pconfig;
+
+  if (pConf)
+  {
+    pConf->SetPath(_T("/PlugIns/Tactics/Windhistory"));
+    pConf->Write(_T("Exportrate"), m_exportInterval);
+    pConf->Write(_T("WindhistoryExportfile"), m_logfile);
+    return true;
+  }
+  else
+    return false;
+}
+void TacticsInstrument_WindDirHistory::ExportData(void)
+{
+  if (m_isExporting == true) {
+    wxDateTime localTime(m_ArrayRecTime[WIND_RECORD_COUNT - 1]);
+    if (localTime.GetSecond() % m_exportInterval == 0) {
+      wxString str = wxString::Format(_T("%s%s%s%s%3.0f%s%3.1f%s%3.0f%s%3.1f\n"), localTime.FormatDate(), g_sDataExportSeparator, localTime.FormatTime(), g_sDataExportSeparator, m_WindDir, g_sDataExportSeparator, toUsrSpeed_Plugin(m_WindSpd, g_iDashWindSpeedUnit), g_sDataExportSeparator, m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT - 1], g_sDataExportSeparator, toUsrSpeed_Plugin(m_ExpSmoothArrayWindSpd[WIND_RECORD_COUNT - 1], g_iDashWindSpeedUnit));
+      m_ostreamlogfile.Write(str);
     }
   }
 }

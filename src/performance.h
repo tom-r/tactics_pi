@@ -142,7 +142,7 @@ public:
 	void showDlg();
 	void setValue(wxString s, int row, int col);
 	void reset();
-	bool insert();
+	//bool insert();
 	void loadPolar(wxString FilePath);        //fill the polar values from file in the lookup table
 	void completePolar();    //complete the empty spots in the lookup table with simple average calculation
 	void CalculateLineAverages(int n, int min, int max);
@@ -164,7 +164,7 @@ private:
 	wxSize			center;
 	double			dist;
 
-	double toRad(int angle);
+	//double toRad(int angle);
 };
 
 /*************************************************************************************
@@ -249,7 +249,8 @@ class TacticsInstrument_PolarPerformance : public TacticsInstrument
 {
 public:
   TacticsInstrument_PolarPerformance(wxWindow *parent, wxWindowID id, wxString title);
-  ~TacticsInstrument_PolarPerformance(void){}
+//  ~TacticsInstrument_PolarPerformance(void){}
+  ~TacticsInstrument_PolarPerformance(void);
   void SetData(int, double, wxString);
   wxSize GetSize(int orient, wxSize hint);
 
@@ -257,21 +258,33 @@ private:
   int m_soloInPane;
   int    m_SpdRecCnt, m_SpdStartVal, m_DirStartVal;
   int m_isNULL;
+  wxFileConfig  *m_pconfig;
+  bool LoadConfig(void);
+  bool SaveConfig(void);
 
 protected:
   double alpha;
   double m_ArrayPercentSpdHistory[DATA_RECORD_COUNT];
   double m_ArrayBoatSpdHistory[DATA_RECORD_COUNT];
+  double m_ArrayTWAHistory[DATA_RECORD_COUNT];
   double m_ExpSmoothArrayBoatSpd[DATA_RECORD_COUNT];
   double m_ExpSmoothArrayPercentSpd[DATA_RECORD_COUNT];
   wxDateTime::Tm m_ArrayRecTime[DATA_RECORD_COUNT];
 
+  wxTimer m_PolarPerfUpdTimer;
   double m_MaxBoatSpd;
   double m_MinBoatSpd;
   double m_BoatSpeedRange;
   double m_MaxPercent;  //...in array
   double m_AvgSpdPercent;
-  ExpSmooth  *mExpSmAvgSpdPercent;
+  DoubleExpSmooth  *mExpSmAvgSpdPercent;
+  double m_AvgTWA;         //for data export
+  DoubleExpSmooth  *mExpSmAvgTWA;//for data export
+  double m_AvgTWS;         //for data export >100% 
+  DoubleExpSmooth  *mExpSmAvgTWS;//for data export >100%
+//  wxString    m_polarexceedfile;
+//  wxFile      m_ostream;
+
   double m_TWA, m_TWS, m_STW, m_PolarSpeedPercent, m_PolarSpeed;
   double m_MaxPercentScale, m_MaxBoatSpdScale;
   int num_of_scales;
@@ -288,15 +301,33 @@ protected:
   int m_LeftLegend, m_RightLegend;
   int m_currSec, m_lastSec, m_SpdCntperSec, m_DirCntperSec;
   double m_cntSpd, m_cntDir, m_avgSpd, m_avgDir;
+  wxString    m_logfile;        //for data export
+  wxFile      m_ostreamlogfile; //for data export
+  bool        m_isExporting;      //for data export
+  int         m_exportInterval; //for data export
+  wxButton    *m_LogButton;     //for data export
+  wxMenu     *m_pExportmenu;//for data export
+//  wxMenuBar   *m_pExportmenuBar;//for data export
+  wxMenuItem* btn1Sec;//for data export
+  wxMenuItem* btn5Sec;//for data export
+  wxMenuItem* btn10Sec;//for data export
+  wxMenuItem* btn20Sec;//for data export
+  wxMenuItem* btn60Sec;//for data export
+  struct pol
+  {
+    double   tmpwinddir[WINDDIR + 1];
+    bool     ischanged[WINDDIR + 1]; 
+  } tmpwindsp[WINDSPEED + 1];
 
   void Draw(wxGCDC* dc);
   void DrawBackground(wxGCDC* dc);
   void DrawForeground(wxGCDC* dc);
-  void SetMinMaxWindScale();
-  //void DrawWindDirScale(wxGCDC* dc);
   void DrawBoatSpeedScale(wxGCDC* dc);
   void DrawPercentSpeedScale(wxGCDC* dc);
-  //wxString GetWindDirStr(wxString WindDir);
+  void OnPolarPerfUpdTimer(wxTimerEvent & event);
+  void OnLogDataButtonPressed(wxCommandEvent& event);
+//  void OnContextMenuSelect(wxCommandEvent& event);
+  void ExportData(void);
 };
 #endif
 /*

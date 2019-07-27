@@ -109,6 +109,7 @@ bool g_bExpPerfData05;
 bool g_bNKE_TrueWindTableBug;//variable for NKE TrueWindTable-Bugfix
 bool b_tactics_dc_message_shown = false;
 wxString g_sCMGSynonym, g_sVMGSynonym;
+wxString g_sDataExportSeparator;
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;
@@ -775,6 +776,7 @@ wxString tactics_pi::GetLongDescription()
 //*********************************************************************************
 void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString unit)
 {
+  double org_value=value;
 	if (st == OCPN_DBP_STC_AWS){
 		//Correct AWS with heel if global variable set and heel is available
 		//correction only makes sense if you use a heel sensor 
@@ -837,7 +839,7 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
 	// calculate some data and distribute to all instruments as well
 	SetCalcVariables(st, value, unit);
 	CalculateTrueWind(st, value, unit);
-	CalculateLeeway(st, value, unit);
+	CalculateLeeway(st, org_value, unit);
 	CalculateCurrent(st, value, unit);
 	CalculateLaylineDegreeRange();
 	CalculatePerformanceData();
@@ -2054,15 +2056,13 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 				if (!wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees)) {
 					if (!wxIsNaN(mVar) && (mPriHeadingT > 3)){
 						mPriHeadingT = 4;
-						calmHdt = mHdm + mVar;
-						if (calmHdt < 0.0) {
-							calmHdt = calmHdt + 360.0;
-						}
-						else if (calmHdt >= 360.0) {
-							calmHdt = calmHdt - 360.0;
-						}
-						SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, calmHdt, _T("\u00B0"));
-						mHDT_Watchdog = gps_watchdog_timeout_ticks;
+                        double heading = mHdm + mVar;
+                        if (heading < 0)
+                            heading += 360;
+                        else if (heading >= 360.0)
+                            heading -= 360;
+                        SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, heading, _T("\u00B0"));
+                        mHDT_Watchdog = gps_watchdog_timeout_ticks;
 					}
 				}
 			}
@@ -2083,14 +2083,12 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 				if (!wxIsNaN(m_NMEA0183.Hdm.DegreesMagnetic)) {
 					if (!wxIsNaN(mVar) && (mPriHeadingT > 2)){
 						mPriHeadingT = 3;
-						calmHdt = mHdm + mVar;
-						if (calmHdt < 0.0) {
-							calmHdt = calmHdt + 360.0;
-						}
-						else if (calmHdt >= 360.0) {
-							calmHdt = calmHdt - 360.0;
-						}
-						SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, calmHdt, _T("\u00B0"));
+                        double heading = mHdm + mVar;
+                        if (heading < 0)
+                          heading += 360;
+                        else if (heading >= 360.0)
+                          heading -= 360;
+                        SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, heading, _T("\u00B0"));
 						mHDT_Watchdog = gps_watchdog_timeout_ticks;
 					}
 				}
@@ -2186,8 +2184,8 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
                 // this almost duplicates the TWS values delivered in MWD & VWT and destroys the Wind history view, showing weird peaks
                 // It is particularly annoying when @anchor and trying to record windspeeds ...
                 // It seems to happen only when 
-                // * VWR sentence --> AWA changes from "Left" to "Right" through 0° AWA
-                // * with low AWA values like 0...4 degrees
+                // * VWR sentence --> AWA changes from "Left" to "Right" through 0° AWA (TWA)
+                // * with low AWA/TWA values like 0...4 degrees
                 // NMEA stream looks like this:
                 //  $IIMWD,,,349,M,6.6,N,3.4,M*29                 6.6N TWS
                 //  $IIVWT, 3, R, 7.1, N, 3.7, M, 13.1, K * 63
@@ -2964,6 +2962,9 @@ bool tactics_pi::LoadConfig(void)
 		pConf->Read(_T("CMGSynonym"), &g_sCMGSynonym, _T("CMG"));
 		pConf->Read(_T("VMGSynonym"), &g_sVMGSynonym, _T("VMG"));
 		m_bDisplayCurrentOnChart = g_bDisplayCurrentOnChart;
+        //DataExportSeparator for WindHistory, BaroHistory & PolarPerformance         
+        pConf->Read(_T("DataExportSeparator"), &g_sDataExportSeparator, _(";"));
+
 		int d_cnt;
 		pConf->Read(_T("TacticsCount"), &d_cnt, -1);
 		// TODO: Memory leak? We should destroy everything first
@@ -3078,6 +3079,9 @@ bool tactics_pi::SaveConfig(void)
 		pConf->Write(_T("ShowCurrentOnChart"), g_bDisplayCurrentOnChart);
 		pConf->Write(_T("CMGSynonym"), g_sCMGSynonym);
 		pConf->Write(_T("VMGSynonym"), g_sVMGSynonym);
+        //WindHistory, BaroHistory & PolarPerformance need DataExportSeparator         
+        pConf->Write(_T("DataExportSeparator"), g_sDataExportSeparator);
+
 		pConf->SetPath(_T("/PlugIns/Tactics/Performance"));
 		pConf->Write(_T("PolarFile"), g_path_to_PolarFile);
 		pConf->Write(_T("BoatLeewayFactor"), g_dLeewayFactor);
@@ -4896,7 +4900,6 @@ Calculate Leeway from heel
 **********************************************************************************/
 void tactics_pi::CalculateLeeway(int st, double value, wxString unit)
 {
-
 	if (g_bUseFixedLeeway){
 		mHeelUnit = (mAWAUnit == _T("\u00B0L")) ? _T("\u00B0r") : _T("\u00B0l");
 		mLeeway = g_dfixedLeeway;
@@ -4909,14 +4912,17 @@ void tactics_pi::CalculateLeeway(int st, double value, wxString unit)
 	else {//g_bUseHeelSensor or g_bManHeelInput
 
 		// only start calculating if we have a full set of data
-		if (!wxIsNaN(mheel) && !wxIsNaN(mStW)) {
-			double stw_kts = fromUsrSpeed_Plugin(mStW, g_iDashSpeedUnit);
+//      if (!wxIsNaN(mheel) && !wxIsNaN(mStW)) {
+//        double stw_kts = fromUsrSpeed_Plugin(mStW, g_iDashSpeedUnit);
+      if (st == OCPN_DBP_STC_STW && !wxIsNaN(mheel) && !wxIsNaN(value)) {
+			double stw_kts = fromUsrSpeed_Plugin(value, g_iDashSpeedUnit);
 
 			// calculate Leeway based on Heel
 			if (mheel == 0)
 				mLeeway = 0;
-			else if (mStW == 0)
-				mLeeway = g_dfixedLeeway;
+//			else if (mStW == 0)
+            else if (value == 0)
+              mLeeway = g_dfixedLeeway;
 			else
 				mLeeway = (g_dLeewayFactor*mheel) / (stw_kts*stw_kts);
 			if (mLeeway > g_dfixedLeeway) mLeeway = g_dfixedLeeway;

@@ -57,8 +57,7 @@ class TacticsInstrument;
 class TacticsInstrument_Single;
 class TacticsInstrument_Position;
 class TacticsInstrument_Sun;
-class TacticsInstrument_PerformanceSingle; //TR
-
+class TacticsInstrument_PerformanceSingle;
 enum
 {
     OCPN_DBP_STC_LAT = 1 << 0,
