@@ -88,7 +88,6 @@ protected:
   void OnAvgTimeSliderUpdated(wxCommandEvent& event);
   void CalcAvgWindDir(double CurWindDir);
   void OnAvgWindUpdTimer(wxTimerEvent & event);
-  //void DrawWindSpeedScale(wxGCDC* dc);
 };
 
 

@@ -47,21 +47,25 @@
 #include "instrument.h"
 #include "dial.h"
 
+#include <wx/filename.h>
 
 
 class TacticsInstrument_WindDirHistory : public TacticsInstrument
 {
 public:
   TacticsInstrument_WindDirHistory(wxWindow *parent, wxWindowID id, wxString title);
-  ~TacticsInstrument_WindDirHistory(void){}
+  ~TacticsInstrument_WindDirHistory(void);
   void SetData(int, double, wxString);
   wxSize GetSize(int orient, wxSize hint);
 
 private:
   int m_soloInPane;
-  int    m_SpdRecCnt, m_DirRecCnt, m_SpdStartVal, m_DirStartVal;
+  int m_SpdRecCnt, m_DirRecCnt, m_SpdStartVal, m_DirStartVal;
   int m_isNULL;
   int m_WindDirShift;
+  wxFileConfig  *m_pconfig;
+  bool LoadConfig(void);
+  bool SaveConfig(void);
 
 protected:
   double alpha;
@@ -96,6 +100,19 @@ protected:
   int m_currSec, m_lastSec, m_SpdCntperSec, m_DirCntperSec;
   double m_cntSpd, m_cntDir, m_avgSpd, m_avgDir;
 
+  wxString    m_logfile;        //for data export
+  wxFile      m_ostreamlogfile; //for data export
+  bool        m_isExporting;      //for data export
+  int         m_exportInterval; //for data export
+  wxButton    *m_LogButton;     //for data export
+  wxMenu     *m_pExportmenu;//for data export
+  wxMenuBar   *m_pExportmenuBar;//for data export
+  wxMenuItem* btn1Sec;
+  wxMenuItem* btn5Sec;
+  wxMenuItem* btn10Sec;
+  wxMenuItem* btn20Sec;
+  wxMenuItem* btn60Sec;
+
   void Draw(wxGCDC* dc);
   void DrawBackground(wxGCDC* dc);
   void DrawForeground(wxGCDC* dc);
@@ -104,6 +121,10 @@ protected:
   void DrawWindSpeedScale(wxGCDC* dc);
   wxString GetWindDirStr(wxString WindDir);
   void OnWindHistUpdTimer(wxTimerEvent & event);
+  void OnLogDataButtonPressed(wxCommandEvent& event);
+ // void OnContextMenuSelect(wxCommandEvent& event);
+  void ExportData(void);
+
 };
 
 
