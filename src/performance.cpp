@@ -735,8 +735,8 @@ double Polar::GetPolarSpeed(double twa, double tws)
   avspd1 = windsp[twsmin].winddir[i_twa] ;
   avspd2 = windsp[twsmin + 1].winddir[i_twa];
   // now do the horizontal averaging btw. the 2 surrounding polar tws values ...
-  //if (wxIsNaN(avspd1) || wxIsNaN(avspd1))
-    return ((wxIsNaN(avspd1) || wxIsNaN(avspd1))?NAN: avspd1 + (avspd2 - avspd1)*fws);
+  //if (wxIsNaN(avspd1) || wxIsNaN(avspd2))
+    return ((wxIsNaN(avspd1) || wxIsNaN(avspd2))?NAN: avspd1 + (avspd2 - avspd1)*fws);
 }
 /***********************************************************************************
 Get the polar speed with full averaging of the input data of both TWA and TWS.
