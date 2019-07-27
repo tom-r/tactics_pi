@@ -585,7 +585,9 @@ void Polar::reset()
 			windsp[0].isfix[n] = false;
 	}
 	for (int i = 1; i <= WINDSPEED; i++) {
-		for (int n = 0; n < WINDDIR; n++) {
+      windsp[i].winddir[0] = 0;
+      windsp[i].isfix[0] = false;
+      for (int n = 0; n < WINDDIR; n++) {
 			windsp[i].winddir[n] = NAN;
 			windsp[i].isfix[n] = false;
 		}
