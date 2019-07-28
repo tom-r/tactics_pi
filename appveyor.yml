@@ -1,64 +1,90 @@
-clone_folder: c:\project\projections_pi
-shallow_clone: true
+#    General Configuration      #
+#    Environment Configuration    #
+# environment:
+#  auth_token:
+#    secure: VVAVg9a8n+XgesI85/cXrXyNeStivq8FynlajE94lGUtzDGeu5PMWI5f1OSYg0tS
+# Appveyor auth token encrypted  
+# Build worker image (VM template)
 image:
-- Visual Studio 2015
+- Visual Studio 2017
 
+# scripts that are called at very beginning, before repo cloning
+# init:
+
+version: 1.0.{build}
+# clone directory
+clone_folder: c:\project\tactics_pi
+# fetch repository as zip archive
+shallow_clone: false  # default is "false"
+# set clone depth, clone entire repository history if not defined
+# clone_depth:5
+
+# Build Configuration       #
+# build platform, i.e. x86, x64, Any CPU. This setting is optional.
 platform: 
 # - x64
-- Win32
+  - Win32
 
+# build Configuration, i.e. Debug, Release, etc.
 configuration: Release
+
+# to run tests against only selected assemblies and/or categories
 test: OFF
 
+# scripts that run after cloning repository
 install:
-  - '"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x86'
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
 
   # sent environment variables for wxWidgets
-  - set WXWIN=C:\wxWidgets-3.0.2
+  - set WXWIN=C:\wxWidgets-3.1.2
   - set wxWidgets_ROOT_DIR=%WXWIN%
   - set wxWidgets_LIB_DIR=%WXWIN%\lib\vc_dll
   - cmd: SET PATH=%PATH%;%WXWIN%;%wxWidgets_LIB_DIR%;C:\Program Files (x86)\Poedit\Gettexttools\bin;
 
   # install dependencies:
-  - choco install poedit nsis -x86
+  - choco install poedit
+
+  - ps: Start-FileDownload http://opencpn.navnux.org/build_deps/nsis-3.04-setup.exe
+  - cmd: nsis-3.04-setup.exe /S
 
   # Download and unzip wxwidgets
-  - ps: Start-FileDownload http://downloads.sourceforge.net/project/wxwindows/3.0.2/wxWidgets-3.0.2.zip
-  - cmd: 7z x wxwidgets-3.0.2.zip -o%WXWIN% > null
+  - ps: Start-FileDownload http://opencpn.navnux.org/build_deps/wxWidgets-3.1.2.7z
+  - cmd: 7z x wxWidgets-3.1.2.7z -o%WXWIN% > null
 
-  # some debugging information
-  - set
+  #- set #Use only while debugging - it reveals the deploy token set on Appveyor
+
   # - cmake --help
 
-  # build wxWidgets
-  - cmd: cd %WXWIN%\build\msw\
-  - cmd: nmake -f makefile.vc BUILD=release SHARED=1 CFLAGS=/D_USING_V120_SDK71_ CXXFLAGS=/D_USING_V120_SDK71_
-  - cmd: nmake -f makefile.vc BUILD=debug SHARED=1 CFLAGS=/D_USING_V120_SDK71_ CXXFLAGS=/D_USING_V120_SDK71_
-
 before_build:
-  - cd c:\project\projections_pi
+  - cd c:\project\tactics_pi
   - mkdir build
   - cd build
-  - ps: Start-FileDownload https://downloads.sourceforge.net/project/opencpnplugins/opencpn_lib/4.2-vc120_xp/opencpn.lib
-  - ps: Start-FileDownload https://downloads.sourceforge.net/project/opencpnplugins/opencpn_packaging_data/OpenCPN_buildwin.7z
-  - cmd: 7z x -y OpenCPN_buildwin.7z -oc:\project\projections_pi
-  - cmake -T v120_xp ..
+  - ps: Start-FileDownload https://downloads.sourceforge.net/project/opencpnplugins/opencpn_lib/4.99.1405-vc141_xp/opencpn.lib
+  - ps: Start-FileDownload http://opencpn.navnux.org/build_deps/OpenCPN_buildwin-4.99a.7z
+  - cmd: 7z x -y OpenCPN_buildwin-4.99a.7z -oc:\project\iacfleet_pi\buildwin
+  - cmake -T v141_xp ..
 
+# to run your custom scripts instead of automatic MSBuild
 build_script:
   # - cmake --build . --config debug
   - cmake --build . --target package --config release
 
-artifacts:
-  - path: 'build\*.exe'
-    name: installer
-
+# Artifacts Configuration    #
+artifacts: # push all files in directory
+  path: build\*.exe
+  name: installer
+# Deploy to GitHub Releases
+  
 deploy:
-  description: 'release created by AppVeyor CI'
+
   provider: GitHub
-  auth_token: '%GitHub_auth_token%'
-  artifact: installer
+  auth_token:
+    secure: VVAVg9a8n+XgesI85/cXrXyNeStivq8FynlajE94lGUtzDGeu5PMWI5f1OSYg0tS
+  artifact: installer, portable
   draft: true
   prerelease: true
+  tag: $(APPVEYOR_REPO_TAG_NAME) # insert version name
   on:
-    appveyor_repo_tag: true # deploy on tag push only
-    configuration: Release  # Debug contains non-redist MS DLLs
+    configuration: Release    # Debug contains non-redist MS DLLs
+    APPVEYOR_REPO_TAG: true   # deploy on tag push only
+#   branch: master   # release from master branch only
