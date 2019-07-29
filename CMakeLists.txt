@@ -23,13 +23,14 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
 # This should be 2.8.0 to have FindGTK2 module
 cmake_policy(SET CMP0012 NEW)
-
+# define minimum cmake version
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
 PROJECT(tactics_pi)
-
 SET(PACKAGE_NAME tactics_pi)
 SET(VERBOSE_NAME Tactics)
 SET(TITLE_NAME TACTICS)
 SET(CPACK_PACKAGE_CONTACT "Tom R")
+INCLUDE("cmake/PluginConfigure.cmake")
 
 SET(BUNDLE_DATA TRUE)
 
