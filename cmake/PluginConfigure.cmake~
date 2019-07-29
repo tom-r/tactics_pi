@@ -1,6 +1,6 @@
 ##---------------------------------------------------------------------------
 ## Author:      Sean D'Epagnier
-## Copyright:
+## Copyright:   
 ## License:     GPLv3+
 ##---------------------------------------------------------------------------
 
@@ -81,11 +81,11 @@ ENDIF(_wx_selected_config MATCHES "androideabi-qt")
 
 ENDIF(DEFINED _wx_selected_config)
 
-
 MESSAGE (STATUS "*** Staging to build ${PACKAGE_NAME} ***")
 
 include  ("VERSION.cmake")
 configure_file(${PROJECT_SOURCE_DIR}/cmake/wxWTranslateCatalog.h.in ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/include/wxWTranslateCatalog.h)
+
 
 #  Do the version.h configuration into the build output directory,
 #  thereby allowing building from a read-only source tree.
@@ -96,7 +96,6 @@ IF(NOT SKIP_VERSION_CONFIG)
 ENDIF(NOT SKIP_VERSION_CONFIG)
 
 SET(PLUGIN_VERSION "${PLUGIN_VERSION_MAJOR}.${PLUGIN_VERSION_MINOR}.${PLUGIN_VERSION_PATCH}-${NAME_SUFFIX}" )
-
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/src)
 
 # SET(PROFILING 1)
@@ -118,7 +117,6 @@ else ()
   set (CMAKE_CXX_STANDARD 11)
   message(STATUS "Setting C++11 standard via cmake standard mecahnism")
 endif ()
-
 
 #  IF NOT DEBUGGING CFLAGS="-O2 -march=native"
 IF(NOT MSVC)
@@ -180,7 +178,6 @@ IF(QT_ANDROID)
 
 ENDIF(QT_ANDROID)
 
-
 IF(MSYS)
 # this is just a hack. I think the bug is in FindwxWidgets.cmake
 STRING( REGEX REPLACE "/usr/local" "\\\\;C:/MinGW/msys/1.0/usr/local" wxWidgets_INCLUDE_DIRS "${wxWidgets_INCLUDE_DIRS}" )
@@ -196,7 +193,6 @@ IF(OCPN_USE_SVG)
   ADD_DEFINITIONS(-DOCPN_USE_SVG)
 ENDIF(OCPN_USE_SVG)
 
-  
 FIND_PACKAGE(OpenGL)
 IF(OPENGL_GLU_FOUND)
 
@@ -280,7 +276,6 @@ ENDIF(QT_ANDROID)
 
 
 
-
 SET(BUILD_SHARED_LIBS TRUE)
 
 FIND_PACKAGE(Gettext REQUIRED)
@@ -309,4 +304,3 @@ LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
 
 
 ADD_DEFINITIONS(-DTIXML_USE_STL)
-
