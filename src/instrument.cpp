@@ -168,7 +168,7 @@ void TacticsInstrument::OnPaint( wxPaintEvent& WXUNUSED(event) )
             pdc.DrawRectangle(0, 0, size.x, m_TitleHeight);
 
             wxPen pen;
-            pen.SetStyle( wxSOLID );
+            pen.SetStyle( wxPENSTYLE_SOLID );
             GetGlobalColor( _T("DASHL"), &cl );
             pen.SetColour( cl );
             pdc.SetPen( pen );

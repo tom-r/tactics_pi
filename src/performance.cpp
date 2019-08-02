@@ -44,6 +44,8 @@
 #include <map>
 
 extern Polar* BoatPolar;
+extern AvgWind* AverageWind; //TR 28.07.19
+
 extern wxString g_path_to_PolarLookupOutputFile;
 extern wxString g_path_to_PolarFile;
 extern int g_iDashWindSpeedUnit;
@@ -51,6 +53,9 @@ extern int g_iDashSpeedUnit;
 extern PlugIn_Waypoint *m_pMark;
 extern int g_iSpeedFormat;
 extern wxString g_sDataExportSeparator;
+extern bool g_bDataExportUTC;
+extern bool g_bDataExportClockticks;
+
 //extern int g_iPolarMode; //0=do nothing, 1=create new, 2=update existing
 #define ID_EXPORTRATE_1   11001
 #define ID_EXPORTRATE_5   11005
@@ -295,9 +300,34 @@ void TacticsInstrument_PerformanceSingle::SetData(int st, double data, wxString 
                 m_data = _T("no data");
             }
             else if (m_displaytype == TWAMARK){
+              double avWnd = AverageWind->GetAvgWindDir();
+              while (avWnd > 360) avWnd -= 360;
+              while (avWnd < 0) avWnd += 360;
+              double port = avWnd + AverageWind->GetDegRangePort();
+              while (port > 360) port -= 360;
+              while (port < 0) port += 360;
+              double stb = avWnd + AverageWind->GetDegRangeStb();
+              while (stb > 360) stb -= 360;
+              while (stb < 0) stb += 360;
+              //wxLogMessage("avWnd=%.0f %.0f %.0f", port,avWnd,stb);
+              /* original :
               if (mBRG>=0 && !wxIsNaN(mTWD)) {
                 double markBrG = getDegRange(mBRG, mTWD);
                 m_data = wxString::Format("%.0f",(double) markBrG) + _T("\u00B0");
+              }*/
+              if (mBRG >= 0 && !wxIsNaN(mTWD) && !wxIsNaN(avWnd) ) {
+                //double markBrG = getDegRange(mBRG, mTWD);
+                // do the rounding inside the function to keep it somehow in sync with the AvgWind instrument ...
+                double AvgMarkBrG = getDegRange(mBRG, wxRound(avWnd));
+                double leftMarkBrG = getDegRange(mBRG, wxRound(port));
+                double rightMarkBrG = getDegRange(mBRG, wxRound(stb));
+                
+                if (leftMarkBrG > rightMarkBrG) {
+                  double tmp = leftMarkBrG;
+                  leftMarkBrG = rightMarkBrG;
+                  rightMarkBrG = tmp;
+                }
+                m_data = wxString::Format("%.0f", (double)leftMarkBrG) + _T("\u00B0") + wxString::Format(" - %.0f", (double)AvgMarkBrG) + _T("\u00B0")+ wxString::Format(" - %.0f", (double)rightMarkBrG) + _T("\u00B0");
               }
               else
                 m_data = _T("---");
@@ -538,16 +568,16 @@ void Polar::loadPolar(wxString FilePath)
 		wxFileOutputStream outstream(path_to_PolarLookupOutputFile);
 		wxTextOutputStream out(outstream);
 
-		wxString str = _T("d/s");
+		wxString str = _T("TWA\\TWS");
         for (int i = 0; i <= WINDSPEED; i++){
-			str = wxString::Format(_T("%s\t%02d"), str, i);
+			str = wxString::Format(_T("%s;%02d"), str, i);
 		}
 		str = str + _T("\n");
 		out.WriteString(str);				// write line by line
 		for (int n = 0; n < WINDDIR; n++){
-			str = wxString::Format(_T("%d\t"), n);
+			str = wxString::Format(_T("%d"), n);
             for (int i = 0; i <= WINDSPEED; i++){
-				str = wxString::Format(_T("%s\t%.2f"), str, windsp[i].winddir[n]);
+				str = wxString::Format(_T("%s;%.2f"), str, windsp[i].winddir[n]);
 			}
 			str = str + _T("\n");
 			out.WriteString(str);				// write line by line
@@ -1287,6 +1317,9 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_STW | OCPN_DBP_STC_TWA | OCPN_
 TacticsInstrument_PolarPerformance::~TacticsInstrument_PolarPerformance(void) {
   if (m_isExporting)
     m_ostreamlogfile.Close();
+  m_PolarPerfUpdTimer.Stop();
+  m_LogButton->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TacticsInstrument_PolarPerformance::OnLogDataButtonPressed), NULL, this);
+
   /*temp out
   //output of temp lookup table
   wxFileOutputStream outstream("C:/TEMP/updated_Polar.txt");
@@ -1806,7 +1839,9 @@ void TacticsInstrument_PolarPerformance::OnLogDataButtonPressed(wxCommandEvent& 
     bool exists = m_ostreamlogfile.Exists(m_logfile);
     m_ostreamlogfile.Open(m_logfile, wxFile::write_append);
     if (!exists) {
-      wxString str = wxString::Format(_T("%s%s%s%s%s%s%s%s%s%s%s\n"), "Date", g_sDataExportSeparator, "Time", g_sDataExportSeparator, "AvgTWA", g_sDataExportSeparator, "AvgTWS", g_sDataExportSeparator, "smoothed BoatSpd", g_sDataExportSeparator, "Percent");
+      wxString str_ticks = g_bDataExportClockticks ? wxString::Format(_("ClockTicks%s"), g_sDataExportSeparator) : _("");
+      wxString str_utc = g_bDataExportUTC ? wxString::Format(_("UTC-ISO8601%s"), g_sDataExportSeparator) : _("");
+      wxString str = wxString::Format(_T("%s%s%s%s%s%s%s%s%s%s%s%s%s\n"), str_ticks, str_utc, "Date", g_sDataExportSeparator, "local Time", g_sDataExportSeparator, "AvgTWA", g_sDataExportSeparator, "AvgTWS", g_sDataExportSeparator, "smoothed BoatSpd", g_sDataExportSeparator, "Percent");
       m_ostreamlogfile.Write(str);
     }
     SaveConfig(); //save the new export-rate &filename to opencpn.ini
@@ -1857,7 +1892,20 @@ void TacticsInstrument_PolarPerformance::ExportData(void) {
   if (m_isExporting == true) {
     wxDateTime localTime(m_ArrayRecTime[DATA_RECORD_COUNT - 1]);
     if (localTime.GetSecond() % m_exportInterval == 0) {
-      wxString str = wxString::Format(_T("%s%s%s%s%3.0f%s%3.1f%s%3.2f%s%3.2f\n"), localTime.FormatDate(), g_sDataExportSeparator, localTime.FormatTime(), g_sDataExportSeparator, m_AvgTWA, g_sDataExportSeparator, toUsrSpeed_Plugin(m_AvgTWS, g_iDashWindSpeedUnit), g_sDataExportSeparator, toUsrSpeed_Plugin(m_ExpSmoothArrayBoatSpd[DATA_RECORD_COUNT - 1], g_iDashSpeedUnit), g_sDataExportSeparator, m_AvgSpdPercent);
+      wxString str_utc, ticks;
+      if (g_bDataExportUTC) {
+        wxDateTime utc = localTime.ToUTC();
+        str_utc = wxString::Format(_T("%s%s"), utc.FormatISOCombined('T'), g_sDataExportSeparator);
+      }
+      else
+        str_utc = _T("");
+      if (g_bDataExportClockticks) {
+        wxLongLong ti = localTime.GetValue();
+        ticks = wxString::Format(_T("%s%s"), ti.ToString(), g_sDataExportSeparator);
+      }
+      else
+        ticks = _T("");
+      wxString str = wxString::Format(_T("%s%s%s%s%s%s%3.0f%s%3.1f%s%3.2f%s%3.2f\n"), ticks, str_utc, localTime.FormatDate(), g_sDataExportSeparator, localTime.FormatTime(), g_sDataExportSeparator, m_AvgTWA, g_sDataExportSeparator, toUsrSpeed_Plugin(m_AvgTWS, g_iDashWindSpeedUnit), g_sDataExportSeparator, toUsrSpeed_Plugin(m_ExpSmoothArrayBoatSpd[DATA_RECORD_COUNT - 1], g_iDashSpeedUnit), g_sDataExportSeparator, m_AvgSpdPercent);
       m_ostreamlogfile.Write(str);
     }
   }

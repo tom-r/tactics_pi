@@ -110,6 +110,9 @@ bool g_bNKE_TrueWindTableBug;//variable for NKE TrueWindTable-Bugfix
 bool b_tactics_dc_message_shown = false;
 wxString g_sCMGSynonym, g_sVMGSynonym;
 wxString g_sDataExportSeparator;
+bool     g_bDataExportUTC;
+bool     g_bDataExportClockticks;
+AvgWind* AverageWind; //TR 28.07.19
 
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;
@@ -502,11 +505,9 @@ int tactics_pi::Init(void)
 	m_ExpSmoothCosCog = NAN;
 	m_CurrentDirection = NAN;
 	m_LaylineSmoothedCog = NAN;
-    //TR20190620
     m_SmoothedpredCog = NAN;
     m_ExpSmoothSinpredCog = NAN;
     m_ExpSmoothCospredCog = NAN;
-    //TR20190623
     m_ExpSmcur_tacklinedir = NAN;
     m_ExpSmtarget_tacklinedir = NAN;
 
@@ -515,14 +516,10 @@ int tactics_pi::Init(void)
 	mCosCurrDir = new DoubleExpSmooth(g_dalpha_currdir);
 	mExpSmoothCurrSpd = new ExpSmooth(alpha_currspd);
 	mExpSmoothSog = new DoubleExpSmooth(0.4);
-//    mExpSmSinCog = new DoubleExpSmooth(m_alphaLaylineCog);//prev. ExpSmooth(...
-//    mExpSmCosCog = new DoubleExpSmooth(m_alphaLaylineCog);//prev. ExpSmooth(...
     mExpSmSinCog = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);//prev. ExpSmooth(...
     mExpSmCosCog = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);//prev. ExpSmooth(...
-    //TR20190620
     mExpSmSinpredCog = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
     mExpSmCospredCog = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
-    //TR20190623
     mExpSmSincur_tacklinedir = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
     mExpSmCoscur_tacklinedir = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
     mExpSmSintarget_tacklinedir = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
@@ -606,6 +603,10 @@ int tactics_pi::Init(void)
 	if (m_config_version == 1) {
 		SaveConfig();
 	}
+    AverageWind = new AvgWind();
+    //we process data 1/s ...
+    m_avgWindUpdTimer.Start(1000, wxTIMER_CONTINUOUS);
+    m_avgWindUpdTimer.Connect(wxEVT_TIMER, wxTimerEventHandler(tactics_pi::OnAvgWindUpdTimer), NULL, this);
 
 	Start(1000, wxTIMER_CONTINUOUS);
 	/* TR */
@@ -629,7 +630,11 @@ int tactics_pi::Init(void)
 		WANTS_OVERLAY_CALLBACK
 		);
 }
-
+void tactics_pi::OnAvgWindUpdTimer(wxTimerEvent & event)
+{
+  if (!wxIsNaN(mTWD))
+    AverageWind->CalcAvgWindDir(mTWD);
+}
 bool tactics_pi::DeInit(void)
 {
 	SaveConfig();
@@ -660,7 +665,7 @@ bool tactics_pi::DeInit(void)
 		m_pRoute->pWaypointList->DeleteContents(true);
 		DeletePlugInRoute(m_pRoute->m_GUID);
 	}
-
+    m_avgWindUpdTimer.Stop();
 	return true;
 }
 //*********************************************************************************
@@ -2964,6 +2969,8 @@ bool tactics_pi::LoadConfig(void)
 		m_bDisplayCurrentOnChart = g_bDisplayCurrentOnChart;
         //DataExportSeparator for WindHistory, BaroHistory & PolarPerformance         
         pConf->Read(_T("DataExportSeparator"), &g_sDataExportSeparator, _(";"));
+        pConf->Read(_T("DataExportUTC-ISO8601"), &g_bDataExportUTC, 0);
+        pConf->Read(_T("DataExportClockticks"), &g_bDataExportClockticks,0);
 
 		int d_cnt;
 		pConf->Read(_T("TacticsCount"), &d_cnt, -1);
@@ -3081,6 +3088,8 @@ bool tactics_pi::SaveConfig(void)
 		pConf->Write(_T("VMGSynonym"), g_sVMGSynonym);
         //WindHistory, BaroHistory & PolarPerformance need DataExportSeparator         
         pConf->Write(_T("DataExportSeparator"), g_sDataExportSeparator);
+        pConf->Write(_T("DataExportUTC-ISO8601"), g_bDataExportUTC);
+        pConf->Write(_T("DataExportClockticks"), g_bDataExportClockticks);
 
 		pConf->SetPath(_T("/PlugIns/Tactics/Performance"));
 		pConf->Write(_T("PolarFile"), g_path_to_PolarFile);
@@ -4856,7 +4865,7 @@ void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
           mTWA = 180.;
         }
         mTWS = sqrt(pow((aws_kts*cos(mAWA*M_PI / 180.)) - spdval, 2) + pow(aws_kts*sin(mAWA*M_PI / 180.), 2));
-      /* ToDo: adding leeway needs to be reviewed, as the direction of the bow is still based in the magnetic compass,
+      /* ToDo: adding leeway needs to be reviewed, as the direction of the bow is still based on the magnetic compass,
                no matter if leeway or not ...
       if (!wxIsNaN(mLeeway) && g_bUseHeelSensor) { //correct TWD with Leeway if heel is available. Makes only sense with heel sensor
         mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA + mLeeway : mHdt - mTWA + mLeeway;

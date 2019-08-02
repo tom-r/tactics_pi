@@ -196,6 +196,8 @@ private:
       void SendSentenceToAllInstruments(int st, double value, wxString unit);
       void SendSatInfoToAllInstruments(int cnt, int seq, SAT_INFO sats[4]);
       void SendUtcTimeToAllInstruments( wxDateTime value );
+      void OnAvgWindUpdTimer(wxTimerEvent & event);
+      wxTimer m_avgWindUpdTimer;
 
       wxFileConfig         *m_pconfig;
       wxAuiManager         *m_pauimgr;

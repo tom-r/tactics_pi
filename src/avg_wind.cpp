@@ -42,6 +42,118 @@
 #endif
 
 extern int g_iDashWindSpeedUnit;
+extern AvgWind* AverageWind;
+/************************************************************************************************************************
+ Class for Average Wind Calculation
+ The content of this class was originally part of the TacticsInstrument_AvgWindDir intrument.
+ I extracted the average Wind calculation from the instrument to be able to use it in tactics_pi itself
+ for the "TWA to Waypoint" instrument. Definition is now in tactics_pi, TacticsInstrument_AvgWindDir calls
+ this instance of the class.
+ The idea of this class is to constantly feed the live TWD into it. The class handles the calculation.
+ Retrieval of the avg. wind + port & stb limits via getter-functions.
+ This class is not derived from a instrument, window, ... and has no separate timer function.
+ To make it work with the timescale in TacticsInstrument_AvgWindDir, it has to be called 1/s (--> separate timer in
+ tactics_pi with callback function to feed the class for calculation)
+*************************************************************************************************************************/
+AvgWind::AvgWind()
+{
+  m_SampleCount = 0;
+  m_AvgTime = 360; //value is in Seconds --> 6 min
+  m_DegRangePort = 0.0;
+  m_DegRangeStb = 0.0;
+  for (int i = 0; i < AVG_WIND_RECORDS; i++) {
+    m_WindDirArray[i] = NAN;
+    m_signedWindDirArray[i] = NAN;
+    m_ExpsinSmoothArrayWindDir[i] = NAN;
+    m_ExpcosSmoothArrayWindDir[i] = NAN;
+    m_ExpSmoothSignedWindDirArray[i] = NAN;
+  }
+  mDblsinExpSmoothWindDir = new DoubleExpSmooth(0.09);
+  mDblcosExpSmoothWindDir = new DoubleExpSmooth(0.09);
+}
+void AvgWind::CalcAvgWindDir(double CurWindDir)
+{
+  int i;
+  if (!wxIsNaN(CurWindDir)) {
+
+    m_SampleCount = m_SampleCount < AVG_WIND_RECORDS ? m_SampleCount + 1 : AVG_WIND_RECORDS;
+    //fill the array, perform data shifting in case the array is completely filled.
+    // we always fill the whole array, independent of which time average is set.
+    // --> once the array is filled up, we can dynamically change the time average w/o the need to
+    // wait for another full set of data.
+    for (i = AVG_WIND_RECORDS - 1; i > 0; i--) {
+      m_WindDirArray[i] = m_WindDirArray[i - 1];
+      m_ExpsinSmoothArrayWindDir[i] = m_ExpsinSmoothArrayWindDir[i - 1];
+      m_ExpcosSmoothArrayWindDir[i] = m_ExpcosSmoothArrayWindDir[i - 1];
+    }
+    m_WindDirArray[0] = CurWindDir;
+    double rad = (90 - CurWindDir)*M_PI / 180.;
+
+    m_ExpsinSmoothArrayWindDir[0] = mDblsinExpSmoothWindDir->GetSmoothVal(sin(rad));
+    m_ExpcosSmoothArrayWindDir[0] = mDblcosExpSmoothWindDir->GetSmoothVal(cos(rad));
+
+    //Problem Norddurchgang: 355° - 10° ...
+    //solution via atan2 function...
+    //calculation of arithmetical mean value
+    double sinAvgDir = 0;
+    double cosAvgDir = 0;
+    rad = 0;
+    int samples = m_SampleCount < m_AvgTime ? m_SampleCount : m_AvgTime;
+    for (i = 0; i < samples; i++) {
+      rad = (90. - m_WindDirArray[i])*M_PI / 180.;
+      sinAvgDir += sin(rad);
+      cosAvgDir += cos(rad);
+    }
+    m_AvgWindDir = (90. - (atan2(sinAvgDir, cosAvgDir)*180. / M_PI) + 360.);
+    while (m_AvgWindDir >= 360) m_AvgWindDir -= 360;
+    //m_AvgDegRange ermitteln
+    m_DegRangePort = 360;
+    m_DegRangeStb = -360;
+
+    double val, smval, smWDir;
+    for (i = 0; i < samples && !wxIsNaN(m_WindDirArray[i]); i++) {
+      val = getSignedDegRange(m_AvgWindDir, m_WindDirArray[i]);
+      m_signedWindDirArray[i] = val;
+      smWDir = (90. - (atan2(m_ExpsinSmoothArrayWindDir[i], m_ExpcosSmoothArrayWindDir[i])*180. / M_PI) + 360.);
+      while (smWDir >= 360) smWDir -= 360;
+      smval = getSignedDegRange(m_AvgWindDir, smWDir);
+      m_ExpSmoothSignedWindDirArray[i] = smval;
+
+      if (val < m_DegRangePort) m_DegRangePort = val;
+      if (val > m_DegRangeStb) m_DegRangeStb = val;
+    }
+  }
+}
+
+double AvgWind::GetAvgWindDir()
+{
+  return m_AvgWindDir;
+}
+double AvgWind::GetDegRangePort()
+{
+  return m_DegRangePort;
+}
+double AvgWind::GetDegRangeStb()
+{
+  return m_DegRangeStb;
+}
+
+void AvgWind::SetAvgTime(int time)
+{
+  m_AvgTime = time; //seconds !
+}
+double AvgWind::GetsignedWindDirArray(int idx)
+{
+  return m_signedWindDirArray[idx];
+}
+double AvgWind::GetExpSmoothSignedWindDirArray(int idx)
+{
+  return m_ExpSmoothSignedWindDirArray[idx];
+}
+int  AvgWind::GetSampleCount()
+{
+  return m_SampleCount;
+}
 //************************************************************************************************************************
 // History of wind direction
 //************************************************************************************************************************
@@ -51,25 +163,13 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_TWD)
 {
   SetDrawSoloInPane(true);
   m_WindDir = NAN;
-  m_WindDirRange = 90;
   m_TopLineHeight = 30;
   m_IsRunning = false;
   m_SampleCount = 0;
   m_Legend = 3;
-   m_AvgTime = 360; //6 min
-   m_DegRangePort = 0.0;
-   m_DegRangeStb = 0.0;
-   for (int i = 0; i < AVG_WIND_RECORDS; i++){
-     m_WindDirArray[i] = NAN;
-     m_signedWindDirArray[i] = NAN;
-     m_ExpsinSmoothArrayWindDir[i] = NAN;
-     m_ExpcosSmoothArrayWindDir[i] = NAN;
-     m_ExpSmoothSignedWindDirArray[i] = NAN;
-   }
-   mDblsinExpSmoothWindDir = new DoubleExpSmooth(0.06);
-   mDblcosExpSmoothWindDir = new DoubleExpSmooth(0.06);
-
-  alpha = 0.1;  //smoothing constant
+  m_AvgTime = 360; //6 min
+  m_DegRangePort = 0.0;
+  m_DegRangeStb = 0.0;
   wxSize size = GetClientSize();
   m_cx = size.x / 2;
 
@@ -85,27 +185,26 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_TWD)
 //we process data 1/s ...
   m_avgWindUpdTimer.Start(1000, wxTIMER_CONTINUOUS);
   m_avgWindUpdTimer.Connect(wxEVT_TIMER, wxTimerEventHandler(TacticsInstrument_AvgWindDir::OnAvgWindUpdTimer), NULL, this);
+  
 
-
+}
+TacticsInstrument_AvgWindDir::~TacticsInstrument_AvgWindDir(void)
+{
+  m_avgWindUpdTimer.Stop();
 }
 void TacticsInstrument_AvgWindDir::OnAvgWindUpdTimer(wxTimerEvent & event)
 {
-  if (!wxIsNaN(m_WindDir))
-    CalcAvgWindDir(m_WindDir);
+  if (!wxIsNaN(m_WindDir)) {
+    m_AvgWindDir = AverageWind->GetAvgWindDir();
+    m_DegRangePort = AverageWind->GetDegRangePort();
+    m_DegRangeStb = AverageWind->GetDegRangeStb();
+    m_SampleCount = AverageWind->GetSampleCount();
+  }
 }
 void TacticsInstrument_AvgWindDir::OnAvgTimeSliderUpdated(wxCommandEvent& event)
-{  // slider increments in step of 2 only
- /* int val = m_AvgTimeSlider->GetValue();
-
-  int remainder = val % 2; // The step interval. 
-
-  // If the value is not evenly divisible by the step interval,
-  // snap the value to an even interval.
-  if (remainder != 0){
-    val -= remainder;
-    m_AvgTimeSlider->SetValue(val);
-  }*/
+{ //Note : the slider also updates the calculation in tactics_pi. This is done on puropse !       
   m_AvgTime = m_AvgTimeSlider->GetValue()*60;
+  AverageWind->SetAvgTime(m_AvgTime);
 }
 
 wxSize TacticsInstrument_AvgWindDir::GetSize(int orient, wxSize hint)
@@ -128,59 +227,6 @@ void TacticsInstrument_AvgWindDir::SetData(int st, double data, wxString unit)
     m_IsRunning = wxIsNaN(m_WindDir)? false:true;
 }
 
-double TacticsInstrument_AvgWindDir::GetAvgWindDir()
-{
-  return m_AvgWindDir;
-}
-void TacticsInstrument_AvgWindDir::CalcAvgWindDir(double CurWindDir)
-{
-  int i;
-  m_SampleCount = m_SampleCount<AVG_WIND_RECORDS ? m_SampleCount + 1 : AVG_WIND_RECORDS;
-  //fill the array, perform data shifting in case the array is completely filled.
-  // we always fill the whole array, independent of which time average is set.
-  // --> once the array is filled up, we can dynamically change the time average w/o the need to
-  // wait for another full set of data.
-  for (i = AVG_WIND_RECORDS - 1; i > 0; i--) {
-    m_WindDirArray[i]=m_WindDirArray[i - 1]  ;
-    m_ExpsinSmoothArrayWindDir[i] = m_ExpsinSmoothArrayWindDir[i-1];
-    m_ExpcosSmoothArrayWindDir[i] = m_ExpcosSmoothArrayWindDir[i - 1];
-  }
-  m_WindDirArray[0] = CurWindDir;
-  double rad = (90 - CurWindDir)*M_PI / 180.;
-
-  m_ExpsinSmoothArrayWindDir[0] = mDblsinExpSmoothWindDir->GetSmoothVal(sin(rad));
-  m_ExpcosSmoothArrayWindDir[0] = mDblcosExpSmoothWindDir->GetSmoothVal(cos(rad));
-
-  //Problem Norddurchgang: 355° - 10° ...
-  //solution via atan2 function...
-  //calculation of arithmetical mean value
-  double sinAvgDir = 0;
-  double cosAvgDir = 0;
-   rad = 0;
-   int samples = m_SampleCount < m_AvgTime ? m_SampleCount : m_AvgTime;
-  for (i = 0; i < samples; i++){
-    rad = (90. - m_WindDirArray[i])*M_PI / 180.;
-    sinAvgDir += sin(rad);
-    cosAvgDir += cos(rad);
-  }
-  m_AvgWindDir = (90. - (atan2( sinAvgDir,cosAvgDir)*180. / M_PI) + 360.);
- while (m_AvgWindDir >= 360) m_AvgWindDir -= 360;
- //m_AvgDegRange ermitteln
- m_DegRangePort = 360;
- m_DegRangeStb = -360;
- double val,smval,smWDir;
- for (i = 0; i < samples && !wxIsNaN(m_WindDirArray[i]); i++){
-  val= getSignedDegRange(m_AvgWindDir, m_WindDirArray[i]);
-  m_signedWindDirArray[i] = val;
-  smWDir = (90. - (atan2(m_ExpsinSmoothArrayWindDir[i], m_ExpcosSmoothArrayWindDir[i])*180. / M_PI) + 360.);
-  while (smWDir >= 360) smWDir -= 360;
-  smval = getSignedDegRange(m_AvgWindDir, smWDir);
-  m_ExpSmoothSignedWindDirArray[i] = smval;
-  if (val < m_DegRangePort) m_DegRangePort=val;
-  if (val > m_DegRangeStb) m_DegRangeStb=val;
- }
-}
-
 void TacticsInstrument_AvgWindDir::Draw(wxGCDC* dc)
 {
   wxColour c1;
@@ -195,7 +241,6 @@ void TacticsInstrument_AvgWindDir::Draw(wxGCDC* dc)
   m_AvgTimeSlider->SetSize(10, 0, size.x-20,5);
   int w,h;
   m_AvgTimeSlider->GetSize(&w, &m_SliderHeight);
-//  m_width = size.x;
   m_height = size.y;
 
   dc->GetTextExtent(_T("30"), &w, &h, 0, 0, g_pFontSmall);
@@ -306,14 +351,14 @@ void TacticsInstrument_AvgWindDir::DrawForeground(wxGCDC* dc)
   // live direction data
   //---------------------------------------------------------------------------------
   wxPoint points, pointAngle_old;
-  pointAngle_old.x = m_width / 2. + m_signedWindDirArray[0] * m_ratioW + m_Legend + 1;
+  pointAngle_old.x = m_width / 2. + AverageWind->GetsignedWindDirArray(0) * m_ratioW + m_Legend + 1;
   pointAngle_old.y = m_TopLineHeight + m_SliderHeight + 1;
-  pen.SetColour(wxColour(0, 0, 255,40)); //blue, opague
+  pen.SetColour(wxColour(0, 0, 255,60)); //blue, opague
   dc->SetPen(pen);
   int samples = m_SampleCount < m_AvgTime ? m_SampleCount : m_AvgTime;
 
   for (int idx = 1; idx < samples; idx++) {
-    points.x = m_width / 2. + m_signedWindDirArray[idx] * m_ratioW + m_Legend + 1;
+    points.x = m_width / 2. + AverageWind->GetsignedWindDirArray(idx) * m_ratioW + m_Legend + 1;
     points.y = (int)((double)m_TopLineHeight + m_SliderHeight + 1. + (double)idx * m_ratioH);
     dc->DrawLine(pointAngle_old,points);
     pointAngle_old.x = points.x;
@@ -321,7 +366,7 @@ void TacticsInstrument_AvgWindDir::DrawForeground(wxGCDC* dc)
   }
   
   //---------------------------------------------------------------------------------
-  //exponential smoothing of direction
+  //printing the exponentially smoothed direction
   //---------------------------------------------------------------------------------
   pen.SetStyle(wxPENSTYLE_SOLID);
   pen.SetColour(wxColour(0, 0, 255, 128));
@@ -333,10 +378,10 @@ void TacticsInstrument_AvgWindDir::DrawForeground(wxGCDC* dc)
   redbrush.SetStyle(wxBRUSHSTYLE_SOLID);
   redbrush.SetColour(wxColour(204, 41, 41, 128));
   wxPoint fill[4];
-  pointAngle_old.x = m_width / 2. + m_ExpSmoothSignedWindDirArray[0] * m_ratioW + m_Legend + 1;
+  pointAngle_old.x = m_width / 2. + AverageWind->GetExpSmoothSignedWindDirArray(0) * m_ratioW + m_Legend + 1;
   pointAngle_old.y = m_TopLineHeight + m_SliderHeight + 1;
   for (int idx = 1; idx < samples; idx++) {
-    points.x = m_width / 2. + m_ExpSmoothSignedWindDirArray[idx] * m_ratioW + m_Legend + 1;
+    points.x = m_width / 2. + AverageWind->GetExpSmoothSignedWindDirArray(idx) * m_ratioW + m_Legend + 1;
     points.y = m_TopLineHeight + m_SliderHeight + 1 + idx * m_ratioH;
     fill[0].x = pointAngle_old.x;
     fill[0].y = pointAngle_old.y;

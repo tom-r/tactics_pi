@@ -43,6 +43,9 @@
 
 extern int g_iDashWindSpeedUnit;
 extern wxString g_sDataExportSeparator;
+extern bool g_bDataExportUTC;
+extern bool g_bDataExportClockticks;
+
 #define ID_EXPORTRATE_1   11201
 #define ID_EXPORTRATE_5   11205
 #define ID_EXPORTRATE_10  11210
@@ -119,6 +122,9 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_TWD | OCPN_DBP_STC_TWS)
 TacticsInstrument_WindDirHistory::~TacticsInstrument_WindDirHistory(void) {
   if(m_isExporting)
      m_ostreamlogfile.Close();
+  m_WindHistUpdTimer.Stop();
+  m_LogButton->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TacticsInstrument_WindDirHistory::OnLogDataButtonPressed), NULL, this);
+
 }
 /*void TacticsInstrument_WindDirHistory::OnContextMenuSelect(wxCommandEvent& event) {
   int id= event.GetId();
@@ -172,7 +178,7 @@ void TacticsInstrument_WindDirHistory::OnWindHistUpdTimer(wxTimerEvent & event)
       m_ExpSmoothArrayWindSpd[WIND_RECORD_COUNT - 1] = alpha*m_ArrayWindSpdHistory[WIND_RECORD_COUNT - 2] + (1 - alpha)*m_ExpSmoothArrayWindSpd[WIND_RECORD_COUNT - 2];
       m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT - 1] = alpha*m_ArrayWindDirHistory[WIND_RECORD_COUNT - 2] + (1 - alpha)*m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT - 2];
 
-      m_ArrayRecTime[WIND_RECORD_COUNT - 1] = wxDateTime::Now().GetTm( );
+      m_ArrayRecTime[WIND_RECORD_COUNT - 1] = wxDateTime::UNow().GetTm( );
 
       m_oldDirVal = m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT - 1];
       //include the new/latest value in the max/min value test too
@@ -456,7 +462,7 @@ void TacticsInstrument_WindDirHistory::DrawBackground(wxGCDC* dc)
   dc->DrawLine(m_LeftLegend + 3, (int)(m_TopLineHeight + m_DrawAreaRect.height*0.25), m_WindowRect.width - 3 - m_RightLegend, (int)(m_TopLineHeight + m_DrawAreaRect.height*0.25));
   dc->DrawLine(m_LeftLegend + 3, (int)(m_TopLineHeight + m_DrawAreaRect.height*0.75), m_WindowRect.width - 3 - m_RightLegend, (int)(m_TopLineHeight + m_DrawAreaRect.height*0.75));
 #ifdef __WXMSW__
-  pen.SetStyle(wxSHORT_DASH);
+  pen.SetStyle(wxPENSTYLE_SHORT_DASH);
   dc->SetPen(pen);
 #endif
   dc->DrawLine(m_LeftLegend + 3, (int)(m_TopLineHeight + m_DrawAreaRect.height*0.5), m_WindowRect.width - 3 - m_RightLegend, (int)(m_TopLineHeight + m_DrawAreaRect.height*0.5));
@@ -705,7 +711,10 @@ void TacticsInstrument_WindDirHistory::OnLogDataButtonPressed(wxCommandEvent& ev
     bool exists = m_ostreamlogfile.Exists(m_logfile);
     m_ostreamlogfile.Open(m_logfile, wxFile::write_append);
     if (!exists) {
-      wxString str = wxString::Format(_T("%s%s%s%s%s%s%s%s%s%s%s\n"), "Date", g_sDataExportSeparator, "Time", g_sDataExportSeparator, "TWD", g_sDataExportSeparator, "TWS", g_sDataExportSeparator, "smoothed TWD", g_sDataExportSeparator, "smoothed TWS");
+      wxString str_ticks = g_bDataExportClockticks ? wxString::Format(_("ClockTicks%s"), g_sDataExportSeparator) : _("");
+      wxString str_utc = g_bDataExportUTC ? wxString::Format(_("UTC-ISO8601%s"), g_sDataExportSeparator) : _("");
+
+      wxString str = wxString::Format(_T("%s%s%s%s%s%s%s%s%s%s%s%s%s\n"), str_ticks, str_utc, "Date", g_sDataExportSeparator, "local Time", g_sDataExportSeparator, "TWD", g_sDataExportSeparator, "TWS", g_sDataExportSeparator, "smoothed TWD", g_sDataExportSeparator, "smoothed TWS");
       m_ostreamlogfile.Write(str);
     }
     SaveConfig(); //save the new export-rate &filename to opencpn.ini
@@ -756,7 +765,21 @@ void TacticsInstrument_WindDirHistory::ExportData(void)
   if (m_isExporting == true) {
     wxDateTime localTime(m_ArrayRecTime[WIND_RECORD_COUNT - 1]);
     if (localTime.GetSecond() % m_exportInterval == 0) {
-      wxString str = wxString::Format(_T("%s%s%s%s%3.0f%s%3.1f%s%3.0f%s%3.1f\n"), localTime.FormatDate(), g_sDataExportSeparator, localTime.FormatTime(), g_sDataExportSeparator, m_WindDir, g_sDataExportSeparator, toUsrSpeed_Plugin(m_WindSpd, g_iDashWindSpeedUnit), g_sDataExportSeparator, m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT - 1], g_sDataExportSeparator, toUsrSpeed_Plugin(m_ExpSmoothArrayWindSpd[WIND_RECORD_COUNT - 1], g_iDashWindSpeedUnit));
+      wxString str_utc, ticks;
+      if (g_bDataExportUTC) {
+        wxDateTime utc = localTime.ToUTC();
+        str_utc = wxString::Format(_T("%s%s"), utc.FormatISOCombined('T'), g_sDataExportSeparator);
+      }
+      else
+        str_utc = _T("");
+      if (g_bDataExportClockticks) {
+        wxLongLong ti = localTime.GetValue();
+        ticks = wxString::Format(_T("%s%s"), ti.ToString(), g_sDataExportSeparator);
+      }
+      else
+        ticks = _T("");
+
+      wxString str = wxString::Format(_T("%s%s%s%s%s%s%3.0f%s%3.1f%s%3.0f%s%3.1f\n"), ticks, str_utc, localTime.FormatDate(), g_sDataExportSeparator, localTime.FormatTime(), g_sDataExportSeparator, m_WindDir, g_sDataExportSeparator, toUsrSpeed_Plugin(m_WindSpd, g_iDashWindSpeedUnit), g_sDataExportSeparator, m_ExpSmoothArrayWindDir[WIND_RECORD_COUNT - 1], g_sDataExportSeparator, toUsrSpeed_Plugin(m_ExpSmoothArrayWindSpd[WIND_RECORD_COUNT - 1], g_iDashWindSpeedUnit));
       m_ostreamlogfile.Write(str);
     }
   }

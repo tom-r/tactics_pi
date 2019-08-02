@@ -39,8 +39,8 @@
 
 #include "instrument.h"
 #include "dial.h"
-
-//#include "nmea0183/nmea0183.h"
+class DoubleExpSmooth;
+#include "avg_wind.h"
 
 WX_DEFINE_ARRAY_DOUBLE(int, ArrayOfDouble);
 
@@ -58,6 +58,7 @@ struct TargetxMG{
 };
 class tactics_pi;
 class Polar;
+
 double getDegRange(double max, double min);
 double getSignedDegRange(double max, double min);
 

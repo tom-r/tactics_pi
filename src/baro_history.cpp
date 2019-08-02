@@ -43,6 +43,8 @@
     #include <wx/wx.h>
 #endif
 extern wxString g_sDataExportSeparator;
+extern bool g_bDataExportUTC;
+extern bool g_bDataExportClockticks;
 
 #define ID_EXPORTRATE_10 11110
 #define ID_EXPORTRATE_20 11120
@@ -78,7 +80,7 @@ TacticsInstrument_BaroHistory::TacticsInstrument_BaroHistory(wxWindow *parent, w
   m_WindowRect = GetClientRect();
   m_DrawAreaRect = GetClientRect();
   m_DrawAreaRect.SetHeight(m_WindowRect.height - m_TopLineHeight - m_TitleHeight);
-  m_BaroHistUpdTimer.Start(5000, wxTIMER_CONTINUOUS);
+  m_BaroHistUpdTimer.Start(1000, wxTIMER_CONTINUOUS);
   m_BaroHistUpdTimer.Connect(wxEVT_TIMER, wxTimerEventHandler(TacticsInstrument_BaroHistory::OnBaroHistUpdTimer), NULL, this);
 
   //data export
@@ -107,6 +109,9 @@ TacticsInstrument_BaroHistory::TacticsInstrument_BaroHistory(wxWindow *parent, w
 TacticsInstrument_BaroHistory::~TacticsInstrument_BaroHistory(void) {
   if (m_isExporting)
     m_ostreamlogfile.Close();
+  m_BaroHistUpdTimer.Stop();
+  m_LogButton->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TacticsInstrument_BaroHistory::OnLogDataButtonPressed), NULL, this);
+
 }
 wxSize TacticsInstrument_BaroHistory::GetSize( int orient, wxSize hint )
 {
@@ -382,7 +387,7 @@ void TacticsInstrument_BaroHistory::DrawForeground(wxGCDC* dc)
   }
 
   //---------------------------------------------------------------------------------
-  //draw vertical timelines every 5 minutes
+  //draw vertical timelines every 15 minutes
   //---------------------------------------------------------------------------------
   GetGlobalColor(_T("UBLCK"), &col);
   pen.SetColour(col);
@@ -392,19 +397,25 @@ void TacticsInstrument_BaroHistory::DrawForeground(wxGCDC* dc)
   dc->SetFont(*g_pFontSmall);
   int done=-1;
   wxPoint pointTime;
+  int prevfiverfit = -15;
   for (int idx = 0; idx < BARO_RECORD_COUNT; idx++) {
     if (m_ArrayRecTime[idx].year != 999) {
       wxDateTime localTime( m_ArrayRecTime[idx] );
       min=localTime.GetMinute( );
       hour=localTime.GetHour( );
       sec=localTime.GetSecond( );
-      if ( (hour*100+min) != done && (min % 5 == 0 ) && (sec == 0 || sec == 1) ) {
-        pointTime.x = idx * m_ratioW + 3 + m_LeftLegend;
+//      if ( (hour*100+min) != done && (min % 5 == 0 ) && (sec == 0 || sec == 1) ) {
+      if ((hour * 100 + min) != done && (min % 15 == 0)) {
+        if (min != prevfiverfit) {
+          pointTime.x = idx * m_ratioW + 3 + m_LeftLegend;
         dc->DrawLine( pointTime.x, m_TopLineHeight+1, pointTime.x,(m_TopLineHeight+m_DrawAreaRect.height+1) );
         label.Printf(_T("%02d:%02d"), hour,min);
         dc->GetTextExtent(label, &width, &height, 0, 0, g_pFontSmall);
         dc->DrawText(label, pointTime.x-width/2, m_WindowRect.height-height);
         done=hour*100+min;
+        prevfiverfit = min;
+        } // then avoid double printing in faster devices
+
       }
     }
   }
@@ -429,7 +440,10 @@ void TacticsInstrument_BaroHistory::OnLogDataButtonPressed(wxCommandEvent& event
     bool exists = m_ostreamlogfile.Exists(m_logfile);
     m_ostreamlogfile.Open(m_logfile, wxFile::write_append);
     if (!exists) {
-      wxString str = wxString::Format(_T("%s%s%s%s%s\n"), "Date", g_sDataExportSeparator, "Time", g_sDataExportSeparator, "Pressure");
+      wxString str_ticks = g_bDataExportClockticks ? wxString::Format(_("ClockTicks%s"), g_sDataExportSeparator) : _("");
+      wxString str_utc = g_bDataExportUTC ? wxString::Format(_("UTC-ISO8601%s"), g_sDataExportSeparator) : _("");
+
+      wxString str = wxString::Format(_T("%s%s%s%s%s%s%s\n"), str_ticks, str_utc, "Date", g_sDataExportSeparator, "local Time", g_sDataExportSeparator, "Pressure");
       m_ostreamlogfile.Write(str);
     }
     SaveConfig(); //save the new export-rate &filename to opencpn.ini
@@ -480,7 +494,20 @@ void TacticsInstrument_BaroHistory::ExportData(void)
   if (m_isExporting == true) {
     wxDateTime localTime(m_ArrayRecTime[BARO_RECORD_COUNT - 1]);
     if (localTime.GetSecond() % m_exportInterval == 0) {
-      wxString str = wxString::Format(_T("%s%s%s%s%4.1f\n"), localTime.FormatDate(), g_sDataExportSeparator, localTime.FormatTime(), g_sDataExportSeparator, m_Press);
+      wxString str_utc, ticks;
+      if (g_bDataExportUTC) {
+        wxDateTime utc = localTime.ToUTC();
+        str_utc = wxString::Format(_T("%s%s"), utc.FormatISOCombined('T'), g_sDataExportSeparator);
+      }
+      else
+        str_utc = _T("");
+      if (g_bDataExportClockticks) {
+        wxLongLong ti = localTime.GetValue();
+        ticks = wxString::Format(_T("%s%s"), ti.ToString(), g_sDataExportSeparator);
+      }
+      else
+        ticks = _T("");
+      wxString str = wxString::Format(_T("%s%s%s%s%s%s%4.1f\n"), ticks, str_utc, localTime.FormatDate(), g_sDataExportSeparator, localTime.FormatTime(), g_sDataExportSeparator, m_Press);
       m_ostreamlogfile.Write(str);
     }
   }

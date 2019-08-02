@@ -241,13 +241,13 @@ void TacticsInstrument_BearingCompass::DrawWindAngles(wxGCDC* dc)
 		wxColour cl;
 		GetGlobalColor(_T("DASH2"), &cl);
 		wxPen pen1;
-		pen1.SetStyle(wxSOLID);
+		pen1.SetStyle(wxPENSTYLE_SOLID);
 		pen1.SetColour(cl);
 		pen1.SetWidth(2);
 		dc->SetPen(pen1);
 		GetGlobalColor(_T("DASH1"), &cl);
 		wxBrush brush1;
-		brush1.SetStyle(wxSOLID);
+		brush1.SetStyle(wxBRUSHSTYLE_SOLID);
 		brush1.SetColour(cl);
 		dc->SetBrush(brush1);
 
@@ -255,7 +255,7 @@ void TacticsInstrument_BearingCompass::DrawWindAngles(wxGCDC* dc)
 
 		GetGlobalColor(_T("BLUE3"), &cl);
 		wxBrush brush;
-		brush.SetStyle(wxSOLID);
+		brush.SetStyle(wxBRUSHSTYLE_SOLID);
 		brush.SetColour(cl);
 		dc->SetBrush(brush);
 
@@ -311,7 +311,7 @@ void TacticsInstrument_BearingCompass::DrawWindAngles(wxGCDC* dc)
 		brg[1].y = m_cy + (m_radius * 0.75 * sin(value));
 
 		wxPen pen2;
-		pen2.SetStyle(wxSOLID);
+		pen2.SetStyle(wxPENSTYLE_SOLID);
 		pen2.SetColour(cl);
 		pen2.SetWidth(1);
 		dc->SetPen(pen2);
@@ -324,13 +324,13 @@ void TacticsInstrument_BearingCompass::DrawWindAngles(wxGCDC* dc)
 		wxColour cl;
 		GetGlobalColor(_T("DASH2"), &cl);
 		wxPen pen1;
-		pen1.SetStyle(wxSOLID);
+		pen1.SetStyle(wxPENSTYLE_SOLID);
 		pen1.SetColour(cl);
 		pen1.SetWidth(2);
 		dc->SetPen(pen1);
 		GetGlobalColor(_T("DASH1"), &cl);
 		wxBrush brush1;
-		brush1.SetStyle(wxSOLID);
+		brush1.SetStyle(wxBRUSHSTYLE_SOLID);
 		brush1.SetColour(cl);
 		dc->SetBrush(brush1);
 
@@ -338,7 +338,7 @@ void TacticsInstrument_BearingCompass::DrawWindAngles(wxGCDC* dc)
 
 		GetGlobalColor(_T("DASHN"), &cl);
 		wxBrush brush;
-		brush.SetStyle(wxSOLID);
+		brush.SetStyle(wxBRUSHSTYLE_SOLID);
 		brush.SetColour(cl);
 		dc->SetBrush(brush);
 
@@ -388,7 +388,7 @@ void TacticsInstrument_BearingCompass::DrawWindAngles(wxGCDC* dc)
 		brg[1].y = m_cy + (m_radius * 0.75 * sin(value));
 
 		wxPen pen2;
-		pen2.SetStyle(wxSOLID);
+		pen2.SetStyle(wxPENSTYLE_SOLID);
 		pen2.SetColour(cl);
 		pen2.SetWidth(1);
 		dc->SetPen(pen2);
@@ -433,7 +433,7 @@ void TacticsInstrument_BearingCompass::DrawTargetAngle(wxGCDC* dc, double Target
       dc->SetPen(*wxTRANSPARENT_PEN);
       GetGlobalColor(color, &cl);
       wxBrush brush;
-      brush.SetStyle(wxSOLID);
+      brush.SetStyle(wxBRUSHSTYLE_SOLID);
       brush.SetColour(cl);
       dc->SetBrush(brush);
 
@@ -515,7 +515,7 @@ void TacticsInstrument_BearingCompass::DrawBearing(wxGCDC* dc)
 
 	GetGlobalColor(_T("URED"), &cl);
 	wxBrush brush;
-	brush.SetStyle(wxSOLID);
+	brush.SetStyle(wxBRUSHSTYLE_SOLID);
 	brush.SetColour(cl);
 	dc->SetBrush(brush);
 
@@ -529,7 +529,7 @@ void TacticsInstrument_BearingCompass::DrawBearing(wxGCDC* dc)
 	brg[1].y = m_cy + (m_radius * 0.98 * sin(value));
 
 	wxPen pen2;
-	pen2.SetStyle(wxSOLID);
+	pen2.SetStyle(wxPENSTYLE_SOLID);
 	pen2.SetColour(cl);
 	pen2.SetWidth(2);
 	dc->SetPen(pen2);
@@ -587,7 +587,7 @@ void TacticsInstrument_BearingCompass::DrawCurrent(wxGCDC* dc)
 
 	wxBrush currbrush;
 	currbrush.SetColour(wxColour(7, 107, 183, 192));
-	currbrush.SetStyle(wxSOLID);
+	currbrush.SetStyle(wxBRUSHSTYLE_SOLID);
 	dc->SetBrush(currbrush);
 
 	double currvalue = deg2rad(m_CurrDir) + deg2rad(m_AngleStart - ANGLE_OFFSET);
@@ -776,13 +776,13 @@ void TacticsInstrument_BearingCompass::DrawLaylines(wxGCDC* dc)
 		wxColour cl;
 		GetGlobalColor(_T("DASH2"), &cl);
 		wxPen pen1;
-		pen1.SetStyle(wxSOLID);
+		pen1.SetStyle(wxPENSTYLE_SOLID);
 		pen1.SetColour(cl);
 		pen1.SetWidth(2);
 		dc->SetPen(pen1);
 		GetGlobalColor(_T("DASH1"), &cl);
 		wxBrush brush1;
-		brush1.SetStyle(wxSOLID);
+		brush1.SetStyle(wxBRUSHSTYLE_SOLID);
 		brush1.SetColour(cl);
 		dc->SetBrush(brush1);
 
@@ -790,8 +790,8 @@ void TacticsInstrument_BearingCompass::DrawLaylines(wxGCDC* dc)
 
 		GetGlobalColor(_T("DASHN"), &cl);
 		wxBrush vbrush, tackbrush;
-		vbrush.SetStyle(wxSOLID);
-		tackbrush.SetStyle(wxSOLID);
+		vbrush.SetStyle(wxBRUSHSTYLE_SOLID);
+		tackbrush.SetStyle(wxBRUSHSTYLE_SOLID);
 		//m_curTack = TWA unit
 		//it shows L= wind from left = port tack or R=wind from right = starboard tack
 		//we're on port tack, so vertical layline is red
