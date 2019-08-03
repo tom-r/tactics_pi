@@ -642,7 +642,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>${VERBOSE_NAME}-Plugin</string>
+				<string>${VERBOSE_NAME}-Plugin-${NAME_SUFFIX}_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>USE_HFS+_COMPRESSION</key>
@@ -1334,7 +1334,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}</string>
+			<string>${VERBOSE_NAME}-Plugin-${NAME_SUFFIX}_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}</string>
 			<key>REFERENCE_FOLDER_PATH</key>
 			<string>.</string>
 		</dict>

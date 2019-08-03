@@ -33,13 +33,15 @@
 #ifndef  WX_PRECOMP
   #include "wx/wx.h"
 #endif //precompiled headers
+//#define     PLUGIN_VERSION_MAJOR    1
+//#define     PLUGIN_VERSION_MINOR    0
+//#define     PLUGIN_VERSION_PATCH    10
+//#define     MY_API_VERSION_MAJOR    1
+//#define     MY_API_VERSION_MINOR    12
+//MY_API.. added to version.h.in and VERSION.cmake
+//Note: Version.h will be generated in build/CMakeFiles/include.
+#include "version.h"
 
-#define     PLUGIN_VERSION_MAJOR    1
-#define     PLUGIN_VERSION_MINOR    0
-#define     PLUGIN_VERSION_PATCH    10
-
-#define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    12
 
 #include <wx/notebook.h>
 #include <wx/fileconf.h>
@@ -193,10 +195,15 @@ public:
 private:
       bool LoadConfig(void);
       void ApplyConfig(void);
+      wxString GetCommonNameVersion(void); //added per Canne Dashboard_tactics
+      wxString GetNameVersion(void);   //added per Canne..
       void SendSentenceToAllInstruments(int st, double value, wxString unit);
       void SendSatInfoToAllInstruments(int cnt, int seq, SAT_INFO sats[4]);
       void SendUtcTimeToAllInstruments( wxDateTime value );
 
+	//added per Canne Dashb_tactics
+      static const char *s_common_name;  
+	//added per Canne Dashb_tactics
       wxFileConfig         *m_pconfig;
       wxAuiManager         *m_pauimgr;
       int                  m_toolbar_item_id;
@@ -275,14 +282,16 @@ private:
 
 //protected:
 //      DECLARE_EVENT_TABLE();
-};
 
+};
+//  Class constructor definition, argument list and types for the constructor, to match Canne suggestion Aug 18
 class TacticsPreferencesDialog : public wxDialog
 {
 public:
-      TacticsPreferencesDialog( wxWindow *pparent, wxWindowID id, wxArrayOfTactics config );
-      ~TacticsPreferencesDialog() {}
-
+    TacticsPreferencesDialog(
+        wxWindow *pparent, wxWindowID id, const wxString derivtitle, wxArrayOfTactics config );
+    ~TacticsPreferencesDialog() {}
+//changed down to here
       void OnCloseDialog(wxCloseEvent& event);
       void OnTacticsSelected(wxListEvent& event);
       void OnTacticsAdd(wxCommandEvent& event);
