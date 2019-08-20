@@ -736,12 +736,12 @@ void tactics_pi::Notify()
 //*********************************************************************************
 int tactics_pi::GetAPIVersionMajor()
 {
-	return MY_API_VERSION_MAJOR;
+	return OCPN_API_VERSION_MAJOR;
 }
 //*********************************************************************************
 int tactics_pi::GetAPIVersionMinor()
 {
-	return MY_API_VERSION_MINOR;
+	return OCPN_API_VERSION_MINOR;
 }
 //*********************************************************************************
 int tactics_pi::GetPlugInVersionMajor()
@@ -758,6 +758,10 @@ int tactics_pi::GetPlugInVersionMinor()
 //    int version_patch = (PLUGIN_VERSION_MINOR * 1000) + PLUGIN_VERSION_PATCH;
 //    return version_patch;
 //}
+//*********************************************************************************
+
+
+
 //*********************************************************************************
 wxBitmap *tactics_pi::GetPlugInBitmap()
 {
