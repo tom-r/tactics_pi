@@ -1334,7 +1334,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>${PACKAGE_FILE_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}.{VERSION_PATCH}-{OCPN_MIN_VERSION}</string>
+			<string>${PACKAGE_FILE_NAME}-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}-${OCPN_MIN_VERSION}</string>
 			<key>REFERENCE_FOLDER_PATH</key>
 			<string>.</string>
 		</dict>
