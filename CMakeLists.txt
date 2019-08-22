@@ -86,6 +86,10 @@ SET(SRC_TACTICS
     src/wxJSON/jsonval.cpp
     src/wxJSON/jsonreader.cpp
     src/ocpn_plugin.h
+    src/TacticsPreferencesDialogDef.cpp
+    src/TacticsPreferencesDialogDef.h
+    src/TacticsPreferencesDialogImpl.cpp
+    src/TacticsPreferencesDialogImpl.h
 )
 
 SET(SRC_NMEA0183
