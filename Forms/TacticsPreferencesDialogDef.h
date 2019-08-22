@@ -47,6 +47,7 @@ class TacticsPreferencesDialogDef : public wxDialog
 	private:
 
 	protected:
+		wxBoxSizer* m_SizerItemBoxSizerMainPanel;
 		wxNotebook* m_notebookPreferences;
 		wxPanel* m_panelTactics;
 		wxListCtrl* m_listCtrlTactics;
@@ -73,8 +74,10 @@ class TacticsPreferencesDialogDef : public wxDialog
 		wxFontPickerCtrl* m_fontPicker4;
 		wxStaticText* m_staticText25;
 		wxSpinCtrl* m_spinCtrlSpeedMax;
+		wxStaticText* m_staticText481;
+		wxSpinCtrl* m_spinCtrlSOGDamp;
 		wxStaticText* m_staticText26;
-		wxSpinCtrl* m_spinCtrl2;
+		wxSpinCtrl* m_spinCtrlCOGDamp;
 		wxStaticText* m_staticText27;
 		wxChoice* m_choiceSpeedUnit;
 		wxStaticText* m_staticText28;
@@ -95,7 +98,7 @@ class TacticsPreferencesDialogDef : public wxDialog
 		wxStaticText* m_staticText35;
 		wxSpinCtrlDouble* m_spinCtrlDoubleMaxLaylineWidth;
 		wxStaticText* m_staticText37;
-		wxSpinCtrlDouble* m_spinCtrlDouble;
+		wxSpinCtrlDouble* m_spinCtrlDoubleLeewayFactor;
 		wxRadioButton* m_radioBtnUseHeelSensor;
 		wxRadioButton* m_radioBtnFixedLeeway;
 		wxSpinCtrlDouble* m_spinCtrlDoublefixedLeeway;
@@ -105,8 +108,8 @@ class TacticsPreferencesDialogDef : public wxDialog
 		wxStaticText* m_staticText41;
 		wxStaticText* m_staticText42;
 		wxStaticText* m_staticText43;
-		wxSpinCtrlDouble* m_spinCtrlDoubleHel5_45;
-		wxSpinCtrlDouble* m_spinCtrlDoubleheel5_90;
+		wxSpinCtrlDouble* m_spinCtrlDoubleHeel5_45;
+		wxSpinCtrlDouble* m_spinCtrlDoubleHeel5_90;
 		wxSpinCtrlDouble* m_spinCtrlDoubleHeel5_135;
 		wxStaticText* m_staticText44;
 		wxSpinCtrlDouble* m_spinCtrlDoubleHeel10_45;
@@ -125,7 +128,7 @@ class TacticsPreferencesDialogDef : public wxDialog
 		wxSpinCtrlDouble* m_spinCtrlDoubleHeel25_90;
 		wxSpinCtrlDouble* m_spinCtrlDoubleHeel25_135;
 		wxStaticText* m_staticText48;
-		wxSpinCtrl* m_spinCtrlAlphaCurrentDir;
+		wxSpinCtrl* m_spinCtrlAlphaCurrDir;
 		wxCheckBox* m_checkBoxCurrentOnChart;
 		wxCheckBox* m_checkBoxCorrectSTWwithLeeway;
 		wxCheckBox* m_checkBoxCorrectAWwithHeel;

@@ -61,7 +61,7 @@
 #include <wx/wfstream.h> //TR temp
 #include <wx/txtstrm.h>   //TR temp
 
-
+tactics_pi  *g_tactics_pi;
 wxFont *g_pFontTitle;
 wxFont *g_pFontData;
 wxFont *g_pFontLabel;
@@ -136,21 +136,6 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //    Tactics PlugIn Implementation
 //
 //---------------------------------------------------------------------------------------------------------
-// !!! WARNING !!!
-// do not change the order, add new instruments at the end, before ID_DBP_LAST_ENTRY!
-// otherwise, for users with an existing opencpn.ini file, their instruments are changing !
-
-enum {
-	ID_DBP_I_POS, ID_DBP_I_SOG, ID_DBP_D_SOG, ID_DBP_I_COG, ID_DBP_D_COG, ID_DBP_I_STW,
-	ID_DBP_I_HDT, ID_DBP_D_AW, ID_DBP_D_AWA, ID_DBP_I_AWS, ID_DBP_D_AWS, ID_DBP_D_TW,
-	ID_DBP_I_DPT, ID_DBP_D_DPT, ID_DBP_I_TMP, ID_DBP_I_VMG, ID_DBP_D_VMG,
-	ID_DBP_I_CLK, ID_DBP_I_SUN, ID_DBP_I_ATMP, ID_DBP_I_AWA, ID_DBP_I_TWA, ID_DBP_I_TWD, ID_DBP_I_TWS,
-	ID_DBP_D_TWD, ID_DBP_I_HDM, ID_DBP_D_HDT, ID_DBP_D_WDH, ID_DBP_I_TWAMARK, ID_DBP_D_MDA, ID_DBP_I_MDA, ID_DBP_D_BPH, ID_DBP_I_FOS,
-	ID_DBP_M_COG, ID_DBP_I_PITCH, ID_DBP_I_HEEL, ID_DBP_D_AWA_TWA, ID_DBP_I_LEEWAY, ID_DBP_I_CURRDIR,
-	ID_DBP_I_CURRSPD, ID_DBP_D_BRG, ID_DBP_I_POLSPD, ID_DBP_I_POLVMG, ID_DBP_I_POLTVMG,
-	ID_DBP_I_POLTVMGANGLE, ID_DBP_I_POLCMG, ID_DBP_I_POLTCMG, ID_DBP_I_POLTCMGANGLE, ID_DBP_D_POLPERF, ID_DBP_D_AVGWIND, ID_DBP_D_POLCOMP,
-	ID_DBP_LAST_ENTRY //this has a reference in one of the routines; defining a "LAST_ENTRY" and setting the reference to it, is one codeline less to change (and find) when adding new instruments :-)
-};
 
 /********************************************************************************************************/
 //   Distance measurement for simple sphere
@@ -449,6 +434,7 @@ wxString GetUUID(void)
 tactics_pi::tactics_pi(void *ppimgr) :
 wxTimer(this), opencpn_plugin_112(ppimgr)
 {
+    g_tactics_pi = this;
 	// Create the PlugIn icons
 	initialize_images();
 
