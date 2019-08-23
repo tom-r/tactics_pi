@@ -71,7 +71,7 @@ class TacticsPreferencesDialogDef : public wxDialog
 		wxStaticText* m_staticText23;
 		wxFontPickerCtrl* m_fontPickerLabel;
 		wxStaticText* m_staticText24;
-		wxFontPickerCtrl* m_fontPicker4;
+		wxFontPickerCtrl* m_fontPickerSmall;
 		wxStaticText* m_staticText25;
 		wxSpinCtrl* m_spinCtrlSpeedMax;
 		wxStaticText* m_staticText481;
@@ -163,11 +163,12 @@ class TacticsPreferencesDialogDef : public wxDialog
 		wxStaticText* m_staticTextDate;
 		wxStaticText* m_staticTextDateVal;
 		wxStaticLine* m_staticline1;
+		wxStaticLine* m_staticline3;
 		wxStaticText* m_staticTextOther;
 		wxStaticText* m_staticTextOtherVal;
-		wxButton* m_buttonApply;
 		wxStdDialogButtonSizer* m_sdbSizer1;
 		wxButton* m_sdbSizer1OK;
+		wxButton* m_sdbSizer1Apply;
 		wxButton* m_sdbSizer1Cancel;
 
 		// Virtual event handlers, overide them in your derived class
@@ -180,7 +181,9 @@ class TacticsPreferencesDialogDef : public wxDialog
 		virtual void OnInstrumentUp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnInstrumentDown( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnManualHeelUpdate( wxCommandEvent& event ) { event.Skip(); }
-		virtual void ApplyPrefs( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnApplyButtonClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCancelButtonClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOKButtonClick( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

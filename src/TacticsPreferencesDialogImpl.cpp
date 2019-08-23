@@ -72,17 +72,29 @@ extern wxString g_sDataExportSeparator;
 
 
 
-TacticsPreferencesDialogImpl::TacticsPreferencesDialogImpl( wxWindow* parent )
+TacticsPreferencesDialogImpl::TacticsPreferencesDialogImpl( wxWindow* parent, wxString derivtitle, wxArrayOfTactics config )
 :
 TacticsPreferencesDialogDef( parent )
 {
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
     
+    SetTitle(derivtitle);
+    
+    // Copy original config
+    m_Config = wxArrayOfTactics(config);
+    
     wxImageList *imglist1 = new wxImageList(32, 32, true, 1);
     imglist1->Add(*_img_tactics_pi);
+    wxImageList *imglist = new wxImageList(20, 20, true, 2);
+    imglist->Add(*_img_instrument);
+    imglist->Add(*_img_dial);
     
     
     m_listCtrlTactics->AssignImageList(imglist1, wxIMAGE_LIST_SMALL);
+    m_listCtrlTactics->InsertColumn(0, _T(""));
+    m_listCtrlInstruments->AssignImageList(imglist, wxIMAGE_LIST_SMALL);
+    m_listCtrlInstruments->InsertColumn(0, _("Instruments"));
+    
     m_bpButtonAddTactics->SetBitmap(*_img_plus);
     m_bpButtonDeleteTactics->SetBitmap(*_img_minus);
     
@@ -214,10 +226,11 @@ void TacticsPreferencesDialogImpl::ApplyPrefs( wxCommandEvent& event )
     SaveTacticsConfig();
 }
 
-void TacticsPreferencesDialogImpl::OnTacticsPreferencesOKClick( wxCommandEvent& event )
+void TacticsPreferencesDialogImpl::OnOKButtonClick( wxCommandEvent& event )
 {
-    //SaveChanges(); // write changes to globals and update config
+    SaveChanges(); // write changes to globals and update config
     Show( false );
+    SetReturnCode(wxID_OK);
 #ifdef __WXOSX__    
     EndModal(wxID_OK);
 #endif
@@ -227,21 +240,22 @@ void TacticsPreferencesDialogImpl::OnTacticsPreferencesOKClick( wxCommandEvent& 
     event.Skip();
 }
 
-void TacticsPreferencesDialogImpl::OnTacticsPreferencesCancelClick( wxCommandEvent& event )
+void TacticsPreferencesDialogImpl::OnCancelButtonClick( wxCommandEvent& event )
 {
     Show( false );
-    #ifdef __WXOSX__    
+    SetReturnCode(wxID_CANCEL);
+#ifdef __WXOSX__    
     EndModal(wxID_CANCEL);
-    #endif
+#endif
     // SetClientSize(m_defaultClientSize);  // only needed if you have dynamic sizing in the dialog
     
     //ResetGlobalLocale();
     event.Skip();
 }
 
-void TacticsPreferencesDialogImpl::OnTacticsPreferencesApplyClick( wxCommandEvent& event )
+void TacticsPreferencesDialogImpl::OnApplyButtonClick( wxCommandEvent& event )
 {
-    //SaveChanges(); // write changes to globals and update config
+    SaveChanges(); // write changes to globals and update config
     
     event.Skip();
 }
@@ -325,7 +339,7 @@ void TacticsPreferencesDialogImpl::UpdateTacticsButtonsState()
     }
     m_bpButtonDeleteTactics->Enable(delete_enable);
     
-    m_panelTactics->Enable(enable);
+    m_panelTactics->Enable(true);
     
     if (item != -1) {
         curSel = m_listCtrlTactics->GetItemData(item);
@@ -615,9 +629,24 @@ wxString TacticsPreferencesDialogImpl::GetUUID(void)
                uuid.clock_seq_hi_and_rsv,
                uuid.clock_seq_low,
                uuid.node_hi,
-               uuid.node_low);
+               uuid.node_low);                 
     
     return str;
 }
 
-
+void TacticsPreferencesDialogImpl::SaveChanges(void)
+{
+    delete g_pFontTitle;
+    g_pFontTitle = new wxFont(m_fontPickerTitle->GetSelectedFont());
+    delete g_pFontData;
+    g_pFontData = new wxFont(m_fontPickerData->GetSelectedFont());
+    delete g_pFontLabel;
+    g_pFontLabel = new wxFont(m_fontPickerLabel->GetSelectedFont());
+    delete g_pFontSmall;
+    g_pFontSmall = new wxFont(m_fontPickerSmall->GetSelectedFont());
+    
+    // OnClose should handle that for us normally but it doesn't seems to do so
+    // We must save changes first
+    SaveTacticsConfig();
+    
+}

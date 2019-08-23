@@ -37,6 +37,7 @@
 #include <typeinfo>
 #include "tactics_pi.h"
 #include "icons.h"
+#include "TacticsPreferencesDialogImpl.h"
 #include "wx/jsonreader.h"
 #include "wx/jsonwriter.h"
 #ifdef __WXMSW__
@@ -2732,9 +2733,18 @@ void tactics_pi::ShowPreferencesDialog(wxWindow* parent)
 //    pos.x -= 100;
     wxString derivtitle = GetCommonName() + " " + GetNameVersion();
 
+    // new dialog
+    TacticsPreferencesDialogImpl *dialog = new TacticsPreferencesDialogImpl(parent, derivtitle, m_ArrayOfTacticsWindow);
+    if(dialog->ShowModal() == wxID_OK) {
+        m_ArrayOfTacticsWindow.Clear();
+        m_ArrayOfTacticsWindow = dialog->m_Config;
+        
+        ApplyConfig();
+        SaveConfig();
+        SetToolbarItemState(m_toolbar_item_id, GetTacticsWindowShownCount() != 0);
+    }
 //Changed to follow Canne https://github.com/rgleason/tactics_pi/commit/7d7aa9cf868128f43b4cd97feda21617efc8f85a#commitcomment-34731745 
-TacticsPreferencesDialog *dialog = new TacticsPreferencesDialog(parent, wxID_ANY, derivtitle, m_ArrayOfTacticsWindow
-);
+/*TacticsPreferencesDialog *dialog = new TacticsPreferencesDialog(parent, wxID_ANY, derivtitle, m_ArrayOfTacticsWindow);
 	if (dialog->ShowModal() == wxID_OK) {
 		delete g_pFontTitle;
 		g_pFontTitle = new wxFont(dialog->m_pFontPickerTitle->GetSelectedFont());
@@ -2754,7 +2764,7 @@ TacticsPreferencesDialog *dialog = new TacticsPreferencesDialog(parent, wxID_ANY
 		ApplyConfig();
 		SaveConfig();
 		SetToolbarItemState(m_toolbar_item_id, GetTacticsWindowShownCount() != 0);
-	}
+	} */
 	dialog->Destroy();
 }
 

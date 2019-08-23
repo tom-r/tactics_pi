@@ -17,8 +17,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	bSizer1 = new wxBoxSizer( wxVERTICAL );
 
 	wxFlexGridSizer* fgSizer13;
-	fgSizer13 = new wxFlexGridSizer( 3, 0, 0, 0 );
-	fgSizer13->AddGrowableCol( 1 );
+	fgSizer13 = new wxFlexGridSizer( 2, 0, 0, 0 );
 	fgSizer13->AddGrowableRow( 1 );
 	fgSizer13->SetFlexibleDirection( wxBOTH );
 	fgSizer13->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
@@ -50,7 +49,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	bSizer4->Add( m_bpButtonDeleteTactics, 0, wxALL, 2 );
 
 
-	fgSizer6->Add( bSizer4, 1, wxALIGN_CENTER|wxEXPAND, 2 );
+	fgSizer6->Add( bSizer4, 1, wxALIGN_CENTER, 2 );
 
 
 	fgSizer5->Add( fgSizer6, 1, wxEXPAND, 2 );
@@ -153,7 +152,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	m_panelTactics->SetSizer( fgSizer5 );
 	m_panelTactics->Layout();
 	fgSizer5->Fit( m_panelTactics );
-	m_notebookPreferences->AddPage( m_panelTactics, _("Tactics"), false );
+	m_notebookPreferences->AddPage( m_panelTactics, _("Tactics"), true );
 	m_panelAppearance = new wxPanel( m_notebookPreferences, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizer10;
 	fgSizer10 = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -201,9 +200,9 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	m_staticText24->Wrap( -1 );
 	fgSizer11->Add( m_staticText24, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
-	m_fontPicker4 = new wxFontPickerCtrl( sbSizerFonts->GetStaticBox(), wxID_ANY, wxNullFont, wxDefaultPosition, wxDefaultSize, wxFNTP_DEFAULT_STYLE );
-	m_fontPicker4->SetMaxPointSize( 100 );
-	fgSizer11->Add( m_fontPicker4, 0, wxALIGN_RIGHT|wxALL, 0 );
+	m_fontPickerSmall = new wxFontPickerCtrl( sbSizerFonts->GetStaticBox(), wxID_ANY, wxNullFont, wxDefaultPosition, wxDefaultSize, wxFNTP_DEFAULT_STYLE );
+	m_fontPickerSmall->SetMaxPointSize( 100 );
+	fgSizer11->Add( m_fontPickerSmall, 0, wxALIGN_RIGHT|wxALL, 0 );
 
 
 	sbSizerFonts->Add( fgSizer11, 1, wxEXPAND, 2 );
@@ -328,7 +327,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	fgSizer15->Add( m_staticText31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
 	m_spinCtrlDoubleAlphaLaylineDampFactor = new wxSpinCtrlDouble( sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0.025, 1, 0.025000, 1 );
-	m_spinCtrlDoubleAlphaLaylineDampFactor->SetDigits( 0 );
+	m_spinCtrlDoubleAlphaLaylineDampFactor->SetDigits( 3 );
 	m_spinCtrlDoubleAlphaLaylineDampFactor->SetToolTip( _("The layline damping factor determines how fast the  laylines react on your course changes, i.e. your COG changes.\n Low values mean high damping.") );
 
 	fgSizer15->Add( m_spinCtrlDoubleAlphaLaylineDampFactor, 0, wxALIGN_RIGHT|wxALL, 0 );
@@ -733,13 +732,14 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	m_scrolledWindowPerformanceParameters->SetSizer( fgSizer14 );
 	m_scrolledWindowPerformanceParameters->Layout();
 	fgSizer14->Fit( m_scrolledWindowPerformanceParameters );
-	m_notebookPreferences->AddPage( m_scrolledWindowPerformanceParameters, _("Performance Parameters"), true );
+	m_notebookPreferences->AddPage( m_scrolledWindowPerformanceParameters, _("Performance Parameters"), false );
 	m_panelAbout = new wxPanel( m_notebookPreferences, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
 
 	wxFlexGridSizer* fgSizerAboutLayout;
 	fgSizerAboutLayout = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerAboutLayout->AddGrowableCol( 1 );
 	fgSizerAboutLayout->SetFlexibleDirection( wxBOTH );
 	fgSizerAboutLayout->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
@@ -824,23 +824,18 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	fgSizerAboutLayout->Add( m_staticTextDateVal, 0, wxALL, 2 );
 
 	m_staticline1 = new wxStaticLine( m_panelAbout, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	fgSizerAboutLayout->Add( m_staticline1, 0, wxEXPAND | wxALL, 2 );
+	fgSizerAboutLayout->Add( m_staticline1, 0, wxEXPAND | wxALL, 0 );
 
-	wxFlexGridSizer* fgSizer4;
-	fgSizer4 = new wxFlexGridSizer( 0, 2, 0, 0 );
-	fgSizer4->SetFlexibleDirection( wxBOTH );
-	fgSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	m_staticline3 = new wxStaticLine( m_panelAbout, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	fgSizerAboutLayout->Add( m_staticline3, 0, wxEXPAND | wxALL, 0 );
 
 	m_staticTextOther = new wxStaticText( m_panelAbout, wxID_ANY, _("Other:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextOther->Wrap( -1 );
-	fgSizer4->Add( m_staticTextOther, 0, wxALL, 2 );
+	fgSizerAboutLayout->Add( m_staticTextOther, 0, wxALL, 2 );
 
-	m_staticTextOtherVal = new wxStaticText( m_panelAbout, wxID_ANY, _("Please report problems using FlySpray at:\nhttps://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n\nor\n\nat the OpenCPN forum:\nhttp://www.cruisersforum.com/forums/f134\n\nor\n\nRaise an issue in GIT at:\nhttps://github.com/rgleason/tacktics_pi/issues\n"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextOtherVal = new wxStaticText( m_panelAbout, wxID_ANY, _("Please report problems using FlySpray at:\nhttps://opencpn.org/flyspray/index.php?project=73&do=index&switch=1\n\nor\n\nat the OpenCPN forum:\nhttp://www.cruisersforum.com/forums/f134\n\nor\n\nRaise an issue in GIT at:\nhttps://github.com/rgleason/tacktics_pi/issues\n"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextOtherVal->Wrap( -1 );
-	fgSizer4->Add( m_staticTextOtherVal, 0, wxALL, 2 );
-
-
-	fgSizerAboutLayout->Add( fgSizer4, 1, wxEXPAND, 2 );
+	fgSizerAboutLayout->Add( m_staticTextOtherVal, 0, wxALL, 2 );
 
 
 	bSizer2->Add( fgSizerAboutLayout, 1, wxEXPAND, 2 );
@@ -851,7 +846,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	bSizer2->Fit( m_panelAbout );
 	m_notebookPreferences->AddPage( m_panelAbout, _("About"), false );
 
-	m_SizerItemBoxSizerMainPanel->Add( m_notebookPreferences, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 2 );
+	m_SizerItemBoxSizerMainPanel->Add( m_notebookPreferences, 1, wxALL|wxEXPAND, 2 );
 
 
 	fgSizer13->Add( m_SizerItemBoxSizerMainPanel, 1, 0, 2 );
@@ -859,12 +854,11 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	wxBoxSizer* bSizerOKCancelApply;
 	bSizerOKCancelApply = new wxBoxSizer( wxHORIZONTAL );
 
-	m_buttonApply = new wxButton( this, wxID_ANY, _("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerOKCancelApply->Add( m_buttonApply, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
-
 	m_sdbSizer1 = new wxStdDialogButtonSizer();
 	m_sdbSizer1OK = new wxButton( this, wxID_OK );
 	m_sdbSizer1->AddButton( m_sdbSizer1OK );
+	m_sdbSizer1Apply = new wxButton( this, wxID_APPLY );
+	m_sdbSizer1->AddButton( m_sdbSizer1Apply );
 	m_sdbSizer1Cancel = new wxButton( this, wxID_CANCEL );
 	m_sdbSizer1->AddButton( m_sdbSizer1Cancel );
 	m_sdbSizer1->Realize();
@@ -896,7 +890,9 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	m_buttonDown->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnInstrumentDown ), NULL, this );
 	m_radioBtnFixedLeeway->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnManualHeelUpdate ), NULL, this );
 	m_radioBtnHeelnput->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnManualHeelUpdate ), NULL, this );
-	m_buttonApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::ApplyPrefs ), NULL, this );
+	m_sdbSizer1Apply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnApplyButtonClick ), NULL, this );
+	m_sdbSizer1Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnCancelButtonClick ), NULL, this );
+	m_sdbSizer1OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnOKButtonClick ), NULL, this );
 }
 
 TacticsPreferencesDialogDef::~TacticsPreferencesDialogDef()
@@ -914,6 +910,8 @@ TacticsPreferencesDialogDef::~TacticsPreferencesDialogDef()
 	m_buttonDown->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnInstrumentDown ), NULL, this );
 	m_radioBtnFixedLeeway->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnManualHeelUpdate ), NULL, this );
 	m_radioBtnHeelnput->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnManualHeelUpdate ), NULL, this );
-	m_buttonApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::ApplyPrefs ), NULL, this );
+	m_sdbSizer1Apply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnApplyButtonClick ), NULL, this );
+	m_sdbSizer1Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnCancelButtonClick ), NULL, this );
+	m_sdbSizer1OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnOKButtonClick ), NULL, this );
 
 }

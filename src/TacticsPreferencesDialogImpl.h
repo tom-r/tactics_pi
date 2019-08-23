@@ -55,9 +55,9 @@ protected:
     void OnInstrumentDown( wxCommandEvent& event );
     void OnManualHeelUpdate( wxCommandEvent& event );
     void ApplyPrefs( wxCommandEvent& event );
-    void OnTacticsPreferencesOKClick( wxCommandEvent& event );
-    void OnTacticsPreferencesCancelClick( wxCommandEvent& event );
-    void OnTacticsPreferencesApplyClick( wxCommandEvent& event );
+    void OnOKButtonClick( wxCommandEvent& event );
+    void OnCancelButtonClick( wxCommandEvent& event );
+    void OnApplyButtonClick( wxCommandEvent& event );
     
     void SaveTacticsConfig(void);
     void UpdateTacticsButtonsState(void);
@@ -65,12 +65,13 @@ protected:
     wxString getInstrumentCaption(unsigned int id);
     wxString GetUUID(void);
     int GetRandomNumber(int range_min, int range_max);
+    void SaveChanges(void);
     
     int  curSel;
     
 public:
     /** Constructor */
-    TacticsPreferencesDialogImpl( wxWindow* parent );
+    TacticsPreferencesDialogImpl( wxWindow* parent, wxString derivtitle, wxArrayOfTactics config );
     //// end generated class members
     
     void UpdateButtonsState(void);
