@@ -29,6 +29,7 @@
 #include "icons.h"
 #include "version.h"
 #include "instrument.h"
+#include "TacticsUtils.h"
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
@@ -69,7 +70,7 @@ extern bool g_bExpPerfData04;
 extern bool g_bExpPerfData05;
 extern wxString g_sCMGSynonym, g_sVMGSynonym;
 extern wxString g_sDataExportSeparator;
-
+extern int g_TacticsPrefsTabToOpen;
 
 
 TacticsPreferencesDialogImpl::TacticsPreferencesDialogImpl( wxWindow* parent, wxString derivtitle, wxArrayOfTactics config )
@@ -98,6 +99,65 @@ TacticsPreferencesDialogDef( parent )
     m_bpButtonAddTactics->SetBitmap(*_img_plus);
     m_bpButtonDeleteTactics->SetBitmap(*_img_minus);
     
+    m_fontPickerTitle->SetPickerCtrlGrowable(true);
+    m_fontPickerTitle->SetSelectedFont(*g_pFontTitle);
+    m_fontPickerData->SetSelectedFont(*g_pFontData);
+    m_fontPickerLabel->SetSelectedFont(*g_pFontLabel);
+    m_fontPickerSmall->SetSelectedFont(*g_pFontSmall);
+    FontChanged();
+    
+    m_spinCtrlSpeedMax->SetValue(g_iDashSpeedMax);
+    m_spinCtrlCOGDamp->SetValue(g_iDashCOGDamp);
+    m_spinCtrlSOGDamp->SetValue(g_iDashSOGDamp);
+    m_choiceSpeedUnit->SetSelection(g_iDashSpeedUnit + 1);
+    m_choiceDepthUnit->SetSelection(g_iDashDepthUnit - 3);
+    m_choiceDistanceUnit->SetSelection(g_iDashDistanceUnit + 1);
+    m_choiceWindSpeedUnit->SetSelection(g_iDashWindSpeedUnit);
+    m_spinCtrlDoubleLeewayFactor->SetValue(g_dLeewayFactor);
+    m_spinCtrlDoublefixedLeeway->SetValue(g_dfixedLeeway);
+    m_radioBtnFixedLeeway->SetValue(g_bUseFixedLeeway);
+    
+    m_spinCtrlAlphaCurrDir->SetValue(g_dalpha_currdir * 1000.0);
+    //    g_dalpha_currdir = m_AlphaCurrDir->GetValue();
+    m_spinCtrlDoubleAlphaDeltCoG->SetValue(g_dalphaDeltCoG);
+    m_spinCtrlDoubleAlphaLaylineDampFactor->SetValue(g_dalphaLaylinedDampFactor);
+    m_spinCtrlDoubleLaylineLength->SetValue(g_dLaylineLengthonChart);
+    m_spinCtrlDoubleMinLaylineWidth->SetValue(g_iMinLaylineWidth);
+    m_spinCtrlDoubleMaxLaylineWidth->SetValue(g_iMaxLaylineWidth);
+    m_checkBoxCurrentOnChart->SetValue(g_bDisplayCurrentOnChart);
+    m_spinCtrlDoubleHeel5_45->SetValue(g_dheel[1][1]);
+    m_spinCtrlDoubleHeel5_90->SetValue(g_dheel[1][2]);
+    m_spinCtrlDoubleHeel5_135->SetValue(g_dheel[1][3]);
+    m_spinCtrlDoubleHeel10_45->SetValue(g_dheel[2][1]);
+    m_spinCtrlDoubleHeel10_90->SetValue(g_dheel[2][2]);
+    m_spinCtrlDoubleHeel10_135->SetValue(g_dheel[2][3]);
+    m_spinCtrlDoubleHeel15_45->SetValue(g_dheel[3][1]);
+    m_spinCtrlDoubleHeel15_90->SetValue(g_dheel[3][2]);
+    m_spinCtrlDoubleHeel15_135->SetValue(g_dheel[3][3]);
+    m_spinCtrlDoubleHeel20_45->SetValue(g_dheel[4][1]);
+    m_spinCtrlDoubleHeel20_90->SetValue(g_dheel[4][2]);
+    m_spinCtrlDoubleHeel20_135->SetValue(g_dheel[4][3]);
+    m_spinCtrlDoubleHeel25_45->SetValue(g_dheel[5][1]);
+    m_spinCtrlDoubleHeel25_90->SetValue(g_dheel[5][2]);
+    m_spinCtrlDoubleHeel25_135->SetValue(g_dheel[5][3]);
+    
+    m_radioBtnUseHeelSensor->SetValue(g_bUseHeelSensor);
+    m_radioBtnFixedLeeway->SetValue(g_bUseFixedLeeway);
+    m_radioBtnHeelnput->SetValue(g_bManHeelInput);
+    m_textCtrlPolar->SetValue(g_path_to_PolarFile);
+    m_checkBoxCorrectSTWwithLeeway->SetValue(g_bCorrectSTWwithLeeway);
+    m_checkBoxCorrectAWwithHeel->SetValue(g_bCorrectAWwithHeel);
+    m_checkBoxForceTrueWindCalculation->SetValue(g_bForceTrueWindCalculation);
+    m_checkBoxUseSOGforTWCalc->SetValue(g_bUseSOGforTWCalc);
+    m_checkBoxShowWindbarbOnChart->SetValue(g_bShowWindbarbOnChart);
+    m_checkBoxShowPolarOnChart->SetValue(g_bShowPolarOnChart);
+    m_checkBoxExpPerfData01->SetValue(g_bExpPerfData01);
+    m_checkBoxExpPerfData02->SetValue(g_bExpPerfData02);
+    m_checkBoxExpPerfData03->SetValue(g_bExpPerfData03);
+    m_checkBoxExpPerfData04->SetValue(g_bExpPerfData04);
+    m_checkBoxExpPerfData05->SetValue(g_bExpPerfData05);
+    
+    
     m_staticTextNameVal->SetLabel( wxT("Tactics Plugin") );
     m_staticTextMajorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MAJOR ));
     m_staticTextMinorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MINOR ));
@@ -116,6 +176,11 @@ TacticsPreferencesDialogDef( parent )
     //itemPanelNotebook03->SetSize(itemBoxSizer06->GetSize());
     UpdateTacticsButtonsState();
     UpdateButtonsState();
+    
+    if(g_TacticsPrefsTabToOpen == -1)
+        m_notebookPreferences->SetSelection(0);
+    else
+        m_notebookPreferences->SetSelection(g_TacticsPrefsTabToOpen);
     
     Fit();
     
@@ -230,26 +295,28 @@ void TacticsPreferencesDialogImpl::OnOKButtonClick( wxCommandEvent& event )
 {
     SaveChanges(); // write changes to globals and update config
     Show( false );
+    g_TacticsPrefsTabToOpen = m_notebookPreferences->GetSelection();
     SetReturnCode(wxID_OK);
 #ifdef __WXOSX__    
     EndModal(wxID_OK);
 #endif
     // SetClientSize(m_defaultClientSize);  // only needed if you have dynamic sizing in the dialog
     
-    //ResetGlobalLocale();
+    ResetGlobalLocale();
     event.Skip();
 }
 
 void TacticsPreferencesDialogImpl::OnCancelButtonClick( wxCommandEvent& event )
 {
     Show( false );
+    g_TacticsPrefsTabToOpen = m_notebookPreferences->GetSelection();
     SetReturnCode(wxID_CANCEL);
 #ifdef __WXOSX__    
     EndModal(wxID_CANCEL);
 #endif
     // SetClientSize(m_defaultClientSize);  // only needed if you have dynamic sizing in the dialog
     
-    //ResetGlobalLocale();
+    ResetGlobalLocale();
     event.Skip();
 }
 
@@ -262,6 +329,8 @@ void TacticsPreferencesDialogImpl::OnApplyButtonClick( wxCommandEvent& event )
 
 void TacticsPreferencesDialogImpl::SaveTacticsConfig()
 {
+    SetGlobalLocale();
+    
     g_iDashSpeedMax = m_spinCtrlSpeedMax->GetValue();
     g_iDashCOGDamp = m_spinCtrlCOGDamp->GetValue();
     g_iDashSOGDamp = m_spinCtrlSOGDamp->GetValue();
@@ -270,7 +339,9 @@ void TacticsPreferencesDialogImpl::SaveTacticsConfig()
     g_iDashDistanceUnit = m_choiceDistanceUnit->GetSelection() - 1;
     g_iDashWindSpeedUnit = m_choiceWindSpeedUnit->GetSelection();
     g_dLeewayFactor = m_spinCtrlDoubleLeewayFactor->GetValue();
-    g_dfixedLeeway = m_radioBtnFixedLeeway->GetValue();
+    g_bUseFixedLeeway = m_radioBtnFixedLeeway->GetValue();
+    g_dfixedLeeway = m_spinCtrlDoublefixedLeeway->GetValue();
+    
     
     g_dalpha_currdir = (double)m_spinCtrlAlphaCurrDir->GetValue() / 1000.0;
     //    g_dalpha_currdir = m_AlphaCurrDir->GetValue();
@@ -320,6 +391,8 @@ void TacticsPreferencesDialogImpl::SaveTacticsConfig()
         for (int i = 0; i < m_listCtrlInstruments->GetItemCount(); i++)
             cont->m_aInstrumentList.Add((int)m_listCtrlInstruments->GetItemData(i));
     }
+    
+    ResetGlobalLocale();
 }
 
 void TacticsPreferencesDialogImpl::UpdateTacticsButtonsState()
@@ -638,6 +711,7 @@ void TacticsPreferencesDialogImpl::SaveChanges(void)
 {
     delete g_pFontTitle;
     g_pFontTitle = new wxFont(m_fontPickerTitle->GetSelectedFont());
+    wxString lFontFace = g_pFontTitle->GetFaceName();
     delete g_pFontData;
     g_pFontData = new wxFont(m_fontPickerData->GetSelectedFont());
     delete g_pFontLabel;
@@ -650,3 +724,50 @@ void TacticsPreferencesDialogImpl::SaveChanges(void)
     SaveTacticsConfig();
     
 }
+
+void TacticsPreferencesDialogImpl::OnFontChanged( wxFontPickerEvent& event )
+{
+    FontChanged();
+    m_scrolledWindowAppearance->Fit();
+    m_scrolledWindowAppearance->Layout();
+    this->SetSizer( m_SizerMainSizer );
+    this->Layout();
+    
+}
+
+void TacticsPreferencesDialogImpl::FontChanged( void )
+{
+    m_staticTextTitle->SetFont(m_fontPickerTitle->GetSelectedFont());
+    m_staticTextData->SetFont(m_fontPickerData->GetSelectedFont());
+    m_staticTextLabel->SetFont(m_fontPickerLabel->GetSelectedFont());
+    m_staticTextSmall->SetFont(m_fontPickerSmall->GetSelectedFont());
+
+    m_fontPickerTitle->SetSize(m_fontPickerTitle->GetBestSize());
+    m_fontPickerData->SetSize(m_fontPickerData->GetBestSize());
+    m_fontPickerLabel->SetSize(m_fontPickerLabel->GetBestSize());
+    m_fontPickerSmall->SetSize(m_fontPickerSmall->GetBestSize());
+    
+    m_spinCtrlDoubleAlphaDeltCoG->SetSize((m_spinCtrlDoubleAlphaDeltCoG->GetBestSize()));
+    
+}
+
+void TacticsPreferencesDialogImpl::OnUpdateCtrl(wxCommandEvent& event)
+{
+    UpdateCtrl();
+}
+
+void TacticsPreferencesDialogImpl::OnUpdateCtrl(wxSpinDoubleEvent& event)
+{
+    UpdateCtrl();
+}
+
+void TacticsPreferencesDialogImpl::UpdateCtrl()
+{
+    m_spinCtrlDoubleAlphaLaylineDampFactor->SetSize(m_spinCtrlDoubleAlphaLaylineDampFactor->GetBestSize());
+    m_spinCtrlDoubleAlphaDeltCoG->SetSize((m_spinCtrlDoubleAlphaDeltCoG->GetBestSize()));
+    m_scrolledWindowPerformanceParameters->Fit();
+    m_scrolledWindowPerformanceParameters->Layout();
+    this->SetSizer( m_SizerMainSizer );
+    this->Layout();
+}
+

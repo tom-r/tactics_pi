@@ -13,8 +13,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-	wxBoxSizer* bSizer1;
-	bSizer1 = new wxBoxSizer( wxVERTICAL );
+	m_SizerMainSizer = new wxBoxSizer( wxVERTICAL );
 
 	wxFlexGridSizer* fgSizer13;
 	fgSizer13 = new wxFlexGridSizer( 2, 0, 0, 0 );
@@ -152,8 +151,9 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	m_panelTactics->SetSizer( fgSizer5 );
 	m_panelTactics->Layout();
 	fgSizer5->Fit( m_panelTactics );
-	m_notebookPreferences->AddPage( m_panelTactics, _("Tactics"), true );
-	m_panelAppearance = new wxPanel( m_notebookPreferences, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_notebookPreferences->AddPage( m_panelTactics, _("Tactics"), false );
+	m_scrolledWindowAppearance = new wxScrolledWindow( m_notebookPreferences, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
+	m_scrolledWindowAppearance->SetScrollRate( 5, 5 );
 	wxFlexGridSizer* fgSizer10;
 	fgSizer10 = new wxFlexGridSizer( 0, 1, 0, 0 );
 	fgSizer10->AddGrowableCol( 0 );
@@ -164,7 +164,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	bSizer10 = new wxBoxSizer( wxVERTICAL );
 
 	wxStaticBoxSizer* sbSizerFonts;
-	sbSizerFonts = new wxStaticBoxSizer( new wxStaticBox( m_panelAppearance, wxID_ANY, _("Fonts") ), wxHORIZONTAL );
+	sbSizerFonts = new wxStaticBoxSizer( new wxStaticBox( m_scrolledWindowAppearance, wxID_ANY, _("Fonts") ), wxHORIZONTAL );
 
 	wxFlexGridSizer* fgSizer11;
 	fgSizer11 = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -172,40 +172,40 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	fgSizer11->SetFlexibleDirection( wxBOTH );
 	fgSizer11->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-	m_staticText21 = new wxStaticText( sbSizerFonts->GetStaticBox(), wxID_ANY, _("Title:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText21->Wrap( -1 );
-	fgSizer11->Add( m_staticText21, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
+	m_staticTextTitle = new wxStaticText( sbSizerFonts->GetStaticBox(), wxID_ANY, _("Title:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextTitle->Wrap( -1 );
+	fgSizer11->Add( m_staticTextTitle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
-	m_fontPickerTitle = new wxFontPickerCtrl( sbSizerFonts->GetStaticBox(), wxID_ANY, wxNullFont, wxDefaultPosition, wxDefaultSize, wxFNTP_DEFAULT_STYLE );
+	m_fontPickerTitle = new wxFontPickerCtrl( sbSizerFonts->GetStaticBox(), wxID_ANY, wxFont( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Galapogos BRK") ), wxDefaultPosition, wxDefaultSize, wxFNTP_DEFAULT_STYLE|wxFNTP_FONTDESC_AS_LABEL );
 	m_fontPickerTitle->SetMaxPointSize( 100 );
-	fgSizer11->Add( m_fontPickerTitle, 0, wxALIGN_RIGHT|wxALL, 0 );
+	fgSizer11->Add( m_fontPickerTitle, 2, wxALIGN_RIGHT|wxALL|wxEXPAND, 0 );
 
-	m_staticText22 = new wxStaticText( sbSizerFonts->GetStaticBox(), wxID_ANY, _("Data:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText22->Wrap( -1 );
-	fgSizer11->Add( m_staticText22, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
+	m_staticTextData = new wxStaticText( sbSizerFonts->GetStaticBox(), wxID_ANY, _("Data:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextData->Wrap( -1 );
+	fgSizer11->Add( m_staticTextData, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
-	m_fontPickerData = new wxFontPickerCtrl( sbSizerFonts->GetStaticBox(), wxID_ANY, wxNullFont, wxDefaultPosition, wxDefaultSize, wxFNTP_DEFAULT_STYLE );
+	m_fontPickerData = new wxFontPickerCtrl( sbSizerFonts->GetStaticBox(), wxID_ANY, wxFont( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_ITALIC, wxFONTWEIGHT_BOLD, false, wxT("False Positive Round BRK") ), wxDefaultPosition, wxDefaultSize, wxFNTP_DEFAULT_STYLE|wxFNTP_FONTDESC_AS_LABEL|wxFNTP_USEFONT_FOR_LABEL );
 	m_fontPickerData->SetMaxPointSize( 100 );
-	fgSizer11->Add( m_fontPickerData, 0, wxALIGN_RIGHT|wxALL, 0 );
+	fgSizer11->Add( m_fontPickerData, 2, wxALIGN_RIGHT|wxALL|wxEXPAND, 0 );
 
-	m_staticText23 = new wxStaticText( sbSizerFonts->GetStaticBox(), wxID_ANY, _("Label:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText23->Wrap( -1 );
-	fgSizer11->Add( m_staticText23, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
+	m_staticTextLabel = new wxStaticText( sbSizerFonts->GetStaticBox(), wxID_ANY, _("Label:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextLabel->Wrap( -1 );
+	fgSizer11->Add( m_staticTextLabel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
-	m_fontPickerLabel = new wxFontPickerCtrl( sbSizerFonts->GetStaticBox(), wxID_ANY, wxNullFont, wxDefaultPosition, wxDefaultSize, wxFNTP_DEFAULT_STYLE );
+	m_fontPickerLabel = new wxFontPickerCtrl( sbSizerFonts->GetStaticBox(), wxID_ANY, wxNullFont, wxDefaultPosition, wxDefaultSize, wxFNTP_DEFAULT_STYLE|wxFNTP_FONTDESC_AS_LABEL|wxFNTP_USEFONT_FOR_LABEL );
 	m_fontPickerLabel->SetMaxPointSize( 100 );
-	fgSizer11->Add( m_fontPickerLabel, 0, wxALIGN_RIGHT|wxALL, 0 );
+	fgSizer11->Add( m_fontPickerLabel, 2, wxALIGN_RIGHT|wxALL|wxEXPAND, 0 );
 
-	m_staticText24 = new wxStaticText( sbSizerFonts->GetStaticBox(), wxID_ANY, _("Small:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText24->Wrap( -1 );
-	fgSizer11->Add( m_staticText24, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
+	m_staticTextSmall = new wxStaticText( sbSizerFonts->GetStaticBox(), wxID_ANY, _("Small:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextSmall->Wrap( -1 );
+	fgSizer11->Add( m_staticTextSmall, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
-	m_fontPickerSmall = new wxFontPickerCtrl( sbSizerFonts->GetStaticBox(), wxID_ANY, wxNullFont, wxDefaultPosition, wxDefaultSize, wxFNTP_DEFAULT_STYLE );
+	m_fontPickerSmall = new wxFontPickerCtrl( sbSizerFonts->GetStaticBox(), wxID_ANY, wxNullFont, wxDefaultPosition, wxDefaultSize, wxFNTP_DEFAULT_STYLE|wxFNTP_FONTDESC_AS_LABEL|wxFNTP_USEFONT_FOR_LABEL );
 	m_fontPickerSmall->SetMaxPointSize( 100 );
-	fgSizer11->Add( m_fontPickerSmall, 0, wxALIGN_RIGHT|wxALL, 0 );
+	fgSizer11->Add( m_fontPickerSmall, 2, wxALIGN_RIGHT|wxALL|wxEXPAND, 0 );
 
 
-	sbSizerFonts->Add( fgSizer11, 1, wxEXPAND, 2 );
+	sbSizerFonts->Add( fgSizer11, 1, wxALL|wxEXPAND, 2 );
 
 
 	bSizer10->Add( sbSizerFonts, 1, wxEXPAND, 2 );
@@ -217,7 +217,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	bSizer11 = new wxBoxSizer( wxVERTICAL );
 
 	wxStaticBoxSizer* sbSizer4;
-	sbSizer4 = new wxStaticBoxSizer( new wxStaticBox( m_panelAppearance, wxID_ANY, _("Units, Ranges, Formats") ), wxVERTICAL );
+	sbSizer4 = new wxStaticBoxSizer( new wxStaticBox( m_scrolledWindowAppearance, wxID_ANY, _("Units, Ranges, Formats") ), wxVERTICAL );
 
 	wxFlexGridSizer* fgSizer12;
 	fgSizer12 = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -296,15 +296,14 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	fgSizer10->Add( bSizer11, 1, wxEXPAND, 2 );
 
 
-	m_panelAppearance->SetSizer( fgSizer10 );
-	m_panelAppearance->Layout();
-	fgSizer10->Fit( m_panelAppearance );
-	m_notebookPreferences->AddPage( m_panelAppearance, _("Appearance"), false );
-	m_scrolledWindowPerformanceParameters = new wxScrolledWindow( m_notebookPreferences, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxALWAYS_SHOW_SB|wxVSCROLL );
+	m_scrolledWindowAppearance->SetSizer( fgSizer10 );
+	m_scrolledWindowAppearance->Layout();
+	fgSizer10->Fit( m_scrolledWindowAppearance );
+	m_notebookPreferences->AddPage( m_scrolledWindowAppearance, _("Appearance"), false );
+	m_scrolledWindowPerformanceParameters = new wxScrolledWindow( m_notebookPreferences, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxALWAYS_SHOW_SB|wxTAB_TRAVERSAL|wxVSCROLL );
 	m_scrolledWindowPerformanceParameters->SetScrollRate( 5, 5 );
 	wxFlexGridSizer* fgSizer14;
 	fgSizer14 = new wxFlexGridSizer( 0, 1, 0, 0 );
-	fgSizer14->AddGrowableCol( 0 );
 	fgSizer14->SetFlexibleDirection( wxBOTH );
 	fgSizer14->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
@@ -326,11 +325,11 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 
 	fgSizer15->Add( m_staticText31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
-	m_spinCtrlDoubleAlphaLaylineDampFactor = new wxSpinCtrlDouble( sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0.025, 1, 0.025000, 1 );
+	m_spinCtrlDoubleAlphaLaylineDampFactor = new wxSpinCtrlDouble( sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0.025, 1, 0.025, 0.001 );
 	m_spinCtrlDoubleAlphaLaylineDampFactor->SetDigits( 3 );
 	m_spinCtrlDoubleAlphaLaylineDampFactor->SetToolTip( _("The layline damping factor determines how fast the  laylines react on your course changes, i.e. your COG changes.\n Low values mean high damping.") );
 
-	fgSizer15->Add( m_spinCtrlDoubleAlphaLaylineDampFactor, 0, wxALIGN_RIGHT|wxALL, 0 );
+	fgSizer15->Add( m_spinCtrlDoubleAlphaLaylineDampFactor, 2, wxALIGN_LEFT|wxALL|wxEXPAND, 0 );
 
 	m_staticText32 = new wxStaticText( sbSizer5->GetStaticBox(), wxID_ANY, _("Layline width damping factor [0.025-1]:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText32->Wrap( -1 );
@@ -338,11 +337,11 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 
 	fgSizer15->Add( m_staticText32, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
-	m_spinCtrlDoubleAlphaDeltCoG = new wxSpinCtrlDouble( sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0.025, 1, 0.25, 1 );
+	m_spinCtrlDoubleAlphaDeltCoG = new wxSpinCtrlDouble( sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0.025, 1, 0.25, 0.001 );
 	m_spinCtrlDoubleAlphaDeltCoG->SetDigits( 3 );
 	m_spinCtrlDoubleAlphaDeltCoG->SetToolTip( _("Width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\nThe idea is to display the range where you're sailing to.\n Low values mean high damping.") );
 
-	fgSizer15->Add( m_spinCtrlDoubleAlphaDeltCoG, 0, wxALIGN_RIGHT|wxALL, 0 );
+	fgSizer15->Add( m_spinCtrlDoubleAlphaDeltCoG, 2, wxALIGN_LEFT|wxALL|wxEXPAND, 0 );
 
 	m_staticText33 = new wxStaticText( sbSizer5->GetStaticBox(), wxID_ANY, _("Layline length on Chart [nm]:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText33->Wrap( -1 );
@@ -350,11 +349,11 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 
 	fgSizer15->Add( m_staticText33, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
-	m_spinCtrlDoubleLaylineLength = new wxSpinCtrlDouble( sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 20, 0.1, 1 );
+	m_spinCtrlDoubleLaylineLength = new wxSpinCtrlDouble( sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 20, 0.000000, 0.1 );
 	m_spinCtrlDoubleLaylineLength->SetDigits( 1 );
 	m_spinCtrlDoubleLaylineLength->SetToolTip( _("Length of the boat laylines in [nm]") );
 
-	fgSizer15->Add( m_spinCtrlDoubleLaylineLength, 0, wxALIGN_RIGHT|wxALL, 0 );
+	fgSizer15->Add( m_spinCtrlDoubleLaylineLength, 2, wxALIGN_LEFT|wxALL|wxEXPAND, 0 );
 
 	m_staticText34 = new wxStaticText( sbSizer5->GetStaticBox(), wxID_ANY, _("Min. Layline Width [°]:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText34->Wrap( -1 );
@@ -362,11 +361,11 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 
 	fgSizer15->Add( m_staticText34, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
-	m_spinCtrlDoubleMinLaylineWidth = new wxSpinCtrlDouble( sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 20, 0, 1 );
+	m_spinCtrlDoubleMinLaylineWidth = new wxSpinCtrlDouble( sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 20, 3.000000, 1 );
 	m_spinCtrlDoubleMinLaylineWidth->SetDigits( 0 );
 	m_spinCtrlDoubleMinLaylineWidth->SetToolTip( _("Min. width of boat laylines in degrees.") );
 
-	fgSizer15->Add( m_spinCtrlDoubleMinLaylineWidth, 0, wxALIGN_RIGHT|wxALL, 0 );
+	fgSizer15->Add( m_spinCtrlDoubleMinLaylineWidth, 2, wxALIGN_LEFT|wxALL|wxEXPAND, 0 );
 
 	m_staticText35 = new wxStaticText( sbSizer5->GetStaticBox(), wxID_ANY, _("Max. Layline Width [°]:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText35->Wrap( -1 );
@@ -378,10 +377,10 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	m_spinCtrlDoubleMaxLaylineWidth->SetDigits( 0 );
 	m_spinCtrlDoubleMaxLaylineWidth->SetToolTip( _("Max. width of boat laylines in degrees.") );
 
-	fgSizer15->Add( m_spinCtrlDoubleMaxLaylineWidth, 0, wxALIGN_RIGHT|wxALL, 0 );
+	fgSizer15->Add( m_spinCtrlDoubleMaxLaylineWidth, 2, wxALIGN_LEFT|wxALL|wxEXPAND, 0 );
 
 
-	sbSizer5->Add( fgSizer15, 1, wxEXPAND, 2 );
+	sbSizer5->Add( fgSizer15, 1, wxALL|wxEXPAND, 2 );
 
 
 	bSizer13->Add( sbSizer5, 1, wxEXPAND, 2 );
@@ -411,7 +410,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	m_spinCtrlDoubleLeewayFactor->SetDigits( 2 );
 	m_spinCtrlDoubleLeewayFactor->SetToolTip( _("Leeway='Drift' of boat due to heel/wind influence\nLow values mean high performance of hull\nLeeway = (LeewayFactor * Heel) / STW °;") );
 
-	fgSizer17->Add( m_spinCtrlDoubleLeewayFactor, 0, wxALIGN_RIGHT|wxALL, 0 );
+	fgSizer17->Add( m_spinCtrlDoubleLeewayFactor, 0, wxALL|wxEXPAND, 0 );
 
 	m_radioBtnUseHeelSensor = new wxRadioButton( sbSizer6->GetStaticBox(), wxID_ANY, _("Use Heel Sensor"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP );
 	m_radioBtnUseHeelSensor->SetToolTip( _("Use the internal heel sensor if available\nImportant for the correct calculation of the surface current.") );
@@ -436,7 +435,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	fgSizer17->Add( m_radioBtnHeelnput, 0, wxALL, 0 );
 
 
-	sbSizer6->Add( fgSizer17, 1, wxEXPAND, 2 );
+	sbSizer6->Add( fgSizer17, 1, wxALL|wxEXPAND, 2 );
 
 
 	bSizer14->Add( sbSizer6, 1, wxEXPAND, 2 );
@@ -455,6 +454,9 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 
 	wxFlexGridSizer* fgSizer18;
 	fgSizer18 = new wxFlexGridSizer( 0, 4, 0, 0 );
+	fgSizer18->AddGrowableCol( 1 );
+	fgSizer18->AddGrowableCol( 2 );
+	fgSizer18->AddGrowableCol( 3 );
 	fgSizer18->SetFlexibleDirection( wxBOTH );
 	fgSizer18->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
@@ -473,90 +475,90 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 
 	m_staticText42 = new wxStaticText( sbSizer7->GetStaticBox(), wxID_ANY, _("135°"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText42->Wrap( -1 );
-	fgSizer18->Add( m_staticText42, 0, wxALL, 2 );
+	fgSizer18->Add( m_staticText42, 1, wxALL, 2 );
 
 	m_staticText43 = new wxStaticText( sbSizer7->GetStaticBox(), wxID_ANY, _("5 kn"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText43->Wrap( -1 );
 	fgSizer18->Add( m_staticText43, 0, wxALL, 2 );
 
-	m_spinCtrlDoubleHeel5_45 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 5, 1 );
+	m_spinCtrlDoubleHeel5_45 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 5, 0.1 );
 	m_spinCtrlDoubleHeel5_45->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel5_45, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel5_45, 0, wxALL|wxEXPAND, 0 );
 
-	m_spinCtrlDoubleHeel5_90 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 8, 1 );
+	m_spinCtrlDoubleHeel5_90 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 8, 0.1 );
 	m_spinCtrlDoubleHeel5_90->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel5_90, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel5_90, 0, wxALL|wxEXPAND, 0 );
 
-	m_spinCtrlDoubleHeel5_135 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 5, 1 );
+	m_spinCtrlDoubleHeel5_135 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 5, 0.1 );
 	m_spinCtrlDoubleHeel5_135->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel5_135, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel5_135, 0, wxALL|wxEXPAND, 0 );
 
 	m_staticText44 = new wxStaticText( sbSizer7->GetStaticBox(), wxID_ANY, _("10 kn"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText44->Wrap( -1 );
 	fgSizer18->Add( m_staticText44, 0, wxALL, 2 );
 
-	m_spinCtrlDoubleHeel10_45 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 8, 1 );
+	m_spinCtrlDoubleHeel10_45 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 8, 0.1 );
 	m_spinCtrlDoubleHeel10_45->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel10_45, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel10_45, 0, wxALL|wxEXPAND, 0 );
 
-	m_spinCtrlDoubleHeel10_90 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 10, 1 );
+	m_spinCtrlDoubleHeel10_90 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 10, 0.1 );
 	m_spinCtrlDoubleHeel10_90->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel10_90, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel10_90, 0, wxALL|wxEXPAND, 0 );
 
-	m_spinCtrlDoubleHeel10_135 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 11, 1 );
+	m_spinCtrlDoubleHeel10_135 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 11, 0.1 );
 	m_spinCtrlDoubleHeel10_135->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel10_135, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel10_135, 0, wxALL|wxEXPAND, 0 );
 
 	m_staticText45 = new wxStaticText( sbSizer7->GetStaticBox(), wxID_ANY, _("15 kn"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText45->Wrap( -1 );
 	fgSizer18->Add( m_staticText45, 0, wxALL, 2 );
 
-	m_spinCtrlDoubleHeel15_45 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 25, 1 );
+	m_spinCtrlDoubleHeel15_45 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 25, 0.1 );
 	m_spinCtrlDoubleHeel15_45->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel15_45, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel15_45, 0, wxALL|wxEXPAND, 0 );
 
-	m_spinCtrlDoubleHeel15_90 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 20, 1 );
+	m_spinCtrlDoubleHeel15_90 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 20, 0.1 );
 	m_spinCtrlDoubleHeel15_90->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel15_90, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel15_90, 0, wxALL|wxEXPAND, 0 );
 
-	m_spinCtrlDoubleHeel15_135 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 13, 1 );
+	m_spinCtrlDoubleHeel15_135 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 13, 0.1 );
 	m_spinCtrlDoubleHeel15_135->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel15_135, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel15_135, 0, wxALL|wxEXPAND, 0 );
 
 	m_staticText46 = new wxStaticText( sbSizer7->GetStaticBox(), wxID_ANY, _("20 kn"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText46->Wrap( -1 );
 	fgSizer18->Add( m_staticText46, 0, wxALL, 2 );
 
-	m_spinCtrlDoubleHeel20_45 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 20, 1 );
+	m_spinCtrlDoubleHeel20_45 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 20, 0.1 );
 	m_spinCtrlDoubleHeel20_45->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel20_45, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel20_45, 0, wxALL|wxEXPAND, 0 );
 
-	m_spinCtrlDoubleHeel20_90 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 16, 1 );
+	m_spinCtrlDoubleHeel20_90 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 16, 0.1 );
 	m_spinCtrlDoubleHeel20_90->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel20_90, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel20_90, 0, wxALL|wxEXPAND, 0 );
 
-	m_spinCtrlDoubleHeel20_135 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 15, 1 );
+	m_spinCtrlDoubleHeel20_135 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 15, 0.1 );
 	m_spinCtrlDoubleHeel20_135->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel20_135, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel20_135, 0, wxALL|wxEXPAND, 0 );
 
 	m_staticText47 = new wxStaticText( sbSizer7->GetStaticBox(), wxID_ANY, _("25 kn"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText47->Wrap( -1 );
 	fgSizer18->Add( m_staticText47, 0, wxALL, 2 );
 
-	m_spinCtrlDoubleHeel25_45 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 25, 1 );
+	m_spinCtrlDoubleHeel25_45 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 25, 0.1 );
 	m_spinCtrlDoubleHeel25_45->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel25_45, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel25_45, 0, wxALL|wxEXPAND, 0 );
 
-	m_spinCtrlDoubleHeel25_90 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 20, 1 );
+	m_spinCtrlDoubleHeel25_90 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 20, 0.1 );
 	m_spinCtrlDoubleHeel25_90->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel25_90, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel25_90, 0, wxALL|wxEXPAND, 0 );
 
-	m_spinCtrlDoubleHeel25_135 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 20, 1 );
+	m_spinCtrlDoubleHeel25_135 = new wxSpinCtrlDouble( sbSizer7->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60, 19.800000, 0.1 );
 	m_spinCtrlDoubleHeel25_135->SetDigits( 1 );
-	fgSizer18->Add( m_spinCtrlDoubleHeel25_135, 0, wxALL, 0 );
+	fgSizer18->Add( m_spinCtrlDoubleHeel25_135, 0, wxALL|wxEXPAND, 0 );
 
 
-	bSizer17->Add( fgSizer18, 1, wxEXPAND, 2 );
+	bSizer17->Add( fgSizer18, 1, wxALL|wxEXPAND, 2 );
 
 
 	sbSizer7->Add( bSizer17, 1, wxEXPAND, 2 );
@@ -595,7 +597,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	fgSizer20->Add( m_checkBoxCurrentOnChart, 0, wxALL, 2 );
 
 
-	sbSizer8->Add( fgSizer20, 1, wxEXPAND, 2 );
+	sbSizer8->Add( fgSizer20, 1, wxALL|wxEXPAND, 2 );
 
 
 	bSizer18->Add( sbSizer8, 1, wxEXPAND, 2 );
@@ -640,7 +642,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	fgSizer21->Add( m_checkBoxShowWindbarbOnChart, 0, wxALL, 0 );
 
 
-	sbSizer9->Add( fgSizer21, 1, wxEXPAND, 2 );
+	sbSizer9->Add( fgSizer21, 1, wxALL|wxEXPAND, 2 );
 
 
 	bSizer19->Add( sbSizer9, 1, wxEXPAND, 2 );
@@ -677,7 +679,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	fgSizer22->Add( m_checkBoxShowPolarOnChart, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
 
-	sbSizer10->Add( fgSizer22, 1, wxEXPAND, 5 );
+	sbSizer10->Add( fgSizer22, 1, wxALL|wxEXPAND, 5 );
 
 
 	bSizer20->Add( sbSizer10, 1, wxEXPAND, 2 );
@@ -720,7 +722,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	fgSizer201->Add( m_checkBoxExpPerfData05, 0, wxALL, 2 );
 
 
-	sbSizer11->Add( fgSizer201, 1, wxEXPAND, 2 );
+	sbSizer11->Add( fgSizer201, 1, wxALL|wxEXPAND, 2 );
 
 
 	bSizer21->Add( sbSizer11, 1, wxEXPAND, 2 );
@@ -732,7 +734,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	m_scrolledWindowPerformanceParameters->SetSizer( fgSizer14 );
 	m_scrolledWindowPerformanceParameters->Layout();
 	fgSizer14->Fit( m_scrolledWindowPerformanceParameters );
-	m_notebookPreferences->AddPage( m_scrolledWindowPerformanceParameters, _("Performance Parameters"), false );
+	m_notebookPreferences->AddPage( m_scrolledWindowPerformanceParameters, _("Performance Parameters"), true );
 	m_panelAbout = new wxPanel( m_notebookPreferences, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
@@ -838,7 +840,7 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	fgSizerAboutLayout->Add( m_staticTextOtherVal, 0, wxALL, 2 );
 
 
-	bSizer2->Add( fgSizerAboutLayout, 1, wxEXPAND, 2 );
+	bSizer2->Add( fgSizerAboutLayout, 1, wxALL|wxEXPAND, 2 );
 
 
 	m_panelAbout->SetSizer( bSizer2 );
@@ -863,16 +865,16 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	m_sdbSizer1->AddButton( m_sdbSizer1Cancel );
 	m_sdbSizer1->Realize();
 
-	bSizerOKCancelApply->Add( m_sdbSizer1, 1, wxEXPAND, 2 );
+	bSizerOKCancelApply->Add( m_sdbSizer1, 1, wxALL|wxEXPAND, 2 );
 
 
 	fgSizer13->Add( bSizerOKCancelApply, 1, wxALIGN_RIGHT, 2 );
 
 
-	bSizer1->Add( fgSizer13, 1, wxEXPAND, 2 );
+	m_SizerMainSizer->Add( fgSizer13, 1, wxEXPAND, 2 );
 
 
-	this->SetSizer( bSizer1 );
+	this->SetSizer( m_SizerMainSizer );
 	this->Layout();
 
 	this->Centre( wxBOTH );
@@ -888,6 +890,10 @@ TacticsPreferencesDialogDef::TacticsPreferencesDialogDef( wxWindow* parent, wxWi
 	m_buttonDelete->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnInstrumentDelete ), NULL, this );
 	m_buttonUp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnInstrumentUp ), NULL, this );
 	m_buttonDown->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnInstrumentDown ), NULL, this );
+	m_fontPickerTitle->Connect( wxEVT_COMMAND_FONTPICKER_CHANGED, wxFontPickerEventHandler( TacticsPreferencesDialogDef::OnFontChanged ), NULL, this );
+	m_fontPickerData->Connect( wxEVT_COMMAND_FONTPICKER_CHANGED, wxFontPickerEventHandler( TacticsPreferencesDialogDef::OnFontChanged ), NULL, this );
+	m_fontPickerLabel->Connect( wxEVT_COMMAND_FONTPICKER_CHANGED, wxFontPickerEventHandler( TacticsPreferencesDialogDef::OnFontChanged ), NULL, this );
+	m_fontPickerSmall->Connect( wxEVT_COMMAND_FONTPICKER_CHANGED, wxFontPickerEventHandler( TacticsPreferencesDialogDef::OnFontChanged ), NULL, this );
 	m_radioBtnFixedLeeway->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnManualHeelUpdate ), NULL, this );
 	m_radioBtnHeelnput->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnManualHeelUpdate ), NULL, this );
 	m_sdbSizer1Apply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnApplyButtonClick ), NULL, this );
@@ -908,6 +914,10 @@ TacticsPreferencesDialogDef::~TacticsPreferencesDialogDef()
 	m_buttonDelete->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnInstrumentDelete ), NULL, this );
 	m_buttonUp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnInstrumentUp ), NULL, this );
 	m_buttonDown->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnInstrumentDown ), NULL, this );
+	m_fontPickerTitle->Disconnect( wxEVT_COMMAND_FONTPICKER_CHANGED, wxFontPickerEventHandler( TacticsPreferencesDialogDef::OnFontChanged ), NULL, this );
+	m_fontPickerData->Disconnect( wxEVT_COMMAND_FONTPICKER_CHANGED, wxFontPickerEventHandler( TacticsPreferencesDialogDef::OnFontChanged ), NULL, this );
+	m_fontPickerLabel->Disconnect( wxEVT_COMMAND_FONTPICKER_CHANGED, wxFontPickerEventHandler( TacticsPreferencesDialogDef::OnFontChanged ), NULL, this );
+	m_fontPickerSmall->Disconnect( wxEVT_COMMAND_FONTPICKER_CHANGED, wxFontPickerEventHandler( TacticsPreferencesDialogDef::OnFontChanged ), NULL, this );
 	m_radioBtnFixedLeeway->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnManualHeelUpdate ), NULL, this );
 	m_radioBtnHeelnput->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnManualHeelUpdate ), NULL, this );
 	m_sdbSizer1Apply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TacticsPreferencesDialogDef::OnApplyButtonClick ), NULL, this );

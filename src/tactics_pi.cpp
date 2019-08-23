@@ -114,6 +114,12 @@ wxString g_sDataExportSeparator;
 // Petri addeds
 const char *tactics_pi::s_common_name = _("Tactics");
 
+int g_TacticsPrefsTabToOpen = -1;
+
+wxString    *g_ODlocale;
+int         g_iLocaleDepth;
+
+
 #if !defined(NAN)
 static const long long lNaN = 0xfff8000000000000;
 #define NAN (*(double*)&lNaN)

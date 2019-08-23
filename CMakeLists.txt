@@ -90,6 +90,8 @@ SET(SRC_TACTICS
     src/TacticsPreferencesDialogDef.h
     src/TacticsPreferencesDialogImpl.cpp
     src/TacticsPreferencesDialogImpl.h
+    src/TacticsUtils.cpp
+    src/TacticsUtils.h
 )
 
 SET(SRC_NMEA0183

@@ -25,7 +25,7 @@
 ***************************************************************************
 */
 
-include "wx/wxprec.h"
+#include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
 #include "wx/wx.h"
@@ -33,6 +33,11 @@ include "wx/wxprec.h"
 #include <wx/textwrapper.h>
  
 #include "TacticsUtils.h"
+
+extern int      g_iLocaleDepth;
+extern wxString *g_ODlocale;
+
+
 
 // International helper functions
 void SetGlobalLocale( void )
