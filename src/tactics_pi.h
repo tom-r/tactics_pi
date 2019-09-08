@@ -33,13 +33,15 @@
 #ifndef  WX_PRECOMP
   #include "wx/wx.h"
 #endif //precompiled headers
-
+/*
 #define     PLUGIN_VERSION_MAJOR    1
 #define     PLUGIN_VERSION_MINOR    0
-#define     PLUGIN_VERSION_PATCH    10
-
+#define     PLUGIN_VERSION_PATCH    11
+*/
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    12
+
+#include "../include/version.h"
 
 #include <wx/notebook.h>
 #include <wx/fileconf.h>
@@ -193,12 +195,14 @@ public:
 private:
       bool LoadConfig(void);
       void ApplyConfig(void);
+      wxString GetCommonNameVersion(void);
+      wxString GetNameVersion(void);
       void SendSentenceToAllInstruments(int st, double value, wxString unit);
       void SendSatInfoToAllInstruments(int cnt, int seq, SAT_INFO sats[4]);
       void SendUtcTimeToAllInstruments( wxDateTime value );
       void OnAvgWindUpdTimer(wxTimerEvent & event);
       wxTimer m_avgWindUpdTimer;
-
+      static const char    *s_common_name;
       wxFileConfig         *m_pconfig;
       wxAuiManager         *m_pauimgr;
       int                  m_toolbar_item_id;
@@ -282,7 +286,9 @@ private:
 class TacticsPreferencesDialog : public wxDialog
 {
 public:
-      TacticsPreferencesDialog( wxWindow *pparent, wxWindowID id, wxArrayOfTactics config );
+      TacticsPreferencesDialog( wxWindow *pparent, wxWindowID id, wxArrayOfTactics config
+        , wxString commonName, wxString nameVersion
+      );
       ~TacticsPreferencesDialog() {}
 
       void OnCloseDialog(wxCloseEvent& event);
@@ -326,7 +332,7 @@ public:
       //wxSlider                     *m_AlphaCurrDir; //TR
 	  wxButton                     *m_buttonLoadPolar;//TR
       wxButton                     *m_buttonPrefsApply;//TR
-       wxButton                     *m_buttonPrefOK;//TR
+       //wxButton                     *m_buttonPrefOK;//TR
 	  wxTextCtrl                   *m_pTextCtrlPolar; //TR
       wxSpinCtrlDouble             *m_pLaylineLength; //TR
       wxSpinCtrlDouble             *m_heel5_45;
@@ -362,6 +368,9 @@ public:
       wxCheckBox                   *m_ExpPerfData03;
       wxCheckBox                   *m_ExpPerfData04;
       wxCheckBox                   *m_ExpPerfData05;
+      wxCheckBox                   *m_ExpFileData01;
+      wxCheckBox                   *m_ExpFileData02;
+      wxTextCtrl                   *m_pDataExportSeparator;
 private:
       void UpdateTacticsButtonsState(void);
       void UpdateButtonsState(void);

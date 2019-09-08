@@ -61,6 +61,7 @@ AvgWind::AvgWind()
   m_AvgTime = 360; //value is in Seconds --> 6 min
   m_DegRangePort = 0.0;
   m_DegRangeStb = 0.0;
+  m_AvgWindDir = NAN;
   for (int i = 0; i < AVG_WIND_RECORDS; i++) {
     m_WindDirArray[i] = NAN;
     m_signedWindDirArray[i] = NAN;
@@ -88,6 +89,10 @@ void AvgWind::CalcAvgWindDir(double CurWindDir)
     }
     m_WindDirArray[0] = CurWindDir;
     double rad = (90 - CurWindDir)*M_PI / 180.;
+    if (m_SampleCount == 1) {
+      mDblsinExpSmoothWindDir->SetInitVal(sin(rad));
+      mDblcosExpSmoothWindDir->SetInitVal(cos(rad));
+    }
 
     m_ExpsinSmoothArrayWindDir[0] = mDblsinExpSmoothWindDir->GetSmoothVal(sin(rad));
     m_ExpcosSmoothArrayWindDir[0] = mDblcosExpSmoothWindDir->GetSmoothVal(cos(rad));
@@ -95,9 +100,9 @@ void AvgWind::CalcAvgWindDir(double CurWindDir)
     //Problem Norddurchgang: 355° - 10° ...
     //solution via atan2 function...
     //calculation of arithmetical mean value
-    double sinAvgDir = 0;
-    double cosAvgDir = 0;
-    rad = 0;
+    double sinAvgDir = 0.0;
+    double cosAvgDir = 0.0;
+    rad = 0.0;
     int samples = m_SampleCount < m_AvgTime ? m_SampleCount : m_AvgTime;
     for (i = 0; i < samples; i++) {
       rad = (90. - m_WindDirArray[i])*M_PI / 180.;
@@ -154,6 +159,7 @@ int  AvgWind::GetSampleCount()
 {
   return m_SampleCount;
 }
+
 //************************************************************************************************************************
 // History of wind direction
 //************************************************************************************************************************
@@ -163,7 +169,17 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_TWD)
 {
   SetDrawSoloInPane(true);
   m_WindDir = NAN;
+  m_AvgWindDir = NAN;
   m_TopLineHeight = 30;
+  m_TitleHeight = 10;
+  m_SliderHeight = 0;
+  m_availableHeight = 0;
+  m_width = 0;
+  m_height = 0;
+  m_cx = 0;
+  m_Legend = 0;
+  m_ratioW = NAN;
+  m_ratioH = NAN;
   m_IsRunning = false;
   m_SampleCount = 0;
   m_Legend = 3;
@@ -172,14 +188,13 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_TWD)
   m_DegRangeStb = 0.0;
   wxSize size = GetClientSize();
   m_cx = size.x / 2;
-
   m_AvgTimeSlider = new wxSlider(this, wxID_ANY, m_AvgTime / 60, 6, 30, wxDefaultPosition, wxDefaultSize, wxSL_AUTOTICKS | wxSL_BOTTOM | wxSL_HORIZONTAL | wxFULL_REPAINT_ON_RESIZE | wxSL_VALUE_LABEL);
   m_AvgTimeSlider->SetPageSize(2);
   m_AvgTimeSlider->SetLineSize(2);
   m_AvgTimeSlider->SetTickFreq(2);
   m_AvgTimeSlider->SetValue(m_AvgTime/60);
   m_AvgTimeSlider->Connect(wxEVT_COMMAND_SLIDER_UPDATED, wxCommandEventHandler(TacticsInstrument_AvgWindDir::OnAvgTimeSliderUpdated), NULL, this);
-  int w;
+  int w=0;
   m_AvgTimeSlider->GetSize(&w, &m_SliderHeight);
 
 //we process data 1/s ...

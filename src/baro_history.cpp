@@ -59,18 +59,19 @@ TacticsInstrument_BaroHistory::TacticsInstrument_BaroHistory(wxWindow *parent, w
   TacticsInstrument(parent, id, title, OCPN_DBP_STC_MDA)
 {
   SetDrawSoloInPane(true);
-  m_MaxPress = 0;
-  m_MinPress = (double)1200;
-  m_TotalMaxPress = 0;
-  m_TotalMinPress = 1200;
-  m_Press = 0;
+  m_MaxPress = 0.0;
+  m_MinPress = 1200.00;
+  m_TotalMaxPress = 0.0;
+  m_TotalMinPress = 1200.00;
+  m_Press = 0.0;
+  m_MaxPressScale = NAN;
+  m_ratioW = NAN;
   m_TopLineHeight = 35;
-  m_SpdRecCnt = 0;
-  m_SpdStartVal = -1;
   m_IsRunning = false;
   m_SampleCount = 0;
   m_LeftLegend = 3;
   m_RightLegend = 3;
+  m_TitleHeight = 10;
   for (int idx = 0; idx < BARO_RECORD_COUNT; idx++) {
     m_ArrayPressHistory[idx] = -1;
     m_ArrayRecTime[idx] = wxDateTime::Now().GetTm();
@@ -80,7 +81,8 @@ TacticsInstrument_BaroHistory::TacticsInstrument_BaroHistory(wxWindow *parent, w
   m_WindowRect = GetClientRect();
   m_DrawAreaRect = GetClientRect();
   m_DrawAreaRect.SetHeight(m_WindowRect.height - m_TopLineHeight - m_TitleHeight);
-  m_BaroHistUpdTimer.Start(1000, wxTIMER_CONTINUOUS);
+  m_BaroHistUpdTimer.Start(1000, wxTIMER_CONTINUOUS); //start with 1/s, on full exportinterval set to 5 sec
+  m_TimerSynched = false;
   m_BaroHistUpdTimer.Connect(wxEVT_TIMER, wxTimerEventHandler(TacticsInstrument_BaroHistory::OnBaroHistUpdTimer), NULL, this);
 
   //data export
@@ -127,81 +129,53 @@ wxSize TacticsInstrument_BaroHistory::GetSize( int orient, wxSize hint )
 }
 void TacticsInstrument_BaroHistory::SetData(int st, double data, wxString unit)
 {
-    if (st == OCPN_DBP_STC_MDA) {
-      m_Press = data;
-      if(m_SpdRecCnt++<=5) m_SpdStartVal+=data;
-    }
-    if ( m_SpdRecCnt == 5 ) {
-      m_Press=  m_SpdStartVal/5;
-    }
-/* moved to OnBaroHistUpdTimer()
-//start working after we collected 5 records each, as start values for the smoothed curves
-    if (m_SpdRecCnt > 5) {
-      m_IsRunning=true;
-      m_SampleCount = m_SampleCount<BARO_RECORD_COUNT? m_SampleCount+1:BARO_RECORD_COUNT;
-      m_MaxPress = 0;
-    ;
-      //data shifting
-      for (int idx = 1; idx < BARO_RECORD_COUNT; idx++) {
-        if (BARO_RECORD_COUNT-m_SampleCount <= idx)
-        m_MaxPress   = wxMax(m_ArrayPressHistory[idx-1],m_MaxPress);
-        m_MinPress   = wxMin(m_ArrayPressHistory[idx-1],m_MinPress);
-        m_ArrayPressHistory[idx-1] = m_ArrayPressHistory[idx];
-        m_ArrayRecTime[idx-1]=m_ArrayRecTime[idx];
-      }
-         m_ArrayPressHistory[BARO_RECORD_COUNT-1] = m_Press;
-      if( m_SampleCount<2) {
-        m_ArrayPressHistory[BARO_RECORD_COUNT-2] = m_Press;
-
-      }
-      m_ArrayRecTime[BARO_RECORD_COUNT-1] = wxDateTime::Now( ).GetTm( );
-      m_MaxPress   = wxMax(m_Press,m_MaxPress);
-
-      m_MinPress   = wxMin(m_MinPress,m_Press);
-      if (wxMin(m_Press,m_MinPress) == -1 ) {
-      m_MinPress   = wxMin(m_Press,1200); // to make a OK inital value
-     }
-      //get the overall max min pressure
-      m_TotalMaxPress = wxMax(m_Press,m_TotalMaxPress);
-      m_TotalMinPress = wxMin(m_Press,m_TotalMinPress);
-    }*/
-  }
-// 1/sec should do for barometric pressure ...
+    if (st == OCPN_DBP_STC_MDA)  m_Press = data;
+}
+// 5/sec should do for barometric pressure ...
 void TacticsInstrument_BaroHistory::OnBaroHistUpdTimer(wxTimerEvent & event)
 {
-  if (m_Press>0) {
-    //start working after we collected 5 records each, as start values for the smoothed curves
-    if (m_SpdRecCnt > 5) {
-      m_IsRunning = true;
-      m_SampleCount = m_SampleCount < BARO_RECORD_COUNT ? m_SampleCount + 1 : BARO_RECORD_COUNT;
-      m_MaxPress = 0;
-      ;
-      //data shifting
-      for (int idx = 1; idx < BARO_RECORD_COUNT; idx++) {
-        if (BARO_RECORD_COUNT - m_SampleCount <= idx)
-          m_MaxPress = wxMax(m_ArrayPressHistory[idx - 1], m_MaxPress);
-        m_MinPress = wxMin(m_ArrayPressHistory[idx - 1], m_MinPress);
-        m_ArrayPressHistory[idx - 1] = m_ArrayPressHistory[idx];
-        m_ArrayRecTime[idx - 1] = m_ArrayRecTime[idx];
-      }
-      m_ArrayPressHistory[BARO_RECORD_COUNT - 1] = m_Press;
-      if (m_SampleCount < 2) {
-        m_ArrayPressHistory[BARO_RECORD_COUNT - 2] = m_Press;
-
-      }
-      m_ArrayRecTime[BARO_RECORD_COUNT - 1] = wxDateTime::Now().GetTm();
-      m_MaxPress = wxMax(m_Press, m_MaxPress);
-
-      m_MinPress = wxMin(m_MinPress, m_Press);
-      if (wxMin(m_Press, m_MinPress) == -1) {
-        m_MinPress = wxMin(m_Press, 1200); // to make a OK inital value
-      }
-      //get the overall max min pressure
-      m_TotalMaxPress = wxMax(m_Press, m_TotalMaxPress);
-      m_TotalMinPress = wxMin(m_Press, m_TotalMinPress);
-
-      ExportData();
+  // as long as the timer is not synched to a full minute ...
+  if (m_TimerSynched == false) {
+    if (wxDateTime::Now().GetSecond() % 10 == 0) {
+      m_BaroHistUpdTimer.Stop();        //stop and restart the timer with 5s 
+      m_BaroHistUpdTimer.Start(5000, wxTIMER_CONTINUOUS);
+      m_TimerSynched = true;
     }
+    else  //do nothing and return ...
+      return;
+  }
+  wxDateTime localTimeNow = wxDateTime::Now().GetTm();
+
+  if (m_Press > 0.0) {
+    m_IsRunning = true;
+    m_SampleCount = m_SampleCount < BARO_RECORD_COUNT ? m_SampleCount + 1 : BARO_RECORD_COUNT;
+    m_MaxPress = 0.0;
+    ;
+    //data shifting
+    for (int idx = 1; idx < BARO_RECORD_COUNT; idx++) {
+      if (BARO_RECORD_COUNT - m_SampleCount <= idx)
+        m_MaxPress = wxMax(m_ArrayPressHistory[idx - 1], m_MaxPress);
+      m_MinPress = wxMin(m_ArrayPressHistory[idx - 1], m_MinPress);
+      m_ArrayPressHistory[idx - 1] = m_ArrayPressHistory[idx];
+      m_ArrayRecTime[idx - 1] = m_ArrayRecTime[idx];
+    }
+    m_ArrayPressHistory[BARO_RECORD_COUNT - 1] = m_Press;
+    if (m_SampleCount < 2) {
+      m_ArrayPressHistory[BARO_RECORD_COUNT - 2] = m_Press;
+
+    }
+    m_ArrayRecTime[BARO_RECORD_COUNT - 1] = wxDateTime::Now().GetTm();
+    m_MaxPress = wxMax(m_Press, m_MaxPress);
+
+    m_MinPress = wxMin(m_MinPress, m_Press);
+    if (wxMin(m_Press, m_MinPress) == -1) {
+      m_MinPress = wxMin(m_Press, 1200); // to make a OK inital value
+    }
+    //get the overall max min pressure
+    m_TotalMaxPress = wxMax(m_Press, m_TotalMaxPress);
+    m_TotalMinPress = wxMin(m_Press, m_TotalMinPress);
+    if (localTimeNow.GetSecond() % m_exportInterval == 0)
+      ExportData();
   }
 }
 void TacticsInstrument_BaroHistory::Draw(wxGCDC* dc)
@@ -263,7 +237,7 @@ void  TacticsInstrument_BaroHistory::DrawPressureScale(wxGCDC* dc)
 
       label4.Printf(_T("%.0f hPa"), m_MaxPressScale /4 +(m_TotalMinPress-18)  );
 
-    //bottom legend for min wind
+    //bottom legend for min pressure
     label5.Printf(_T("%.0f hPa"), (m_TotalMinPress-18));
   }
   dc->GetTextExtent(label1, &m_LeftLegend, &height, 0, 0, g_pFontSmall);
@@ -353,7 +327,8 @@ void TacticsInstrument_BaroHistory::DrawForeground(wxGCDC* dc)
     min=localTime.GetMinute( );
     hour=localTime.GetHour( );
   }
-  m_ratioW = double(m_DrawAreaRect.width) / (BARO_RECORD_COUNT-1);
+  // Avoid writing outside of drawing aread , available area = LeftLegend - 3 - draw_area_width - 5
+ // m_ratioW = double(m_DrawAreaRect.width - m_LeftLegend - 3 - 5) / (BARO_RECORD_COUNT - 1);
  // dc->DrawText(wxString::Format(_(" Max %.1f Min %.1f since %02d:%02d  Overall Max %.1f Min %.1f "),m_MaxPress,m_MinPress,hour,min,m_TotalMaxPress,m_TotalMinPress), m_LeftLegend+3+2+degw, m_TopLineHeight-degh+5);
  // Cant get the min sice to work...
  // Single text var to facilitate correct translations:
@@ -364,14 +339,17 @@ void TacticsInstrument_BaroHistory::DrawForeground(wxGCDC* dc)
  dc->DrawText(wxString::Format(_T(" %s %.1f %s %02d:%02d  %s %.1f %s %.1f "), s_Max, m_MaxPress, s_Since, hour, min, s_OMax, m_TotalMaxPress, s_Min, m_TotalMinPress), m_LeftLegend + 3 + 2 + degw, m_TopLineHeight - degh + 2);
  //dc->DrawText(wxString::Format(_(" Max %.1f since %02d:%02d  Overall Max %.1f Min %.1f "),m_MaxPress,hour,min,m_TotalMaxPress,m_TotalMinPress), m_LeftLegend+3+2+degw, m_TopLineHeight-degh+5);
   pen.SetStyle(wxPENSTYLE_SOLID);
-  pen.SetColour(wxColour(61,61,204,96)); //blue, transparent
+  pen.SetColour(wxColour(61,61,204,255)); //blue, opague
   pen.SetWidth(1);
   dc->SetPen( pen );
   ratioH = (double)m_DrawAreaRect.height / (double)m_MaxPressScale ;
+  m_DrawAreaRect.SetWidth(m_WindowRect.width - 6 - m_LeftLegend - m_RightLegend);
+  m_ratioW = double(m_DrawAreaRect.width) / (BARO_RECORD_COUNT - 1);
 
   wxPoint  pointPressure[BARO_RECORD_COUNT+2],pointPressure_old;
   pointPressure_old.x=m_LeftLegend+3;
-  pointPressure_old.y = m_TopLineHeight+m_DrawAreaRect.height - m_ArrayPressHistory[0] * ratioH;
+//TR  pointPressure_old.y = m_TopLineHeight+m_DrawAreaRect.height - m_ArrayPressHistory[0] * ratioH;
+  pointPressure_old.y = m_TopLineHeight + m_DrawAreaRect.height - (m_ArrayPressHistory[0] - (double)m_TotalMinPress + 18) * ratioH;
 
   //---------------------------------------------------------------------------------
   // live pressure data
@@ -379,7 +357,8 @@ void TacticsInstrument_BaroHistory::DrawForeground(wxGCDC* dc)
 
   for (int idx = 1; idx < BARO_RECORD_COUNT; idx++) {
     pointPressure[idx].y = m_TopLineHeight+m_DrawAreaRect.height - ((m_ArrayPressHistory[idx]-(double)m_TotalMinPress+18) * ratioH);
-    pointPressure[idx].x = idx * m_ratioW -3 ;//- 30 + m_LeftLegend;
+//    pointPressure[idx].x = idx * m_ratioW -3 ;//- 30 + m_LeftLegend;
+    pointPressure[idx].x = idx * m_ratioW + 3 + m_LeftLegend;
     if(BARO_RECORD_COUNT-m_SampleCount <= idx && pointPressure[idx].y > m_TopLineHeight && pointPressure_old.y > m_TopLineHeight && pointPressure[idx].y <=m_TopLineHeight+m_DrawAreaRect.height && pointPressure_old.y<=m_TopLineHeight+m_DrawAreaRect.height)
        dc->DrawLine( pointPressure_old.x, pointPressure_old.y, pointPressure[idx].x,pointPressure[idx].y );
     pointPressure_old.x=pointPressure[idx].x;
@@ -493,11 +472,19 @@ void TacticsInstrument_BaroHistory::ExportData(void)
 {
   if (m_isExporting == true) {
     wxDateTime localTime(m_ArrayRecTime[BARO_RECORD_COUNT - 1]);
-    if (localTime.GetSecond() % m_exportInterval == 0) {
-      wxString str_utc, ticks;
+/*    if (m_TimerSynched ==false) {
+      
+      if (localTime.GetSecond() % m_exportInterval == 0) {//remember the second of the first run
+        m_BaroHistUpdTimer.Stop();
+        m_BaroHistUpdTimer.Start(5000, wxTIMER_CONTINUOUS);
+        m_TimerSynched = true;
+      }
+    }
+    if (localTime.GetSecond() % m_exportInterval == 0) { */
+        wxString str_utc, ticks;
       if (g_bDataExportUTC) {
         wxDateTime utc = localTime.ToUTC();
-        str_utc = wxString::Format(_T("%s%s"), utc.FormatISOCombined('T'), g_sDataExportSeparator);
+        str_utc = wxString::Format(_T("%sZ%s"), utc.FormatISOCombined('T'), g_sDataExportSeparator);
       }
       else
         str_utc = _T("");
@@ -509,6 +496,6 @@ void TacticsInstrument_BaroHistory::ExportData(void)
         ticks = _T("");
       wxString str = wxString::Format(_T("%s%s%s%s%s%s%4.1f\n"), ticks, str_utc, localTime.FormatDate(), g_sDataExportSeparator, localTime.FormatTime(), g_sDataExportSeparator, m_Press);
       m_ostreamlogfile.Write(str);
-    }
+    //}
   }
 }

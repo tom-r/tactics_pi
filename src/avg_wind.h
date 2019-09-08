@@ -47,7 +47,7 @@
 #include "instrument.h"
 #include "dial.h"
 #include "performance.h"
-
+// class for calculation of the average wind direction 
 class AvgWind
 {
 public:
@@ -67,12 +67,13 @@ protected:
   int m_SampleCount;
   double m_DegRangeStb, m_DegRangePort; //live max-, min values
   int    m_AvgTime; // in [secs]
-  double m_WindDir,m_AvgWindDir;
+  double m_AvgWindDir;
   double m_WindDirArray[AVG_WIND_RECORDS], m_signedWindDirArray[AVG_WIND_RECORDS];
   double m_ExpSmoothSignedWindDirArray[AVG_WIND_RECORDS], m_ExpsinSmoothArrayWindDir[AVG_WIND_RECORDS], m_ExpcosSmoothArrayWindDir[AVG_WIND_RECORDS]; //30 min with 60sec each
   DoubleExpSmooth *mDblsinExpSmoothWindDir, *mDblcosExpSmoothWindDir;
 
 };
+// class for the AverageWind Instrument
 class TacticsInstrument_AvgWindDir : public TacticsInstrument
 {
 public:

@@ -61,7 +61,6 @@ public:
 private:
   int m_soloInPane;
   int m_SpdRecCnt, m_DirRecCnt, m_SpdStartVal, m_DirStartVal;
-  int m_isNULL;
   int m_WindDirShift;
   wxFileConfig  *m_pconfig;
   bool LoadConfig(void);

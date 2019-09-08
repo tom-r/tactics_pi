@@ -118,7 +118,7 @@ AvgWind* AverageWind; //TR 28.07.19
 static const long long lNaN = 0xfff8000000000000;
 #define NAN (*(double*)&lNaN)
 #endif
-
+const char *tactics_pi::s_common_name = _("Tactics");
 
 // the class factories, used to create and destroy instances of the PlugIn
 
@@ -312,7 +312,7 @@ wxString getInstrumentCaption(unsigned int id)
 	case ID_DBP_D_POLPERF:
 		return _("Polar Performance");
 	case ID_DBP_D_AVGWIND:
-		return _("Average Wind");
+		return _("Average Wind Direction");
 	case ID_DBP_D_POLCOMP:
 		return _("Polar Compass");
 
@@ -455,6 +455,7 @@ wxTimer(this), opencpn_plugin_112(ppimgr)
 
 }
 
+
 tactics_pi::~tactics_pi(void)
 {
 	delete _img_tactics_pi;
@@ -533,6 +534,7 @@ int tactics_pi::Init(void)
 	m_bShowPolarOnChart = false;
 	m_bShowWindbarbOnChart = false;
 	m_bDisplayCurrentOnChart = false;
+    m_bLaylinesIsVisible = false; //TR16.08.
 	m_LeewayOK = false;
 	mHdt = NAN;
 	mStW = NAN;
@@ -761,11 +763,36 @@ wxBitmap *tactics_pi::GetPlugInBitmap()
 {
 	return _img_tactics_pi;
 }
+wxString tactics_pi::GetNameVersion()
+{
+  char name_version[32];
+  sprintf(name_version, "v%d.%d.%d", PLUGIN_VERSION_MAJOR, PLUGIN_VERSION_MINOR, PLUGIN_VERSION_PATCH);
+  wxString retstr(name_version);
+  return retstr;
+}
+wxString tactics_pi::GetCommonNameVersion()
+{
+  wxString retstr(GetCommonName() + " " + GetNameVersion());
+  return retstr;
+}
+
 
 wxString tactics_pi::GetCommonName()
 {
-	return _("Tactics");
+
+  wxString retstr(s_common_name);
+  return retstr;
 }
+/*
+wxString tactics_pi::GetCommonName()
+{
+	//return _("Tactics");
+  static const char* common_name = _("Tactics");
+  char common_name_version[100];
+  sprintf(common_name_version, "%s v%d.%d.%d",
+    common_name, PLUGIN_VERSION_MAJOR, PLUGIN_VERSION_MINOR, PLUGIN_VERSION_PATCH);
+  return common_name_version;
+}*/
 //*********************************************************************************
 wxString tactics_pi::GetShortDescription()
 {
@@ -1088,12 +1115,12 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 			//it shows '°L'= wind from left = port tack or '°R'=wind from right = starboard tack
 			//we're on port tack, so vertical layline is red
 			if (curTack == _T("\u00B0L")) {
-				GLubyte red(204), green(41), blue(41), alpha(128);
+				//GLubyte red(204), green(41), blue(41), alpha(128);
 				glColor4ub(204, 41, 41, 128);                 	// red, green, blue,  alpha
 				targetTack = _T("R");
 			}
 			else if (curTack == _T("\u00B0R"))  {// we're on starboard tack, so vertical layline is green
-				GLubyte red(0), green(200), blue(0), alpha(128);
+				//GLubyte red(0), green(200), blue(0), alpha(128);
 				glColor4ub(0, 200, 0, 128);                 	// red, green, blue,  alpha
 				targetTack = _T("L");
 			}
@@ -1137,12 +1164,12 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
             m_ExpSmoothDiffCogHdt = mExpSmDiffCogHdt->GetSmoothVal((diffCogHdt < 0 ? -diffCogHdt : diffCogHdt));
 			if (targetTack == _T("R")){ // currently wind is from port ...now
 				mPredictedHdG = m_LaylineSmoothedCog - m_ExpSmoothDiffCogHdt - 2 * mTWA - fabs(mLeeway); //Leeway is signed 
-				GLubyte red(0), green(200), blue(0), alpha(128);
+				//GLubyte red(0), green(200), blue(0), alpha(128);
 				glColor4ub(0, 200, 0, 128);                 	// red, green, blue,  alpha
 			}
 			else if (targetTack == _T("L")){ //currently wind from starboard
 				mPredictedHdG = m_LaylineSmoothedCog + m_ExpSmoothDiffCogHdt + 2 * mTWA + fabs(mLeeway); //Leeway is signed 
-				GLubyte red(204), green(41), blue(41), alpha(128);
+				//GLubyte red(204), green(41), blue(41), alpha(128);
 				glColor4ub(204, 41, 41, 128);                 	// red, green, blue,  alpha
 			}
 			else {
@@ -1524,7 +1551,7 @@ void tactics_pi::DoRenderCurrentGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 //        GLubyte red(7), green(107), blue(183), alpha(curr_trans);
 //        glColor4ub(7, 107, 183, curr_trans);                 	// red, green, blue,  alpha
 
-		GLubyte red(7), green(107), blue(183), alpha(164);
+		//GLubyte red(7), green(107), blue(183), alpha(164);
 		glColor4ub(7, 107, 183, 164);                 	// red, green, blue,  alpha
 //        glLineWidth(2);
 //		glBegin(GL_POLYGON | GL_LINES);
@@ -2554,7 +2581,7 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
                     //if (m_NMEA0183.Xdr.TransducerInfo[i].TransducerName == _T("Barometer")) {
                     if (m_NMEA0183.Xdr.TransducerInfo[i].TransducerType == _T("P")) {
 
-						double data;
+						//double data;
 						if (m_NMEA0183.Xdr.TransducerInfo[i].UnitOfMeasurement == _T("B"))
 					//		data = m_NMEA0183.Xdr.TransducerInfo[i].MeasurementData * 1000.;
 					//	else
@@ -2598,7 +2625,6 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 						SendSentenceToAllInstruments(OCPN_DBP_STC_TMP, m_NMEA0183.Xdr.TransducerInfo[i].MeasurementData, m_NMEA0183.Xdr.TransducerInfo[i].UnitOfMeasurement);
 					}
 				}
-
 			}
 		}
 		else if (m_NMEA0183.LastSentenceIDReceived == _T("ZDA")) {
@@ -2734,8 +2760,12 @@ int tactics_pi::GetToolbarToolCount(void)
 
 void tactics_pi::ShowPreferencesDialog(wxWindow* parent)
 {
+
 	TacticsPreferencesDialog *dialog = new TacticsPreferencesDialog(parent, wxID_ANY,
-		m_ArrayOfTacticsWindow);
+		m_ArrayOfTacticsWindow
+      , GetCommonName(),
+      GetNameVersion()
+    );
 
 	if (dialog->ShowModal() == wxID_OK) {
 		delete g_pFontTitle;
@@ -2979,9 +3009,12 @@ bool tactics_pi::LoadConfig(void)
 		pConf->Read(_T("MaxLaylineWidth"), &g_iMaxLaylineWidth, 30);
 		pConf->Read(_T("LaylineWidthDampingFactor"), &g_dalphaDeltCoG, 0.25);
 		pConf->Read(_T("ShowCurrentOnChart"), &g_bDisplayCurrentOnChart, false);
+        pConf->Read(_T("ShowLaylinesOnChart"), &m_bLaylinesIsVisible, false);
+
 		pConf->Read(_T("CMGSynonym"), &g_sCMGSynonym, _T("CMG"));
 		pConf->Read(_T("VMGSynonym"), &g_sVMGSynonym, _T("VMG"));
 		m_bDisplayCurrentOnChart = g_bDisplayCurrentOnChart;
+        
         //DataExportSeparator for WindHistory, BaroHistory & PolarPerformance         
         pConf->Read(_T("DataExportSeparator"), &g_sDataExportSeparator, _(";"));
         pConf->Read(_T("DataExportUTC-ISO8601"), &g_bDataExportUTC, 0);
@@ -3099,7 +3132,8 @@ bool tactics_pi::SaveConfig(void)
 		pConf->Write(_T("MaxLaylineWidth"), g_iMaxLaylineWidth);
 		pConf->Write(_T("LaylineWidthDampingFactor"), g_dalphaDeltCoG);
 		pConf->Write(_T("ShowCurrentOnChart"), g_bDisplayCurrentOnChart);
-		pConf->Write(_T("CMGSynonym"), g_sCMGSynonym);
+        pConf->Write(_T("ShowLaylinesOnChart"), m_bLaylinesIsVisible);
+        pConf->Write(_T("CMGSynonym"), g_sCMGSynonym);
 		pConf->Write(_T("VMGSynonym"), g_sVMGSynonym);
         //WindHistory, BaroHistory & PolarPerformance need DataExportSeparator         
         pConf->Write(_T("DataExportSeparator"), g_sDataExportSeparator);
@@ -3238,9 +3272,11 @@ void tactics_pi::ShowTactics(size_t id, bool visible)
 */
 
 TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID id,
-	wxArrayOfTactics config) :
-	wxDialog(parent, id, _("Tactics preferences"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxMINIMIZE_BOX | wxRESIZE_BORDER)
-	//wxDEFAULT_DIALOG_STYLE )
+	wxArrayOfTactics config
+  , wxString commonName, wxString versionName
+) :
+  wxDialog(parent, id, commonName + " " + versionName + _(" preferences"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxMINIMIZE_BOX | wxRESIZE_BORDER)
+  //wxDialog(parent, id, _("Tactics preferences"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxMINIMIZE_BOX | wxRESIZE_BORDER)
 {
 	Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(TacticsPreferencesDialog::OnCloseDialog),
 		NULL, this);
@@ -3815,8 +3851,37 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	itemFlexGridSizerExpData->Add(m_ExpPerfData05, 0, wxEXPAND, 5);
 	m_ExpPerfData05->SetValue(g_bExpPerfData05);
 	//--------------------
+    //****************************************************************************************************
+    //****************************************************************************************************
+    wxStaticBox* itemStaticBoxFileExp = new wxStaticBox(itemPanelNotebook03, wxID_ANY, _("Export Data to File"));
+    wxStaticBoxSizer* itemStaticBoxSizerFileExp = new wxStaticBoxSizer(itemStaticBoxFileExp, wxHORIZONTAL);
+    itemBoxSizer06->Add(itemStaticBoxSizerFileExp, 0, wxEXPAND | wxALL, border_size);
+    wxFlexGridSizer *itemFlexGridSizerFileExp = new wxFlexGridSizer(2);
+    itemFlexGridSizerFileExp->AddGrowableCol(1);
+    itemStaticBoxSizerFileExp->Add(itemFlexGridSizerFileExp, 1, wxEXPAND | wxALL, 0);
+//    wxStaticText* itemStaticTextDummy2 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _(""), wxDefaultPosition, wxDefaultSize, 0);
+//    itemFlexGridSizerFileExp->Add(itemStaticTextDummy2, 0, wxEXPAND | wxALL, border_size);
+    //--------------------
+    //--------------------
+    m_ExpFileData01 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Prepend Clockticks"));
+    itemFlexGridSizerFileExp->Add(m_ExpFileData01, 0, wxEXPAND, 5);
+    m_ExpFileData01->SetValue(g_bDataExportClockticks);
+    m_ExpFileData01->SetToolTip(_("Adds Clockticks to the data exports of BaroHistory, PolarPerformance and WindHistory"));
 
-	//****************************************************************************************************
+    //--------------------
+    m_ExpFileData02 = new wxCheckBox(itemPanelNotebook03, wxID_ANY, _("Prepend UTC Timestamp"));
+    itemFlexGridSizerFileExp->Add(m_ExpFileData02, 0, wxEXPAND, 5);
+    m_ExpFileData02->SetValue(g_bDataExportUTC);
+    m_ExpFileData02->SetToolTip(_("Adds ISO8601 UTC-Date&Time to the data exports of BaroHistory, PolarPerformance and WindHistory"));
+
+    wxStaticText* itemStaticText31 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Data Separator :"), wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizerFileExp->Add(itemStaticText31, 0, wxEXPAND | wxALL, border_size);
+    m_pDataExportSeparator = new wxTextCtrl(itemPanelNotebook03, wxID_ANY, g_sDataExportSeparator, wxDefaultPosition, wxSize(30, -1), wxTE_LEFT);
+    itemFlexGridSizerFileExp->Add(m_pDataExportSeparator, 0, wxALL, border_size);
+    m_pDataExportSeparator->SetToolTip(_("Sets the separator for the data exports of BaroHistory, PolarPerformance and WindHistory;"));
+
+    //****************************************************************************************************
+    //****************************************************************************************************
 	//    m_buttonPrefsApply = new wxButton(itemPanelNotebook03, wxID_ANY, _("Apply"), wxDefaultPosition, wxDefaultSize, 0);
 	//    itemFlexGridSizer09->Add(m_buttonPrefsApply, 0, wxALIGN_RIGHT | wxALL, 5);
 	//    m_buttonPrefsApply->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TacticsPreferencesDialog::ApplyPrefs), NULL, this);
@@ -3962,6 +4027,9 @@ void TacticsPreferencesDialog::SaveTacticsConfig()
 	g_bExpPerfData03 = m_ExpPerfData03->GetValue();
 	g_bExpPerfData04 = m_ExpPerfData04->GetValue();
 	g_bExpPerfData05 = m_ExpPerfData05->GetValue();
+    g_bDataExportClockticks= m_ExpFileData01->GetValue();
+    g_bDataExportUTC =  m_ExpFileData02->GetValue();
+    g_sDataExportSeparator = m_pDataExportSeparator->GetValue();
 	if (curSel != -1) {
 		TacticsWindowContainer *cont = m_Config.Item(curSel);
 		cont->m_bIsVisible = m_pCheckBoxIsVisible->IsChecked();
@@ -5048,9 +5116,6 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
 			m_ExpSmoothCosCurrDir = mCosCurrDir->GetSmoothVal(cos(rad));
 			m_CurrentDirection = (90. - (atan2(m_ExpSmoothSinCurrDir, m_ExpSmoothCosCurrDir)*180. / M_PI) + 360.);
 			while (m_CurrentDirection >= 360) m_CurrentDirection -= 360;
-			// temporary output of Currdir to file ...
-			//str = wxString::Format(_T("%.2f;%.2f\n"), currdir, m_CurrentDirection);
-			//out.WriteString(str);
 		}
 		else{
 			m_CurrentDirection = NAN;

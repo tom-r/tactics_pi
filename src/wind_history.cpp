@@ -69,6 +69,7 @@ TacticsInstrument(parent, id, title, OCPN_DBP_STC_TWD | OCPN_DBP_STC_TWS)
   m_TotalMaxWindSpd = 0;
   m_WindSpd = 0;
   m_TopLineHeight = 35;
+  m_TitleHeight = 10;
   m_SpdRecCnt = 0;
   m_DirRecCnt = 0;
   m_SpdStartVal = -1;
@@ -768,7 +769,7 @@ void TacticsInstrument_WindDirHistory::ExportData(void)
       wxString str_utc, ticks;
       if (g_bDataExportUTC) {
         wxDateTime utc = localTime.ToUTC();
-        str_utc = wxString::Format(_T("%s%s"), utc.FormatISOCombined('T'), g_sDataExportSeparator);
+        str_utc = wxString::Format(_T("%sZ%s"), utc.FormatISOCombined('T'), g_sDataExportSeparator);
       }
       else
         str_utc = _T("");

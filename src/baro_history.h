@@ -62,13 +62,10 @@ class TacticsInstrument_BaroHistory: public TacticsInstrument
 
       private:
            int m_soloInPane ;
-           int    m_SpdRecCnt, m_DirRecCnt, m_SpdStartVal,m_DirStartVal;
-           int m_isNULL;
-           int m_WindDirShift;
            wxFileConfig  *m_pconfig;
            bool LoadConfig(void);
            bool SaveConfig(void);
-
+           bool m_TimerSynched;
       protected:
            double m_ArrayPressHistory[BARO_RECORD_COUNT];
 
@@ -91,8 +88,7 @@ class TacticsInstrument_BaroHistory: public TacticsInstrument
            int m_DrawingWidth,m_TopLineHeight,m_DrawingHeight;
            int m_width,m_height;
            int m_LeftLegend, m_RightLegend;
-           int m_currSec,m_lastSec,m_SpdCntperSec;
-           double m_cntSpd,m_cntDir,m_avgSpd,m_avgDir;
+        
            wxString    m_logfile;        //for data export
            wxFile      m_ostreamlogfile; //for data export
            bool        m_isExporting;      //for data export

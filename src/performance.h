@@ -124,10 +124,10 @@ public:
 
 	wxDC*			dc;
 
-	wxArrayString	sails;
-	bool			filterSails;
-	double			knots;
-	int				degrees;
+	//wxArrayString	sails;
+	//bool			filterSails;
+	//double			knots;
+	//int				degrees;
 
 	int				mode;
 	double			sog;
@@ -164,8 +164,6 @@ private:
 	wxString		logbookDataPath;
 	wxSize			center;
 	double			dist;
-
-	//double toRad(int angle);
 };
 
 /*************************************************************************************
@@ -257,8 +255,7 @@ public:
 
 private:
   int m_soloInPane;
-  int    m_SpdRecCnt, m_SpdStartVal, m_DirStartVal;
-  int m_isNULL;
+ // int    m_SpdRecCnt, m_SpdStartVal, m_DirStartVal;
   wxFileConfig  *m_pconfig;
   bool LoadConfig(void);
   bool SaveConfig(void);
@@ -275,8 +272,9 @@ protected:
   wxTimer m_PolarPerfUpdTimer;
   double m_MaxBoatSpd;
   double m_MinBoatSpd;
-  double m_BoatSpeedRange;
+  //double m_BoatSpeedRange;
   double m_MaxPercent;  //...in array
+  //double m_MinTWAAngle;//TR 20.08.2019 : temp. for Polar Creation Tests
   double m_AvgSpdPercent;
   DoubleExpSmooth  *mExpSmAvgSpdPercent;
   double m_AvgTWA;         //for data export
@@ -297,11 +295,12 @@ protected:
 
   wxRect m_WindowRect;
   wxRect m_DrawAreaRect; //the coordinates of the real darwing area
-  int m_DrawingWidth, m_TopLineHeight, m_DrawingHeight;
+  int  m_TopLineHeight;
+  //int m_DrawingWidth, m_DrawingHeight;
   int m_width, m_height;
   int m_LeftLegend, m_RightLegend;
-  int m_currSec, m_lastSec, m_SpdCntperSec, m_DirCntperSec;
-  double m_cntSpd, m_cntDir, m_avgSpd, m_avgDir;
+  //int m_currSec, m_lastSec, m_SpdCntperSec, m_DirCntperSec;
+  //double m_cntSpd, m_cntDir, m_avgSpd, m_avgDir;
   wxString    m_logfile;        //for data export
   wxFile      m_ostreamlogfile; //for data export
   bool        m_isExporting;      //for data export
@@ -329,6 +328,11 @@ protected:
   void OnLogDataButtonPressed(wxCommandEvent& event);
 //  void OnContextMenuSelect(wxCommandEvent& event);
   void ExportData(void);
+  //TR 20.08.2019 : temp. for Polar Creation Tests
+ /* wxString    m_polarfile;
+  void loadPolar(wxString FilePath);
+  void setValue(wxString s, int row, int col);
+  void writeTempFile(wxString filename);*/
 };
 #endif
 /*

@@ -546,7 +546,7 @@ void TacticsInstrument_BearingCompass::DrawBearing(wxGCDC* dc)
     wxColour cl;
     GetGlobalColor(_T("UBLCK"), &cl);
     wxPen pen1;
-    pen1.SetStyle(wxSOLID);
+    pen1.SetStyle(wxPENSTYLE_SOLID);
     pen1.SetColour(cl);
     pen1.SetWidth(2);
     dc->SetPen(pen1);
@@ -572,7 +572,7 @@ void TacticsInstrument_BearingCompass::DrawBearing(wxGCDC* dc)
     }
     wxBrush currbrush;
     currbrush.SetColour(wxColour(7, 107, 183, 0));
-    currbrush.SetStyle(wxSOLID);
+    currbrush.SetStyle(wxBRUSHSTYLE_SOLID);
     dc->SetBrush(currbrush);
     dc->DrawPolygon(72, currpoints, 0, 0);
   }
