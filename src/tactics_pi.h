@@ -166,6 +166,11 @@ public:
 	  void CalculateCurrent(int st, double value, wxString unit);
 	  void CalculateLeeway(int st, double value, wxString unit);
 	  void CalculateTrueWind(int st, double value, wxString unit);
+      bool TrueWindCalculationRequired();
+      bool DataSetForTrueWindIsComplete(double spdval);
+      void DistributeDataToAllInstruments();
+      void CalculateTWD();
+      void CalculateTWSandTWA(double value, wxString unit, double spdval);
 	  void CalculateLaylineDegreeRange(void);
       void CalculatePerformanceData(void);
       void CalculatePredictedCourse(void);
