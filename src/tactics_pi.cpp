@@ -4919,73 +4919,95 @@ void tactics_pi::SetCalcVariables(int st, double value, wxString unit)
 /*********************************************************************************
 calculates TWA,TWS and TWD in case it is not available on the System
 **********************************************************************************/
-void tactics_pi::CalculateTrueWind(int st, double value, wxString unit)
-{
-	double spdval;
+void tactics_pi::CalculateTrueWind(int st, double value, wxString unit) {
+    switch (st) {
+    case OCPN_DBP_STC_TWA:
+    case OCPN_DBP_STC_TWS:
+    case OCPN_DBP_STC_TWD:
+        m_bTrueWind_available = true;
+        break;
+    case OCPN_DBP_STC_AWS:
+        double spdval = (g_bUseSOGforTWCalc) ? mSOG : mStW;
+        if (TrueWindCalculationRequired() && DataSetForTrueWindIsComplete(spdval)) {
+            CalculateTWSandTWA(value, unit, spdval);
+            CalculateTWD();
+            DistributeDataToAllInstruments();
+        }
+        break;
+    }
+}
 
-	if (st == OCPN_DBP_STC_TWA || st == OCPN_DBP_STC_TWS || st == OCPN_DBP_STC_TWD) {
-		m_bTrueWind_available = true;
-	}
+bool tactics_pi::TrueWindCalculationRequired() {
+    return (g_bForceTrueWindCalculation || !m_bTrueWind_available);
+}
 
-    if (st == OCPN_DBP_STC_AWS && !wxIsNaN(mStW) && !wxIsNaN(mSOG)){
-      //  Calculate TWS (from AWS and StW/SOG)
-      spdval = (g_bUseSOGforTWCalc) ? mSOG : mStW ;
-      // only start calculating if we have a full set of data
-      if ((!m_bTrueWind_available || g_bForceTrueWindCalculation) && mAWA >= 0 && mAWS>=0  && spdval >= 0 && mAWAUnit != _("") && !wxIsNaN(mHdt)) {
-        //we have to do the calculation in knots
-        double aws_kts = fromUsrSpeed_Plugin(mAWS, g_iDashWindSpeedUnit);
-        spdval = fromUsrSpeed_Plugin(spdval, g_iDashSpeedUnit);
+bool tactics_pi::DataSetForTrueWindIsComplete(double spdval) {
+    ///  True Wind calculation requires a numerical value for spdval, a positive value for AWA and a positive value for AWS
+    return (!wxIsNaN(spdval) && (mAWA >= 0) && (mAWS >= 0) && (spdval >= 0) && (mAWAUnit != _("")));
+}
 
-        mTWA = 0;
-        mTWD = 0.;
-        if (mAWA < 180.) {
-          mTWA = 90. - (180. / M_PI*atan((aws_kts*cos(mAWA*M_PI / 180.) - spdval) / (aws_kts*sin(mAWA*M_PI / 180.))));
-        }
-        else if (mAWA > 180.) {
-          mTWA = 360. - (90. - (180. / M_PI*atan((aws_kts*cos((180. - (mAWA - 180.))*M_PI / 180.) - spdval) / (aws_kts*sin((180. - (mAWA - 180.))*M_PI / 180.)))));
-        }
-        else {
-          mTWA = 180.;
-        }
-        mTWS = sqrt(pow((aws_kts*cos(mAWA*M_PI / 180.)) - spdval, 2) + pow(aws_kts*sin(mAWA*M_PI / 180.), 2));
-      /* ToDo: adding leeway needs to be reviewed, as the direction of the bow is still based on the magnetic compass,
-               no matter if leeway or not ...
-      if (!wxIsNaN(mLeeway) && g_bUseHeelSensor) { //correct TWD with Leeway if heel is available. Makes only sense with heel sensor
-        mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA + mLeeway : mHdt - mTWA + mLeeway;
-        }
-        else*/
-          mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA : mHdt - mTWA;
-        //endif
-        if (mTWD >= 360) mTWD -= 360;
-        if (mTWD < 0) mTWD += 360;
-        //convert mTWS back to user wind speed settings
-        mTWS = toUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);
-        m_calcTWS = mTWS;
-        m_calcTWD = mTWD;
-        m_calcTWA = mTWA;
-        if (mAWSUnit == _("")) mAWSUnit = mAWAUnit;
-        //distribute data to all instruments
-        for (size_t i = 0; i < m_ArrayOfTacticsWindow.GetCount(); i++) {
-          TacticsWindow *tactics_window = m_ArrayOfTacticsWindow.Item(i)->m_pTacticsWindow;
-          if (tactics_window){
+void tactics_pi::DistributeDataToAllInstruments() {
+    //distribute data to all instruments
+    for (size_t i = 0; i < m_ArrayOfTacticsWindow.GetCount(); i++) {
+        TacticsWindow *tactics_window = m_ArrayOfTacticsWindow.Item(i)->m_pTacticsWindow;
+        if (tactics_window) {
             tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWA, mTWA, mAWAUnit);
             tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWS, mTWS, mAWSUnit);
             mTWS_Watchdog = gps_watchdog_timeout_ticks;
             tactics_window->SendSentenceToAllInstruments(OCPN_DBP_STC_TWD, mTWD, _T("\u00B0T"));
             mTWD_Watchdog = gps_watchdog_timeout_ticks;
-          }
         }
-      }
-      else{
-//        m_calcTWS = mTWS = NAN;
-//        m_calcTWD = mTWD = NAN;
-        //m_calcTWA = mTWA = NAN;
-        m_calcTWS = NAN;
-        m_calcTWD = NAN;
-        m_calcTWA = NAN;
-
-      }
     }
+}
+
+void tactics_pi::CalculateTWD() {
+    /*    Calculates the TWD value, without leeway correction
+          ToDo: adding leeway needs to be reviewed, as the direction of the bow is still based on the magnetic compass,
+          no matter if leeway or not ...
+          // Correct TWD with Leeway if heel is available if heel sensor is available.
+          if (!wxIsNaN(mLeeway) && g_bUseHeelSensor) { //correct TWD with Leeway if heel is available.
+          mTWD = (mAWAUnit == _T("\u00B0R")) ? mHdt + mTWA + mLeeway : mHdt - mTWA + mLeeway;
+    */
+
+    // If for any reason the HDG sensor fails, the calculation is based on COG (less accurate)
+
+    double hdtval;
+
+    if (!wxIsNaN(mHdt)) {
+        hdtval = mHdt;
+    }
+    else if (!wxIsNaN(mCOG)) {
+        hdtval = mCOG;
+    }
+    mTWD = (mAWAUnit == _T("\u00B0R")) ? hdtval + mTWA : hdtval - mTWA;
+    if (mTWD >= 360) {
+        mTWD -= 360;
+    }
+    else if (mTWD < 0) {  // WT20191101 added else, since mTWD can't be both
+        mTWD += 360;
+    }
+}
+
+void tactics_pi::CalculateTWSandTWA(double value, wxString unit, double spdval) {
+
+    //  TrueWindCalculation requires the windspeed in knots
+    double aws_kts = fromUsrSpeed_Plugin(mAWS, g_iDashWindSpeedUnit);
+    spdval = fromUsrSpeed_Plugin(spdval, g_iDashSpeedUnit);
+
+    mTWA = 0;
+    mTWD = 0.;
+    if (mAWA < 180.) {
+        mTWA = 90. - (180. / M_PI * atan((aws_kts*cos(mAWA*M_PI / 180.) - spdval) / (aws_kts*sin(mAWA*M_PI / 180.))));
+    }
+    else if (mAWA > 180.) {
+        mTWA = 360. - (90. - (180. / M_PI * atan((aws_kts*cos((180. - (mAWA - 180.))*M_PI / 180.) - spdval) / (aws_kts*sin((180. - (mAWA - 180.))*M_PI / 180.)))));
+    }
+    else {
+        mTWA = 180.;
+    }
+    mTWS = sqrt(pow((aws_kts*cos(mAWA*M_PI / 180.)) - spdval, 2) + pow(aws_kts*sin(mAWA*M_PI / 180.), 2));
+    mTWS = toUsrSpeed_Plugin(mTWS, g_iDashWindSpeedUnit);   // convert TWS to user wind speed setting
+    if (mAWSUnit == _("")) mAWSUnit = mAWAUnit;
 }
 /*********************************************************************************
 Calculate Leeway from heel
