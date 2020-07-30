@@ -448,7 +448,7 @@ wxString GetUUID(void)
 //---------------------------------------------------------------------------------------------------------
 
 tactics_pi::tactics_pi(void *ppimgr) :
-wxTimer(this), opencpn_plugin_112(ppimgr)
+wxTimer(this), opencpn_plugin_116(ppimgr)
 {
 	// Create the PlugIn icons
 	initialize_images();
@@ -741,12 +741,12 @@ void tactics_pi::Notify()
 //*********************************************************************************
 int tactics_pi::GetAPIVersionMajor()
 {
-	return MY_API_VERSION_MAJOR;
+	return OCPN_API_VERSION_MAJOR;
 }
 //*********************************************************************************
 int tactics_pi::GetAPIVersionMinor()
 {
-	return MY_API_VERSION_MINOR;
+	return OCPN_API_VERSION_MINOR;
 }
 //*********************************************************************************
 int tactics_pi::GetPlugInVersionMajor()
@@ -779,10 +779,13 @@ wxString tactics_pi::GetCommonNameVersion()
 
 wxString tactics_pi::GetCommonName()
 {
+    return _T(PLUGIN_COMMON_NAME);
 
-  wxString retstr(s_common_name);
-  return retstr;
+/*  wxString retstr(s_common_name);
+  return retstr; */
+  
 }
+
 /*
 wxString tactics_pi::GetCommonName()
 {
@@ -796,13 +799,13 @@ wxString tactics_pi::GetCommonName()
 //*********************************************************************************
 wxString tactics_pi::GetShortDescription()
 {
-	return _("Tactics PlugIn for OpenCPN");
+    return _(PLUGIN_SHORT_DESCRIPTION);
+	
 }
 //*********************************************************************************
 wxString tactics_pi::GetLongDescription()
 {
-	return _("Tactics PlugIn for OpenCPN\n\
-			 Provides performance data & instrument display from NMEA source and polar file.");
+    return _(PLUGIN_LONG_DESCRIPTION);
 
 }
 //*********************************************************************************

@@ -33,15 +33,9 @@
 #ifndef  WX_PRECOMP
   #include "wx/wx.h"
 #endif //precompiled headers
-/*
-#define     PLUGIN_VERSION_MAJOR    1
-#define     PLUGIN_VERSION_MINOR    0
-#define     PLUGIN_VERSION_PATCH    11
-*/
-#define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    12
 
-#include "../include/version.h"
+
+#include "version.h"
 
 #include <wx/notebook.h>
 #include <wx/fileconf.h>
@@ -125,7 +119,7 @@ WX_DEFINE_ARRAY(TacticsInstrumentContainer *, wxArrayOfInstrument);
 //----------------------------------------------------------------------------------------------------------
 
 
-class tactics_pi : public wxTimer, opencpn_plugin_112
+class tactics_pi : public wxTimer, opencpn_plugin_116
 {
 public:
       tactics_pi(void *ppimgr);
