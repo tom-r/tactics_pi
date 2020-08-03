@@ -18,7 +18,7 @@
 ## *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 ## ***************************************************************************
 #  Frontend2 Author:  ongough aka. Jon Gough Copyright: wxWidgets License
-#  Fronted2 Version: 1.0.131
+#  Fronted2 Version: 1.0.132
 # ---------------------------------------------------------------------------
 ## ----- When changing this file do NOT change the order in which sections occur        ----- ##
 ## ----- Changes should only be made between the section blocks that identify where     ----- ##
@@ -55,9 +55,9 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data & ins
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "16")
+set(VERSION_PATCH "17")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "2020-07-30")
+set(VERSION_DATE "2020-08-03")
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -66,7 +66,7 @@ set(TP_COMMENT "  * Release for O5 using CI")
 set(PARENT "opencpn")
 
 # The next line allows for setting up your own local webserver with git on it for testing purposes, the default is github.com
-# This has been moved to PluginConfigure. Required to build flatpak.
+# This has been moved to PluginConfigure. Required to build flatpak and locally.
 #set(GIT_REPOSITORY_SERVER "github.com")
 
 # Specifies cloudsmith repository sufficies
