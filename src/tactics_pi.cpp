@@ -579,10 +579,15 @@ int tactics_pi::Init(void)
 	else
 		BoatPolar->loadPolar(_T("NULL"));
 	//    This PlugIn needs a toolbar icon
-	wxString shareLocn = *GetpSharedDataLocation() +
-		_T("plugins") + wxFileName::GetPathSeparator() +
-		_T("tactics_pi") + wxFileName::GetPathSeparator()
-		+ _T("data") + wxFileName::GetPathSeparator();
+//	wxString shareLocn = *GetpSharedDataLocation() +
+//		_T("plugins") + wxFileName::GetPathSeparator() +
+//		_T("tactics_pi") + wxFileName::GetPathSeparator()
+//		+ _T("data") + wxFileName::GetPathSeparator();
+	wxString shareLocn = *GetPluginDataDir("tactics_pi") + _T("/data")
+	
+//		_T("plugins") + wxFileName::GetPathSeparator() +
+//		_T("tactics_pi") + wxFileName::GetPathSeparator()
+//		+ _T("data") + wxFileName::GetPathSeparator();
 
 	wxString normalIcon = shareLocn + _T("Tactics.svg");
 	wxString toggledIcon = shareLocn + _T("Tactics_toggled.svg");
