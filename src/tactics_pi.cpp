@@ -583,7 +583,9 @@ int tactics_pi::Init(void)
 //		_T("plugins") + wxFileName::GetPathSeparator() +
 //		_T("tactics_pi") + wxFileName::GetPathSeparator()
 //		+ _T("data") + wxFileName::GetPathSeparator();
-	wxString shareLocn = *GetPluginDataDir("tactics_pi") + _T("/data")
+
+	wxString shareLocn = *GetPluginDataDir("tactics_pi") + wxFileName::GetPathSeparator() + 
+	_T("data")  +  wxFileName::GetPathSeparator();
 	
 //		_T("plugins") + wxFileName::GetPathSeparator() +
 //		_T("tactics_pi") + wxFileName::GetPathSeparator()
