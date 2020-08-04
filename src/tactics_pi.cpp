@@ -584,8 +584,8 @@ int tactics_pi::Init(void)
 //		_T("tactics_pi") + wxFileName::GetPathSeparator()
 //		+ _T("data") + wxFileName::GetPathSeparator();
 // First try
-	wxString shareLocn = *GetPluginDataDir("tactics_pi") + wxFileName::GetPathSeparator() +  _T("data")  +  wxFileName::GetPathSeparator();
-	
+	wxString shareLocn = GetPluginDataDir("tactics_pi") +  _T("/data/");
+
 	wxString normalIcon = shareLocn + _T("Tactics.svg");
 	wxString toggledIcon = shareLocn + _T("Tactics_toggled.svg");
 	wxString rolloverIcon = shareLocn + _T("Tactics_rollover.svg");
