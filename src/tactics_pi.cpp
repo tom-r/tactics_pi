@@ -5162,43 +5162,34 @@ void tactics_pi::CalculatePerformanceData(void)
 	}
 
 	mPolarTargetSpeed = BoatPolar->GetPolarSpeed(mTWA, mTWS);
-	//transfer targetangle dependent on AWA, not TWA
-	if (mAWA <= 90)
-		tvmg = BoatPolar->Calc_TargetVMG(60, mTWS);
-	else
-		tvmg = BoatPolar->Calc_TargetVMG(120, mTWS);
-
-	// get Target VMG Angle from Polar
-	//tvmg = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
-    if (tvmg.TargetSpeed > 0 && !wxIsNaN(mStW)) {
+// get Target VMG Angle from Polar
+	tvmg = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
+    
+    mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0;
+    if ( (tvmg.TargetSpeed > 0) && !std::isnan( mStW ) ) {
 		double VMG = BoatPolar->Calc_VMG(mTWA, mStW);
-		mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0;
-		if (mTWA < 90){
-			mPercentTargetVMGupwind = fabs(VMG / tvmg.TargetSpeed * 100.);
+		if ( mTWA < 90 ) {
+			mPercentTargetVMGupwind = fabs( VMG / tvmg.TargetSpeed * 100. );
 		}
-		if (mTWA > 90){
-			mPercentTargetVMGdownwind = fabs(VMG / tvmg.TargetSpeed * 100.);
+		if ( mTWA > 90 ) {
+			mPercentTargetVMGdownwind = fabs( VMG / tvmg.TargetSpeed * 100. );
 		}
-		//mVMGGain = 100.0 - mStW/tvmg.TargetSpeed  * 100.;
 		mVMGGain = 100.0 - VMG / tvmg.TargetSpeed  * 100.;
 	}
 	else
-	{
-		mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0;
 		mVMGGain = 0;
-	}
-	if (tvmg.TargetAngle >= 0 && tvmg.TargetAngle < 360) {
+
+	if ( (tvmg.TargetAngle >= 0) && (tvmg.TargetAngle < 360) ) {
 		mVMGoptAngle = getSignedDegRange(mTWA, tvmg.TargetAngle);
 	}
 	else
 		mVMGoptAngle = 0;
 
-    if (mBRG >= 0 && !wxIsNaN(mHdt) && !wxIsNaN(mStW) && !wxIsNaN(mTWD)){
+    if ( (mBRG >= 0) && !std::isnan( mHdt ) && !std::isnan( mStW ) && !std::isnan( mTWD ) ){
 		tcmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
 		double actcmg = BoatPolar->Calc_CMG(mHdt, mStW, mBRG);
-		// mCMGGain = (tcmg.TargetSpeed >0) ? (100.0 - mStW / tcmg.TargetSpeed *100.) : 0.0;
 		mCMGGain = (tcmg.TargetSpeed >0) ? (100.0 - actcmg / tcmg.TargetSpeed *100.) : 0.0;
-		if (tcmg.TargetAngle >= 0 && tcmg.TargetAngle < 360) {
+		if ( (tcmg.TargetAngle >= 0) && (tcmg.TargetAngle < 360) ) {
 			mCMGoptAngle = getSignedDegRange(mTWA, tcmg.TargetAngle);
 		}
 		else
