@@ -245,7 +245,7 @@ private:
       //double exp.smoothing of predicted Cog for Tactics WP laylines
       double               m_ExpSmcur_tacklinedir, m_ExpSmtarget_tacklinedir,m_ExpSmoothSincur_tacklinedir, m_ExpSmoothCoscur_tacklinedir, m_ExpSmoothSintarget_tacklinedir, m_ExpSmoothCostarget_tacklinedir; //TR20190623
       //Performance Variables
-      double               mPolarTargetSpeed, mPredictedHdG, mPredictedCoG, mPredictedSoG, mPercentTargetVMGupwind, mPercentTargetVMGdownwind;
+      double               mPolarTargetSpeed, mPredictedHdG, mPredictedCoG, mPredictedSoG, mPercentTargetVMGupwind, mPercentTargetVMGdownwind, mPercentUserTargetSpeed;
       TargetxMG tvmg,tcmg;
       double               mVMGGain, mCMGGain, mVMGoptAngle, mCMGoptAngle,mBRG;
 	  wxDC            *m_pdc;

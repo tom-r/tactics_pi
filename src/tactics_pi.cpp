@@ -525,6 +525,8 @@ int tactics_pi::Init(void)
     mExpSmCoscur_tacklinedir = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
     mExpSmSintarget_tacklinedir = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
     mExpSmCostarget_tacklinedir = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
+	
+	mPercentTargetVMGupwind = mPercentTargetVMGdownwind = mPercentUserTargetSpeed = 0.;
 
     m_ExpSmoothDegRange = 0;
 	mExpSmDegRange = new ExpSmooth(g_dalphaDeltCoG);
@@ -5157,46 +5159,55 @@ use of any instrument or setting
 **********************************************************************************/
 void tactics_pi::CalculatePerformanceData(void)
 {
-	if (wxIsNaN(mTWA) || wxIsNaN(mTWS)) {
-		return;
-	}
+    if ( std::isnan(mTWA) || std::isnan(mTWS)|| std::isnan(mStW) ) {
+        return;
+    }
 
-	mPolarTargetSpeed = BoatPolar->GetPolarSpeed(mTWA, mTWS);
-// get Target VMG Angle from Polar
-	tvmg = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
+    mPolarTargetSpeed = BoatPolar->GetPolarSpeed(mTWA, mTWS);
+    if ( std::isnan(mPolarTargetSpeed) ) {
+        mPercentTargetVMGupwind = mPercentTargetVMGdownwind = mPercentUserTargetSpeed = 0.;
+        mPolarTargetSpeed = mPercentUserTargetSpeed = 0.;
+    } // then a polar but we are out of it - the numerical instrument show "no polar data" - here it is 0.0
+    else {
+        // Calculate the StW's performance against the polar target speed
+        mPercentUserTargetSpeed = mStW / mPolarTargetSpeed * 100;
+    }
+
+    // get Target VMG Angle from Polar
+    tvmg = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
     
-    mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0;
+    mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0.;
     if ( (tvmg.TargetSpeed > 0) && !std::isnan( mStW ) ) {
-		double VMG = BoatPolar->Calc_VMG(mTWA, mStW);
-		if ( mTWA < 90 ) {
-			mPercentTargetVMGupwind = fabs( VMG / tvmg.TargetSpeed * 100. );
-		}
-		if ( mTWA > 90 ) {
-			mPercentTargetVMGdownwind = fabs( VMG / tvmg.TargetSpeed * 100. );
-		}
-		mVMGGain = 100.0 - VMG / tvmg.TargetSpeed  * 100.;
-	}
-	else
-		mVMGGain = 0;
+        double VMG = BoatPolar->Calc_VMG(mTWA, mStW);
+        if ( mTWA < 90 ) {
+            mPercentTargetVMGupwind = fabs( VMG / tvmg.TargetSpeed * 100. );
+        }
+        if ( mTWA > 90 ) {
+            mPercentTargetVMGdownwind = fabs( VMG / tvmg.TargetSpeed * 100. );
+        }
+        mVMGGain = 100.0 - VMG / tvmg.TargetSpeed  * 100.;
+    }
+    else
+        mVMGGain = 0;
 
-	if ( (tvmg.TargetAngle >= 0) && (tvmg.TargetAngle < 360) ) {
-		mVMGoptAngle = getSignedDegRange(mTWA, tvmg.TargetAngle);
-	}
-	else
-		mVMGoptAngle = 0;
+    if ( (tvmg.TargetAngle >= 0) && (tvmg.TargetAngle < 360) ) {
+        mVMGoptAngle = getSignedDegRange(mTWA, tvmg.TargetAngle);
+    }
+    else
+        mVMGoptAngle = 0;
 
     if ( (mBRG >= 0) && !std::isnan( mHdt ) && !std::isnan( mStW ) && !std::isnan( mTWD ) ){
-		tcmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
-		double actcmg = BoatPolar->Calc_CMG(mHdt, mStW, mBRG);
-		mCMGGain = (tcmg.TargetSpeed >0) ? (100.0 - actcmg / tcmg.TargetSpeed *100.) : 0.0;
-		if ( (tcmg.TargetAngle >= 0) && (tcmg.TargetAngle < 360) ) {
-			mCMGoptAngle = getSignedDegRange(mTWA, tcmg.TargetAngle);
-		}
-		else
-			mCMGoptAngle = 0;
+        tcmg = BoatPolar->Calc_TargetCMG(mTWS, mTWD, mBRG);
+        double actcmg = BoatPolar->Calc_CMG(mHdt, mStW, mBRG);
+        mCMGGain = (tcmg.TargetSpeed >0) ? (100.0 - actcmg / tcmg.TargetSpeed *100.) : 0.0;
+        if ( (tcmg.TargetAngle >= 0) && (tcmg.TargetAngle < 360) ) {
+            mCMGoptAngle = getSignedDegRange(mTWA, tcmg.TargetAngle);
+        }
+        else
+            mCMGoptAngle = 0;
 
-	}
-	CalculatePredictedCourse();
+    }
+    CalculatePredictedCourse();
 }
 /*********************************************************************************
 First shot of an export routine for the NMEA $PNKEP (NKE style) performance data
@@ -5204,22 +5215,26 @@ First shot of an export routine for the NMEA $PNKEP (NKE style) performance data
 void tactics_pi::ExportPerformanceData(void)
 {
 	//PolarTargetSpeed
-	if (g_bExpPerfData01 && !wxIsNaN(mPolarTargetSpeed)){
+	if (g_bExpPerfData01 && !std::isnan(mPolarTargetSpeed)){
 		createPNKEP_NMEA(1, mPolarTargetSpeed, mPolarTargetSpeed  * 1.852, 0, 0);
 	}
 	//todo : extract mPredictedCoG calculation from layline.calc and add to CalculatePerformanceData
-	if (g_bExpPerfData02 && !wxIsNaN(mPredictedCoG)){
+	if (g_bExpPerfData02 && !std::isnan(mPredictedCoG)){
 		createPNKEP_NMEA(2, mPredictedCoG, 0, 0, 0); // course (CoG) on other tack
 	}
 	//Target VMG angle, act. VMG % upwind, act. VMG % downwind
-	if (g_bExpPerfData03 && !wxIsNaN(tvmg.TargetAngle) && tvmg.TargetSpeed > 0){
-		createPNKEP_NMEA(3, tvmg.TargetAngle, mPercentTargetVMGupwind, mPercentTargetVMGdownwind, 0);
+	if (g_bExpPerfData03 && !std::isnan(tvmg.TargetAngle) && tvmg.TargetSpeed > 0){
+		createPNKEP_NMEA(3, 
+                         tvmg.TargetAngle,
+                         ( (mPercentTargetVMGupwind == 0)? mPercentTargetVMGdownwind : mPercentTargetVMGupwind ),
+                         mPercentUserTargetSpeed,
+                         0);
 	}
 	//Gain VMG de 0 à 999%, Angle pour optimiser le VMG de 0 à 359°,Gain CMG de 0 à 999%,Angle pour optimiser le CMG de 0 à 359°
 	if (g_bExpPerfData04)
 		createPNKEP_NMEA(4, mCMGoptAngle, mCMGGain, mVMGoptAngle, mVMGGain);
 	//current direction, current speed kts, current speed in km/h,
-	if (g_bExpPerfData05 && !wxIsNaN(m_CurrentDirection) && !wxIsNaN(m_ExpSmoothCurrSpd)){
+	if (g_bExpPerfData05 && !std::isnan(m_CurrentDirection) && !std::isnan(m_ExpSmoothCurrSpd)){
 		createPNKEP_NMEA(5, m_CurrentDirection, m_ExpSmoothCurrSpd, m_ExpSmoothCurrSpd  * 1.852, 0);
 	}
 }
@@ -5261,27 +5276,28 @@ I implemented "Polar speed" here !, as this also works on crosswind courses
 And Target-VMG % is available in $PNKEP03 and $PNKEP04
 The Channel in the NKE instruments is called "Target Speed"
 $PNKEP,01,x.x,N,x.x,K*hh<CR><LF>
-|      \ target speed in km/h
-\ target speed in knots
+           |      \ target speed in km/h
+           \ target speed in knots
 course on next tack (code PNKEP02)
 $PNKEP,02,x.x*hh<CR><LF>
-\ Cap sur bord Opposé/prochain bord de 0 à 359°
-Opt. VMG angle and performance up and downwind   (code PNKEP03)
+           \ Cap sur bord Opposé/prochain bord de 0 à 359°
+Opt. VMG angle and performance up and downwind + polar speed perfomance
+(source SailGrib WR v2.1.0 user guide)
 $PNKEP,03,x.x,x.x,x.x*hh<CR><LF>
-|   |   \ performance downwind from 0 to 99%
-|   \ performance upwind from 0 to 99%
-\ opt. VMG angle  0 à 359°
+           |    |   \ polar speed performance TWA/TWS from 0 to 99%
+           |    \ performance upwind or downwind from 0 to 99%
+           \ opt.VMG angle  0 à 359deg 
 Angles pour optimiser le CMG et VMG et gain correspondant (code PNKEP04)
 $PNKEP,04,x.x,x.x,x.x,x.x*hh<CR><LF>
-|   |   |   \ Gain VMG de 0 à 999%
-|   |   \ Angle pour optimiser le VMG de 0 à 359°
-|   \ Gain CMG de 0 à 999%
-\ Angle pour optimiser le CMG de 0 à 359°
+           |   |   |   \ Gain VMG de 0 à 999%
+           |   |   \ Angle pour optimiser le VMG de 0 à 359°
+           |   \ Gain CMG de 0 à 999%
+            \ Angle pour optimiser le CMG de 0 à 359°
 Direction and speed of sea current (code PNKEP05)
 $PNKEP,05,x.x,x.x,N,x.x,K*hh<CR><LF>
-|   |     \ current speed in km/h
-|   \ current speed in knots
-\ current direction from 0 à 359°
+           |   |     \ current speed in km/h
+           |   \ current speed in knots
+           \ current direction from 0 à 359°
 -------------------------------------
 Found in the documentation of the normal heel sensor ...
 I bet we could also upload acceleration and gyrometer data ;-)
