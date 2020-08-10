@@ -2616,8 +2616,11 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 						SendSentenceToAllInstruments(OCPN_DBP_STC_PITCH, xdrdata, xdrunit);
 					}
 					// NKE style of XDR Heel
-                      else if ((m_NMEA0183.Xdr.TransducerInfo[i].TransducerName == _T("ROLL")) ||
-                        (m_NMEA0183.Xdr.TransducerInfo[i].TransducerName == _T("Heel Angle"))) {
+					    else if
+                          (m_NMEA0183.Xdr.TransducerInfo[i].TransducerName == _T("ROLL")) ||
+                          (m_NMEA0183.Xdr.TransducerInfo[i].TransducerName == _T("HEEL")) ||
+                          (m_NMEA0183.Xdr.TransducerInfo[i].TransducerName == _T("Heel Angle")) )
+                      {					  
                         if (m_NMEA0183.Xdr.TransducerInfo[i].MeasurementData > 0)
                           xdrunit = _T("\u00B0r");
                         else if (m_NMEA0183.Xdr.TransducerInfo[i].MeasurementData < 0) {
