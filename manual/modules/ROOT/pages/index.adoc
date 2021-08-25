@@ -33,12 +33,13 @@ image::tactics_pi-3.jpeg[]
 
 References:
 
-* http://vm2330.sgvps.net/%7Esyrftest/images/library/20160217160905.pdf[Yacht
-Performance Analysis with Computers]
+//  Unavailable, alternatives behind paywall
+// * https://vm2330.sgvps.net/%7Esyrftest/images/library/20160217160905.pdf[Yacht
+// Performance Analysis with Computers]  
 * http://www.ockam.com/docs/Calculations.pdf[How Ockam Calculates
 things]
-* http://www.orc.org/rules/Speed%20Guide%20Explanation.pdf\Speed%20Guide%20Calculation[http://www.orc.org/rules/Speed%20Guide%20Explanation.pdf\Speed
-Guide Calculation]
+* https://www.orc.org/rules/Speed%20Guide%20Explanation.pdf[
+http://www.orc.org/rules/Speed  Guide Explanation.pdf]
 
 === 1. Introduction
 
@@ -52,65 +53,6 @@ This is still alpha code (not even beta), and you should not use it for
 live – real sailing. +
 I will not be liable for any harm, damage or whatever strange things
 happen if you use this plugin and rely on its data.
-
-Table of Content
-
-link:#introduction[1. Introduction] 1 +
-link:#what_tactics_pi_can_do[1.1 What tactics_pi can do] 3 +
-link:#prerequisites[1.2 Prerequisites] 5 +
-link:#basic_functions_work_without_a_polar_file[2. Basic functions work
-without a polar file] 5 +
-link:#calculate_true_wind_data[2.1 Calculate true wind data] 5 +
-link:#calculate_leeway[2.2 Calculate “Leeway”] 6 +
-link:#calculate_the_surface_current[2.3 Calculate the surface current]
-8 +
-link:#activation_of_the_current_display[2.3.1 Activation of the current
-display] 9 +
-link:#calculate_and_display_the_boat_laylines[2.4 Calculate and display
-the boat laylines] 9 +
-link:#show_wind_barbs[2.5 Show wind barbs] 10 +
-link:#activation_of_wind_barb_display[2.5.1 Activation of Wind barb
-display] 11 +
-link:#instruments[2.6 Instruments] 11 +
-link:#current_direction_and_current_speed[2.6.1 Current Direction and
-Current Speed] 11 +
-link:#heel[2.6.2 Heel] 12 +
-link:#leeway[2.6.3 Leeway] 12 +
-link:#twa_to_waypoint[2.6.4 TWA to Waypoint] 12 +
-link:#app_true_wind_angle_dial_instrument_with_twd_display[2.6.5 “App.&
-True Wind Angle” dial instrument with TWD display] 12 +
-link:#average_wind_instrument[2.6.6 Average Wind Instrument] 13 +
-link:#performance_functions_which_need_a_polar_file[3. Performance
-functions which need a polar file] 14 +
-link:#load_a_polar_file[3.1 Load a polar file] 14 +
-link:#display_polar_on_chart[3.2 Display polar on chart] 16 +
-link:#activation_of_the_polar_display_on_the_chart[3.3 Activation of the
-polar display on the chart] 17 +
-link:#performance_data[3.4 Performance data] 18 +
-link:#instruments_which_need_a_polar[3.5 Instruments which need a polar]
-18 +
-link:#polarspeed[3.5.1 Polarspeed] 18 +
-link:#actual_vmg[3.5.2 Actual VMG] 19 +
-link:#target_vmg-angle[3.5.3 Target VMG-Angle] 19 +
-link:#target_vmg[3.5.4 Target VMG] 19 +
-link:#actual_cmg[3.5.5 Actual CMG] 20 +
-link:#target_cmg_angle[3.5.6 Target CMG Angle] 20 +
-link:#target_cmg[3.5.7 Target CMG] 20 +
-link:#polar_performance[3.5.8 Polar Performance] 20 +
-link:#bearing_compass[3.5.9 Bearing compass] 21 +
-link:#polar_compass[3.5.10 Polar Compass] 24 +
-link:#temporary_waypoint_and_target-twa_laylines[3.6 Temporary waypoint
-and Target-TWA laylines] 26 +
-link:#nke_style_nmea_performance_records_and_export_to_the_instruments[3.7
-NKE style NMEA Performance Records and export to the instruments] 28 +
-link:#settings_in_the_ini_file[3.8 Settings in the INI file] 31 +
-link:#restrictions_known_issues_at_the_time_being[3.9 Restrictions/known
-issues at the time being] 34 +
-link:#terminology[4. Terminology] 34 +
-link:#appendix[5. Appendix] 35 +
-link:#how_to_align_check_your_magnetic_compass_with_o[5.1 How to
-align/check your magnetic compass with O] 35 +
-link:#history[6. History] 36
 
 ==== 1.1 What tactics_pi can do :
 
@@ -1345,7 +1287,7 @@ http://busse-yachtshop.de/pdf/bg-triton-2013-bys.pdf[B&G Essential Guide
 to Sailing Instruments], page 8 titled “Why can’t I use SOG and COG for
 calculating True Wind?”
 
-http://forum.raymarine.com/showthread.php?tid=987[Raymarine Forum:
+https://forum.raymarine.com/showthread.php?tid=987[Raymarine Forum:
 Apparent Wind, True Wind and Ground Wind, and data required to
 calculate]
 
@@ -1356,7 +1298,7 @@ Triangle.pdf]
 http://www.ockam.com/2013/06/02/why-bother-with-paddles/[Why bother with
 Paddles, by Ockam Instruments]
 
-https://www.sailingworld.com/decoding-your-electronics-readings[Sailingworld.com
+https://www.sailingworld.com/decoding-your-electronics-readings/[Sailingworld.com
 Decoding your electronics readings] If there is any current, the use of
 SOG instead of STW will be very inaccurate.
 
