@@ -1,7 +1,7 @@
 site:
   title: Tactics Manual
   url:  https://nowhere.net
-  start_page: tactics:ROOT:tactics.adoc
+  start_page: tactics:ROOT:index.adoc
 
 content:
   sources:
