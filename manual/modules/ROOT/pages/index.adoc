@@ -1,8 +1,6 @@
-indexmenu_n_3
+= Tactics
 
-== Tactics
-
-=== Links
+== Links
 
 * Source: https://github.com/tom-r/tactics_pi +
 * Download: https://opencpn.org/OpenCPN/plugins/tactics.html +
@@ -10,7 +8,7 @@ indexmenu_n_3
 http://www.cruisersforum.com/forums/f134/tactics-plugin-166909.html[Tactics
 plugin thread] +
 
-=== Windows Download
+== Windows Download
 
 https://opencpn.org/OpenCPN/info/downloadplugins.html[OpenCPN Plugin
 Downloads Page]
@@ -41,7 +39,7 @@ things]
 * https://www.orc.org/rules/Speed%20Guide%20Explanation.pdf[
 http://www.orc.org/rules/Speed  Guide Explanation.pdf]
 
-=== 1. Introduction
+== 1. Introduction
 
 _Everything started with the question : “Do we make it around the corner
 of that island when we tack now and sail the same apparent wind angle on
@@ -54,7 +52,7 @@ live – real sailing. +
 I will not be liable for any harm, damage or whatever strange things
 happen if you use this plugin and rely on its data.
 
-==== 1.1 What tactics_pi can do :
+=== 1.1 What tactics_pi can do :
 
 To sail Target-VMG / Target-CMG angle, simply steer the blue HDT pointer
 on one of the Target-VMG / - CMG markers.
@@ -128,7 +126,7 @@ preferences. Just hover the mouse over one of the prefs: +
 
 image::tactics_pi_html_de905cc9c9a7846.png[]
 
-==== 1.2 Prerequisites :
+=== 1.2 Prerequisites :
 
 Required
 
@@ -160,9 +158,9 @@ this is vital for a proper surface current calculation. All I can say is
 
 *See also the Terminology at the very end for explanation of terms*
 
-=== 2. Basic functions work without a polar file
+== 2. Basic functions work without a polar file
 
-==== 2.1 Calculate true wind data
+=== 2.1 Calculate true wind data
 
 The plugin can calculate true wind data (TWA, TWS, TWD) but keeps the
 calculated data inside the plugin (it does not broadcast it to O)! True
@@ -217,7 +215,7 @@ the internal true wind calculation. The idea is simply to have a
 fallback for the true wind calculation in case your log fails and also
 to eliminate side effects on the calculation by surface current.
 
-==== 2.2 Calculate “Leeway”
+=== 2.2 Calculate “Leeway”
 
 Leeway describes the drift of the boat due to the force of the wind.
 Leeway is the basic input for the surface current calculation described
@@ -276,7 +274,7 @@ program takes 30°.
 . If you set the radio button here, the routines always take 30°, no
 matter what your sensor calculates or your heel-polar would tell you.
 
-==== 2.3 Calculate the surface current
+=== 2.3 Calculate the surface current
 
 If you compare your HDT and COG vectors in O (the 2 forward vectors on
 the chart at your boat), the difference between both is a mixture
@@ -311,7 +309,7 @@ lower end, the start to increase, until it gets unstable.
 
 image::tactics_pi_html_f51f5c486f2a196f.png[]
 
-===== 2.3.1 Activation of the current display
+==== 2.3.1 Activation of the current display
 
 You can show a semi transparent blue current symbol underneath your
 boat, showing the surface current direction.
@@ -331,7 +329,7 @@ Current_”. This toggles the display on/off.
 image::tactics_pi_html_63a583e211e120b4.png[]
 
 
-===== 2.4 Calculate and display the boat laylines
+=== 2.4 Calculate and display the boat laylines
 
 You can show the boat laylines on the chart. They refer to COG.
 
@@ -370,14 +368,14 @@ tactics_pi main window and select “_Show laylines_”
 
 image::tactics_pi_html_dacf3a0385fecd9f.png[]
 
-===== 2.5 Show wind barbs
+=== 2.5 Show wind barbs
 
 You can also show a wind barb at the boat position, showing you
 direction and speed (feather length) in 5 kt steps
 
 image::tactics_pi_html_d48b279e8c416791.png[]
 
-===== 2.5.1 Activation of Wind barb display
+==== 2.5.1 Activation of Wind barb display
 
 To activate the wind barb display on the chart by default, upon program
 start, navigate to the Preferences dialogue and set the tick “_Display
@@ -402,9 +400,9 @@ image::tactics_pi_html_1b96de6ac37d3e80.png[]
 This is the currently implemented wind barb scale (0-2kts has no feather
 at all) :
 
-==== 2.6 Instruments :
+=== 2.6 Instruments :
 
-===== 2.6.1 Current Direction and Current Speed :
+==== 2.6.1 Current Direction and Current Speed :
 
 image::tactics_pi_html_66bc9e9eb5540c59.png[]
 
@@ -482,11 +480,9 @@ the wind veers away and crosses the average wind direction …
 As you can see in the examples above there are definitely cycles, where
 the wind changes direction.
 
- 
+== 3. Performance functions which need a polar file
 
-=== 3. Performance functions which need a polar file
-
-==== 3.1 Load a polar file
+=== 3.1 Load a polar file
 
 You can load a polar file from the preferences screen
 
@@ -551,7 +547,7 @@ think this is a good compromise to average TWS only, as I’m pretty sure
 that TWA won’t be more accurate than one knot, due tu upwash issues,
 position and accuracy of the wind vane, compass accuracy, etc.
 
-==== 3.2 Display polar on chart
+=== 3.2 Display polar on chart
 
 You can display the polar as overlay on the chart.. The size of the
 different polar “rings” is normalized, they all have the same size.
@@ -574,7 +570,7 @@ has the* *biggersize* !
 
 image::tactics_pi_html_e5a6bb1a90e84af8.png[]
 
-==== 3.3 Activation of the polar display on the chart
+=== 3.3 Activation of the polar display on the chart
 
 To activate the polar display on the chart by default, upon program
 start, navigate to the Preferences dialogue and set the tick “_Show
@@ -590,7 +586,7 @@ _Polar_”. This toggles the display on/off.
 
 image::tactics_pi_html_9dbf213c04389070.png[]
 
-==== 3.4 Performance data
+=== 3.4 Performance data
 
 various performance data is available as text instruments. See the
 following chart for reference on the different terms in relation to a
@@ -612,9 +608,9 @@ so to save space on the screen
 
  
 
-==== 3.5 Instruments which need a polar
+=== 3.5 Instruments which need a polar
 
-===== 3.5.1 Polarspeed :
+==== 3.5.1 Polarspeed :
 
 image::tactics_pi_html_ab68db40c024886a.png[]
 
@@ -632,7 +628,7 @@ Useful in crosswind / reaching conditions without a waypoint
 
 It shows the optimum speed for the given wind conditions.
 
-===== 3.5.2 Actual VMG :
+==== 3.5.2 Actual VMG :
 
 image::tactics_pi_html_d83040e5903a3376.png[]
 
@@ -642,7 +638,7 @@ downwind (then it's off the wind)
 
 VMG = STW * cosine (True Wind Angle)
 
-===== 3.5.3 Target VMG-Angle :
+==== 3.5.3 Target VMG-Angle :
 
 image::tactics_pi_html_84153e595d2e9980.png[]
 
@@ -653,7 +649,7 @@ polar data. *Very useful when sailing up-/downwind* without a waypoint.
 The program simply searches the polar with a given TWS for the optimum
 TWA up-/downwind. It's defined as the tangens on the polar.
 
-===== 3.5.4 Target VMG :
+==== 3.5.4 Target VMG :
 
 image::tactics_pi_html_dcc793dc8467037f.png[]
 
@@ -665,7 +661,7 @@ If we would sail with 164° TWA (from ex. above), then we could make
 11.95 knots according polar), but currently we're doing only 51% of
 that.
 
-===== 3.5.5 Actual CMG:
+==== 3.5.5 Actual CMG:
 
 image::tactics_pi_html_60903bd7e4b1f2e6.png[image,width=200]
 
@@ -681,14 +677,14 @@ CMG = STW * cosine (Heading - Marks bearing)
 
 Quite valuable on reaching courses towards a waypoint.
 
-===== 3.5.6 Target CMG Angle :
+==== 3.5.6 Target CMG Angle :
 
 image::tactics_pi_html_fbd1ac28600c3593.png[]
 
 Optimum angle to sail fastest to a waypoint, based on your polar data
 (Like VMG, but not up-/downwind but towards a waypoint).
 
-===== 3.5.7 Target CMG :
+==== 3.5.7 Target CMG :
 
 image::tactics_pi_html_43fb064c399d3031.png[]
 
@@ -699,7 +695,7 @@ waypoint with 11.98 knots, but currently we're only doing 64% of that.
 *Comment : Calculation is verified, but it doesn't tell you (yet) if
 you're on the correct tack*
 
-===== 3.5.8 Polar Performance
+==== 3.5.8 Polar Performance
 
 – sail trimming aid –
 
@@ -727,7 +723,7 @@ before …
 *Comment : Still needs probably adjustments with the damping factor, #
 of points plotted, etc.*
 
-===== 3.5.9 Bearing compass
+==== 3.5.9 Bearing compass
 
 image::tactics_pi_html_7df2819eefd84ee5.png[image,width=240] +
 
@@ -820,7 +816,7 @@ DTW = the distance to the WP and predicted speed over ground on the
 other tack, *assuming that you sail the same TWA* on the other tack.
 This simply drops out of the surface current calculation …
 
-===== 3.5.10 Polar Compass
+==== 3.5.10 Polar Compass
 
 I derived this instrument from Bearing Compass. Once you loaded a polar,
 it shows you the actual polar ring. The size of the ring is normalized
