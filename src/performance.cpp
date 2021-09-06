@@ -1042,7 +1042,7 @@ void Polar::Calc_TargetCMG2(double TWS, double TWD, double BRG, TargetxMG *TCMGM
 }
 /*
 test, doesn't work ...
-/*
+
 TargetxMG Polar::Calc_TargetCMG2(double TWS, double TWD, double BRG, TargetxMG *cmg2)
 {
   TargetxMG TCMG, *TCMG2;

@@ -289,9 +289,9 @@ endif(PI_JSON_SCHEMA_VALIDATOR)
 #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/api-16)
 
-
+#--------------------------------------------------------------------------
 add_library(${PACKAGE_NAME} SHARED ${SRC_TACTICS} ${SRC_NMEA0183} )
-
+#--------------------------------------------------------------------------
 #  add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
 
 add_definitions(-DTIXML_USE_STL)

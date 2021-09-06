@@ -5083,7 +5083,7 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
 			//      /
 			//     /----------> CRS, STW (stw_corr)
 			//     \
-			      //      \        Current
+			//      \        Current
 			//       \ COG,SOG
 			//        V        
 			// if wind is from port, heel & mLeeway will be positive (to starboard), adding degrees on the compass rose
