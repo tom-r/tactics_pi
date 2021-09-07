@@ -3,41 +3,49 @@
 == Links
 
 * Source: https://github.com/tom-r/tactics_pi +
+* Maintenance Source: https://github.com/rgleason/tactics_pi +
 * Download: https://opencpn.org/OpenCPN/plugins/tactics.html +
-* Forum:
-http://www.cruisersforum.com/forums/f134/tactics-plugin-166909.html[Tactics
-plugin thread] +
+* Forum: http://www.cruisersforum.com/forums/f134/tactics-plugin-166909.html[CF Tactics plugin thread] +
 
-== Windows Download
+== About
 
-https://opencpn.org/OpenCPN/info/downloadplugins.html[OpenCPN Plugin
-Downloads Page]
+An instrument extension to the OpenCPN Dashboard for Sailboat Racing and Tactics which is also useful for cruising.
 
-To test Tactics_pi using VDR_pi nmea player.
+== References
+
+* http://www.ockam.com/docs/Calculations.pdf[How Ockam Calculates things]
+* https://www.orc.org/rules/Speed%20Guide%20Explanation.pdf[http://www.orc.org/rules/Speed  Guide Explanation.pdf]
+//  Unavailable, alternatives behind paywall
+// * https://vm2330.sgvps.net/%7Esyrftest/images/library/20160217160905.pdf[Yacht Performance Analysis with Computers]  
+
+== Installation
+
+Tactics is available as a managed plugin. The OpenCPN Manual has general information in xref:opencpn-plugins:misc:plugin-install.adoc[Plugin Download, Install and Enable] 
+for installing this plugin. This is the preferred way.
+
+In OpenCPN, go to the _Options → Plugins_ and download, install and enable the Tactics plugin.
+
+. In OpenCPN  Click *Tools-Options-Plugins*
+. First "Update" the master plugins catalog.
+. Select the Tactics entry and "Install" the plugin.
+. In the list of installed plugins "Enable" the Tactics plugin and "Apply".
+. Use “*Preferences*” to set your preferences (should be self-explanatory). Then “*Apply*.
+. After successful installation, the plugin should be available in the plugins tab of your OpenCPN options dialog box.
+. Then close *Options* and the Tactics Icon should appear in the Toolbar.
+
+== Testing Tactics_pi using VDR_pi nmea player.
 
 https://tgp-architects.com/files/[OpenCPN Beta File Thingie 2.5.7]
 “rguser”, “rgpass” Go to Tactics directory and download download sample
 vdr file to play (*Sample1.txt, Sample2.txt, Sample3.txt*).
 
-
 image::tactics_pi-bigspeedy.jpeg[] 
 
-
-*tactics_pi* a performance enhancement to dashboard_pi
+*Tactics_pi* a performance enhancement to Dashboard_pi
 
 Rev 1.0
 
 image::tactics_pi-3.jpeg[]
-
-References:
-
-//  Unavailable, alternatives behind paywall
-// * https://vm2330.sgvps.net/%7Esyrftest/images/library/20160217160905.pdf[Yacht
-// Performance Analysis with Computers]  
-* http://www.ockam.com/docs/Calculations.pdf[How Ockam Calculates
-things]
-* https://www.orc.org/rules/Speed%20Guide%20Explanation.pdf[
-http://www.orc.org/rules/Speed  Guide Explanation.pdf]
 
 == 1. Introduction
 
@@ -1135,7 +1143,7 @@ not really interested anymore in a correct wind barb display …
 
 == 4. Terminology
 
-[width="100%",cols="50%,50%",options="header",]
+[width="100%",cols="20%,80%",options="header",]
 |===
 |Term |Description
 |AWA |**A**pparent **W**ind **A**ngle; the relative wind angle measured
@@ -1214,7 +1222,7 @@ That's it…
 
 == 6. History
 
-[width="100%",cols="34%,33%,33%",options="header",]
+[width="100%",cols="8%,22%,70%",options="header",]
 |===
 |Rev |Date |Remark
 |1.0 |24.05.2016 |Initial release
