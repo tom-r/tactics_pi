@@ -1,5 +1,9 @@
 = Tactics
 
+Developer: Thomas Rausch +
+Maintainers: Rick Gleason, Jon Gough, Petri and the Plugin Team +
+PI Manager (PIM) Workflow: Testplugin Template
+
 == Links
 
 * Source: https://github.com/tom-r/tactics_pi +
