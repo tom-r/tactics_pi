@@ -1,5 +1,5 @@
 site:
-  title: Tactics Manual
+  title: Tactics
   url:  https://nowhere.net
   start_page: tactics:ROOT:index.adoc
 
