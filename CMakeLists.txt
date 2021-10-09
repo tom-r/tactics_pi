@@ -18,7 +18,7 @@
 ## *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 ## ***************************************************************************
 #  Frontend2 Author:  ongough aka. Jon Gough Copyright: wxWidgets License
-#  Fronted2 Version: 1.0.132
+#  Fronted2 Version: 1.0.176.1     07/10/2021
 # ---------------------------------------------------------------------------
 ## ----- When changing this file do NOT change the order in which sections occur        ----- ##
 ## ----- Changes should only be made between the section blocks that identify where     ----- ##
@@ -56,7 +56,7 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
 set(VERSION_PATCH "20")
-set(VERSION_TWEAK "0")
+set(VERSION_TWEAK "3")
 set(VERSION_DATE "2020-08-10")
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
@@ -90,12 +90,14 @@ set(XML_DESCRIPTION ${LONG_DESCRIPTION})
 ## ----- Modify section below if there are special requirements for the plugin ----- ##
 ##
 
-SET(BUNDLE_DATA TRUE)
+# SET(BUNDLE_DATA TRUE)
 
 option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 
+# Use local version of GLU library
+#set(USE_LOCAL_GLU TRUE)
 # Prefer libGL.so to libOpenGL.so, see CMP0072
 set(OpenGL_GL_PREFERENCE "LEGACY")
 # Don't use local version of GLU library
@@ -104,9 +106,7 @@ option(USE_GL "Enable OpenGL support" ON)
 message(STATUS "${CMLOC}USE_GL: ${USE_GL}")
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
-    set(CMAKE_BUILD_TYPE
-        "Release"
-        CACHE STRING "Choose the type of build" FORCE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" FORCE)
 endif("${CMAKE_BUILD_TYPE}" STREQUAL "")
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "" "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
 message(STATUS "${CMLOC}Build type: ${CMAKE_BUILD_TYPE}")
@@ -116,7 +116,7 @@ message(STATUS "${CMLOC}Build type: ${CMAKE_BUILD_TYPE}")
 ##
 
 project(${PACKAGE})
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake;")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 #-------------------------------------------------------
 include("PluginSetup")
@@ -127,7 +127,7 @@ include("PluginSetup")
 ## ----- Modify section below if there are special requirements for the plugin ----- ##
 ##
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE "Activate verbose mode for make files" ON)
 
 option(Plugin_CXX11 "Use c++11" OFF)
 
@@ -261,24 +261,27 @@ SET(SRC_NMEA0183
 
 add_definitions(-DPLUGIN_USE_SVG)
 
-if(APPLE)
-    option(PI_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
-else(APPLE)
-    option(PI_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
-endif(APPLE)
+# Not doing JSON_Schema_Validator
+#if(APPLE)
+#    option(PI_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
+#else(APPLE)
+#    option(PI_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
+#endif(APPLE)
+#
+#if(PI_JSON_SCHEMA_VALIDATOR)
+#    message(STATUS "${CMLOC}Using JSON Schema validation - warning this changes the 'flavour' of the executable and it may not be compatible with OpenCPN")
+#    add_definitions(-DPI_JSON_SCHEMA_VALIDATOR)
+#    message(STATUS "${CMLOC}Adding JSON Schema validation")
+#
+#    set(EXTSRC ${EXTSRC} extsrc/json-schema-validator/json-schema-draft7.json.cpp extsrc/json-schema-validator/json-uri.cpp extsrc/json-schema-validator/json-validator.cpp)
+#    set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude/nlohmann extinclude)
+#    #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extinclude/json-schema-validator)
+#else(PI_JSON_SCHEMA_VALIDATOR)
+#    message(STATUS "${CMLOC}Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
+#endif(PI_JSON_SCHEMA_VALIDATOR)
 
-if(PI_JSON_SCHEMA_VALIDATOR)
-    message(STATUS "${CMLOC}Using JSON Schema validation - warning this changes the 'flavour' of the executable and it may not be compatible with OpenCPN")
-    add_definitions(-DPI_JSON_SCHEMA_VALIDATOR)
-    message(STATUS "${CMLOC}Adding JSON Schema validation")
 
-    set(EXTSRC ${EXTSRC} extsrc/json-schema-validator/json-schema-draft7.json.cpp extsrc/json-schema-validator/json-uri.cpp extsrc/json-schema-validator/json-validator.cpp)
-    set(EXTINCLUDE ${EXTINCLUDE} extinclude/nlohmann/json.hpp extinclude/json-schema-validator/json-schema.hpp)
-    include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extinclude/json-schema-validator)
-else(PI_JSON_SCHEMA_VALIDATOR)
-    message(STATUS "${CMLOC}Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
-endif(PI_JSON_SCHEMA_VALIDATOR)
-
+# old includes
 #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
 #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extinclude)
 #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
@@ -287,41 +290,87 @@ endif(PI_JSON_SCHEMA_VALIDATOR)
 #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
 #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/api-16)
+#  did have this include_directories(BEFORE ${PROJECT_SOURCE_DIR}/api-16)
 
-#--------------------------------------------------------------------------
-add_library(${PACKAGE_NAME} SHARED ${SRC_TACTICS} ${SRC_NMEA0183} )
-#--------------------------------------------------------------------------
-#  add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
+#---- new includes
+
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE_DIR})
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/GL)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
+if(QT_ANDROID)
+    include_directories(BEFORE ${qt_android_include})
+    include_directories( ${CMAKE_SOURCE_DIR}/extinclude/GLES2)
+
+    #    #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
+endif(QT_ANDROID)
+
+#target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
+target_sources(${PACKAGE_NAME} PUBLIC ${SRC_TACTICS} ${SRC_NMEA0183} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
+
+
+if(NOT OCPN_FLATPAK_CONFIG)
+    # Build environment not available when flatpak is being configured so following statements will not work
+    message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
+
+    add_subdirectory(libs/tinyxml)
+
+    target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
+endif(NOT OCPN_FLATPAK_CONFIG)
 
 add_definitions(-DTIXML_USE_STL)
 
-if(UNIX AND NOT APPLE)
-    if(PI_JSON_SCHEMA_VALIDATOR)
-        # Change OS/ABI to be UNIX - System V to make it run with OCPN
-        set(lib_name lib${PACKAGE_NAME}.so)
-        message(STATUS "${CMLOC}lib-name: ${lib_name}")
-        find_file(elfedit elfedit)
-        if(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
-            message(STATUS "${CMLOC}Will ensure OS/ABI is set to 0 to match OCPN")
-            add_custom_command(
-                TARGET ${PACKAGE_NAME}
-                POST_BUILD
-                WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-                DEPENDS ${PACKAGE_NAME}
-                COMMENT " Running post build action on ${lib_name}."
-                COMMAND sh -c 'elfedit --input-osabi=Linux --output-osabi=none ${lib_name} || (echo 0) ')
-        else(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
-            message(STATUS "${CMLOC}Cannot correct OS/ABI to match OCPN if it is generated incorrectly. Package binutils needed")
-        endif(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
-    endif(PI_JSON_SCHEMA_VALIDATOR)
-endif(UNIX AND NOT APPLE)
+
+# Not doing JSON_SCHEMA_VALIDATOR
+
+
+### ----Old 
+#--------------------------------------------------------------------------
+#add_library(${PACKAGE_NAME} SHARED ${SRC_TACTICS} ${SRC_NMEA0183} )
+#--------------------------------------------------------------------------
+#  add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
+### -----end
+
+# add_definitions(-DTIXML_USE_STL)
+
+# Not doing JSON_schema_validator
+
+#if(UNIX AND NOT APPLE AND NOT QT_ANDROID)
+#   if(PI_JSON_SCHEMA_VALIDATOR)
+#        # Change OS/ABI to be UNIX - System V to make it run with OCPN
+#        set(lib_name lib${PACKAGE_NAME}.so)
+#        message(STATUS "${CMLOC}lib-name: ${lib_name}")
+#        find_file(elfedit elfedit)
+#        if(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
+#            message(STATUS "${CMLOC}Will ensure OS/ABI is set to 0 to match OCPN")
+#            add_custom_command(
+#                TARGET ${PACKAGE_NAME}
+#                POST_BUILD
+#                WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+#                DEPENDS ${PACKAGE_NAME}
+#                COMMENT " Running post build action on ${lib_name}."
+#                COMMAND sh -c 'elfedit --input-osabi=Linux --output-osabi=none ${lib_name} || (echo 0) ')
+#        else(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
+#            message(STATUS "${CMLOC}Cannot correct OS/ABI to match OCPN if it is generated incorrectly. Package binutils needed")
+#        endif(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
+#    endif(PI_JSON_SCHEMA_VALIDATOR)
+#endif(UNIX AND NOT APPLE AND NOT QT_ANDROID)
 
 ##
 ## ----- Change above to match project requirements ----- ##
 ## ----- do not change next section - needed to configure build process ----- ##
 
 #-------------------------------------------------------
+# Needed for android builds
+if(QT_ANDROID)
+    include_directories(BEFORE ${qt_android_include})
+endif(QT_ANDROID)
+
+# Needed for all builds
 include("PluginInstall")
 include("PluginLocalization")
 include("PluginPackage")
@@ -329,3 +378,8 @@ include("PluginPackage")
 
 ## ----- do not change section above - needed to configure build process ----- ##
 ##
+message(STATUS "${CMLOC}include directories: ")
+get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+foreach(dir ${dirs})
+    message(STATUS "${CMLOC}dir='${dir}'")
+endforeach()
