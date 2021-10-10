@@ -55,9 +55,9 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "20")
-set(VERSION_TWEAK "3")
-set(VERSION_DATE "2020-08-10")
+set(VERSION_PATCH "21")
+set(VERSION_TWEAK "0")
+set(VERSION_DATE "2020-10-10")
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
