@@ -48,7 +48,8 @@
 //wx2.9 #include <wx/wrapsizer.h>
 
 #include "ocpn_plugin.h"
-#include "nmea0183/nmea0183.h"
+//#include "nmea0183/nmea0183.h"
+#include "nmea0183.h"
 #include "instrument.h"
 #include "speedometer.h"
 #include "compass.h"

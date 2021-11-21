@@ -38,7 +38,9 @@
 #include <wx/progdlg.h>
 #include <wx/gdicmn.h>
 #include <wx/fileconf.h>
-#include "nmea0183/nmea0183.h"
+
+//#include "nmea0183/nmea0183.h"
+#include "nmea0183.h"
 
 #include "performance.h"
 #include <map>
