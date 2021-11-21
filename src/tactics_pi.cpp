@@ -452,6 +452,30 @@ wxTimer(this), opencpn_plugin_116(ppimgr)
 {
 	// Create the PlugIn icons
 	initialize_images();
+	
+// Create the PlugIn icons  -from shipdriver
+// loads png file for the listing panel icon
+    wxFileName fn;
+    auto path = GetPluginDataDir("tactics_pi");
+    fn.SetPath(path);
+    fn.AppendDir("data");
+    fn.SetFullName("tactics_panel.png");
+
+    path = fn.GetFullPath();
+
+    wxInitAllImageHandlers();
+
+    wxLogDebug(wxString("Using icon path: ") + path);
+    if (!wxImage::CanRead(path)) {
+        wxLogDebug("Initiating image handlers.");
+        wxInitAllImageHandlers();
+    }
+    wxImage panelIcon(path);
+    if (panelIcon.IsOk())
+        m_panelBitmap = wxBitmap(panelIcon);
+    else
+        wxLogWarning("Tactics panel icon has NOT been loaded");
+// End of from Shipdriver	
 
 }
 
@@ -588,9 +612,9 @@ int tactics_pi::Init(void)
 // First try
 	wxString shareLocn = GetPluginDataDir("tactics_pi") +  _T("/data/");
 
-	wxString normalIcon = shareLocn + _T("Tactics.svg");
-	wxString toggledIcon = shareLocn + _T("Tactics_toggled.svg");
-	wxString rolloverIcon = shareLocn + _T("Tactics_rollover.svg");
+	wxString normalIcon = shareLocn + _T("tactics.svg");
+	wxString toggledIcon = shareLocn + _T("tactics_toggled.svg");
+	wxString rolloverIcon = shareLocn + _T("tactics_rollover.svg");
 
 	//  For journeyman styles, we prefer the built-in raster icons which match the rest of the toolbar.
 	/* if (GetActiveStyleName().Lower() != _T("traditional")){
@@ -763,10 +787,17 @@ int tactics_pi::GetPlugInVersionMinor()
     return PLUGIN_VERSION_MINOR;
 }
 //*********************************************************************************
-wxBitmap *tactics_pi::GetPlugInBitmap()
-{
-	return _img_tactics_pi;
-}
+
+
+//wxBitmap *tactics_pi::GetPlugInBitmap()
+//{
+//	return _img_tactics_pi;
+//}
+
+// Shipdriver uses the climatology_panel.png file to make the bitmap.
+wxBitmap *tactics_pi::GetPlugInBitmap()  { return &m_panelBitmap; }
+// End of shipdriver process
+
 wxString tactics_pi::GetNameVersion()
 {
   char name_version[32];

@@ -139,6 +139,8 @@ public:
       wxString GetCommonName();
       wxString GetShortDescription();
       wxString GetLongDescription();
+	  // from shipdriver to read listing panel bitmap png
+	  wxBitmap m_panelBitmap; 
 
 //    The optional method overrides
       void SetNMEASentence(wxString &sentence);
