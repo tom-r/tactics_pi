@@ -3338,6 +3338,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	wxPanel *itemPanelNotebook01 = new wxPanel(itemNotebook, wxID_ANY, wxDefaultPosition,
 		wxDefaultSize, wxTAB_TRAVERSAL);
 
+// Preferences Tactics Tab
+
 	wxFlexGridSizer *itemFlexGridSizer01 = new wxFlexGridSizer(2);
 	itemFlexGridSizer01->AddGrowableCol(1);
 	itemPanelNotebook01->SetSizer(itemFlexGridSizer01);
@@ -3459,6 +3461,8 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	m_pButtonDown->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
 		wxCommandEventHandler(TacticsPreferencesDialog::OnInstrumentDown), NULL, this);
 
+//Preferences  Appearance Tab
+
 	wxPanel *itemPanelNotebook02 = new wxPanel(itemNotebook, wxID_ANY, wxDefaultPosition,
 		wxDefaultSize, wxTAB_TRAVERSAL);
 	wxBoxSizer* itemBoxSizer05 = new wxBoxSizer(wxVERTICAL);
@@ -3497,6 +3501,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	itemFlexGridSizer03->Add(m_pFontPickerSmall, 0, wxALIGN_RIGHT | wxALL, 0);
 	//      wxColourPickerCtrl
 
+// Units, Ranges. Formats
 	wxStaticBox* itemStaticBox04 = new wxStaticBox(itemPanelNotebook02, wxID_ANY, _("Units, Ranges, Formats"));
 	wxStaticBoxSizer* itemStaticBoxSizer04 = new wxStaticBoxSizer(itemStaticBox04, wxHORIZONTAL);
 	itemBoxSizer05->Add(itemStaticBoxSizer04, 0, wxEXPAND | wxALL, border_size);
@@ -3567,6 +3572,9 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	itemPanelNotebook03->SetScrollRate(0, scrollRate);
 	//itemNotebook->Layout();
 
+
+// Preferences   Performance Parameters Tab
+
 	wxBoxSizer* itemBoxSizer06 = new wxBoxSizer(wxVERTICAL);
 	itemPanelNotebook03->SetSizer(itemBoxSizer06);
 	itemNotebook->AddPage(itemPanelNotebook03, _("Performance Parameters"));
@@ -3584,7 +3592,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
       wxDefaultPosition, wxDefaultSize, 0);
     itemStaticText18->SetToolTip(_("The layline damping factor determines how fast the  laylines react on your course changes, i.e. your COG changes.\n Low values mean high damping."));
     itemFlexGridSizer05->Add(itemStaticText18, 0, wxEXPAND | wxALL, border_size);
-    m_alphaLaylineDampFactor = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0.025, 1, g_dalphaLaylinedDampFactor, 0.001);
+    m_alphaLaylineDampFactor = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0.025, 1, g_dalphaLaylinedDampFactor, 0.001);
     itemFlexGridSizer05->Add(m_alphaLaylineDampFactor, 0, wxALIGN_LEFT, 0);
     m_alphaLaylineDampFactor->SetValue(g_dalphaLaylinedDampFactor);
     m_alphaLaylineDampFactor->SetToolTip(_("The layline damping factor determines how fast the  laylines react on your course changes, i.e. your COG changes.\n Low values mean high damping."));
@@ -3594,7 +3602,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 		wxDefaultPosition, wxDefaultSize, 0);
 	itemStaticText20->SetToolTip(_("The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\nThe idea is to display the COG range where you're sailing to.\n Low values mean high damping."));
 	itemFlexGridSizer05->Add(itemStaticText20, 0, wxEXPAND | wxALL, border_size);
-	m_alphaDeltCoG = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0.025, 1, g_dalphaDeltCoG, 0.001);
+	m_alphaDeltCoG = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0.025, 1, g_dalphaDeltCoG, 0.001);
 	itemFlexGridSizer05->Add(m_alphaDeltCoG, 0, wxALIGN_LEFT, 0);
 	m_alphaDeltCoG->SetValue(g_dalphaDeltCoG);
 	m_alphaDeltCoG->SetToolTip(_("Width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\nThe idea is to display the range where you're sailing to.\n Low values mean high damping."));
@@ -3605,7 +3613,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	itemStaticText19->SetToolTip(_("Length of the boat laylines in [nm]"));
 
 	itemFlexGridSizer05->Add(itemStaticText19, 0, wxEXPAND | wxALL, border_size);
-	m_pLaylineLength = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0.0, 20.0, g_dLaylineLengthonChart, 0.1);
+	m_pLaylineLength = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0.0, 20.0, g_dLaylineLengthonChart, 0.1);
 	itemFlexGridSizer05->Add(m_pLaylineLength, 0, wxALIGN_LEFT | wxALL, 0);
 	m_pLaylineLength->SetValue(g_dLaylineLengthonChart);
 	m_pLaylineLength->SetToolTip(_("Length of the boat laylines in [nm]"));
@@ -3614,7 +3622,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 		wxDefaultPosition, wxDefaultSize, 0);
 	itemStaticText21->SetToolTip(_("Min. width of boat laylines in degrees."));
 	itemFlexGridSizer05->Add(itemStaticText21, 0, wxEXPAND | wxALL, border_size);
-	m_minLayLineWidth = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 20, g_iMinLaylineWidth);
+	m_minLayLineWidth = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 20, g_iMinLaylineWidth);
 	m_minLayLineWidth->SetToolTip(_("Min. width of boat laylines in degrees."));
 	itemFlexGridSizer05->Add(m_minLayLineWidth, 0, wxALIGN_LEFT | wxALL, 0);
 
@@ -3623,7 +3631,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 		wxDefaultPosition, wxDefaultSize, 0);
 	itemStaticText22->SetToolTip(_("Max. width of boat laylines in degrees."));
 	itemFlexGridSizer05->Add(itemStaticText22, 0, wxEXPAND | wxALL, border_size);
-	m_maxLayLineWidth = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 30, g_iMaxLaylineWidth);
+	m_maxLayLineWidth = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 30, g_iMaxLaylineWidth);
 	m_maxLayLineWidth->SetToolTip(_("Max. width of boat laylines in degrees."));
 	itemFlexGridSizer05->Add(m_maxLayLineWidth, 0, wxALIGN_LEFT | wxALL, 0);
 	//****************************************************************************************************
@@ -3639,7 +3647,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	wxStaticText* itemStaticText23a = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Boat's Leeway factor [0-20]:  "), wxDefaultPosition, wxDefaultSize, 0);
 	itemStaticText23a->SetToolTip(_("Leeway='Drift' of boat due to heel/wind influence\nLow values mean high performance of hull\nLeeway = (LeewayFactor * Heel) / STW\u00B2;")); //²
 	itemFlexGridSizer06->Add(itemStaticText23a, 0, wxEXPAND | wxALL, border_size);
-	m_LeewayFactor = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 20, g_dLeewayFactor, 0.01);
+	m_LeewayFactor = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 20, g_dLeewayFactor, 0.01);
 	m_LeewayFactor->SetToolTip(_("Leeway='Drift' of boat due to heel/wind influence\nLow values mean high performance of hull\nLeeway = (LeewayFactor * Heel) / STW\u00B2;"));
 
 	itemFlexGridSizer06->Add(m_LeewayFactor, 0, wxALIGN_LEFT | wxALL, 0);
@@ -3659,7 +3667,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 
 	m_ButtonFixedLeeway->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(TacticsPreferencesDialog::OnManualHeelUpdate), NULL, this);
 
-	m_fixedLeeway = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 30, g_dfixedLeeway, 0.01);
+	m_fixedLeeway = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 30, g_dfixedLeeway, 0.01);
 	itemFlexGridSizer06->Add(m_fixedLeeway, 0, wxALIGN_LEFT, 0);
 	m_fixedLeeway->SetValue(g_dfixedLeeway);
 	//--------------------
@@ -3691,72 +3699,72 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	//--------------------
 	wxStaticText* itemStaticText23ws5 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("5 kn"), wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer07->Add(itemStaticText23ws5, 0, wxEXPAND | wxALL, border_size);
-	m_heel5_45 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[1][1], 0.1);
+	m_heel5_45 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[1][1], 0.1);
 	itemFlexGridSizer07->Add(m_heel5_45, 0, wxALIGN_LEFT, 0);
 	m_heel5_45->SetValue(g_dheel[1][1]);
 	//--------------------
-	m_heel5_90 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[1][2], 0.1);
+	m_heel5_90 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[1][2], 0.1);
 	itemFlexGridSizer07->Add(m_heel5_90, 0, wxALIGN_LEFT, 0);
 	m_heel5_90->SetValue(g_dheel[1][2]);
 	//--------------------
-	m_heel5_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[1][3], 0.1);
+	m_heel5_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[1][3], 0.1);
 	itemFlexGridSizer07->Add(m_heel5_135, 0, wxALIGN_LEFT, 0);
 	m_heel5_135->SetValue(g_dheel[1][3]);
 	//--------------------
 	wxStaticText* itemStaticText23ws10 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("10 kn"), wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer07->Add(itemStaticText23ws10, 0, wxEXPAND | wxALL, border_size);
-	m_heel10_45 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[2][1], 0.1);
+	m_heel10_45 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[2][1], 0.1);
 	itemFlexGridSizer07->Add(m_heel10_45, 0, wxALIGN_LEFT, 0);
 	m_heel10_45->SetValue(g_dheel[2][1]);
 	//--------------------
-	m_heel10_90 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[2][2], 0.1);
+	m_heel10_90 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[2][2], 0.1);
 	itemFlexGridSizer07->Add(m_heel10_90, 0, wxALIGN_LEFT, 0);
 	m_heel10_90->SetValue(g_dheel[2][2]);
 	//--------------------
-	m_heel10_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[2][3], 0.1);
+	m_heel10_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[2][3], 0.1);
 	itemFlexGridSizer07->Add(m_heel10_135, 0, wxALIGN_LEFT, 0);
 	m_heel10_135->SetValue(g_dheel[2][3]);
 	//--------------------
 	wxStaticText* itemStaticText23ws15 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("15 kn"), wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer07->Add(itemStaticText23ws15, 0, wxEXPAND | wxALL, border_size);
 
-	m_heel15_45 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[3][1], 0.1);
+	m_heel15_45 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[3][1], 0.1);
 	itemFlexGridSizer07->Add(m_heel15_45, 0, wxALIGN_LEFT, 0);
 	m_heel15_45->SetValue(g_dheel[3][1]);
 	//--------------------
-	m_heel15_90 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[3][2], 0.1);
+	m_heel15_90 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[3][2], 0.1);
 	itemFlexGridSizer07->Add(m_heel15_90, 0, wxALIGN_LEFT, 0);
 	m_heel15_90->SetValue(g_dheel[3][2]);
 	//--------------------
-	m_heel15_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[3][3], 0.1);
+	m_heel15_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[3][3], 0.1);
 	itemFlexGridSizer07->Add(m_heel15_135, 0, wxALIGN_LEFT, 0);
 	m_heel15_135->SetValue(g_dheel[3][3]);
 	//--------------------
 	wxStaticText* itemStaticText23ws20 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("20 kn"), wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer07->Add(itemStaticText23ws20, 0, wxEXPAND | wxALL, border_size);
-	m_heel20_45 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[4][1], 0.1);
+	m_heel20_45 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[4][1], 0.1);
 	itemFlexGridSizer07->Add(m_heel20_45, 0, wxALIGN_LEFT, 0);
 	m_heel20_45->SetValue(g_dheel[4][1]);
 	//--------------------
-	m_heel20_90 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[4][2], 0.1);
+	m_heel20_90 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[4][2], 0.1);
 	itemFlexGridSizer07->Add(m_heel20_90, 0, wxALIGN_LEFT, 0);
 	m_heel20_90->SetValue(g_dheel[4][2]);
 	//--------------------
-	m_heel20_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[4][3], 0.1);
+	m_heel20_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[4][3], 0.1);
 	itemFlexGridSizer07->Add(m_heel20_135, 0, wxALIGN_LEFT, 0);
 	m_heel20_135->SetValue(g_dheel[4][3]);
 	//--------------------
 	wxStaticText* itemStaticText23ws25 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("25 kn"), wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer07->Add(itemStaticText23ws25, 0, wxEXPAND | wxALL, border_size);
-	m_heel25_45 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[5][1], 0.1);
+	m_heel25_45 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[5][1], 0.1);
 	itemFlexGridSizer07->Add(m_heel25_45, 0, wxALIGN_LEFT, 0);
 	m_heel25_45->SetValue(g_dheel[5][1]);
 	//--------------------
-	m_heel25_90 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[5][2], 0.1);
+	m_heel25_90 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[5][2], 0.1);
 	itemFlexGridSizer07->Add(m_heel25_90, 0, wxALIGN_LEFT, 0);
 	m_heel25_90->SetValue(g_dheel[5][2]);
 	//--------------------
-	m_heel25_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[5][3], 0.1);
+	m_heel25_135 = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS, 0, 60, g_dheel[5][3], 0.1);
 	itemFlexGridSizer07->Add(m_heel25_135, 0, wxALIGN_LEFT, 0);
 	m_heel25_135->SetValue(g_dheel[5][3]);
 
@@ -3773,13 +3781,13 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	/*
 	wxStaticText* itemStaticText24 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Current damping factor [0.001-0.4]:  "),wxDefaultPosition, wxDefaultSize, 0);
 	itemFlexGridSizer08->Add(itemStaticText24, 0, wxEXPAND | wxALL, border_size);
-	m_AlphaCurrDir = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS | wxSP_WRAP, 0.001, 0.4, g_dalpha_currdir, 0.001);
+	m_AlphaCurrDir = new wxSpinCtrlDouble(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS | wxSP_WRAP, 0.001, 0.4, g_dalpha_currdir, 0.001);
 	itemFlexGridSizer08->Add(m_AlphaCurrDir, 0, wxBOTTOM | wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 0);
 	m_AlphaCurrDir->SetValue(g_dalpha_currdir);*/
 	wxStaticText* itemStaticText24 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Current damping factor [1-400]:  "), wxDefaultPosition, wxDefaultSize, 0);
 	itemStaticText24->SetToolTip(_("Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\nLow values mean high damping"));
 	itemFlexGridSizer08->Add(itemStaticText24, 0, wxEXPAND | wxALL, border_size);
-	m_AlphaCurrDir = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, -1), wxSP_ARROW_KEYS | wxSP_WRAP, 1, 400, g_dalpha_currdir * 1000);
+	m_AlphaCurrDir = new wxSpinCtrl(itemPanelNotebook03, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(-1, -1), wxSP_ARROW_KEYS | wxSP_WRAP, 1, 400, g_dalpha_currdir * 1000);
 	itemFlexGridSizer08->Add(m_AlphaCurrDir, 0, wxALIGN_LEFT, 0);
 	m_AlphaCurrDir->SetValue(g_dalpha_currdir * 1000);
 	m_AlphaCurrDir->SetToolTip(_("Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\nLow values mean high damping"));
