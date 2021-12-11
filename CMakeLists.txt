@@ -18,7 +18,7 @@
 ## *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 ## ***************************************************************************
 #  Frontend2 Author:  ongough aka. Jon Gough Copyright: wxWidgets License
-#  Fronted2 Version: 1.0.180     17/11/2021
+#  Fronted2 Version: 1.0.185.0    11/12/2021
 # ---------------------------------------------------------------------------
 ## ----- When changing this file do NOT change the order in which sections occur        ----- ##
 ## ----- Changes should only be made between the section blocks that identify where     ----- ##
@@ -57,9 +57,9 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "24")
+set(VERSION_PATCH "25")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "2020-11-20")
+set(VERSION_DATE "10/12/2021")  # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -97,7 +97,7 @@ option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 
-# Use local version of GLU library
+# Use local version of GLU library  requires libs/glu directory
 #set(USE_LOCAL_GLU TRUE)
 # Prefer libGL.so to libOpenGL.so, see CMP0072
 set(OpenGL_GL_PREFERENCE "LEGACY")
