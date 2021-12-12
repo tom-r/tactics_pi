@@ -452,7 +452,7 @@ wxTimer(this), opencpn_plugin_116(ppimgr)
 {
 	// Create the PlugIn icons
 	initialize_images();
-	
+
 // Create the PlugIn icons  -from shipdriver
 // loads png file for the listing panel icon
     wxFileName fn;
@@ -475,7 +475,7 @@ wxTimer(this), opencpn_plugin_116(ppimgr)
         m_panelBitmap = wxBitmap(panelIcon);
     else
         wxLogWarning("Tactics panel icon has NOT been loaded");
-// End of from Shipdriver	
+// End of from Shipdriver
 
 }
 
@@ -549,7 +549,7 @@ int tactics_pi::Init(void)
     mExpSmCoscur_tacklinedir = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
     mExpSmSintarget_tacklinedir = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
     mExpSmCostarget_tacklinedir = new DoubleExpSmooth(g_dalphaLaylinedDampFactor);
-	
+
 	mPercentTargetVMGupwind = mPercentTargetVMGdownwind = mPercentUserTargetSpeed = 0.;
 
     m_ExpSmoothDegRange = 0;
@@ -640,7 +640,7 @@ int tactics_pi::Init(void)
 
 	Start(1000, wxTIMER_CONTINUOUS);
 	/* TR */
-	// Context menue for making marks    
+	// Context menue for making marks
 	m_pmenu = new wxMenu();
 	// this is a dummy menu required by Windows as parent to item created
 	wxMenuItem *pmi = new wxMenuItem(m_pmenu, -1, _T("Set Tactics Mark "));
@@ -740,7 +740,7 @@ void tactics_pi::Notify()
 
         mSatsInView = 0;
         //SendSentenceToAllInstruments( OCPN_DBP_STC_SAT, 0, _T("") );
-		
+
     }
     mBRG_Watchdog--;
     if (mBRG_Watchdog <= 0) {
@@ -818,7 +818,7 @@ wxString tactics_pi::GetCommonName()
 
 /*  wxString retstr(s_common_name);
   return retstr; */
-  
+
 }
 
 /*
@@ -835,7 +835,7 @@ wxString tactics_pi::GetCommonName()
 wxString tactics_pi::GetShortDescription()
 {
     return _(PLUGIN_SHORT_DESCRIPTION);
-	
+
 }
 //*********************************************************************************
 wxString tactics_pi::GetLongDescription()
@@ -849,14 +849,14 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
   double org_value=value;
 	if (st == OCPN_DBP_STC_AWS){
 		//Correct AWS with heel if global variable set and heel is available
-		//correction only makes sense if you use a heel sensor 
+		//correction only makes sense if you use a heel sensor
 		//AWS_corrected = AWS_measured * cos(AWA_measured) / cos(AWA_corrected)
 		if (g_bCorrectAWwithHeel == true && g_bUseHeelSensor && !wxIsNaN(mheel) && !wxIsNaN(value))
 			value = value / cos(mheel*M_PI / 180.);
 	}
 	if (st == OCPN_DBP_STC_STW){
 		//Correct STW with Leeway if global variable set and heel is available
-		//correction only makes sense if you use a heel sensor 
+		//correction only makes sense if you use a heel sensor
 		if (g_bCorrectSTWwithLeeway == true && g_bUseHeelSensor && !wxIsNaN(mLeeway) && !wxIsNaN(mheel))
 			value = value / cos(mLeeway *M_PI / 180.0);
 	}
@@ -871,7 +871,7 @@ void tactics_pi::SendSentenceToAllInstruments(int st, double value, wxString uni
 	if (st == OCPN_DBP_STC_AWA){
 		if (g_bCorrectAWwithHeel == true && g_bUseHeelSensor && !wxIsNaN(mLeeway) && !wxIsNaN(mheel)){
 			//Correct AWA with heel if global variable set and heel is available
-			//correction only makes sense if you use a heel sensor 
+			//correction only makes sense if you use a heel sensor
 			double tan_awa = tan(value * M_PI / 180.);
 			double awa_heel;
 			if (wxIsNaN(tan_awa))
@@ -1201,12 +1201,12 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 			mExpSmDiffCogHdt->SetAlpha(alpha_CogHdt);
             m_ExpSmoothDiffCogHdt = mExpSmDiffCogHdt->GetSmoothVal((diffCogHdt < 0 ? -diffCogHdt : diffCogHdt));
 			if (targetTack == _T("R")){ // currently wind is from port ...now
-				mPredictedHdG = m_LaylineSmoothedCog - m_ExpSmoothDiffCogHdt - 2 * mTWA - fabs(mLeeway); //Leeway is signed 
+				mPredictedHdG = m_LaylineSmoothedCog - m_ExpSmoothDiffCogHdt - 2 * mTWA - fabs(mLeeway); //Leeway is signed
 				//GLubyte red(0), green(200), blue(0), alpha(128);
 				glColor4ub(0, 200, 0, 128);                 	// red, green, blue,  alpha
 			}
 			else if (targetTack == _T("L")){ //currently wind from starboard
-				mPredictedHdG = m_LaylineSmoothedCog + m_ExpSmoothDiffCogHdt + 2 * mTWA + fabs(mLeeway); //Leeway is signed 
+				mPredictedHdG = m_LaylineSmoothedCog + m_ExpSmoothDiffCogHdt + 2 * mTWA + fabs(mLeeway); //Leeway is signed
 				//GLubyte red(204), green(41), blue(41), alpha(128);
 				glColor4ub(204, 41, 41, 128);                 	// red, green, blue,  alpha
 			}
@@ -1297,7 +1297,7 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 					DistanceBearingMercator_Plugin(curlat, curlon, mlat, mlon, &cur_tacklinedir, &act_sog);
                     // smooth cur_tacklinedir, continue whith smoothed value
                     if (wxIsNaN(m_ExpSmcur_tacklinedir)) m_ExpSmcur_tacklinedir = cur_tacklinedir;
- 
+
                     double myrad2 = (90 - cur_tacklinedir)*M_PI / 180.;
                     mExpSmSincur_tacklinedir->SetAlpha(g_dalphaLaylinedDampFactor);
                     mExpSmCoscur_tacklinedir->SetAlpha(g_dalphaLaylinedDampFactor);
@@ -1485,7 +1485,7 @@ void tactics_pi::DoRenderLaylineGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort
 							glVertex2d(mark_center.x, mark_center.y);
 							glEnd();
 						}
-						else { // otherwise highlight the direct line 
+						else { // otherwise highlight the direct line
 							if (sigCTM_TWA <0)
 								glColor4ub(255, 0, 0, 255);
 							else
@@ -2249,11 +2249,11 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 						_T("\u00B0M"));
 					mTWD_Watchdog = gps_watchdog_timeout_ticks;
 				}
-                
+
                 // NKE has a bug in its TWS calculation with activated(!) "True Wind Tables" in combination of Multigraphic instrument and HR wind sensor
                 // this almost duplicates the TWS values delivered in MWD & VWT and destroys the Wind history view, showing weird peaks
                 // It is particularly annoying when @anchor and trying to record windspeeds ...
-                // It seems to happen only when 
+                // It seems to happen only when
                 // * VWR sentence --> AWA changes from "Left" to "Right" through 0° AWA (TWA)
                 // * with low AWA/TWA values like 0...4 degrees
                 // NMEA stream looks like this:
@@ -2267,11 +2267,11 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
                 //  $IIVWT, 1, L, 8.6, N, 4.4, M, 15.9, K * 7D     VWT now back to 8.6 TWS
                 //  $IIVWR, 0, R, 9.0, N, 4.6, M, 16.7, K * 6C     passing 0°AWA again
                 //  $IIMWD, , , 335, M, 17.6, N, 9.1, M * 1D       jump to 17.6 TWS
-                //  $IIVWT, 8, R, 17.6, N, 9.1, M, 32.6, K * 56    still 17.6 TWS 
+                //  $IIVWT, 8, R, 17.6, N, 9.1, M, 32.6, K * 56    still 17.6 TWS
                 //  $IIVWR, 4, R, 9.1, N, 4.7, M, 16.9, K * 66     VWR increasing to 4°AWA...
                 //  $IIMWD, , , 335, M, 9.0, N, 4.6, M*2E          and back to normal, 9 TWS
-                // trying to catch this here and simply drop the false speed values 
-               
+                // trying to catch this here and simply drop the false speed values
+
                 if (m_bNKE_TrueWindTableBug && m_VWR_AWA < 8 && m_NMEA0183.Mwd.WindSpeedKnots > mTWS*1.7)
                   ;//gotcha
                 //wxLogMessage("MWD-Sentence, MWD-Spd=%f,mTWS=%f,VWR_AWA=%f,NKE_BUG=%d", m_NMEA0183.Mwd.WindSpeedKnots, mTWS, m_VWR_AWA, m_bNKE_TrueWindTableBug);
@@ -2550,7 +2550,7 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
 
 					wxString awaunit;
 					awaunit = m_NMEA0183.Vwr.DirectionOfWind == Left ? _T("\u00B0L") : _T("\u00B0R");
-                    
+
 					SendSentenceToAllInstruments(OCPN_DBP_STC_AWA,
 						m_NMEA0183.Vwr.WindDirectionMagnitude, awaunit);
 					SendSentenceToAllInstruments(OCPN_DBP_STC_AWS, toUsrSpeed_Plugin(m_NMEA0183.Vwr.WindSpeedKnots, g_iDashWindSpeedUnit),
@@ -2651,7 +2651,7 @@ void tactics_pi::SetNMEASentence(wxString &sentence)
                           (m_NMEA0183.Xdr.TransducerInfo[i].TransducerName == _T("ROLL")) ||
                           (m_NMEA0183.Xdr.TransducerInfo[i].TransducerName == _T("HEEL")) ||
                           (m_NMEA0183.Xdr.TransducerInfo[i].TransducerName == _T("Heel Angle")) )
-                      {					  
+                      {
                         if (m_NMEA0183.Xdr.TransducerInfo[i].MeasurementData > 0)
                           xdrunit = _T("\u00B0r");
                         else if (m_NMEA0183.Xdr.TransducerInfo[i].MeasurementData < 0) {
@@ -2744,8 +2744,10 @@ void tactics_pi::SetPositionFix(PlugIn_Position_Fix &pfix)
 	}
 	if (mPriDateTime >= 6) { //We prefer the GPS datetime
 		mPriDateTime = 6;
-		mUTCDateTime.Set(pfix.FixTime);
-		mUTCDateTime = mUTCDateTime.ToUTC();
+        if(pfix.FixTime > 0){
+            mUTCDateTime.Set(pfix.FixTime);
+            mUTCDateTime = mUTCDateTime.ToUTC();
+        }
 	}
 	mSatsInView = pfix.nSats;
 	//    SendSentenceToAllInstruments( OCPN_DBP_STC_SAT, mSatsInView, _T("") );
@@ -3055,8 +3057,8 @@ bool tactics_pi::LoadConfig(void)
 		pConf->Read(_T("CMGSynonym"), &g_sCMGSynonym, _T("CMG"));
 		pConf->Read(_T("VMGSynonym"), &g_sVMGSynonym, _T("VMG"));
 		m_bDisplayCurrentOnChart = g_bDisplayCurrentOnChart;
-        
-        //DataExportSeparator for WindHistory, BaroHistory & PolarPerformance         
+
+        //DataExportSeparator for WindHistory, BaroHistory & PolarPerformance
         pConf->Read(_T("DataExportSeparator"), &g_sDataExportSeparator, _(";"));
         pConf->Read(_T("DataExportUTC-ISO8601"), &g_bDataExportUTC, 0);
         pConf->Read(_T("DataExportClockticks"), &g_bDataExportClockticks,0);
@@ -3176,7 +3178,7 @@ bool tactics_pi::SaveConfig(void)
         pConf->Write(_T("ShowLaylinesOnChart"), m_bLaylinesIsVisible);
         pConf->Write(_T("CMGSynonym"), g_sCMGSynonym);
 		pConf->Write(_T("VMGSynonym"), g_sVMGSynonym);
-        //WindHistory, BaroHistory & PolarPerformance need DataExportSeparator         
+        //WindHistory, BaroHistory & PolarPerformance need DataExportSeparator
         pConf->Write(_T("DataExportSeparator"), g_sDataExportSeparator);
         pConf->Write(_T("DataExportUTC-ISO8601"), g_bDataExportUTC);
         pConf->Write(_T("DataExportClockticks"), g_bDataExportClockticks);
@@ -5112,7 +5114,7 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
 			//calculate endpoint of COG/SOG
 			PositionBearingDistanceMercator_Plugin(mlat, mlon, mCOG, sog_kts, &COGlat, &COGlon);
 
-			//------------------------------------ 
+			//------------------------------------
 			//correct HDT with Leeway
 			//------------------------------------
 
@@ -5124,11 +5126,11 @@ void tactics_pi::CalculateCurrent(int st, double value, wxString unit)
 			//     \
 			//      \        Current
 			//       \ COG,SOG
-			//        V        
+			//        V
 			// if wind is from port, heel & mLeeway will be positive (to starboard), adding degrees on the compass rose
 			//  CRS = Hdt + Leeway
 			//  if wind is from starboard, heel/mLeeway are negative (to port), mLeeway has to be substracted from Hdt
-			//   As mLeeway is a signed double, so we can generally define : CRS = Hdt + mLeeway 
+			//   As mLeeway is a signed double, so we can generally define : CRS = Hdt + mLeeway
 			double CourseThroughWater = mHdt + mLeeway;
 			if (CourseThroughWater >= 360) CourseThroughWater -= 360;
 			if (CourseThroughWater < 0) CourseThroughWater += 360;
@@ -5217,7 +5219,7 @@ void tactics_pi::CalculatePerformanceData(void)
 
     // get Target VMG Angle from Polar
     tvmg = BoatPolar->Calc_TargetVMG(mTWA, mTWS);
-    
+
     mPercentTargetVMGupwind = mPercentTargetVMGdownwind = 0.;
     if ( (tvmg.TargetSpeed > 0) && !std::isnan( mStW ) ) {
         double VMG = BoatPolar->Calc_VMG(mTWA, mStW);
@@ -5266,7 +5268,7 @@ void tactics_pi::ExportPerformanceData(void)
 	}
 	//Target VMG angle, act. VMG % upwind, act. VMG % downwind
 	if (g_bExpPerfData03 && !std::isnan(tvmg.TargetAngle) && tvmg.TargetSpeed > 0){
-		createPNKEP_NMEA(3, 
+		createPNKEP_NMEA(3,
                          tvmg.TargetAngle,
                          ( (mPercentTargetVMGupwind == 0)? mPercentTargetVMGdownwind : mPercentTargetVMGupwind ),
                          mPercentUserTargetSpeed,
@@ -5328,7 +5330,7 @@ Opt. VMG angle and performance up and downwind + polar speed perfomance
 $PNKEP,03,x.x,x.x,x.x*hh<CR><LF>
            |    |   \ polar speed performance TWA/TWS from 0 to 99%
            |    \ performance upwind or downwind from 0 to 99%
-           \ opt.VMG angle  0 à 359deg 
+           \ opt.VMG angle  0 à 359deg
 Angles pour optimiser le CMG et VMG et gain correspondant (code PNKEP04)
 $PNKEP,04,x.x,x.x,x.x,x.x*hh<CR><LF>
            |   |   |   \ Gain VMG de 0 à 999%
