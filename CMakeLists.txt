@@ -18,7 +18,7 @@
 ## *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 ## ***************************************************************************
 #  Frontend2 Author:  ongough aka. Jon Gough Copyright: wxWidgets License
-#  Fronted2 Version: 1.0.185.0    11/12/2021
+#  Fronted2 Version: 1.0.194.0    21/03/2022 # DD/MM/YYYY format
 # ---------------------------------------------------------------------------
 ## ----- When changing this file do NOT change the order in which sections occur        ----- ##
 ## ----- Changes should only be made between the section blocks that identify where     ----- ##
@@ -57,9 +57,9 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "26")
-set(VERSION_TWEAK "0")
-set(VERSION_DATE "12/12/2021")  # DD/MM/YYYY format
+set(VERSION_PATCH "27")
+set(VERSION_TWEAK "1")
+set(VERSION_DATE "21/03/2022")  # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -98,10 +98,12 @@ option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 set(CMAKE_CXX_STANDARD 11)
 
 # Use local version of GLU library  requires libs/glu directory
+#try use local glu true
 #set(USE_LOCAL_GLU TRUE)
 # Prefer libGL.so to libOpenGL.so, see CMP0072
 set(OpenGL_GL_PREFERENCE "LEGACY")
 # Don't use local version of GLU library
+#try true does not help.
 set(USE_LOCAL_GLU FALSE)
 
 option(USE_GL "Enable OpenGL support" ON)
@@ -149,7 +151,7 @@ include("PluginConfigure")
 
 add_definitions(-DUSE_S57)
 
-SET(SRC_TACTICS
+SET(SRCS
     src/tactics_pi.h
     src/tactics_pi.cpp
 	src/avg_wind.h
@@ -298,7 +300,6 @@ set(LIBHDRS
     libs/wxJSON/include/jsonwriter.h
 )
     
-    
 
 add_definitions(-DPLUGIN_USE_SVG)
 
@@ -337,10 +338,13 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE_DIR})
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/GL)
+#added this
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glu)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
-#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/src)
+#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/src)																  
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/nmea0183/src)
+#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/src/nmea0183)
 
 #
 # ----- Change below to match project requirements for android build ----- ##
@@ -355,7 +359,8 @@ endif(QT_ANDROID)
 ##
 
 #target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
-target_sources(${PACKAGE_NAME} PUBLIC ${SRC_TACTICS} ${SRC_NMEA0183} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
+#target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${SRC_NMEA0183} ${HDRS} ${OCPNSRC} ${EXTSRC}  ${LIBHDRS}  ${LIBSSRC})
+target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
 
 
 if(NOT OCPN_FLATPAK_CONFIG)

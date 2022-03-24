@@ -23,7 +23,7 @@ wxString _svg_dial;
 wxString _svg_instrument;
 wxString _svg_minus;
 wxString _svg_plus;
-#endif
+#endif //  PLUGIN_USE_SVG
 
 void initialize_images(void)
 {
@@ -63,7 +63,6 @@ void initialize_images(void)
     _svg_tactics_rollover = fn.GetFullPath();
     fn.SetFullName(_T("tactics_pi_toggled.svg"));
     _svg_tactics_toggled = fn.GetFullPath();
-#endif
-
+#endif //  PLUGIN_USE_SVG					   
 	return;
 }

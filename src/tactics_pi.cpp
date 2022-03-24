@@ -610,6 +610,7 @@ int tactics_pi::Init(void)
 //		_T("tactics_pi") + wxFileName::GetPathSeparator()
 //		+ _T("data") + wxFileName::GetPathSeparator();
 // First try
+
 	wxString shareLocn = GetPluginDataDir("tactics_pi") +  _T("/data/");
 
 	wxString normalIcon = shareLocn + _T("tactics.svg");
