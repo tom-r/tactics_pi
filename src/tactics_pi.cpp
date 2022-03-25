@@ -3591,7 +3591,7 @@ TacticsPreferencesDialog::TacticsPreferencesDialog(wxWindow *parent, wxWindowID 
 	itemStaticBoxSizer05->Add(itemFlexGridSizer05, 1, wxEXPAND | wxALL, 0);
 	wxString s;
     //---Layline damping factor -----------------
-    wxStaticText* itemStaticText18 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Layline damping factor [0.025-1]:  "),
+    wxStaticText* itemStaticText18 = new wxStaticText(itemPanelNotebook03, wxID_ANY, _("Layline damping factor [0.025-0.99]:  "),
       wxDefaultPosition, wxDefaultSize, 0);
     itemStaticText18->SetToolTip(_("The layline damping factor determines how fast the  laylines react on your course changes, i.e. your COG changes.\n Low values mean high damping."));
     itemFlexGridSizer05->Add(itemStaticText18, 0, wxEXPAND | wxALL, border_size);
