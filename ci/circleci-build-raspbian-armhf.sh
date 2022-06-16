@@ -69,6 +69,7 @@ else
     if [ "$OCPN_TARGET" = "focal-arm64" ] ||
        [ "$OCPN_TARGET" = "focal-armhf" ] ||
        [ "$OCPN_TARGET" = "bullseye-armhf" ] ||
+       [ "$OCPN_TARGET" = "bullseye-arm64" ] ||
        [ "$OCPN_TARGET" = "buster-armhf" ]; then
         cat >> build.sh << "EOF5"
         echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -76,7 +77,8 @@ else
         apt-get -y --no-install-recommends --fix-missing install \
         software-properties-common devscripts equivs wget git build-essential gettext wx-common libgtk2.0-dev libwxbase3.0-dev libbz2-dev libcurl4-openssl-dev libexpat1-dev libcairo2-dev libarchive-dev liblzma-dev libexif-dev lsb-release openssl libssl-dev
 EOF5
-        if [ "$OCPN_TARGET" = "buster-armhf" ]; then
+        if [ "$OCPN_TARGET" = "buster-armhf" ] ||
+           [ "$OCPN_TARGET" = "bullseye-arm64" ]; then
             echo "BUILD_GTK3: $BUILD_GTK3"
             if [ ! -n "$BUILD_GTK3" ] || [ "$BUILD_GTK3" = "false" ]; then
                 echo "Building for GTK2"
@@ -110,6 +112,21 @@ EOF9
         git cmake build-essential gettext wx-common libgtk2.0-dev libwxbase3.0-dev libwxgtk3.0-dev libbz2-dev libcurl4-openssl-dev libexpat1-dev libcairo2-dev libarchive-dev liblzma-dev libexif-dev lsb-release
 EOF10
     fi
+fi
+
+# Install extra build libs
+ME=$(echo ${0##*/} | sed 's/\.sh//g')
+EXTRA_LIBS=./ci/extras/extra_libs.txt
+if test -f "$EXTRA_LIBS"; then
+    while read line; do
+        sudo apt-get install $line
+    done < $EXTRA_LIBS
+fi
+EXTRA_LIBS=./ci/extras/${ME}_extra_libs.txt
+if test -f "$EXTRA_LIBS"; then
+    while read line; do
+        sudo apt-get install $line
+    done < $EXTRA_LIBS
 fi
 
 cat build.sh
