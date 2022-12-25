@@ -58,7 +58,7 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "33")
+set(VERSION_PATCH "34")
 set(VERSION_TWEAK "0")
 set(VERSION_DATE "24/12/2022")  # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
