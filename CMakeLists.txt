@@ -18,7 +18,7 @@
 ## *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 ## ***************************************************************************
 #  Frontend2 Author:  ongough aka. Jon Gough Copyright: wxWidgets License
-#  Fronted2 Version: 1.0.238.0    11/06/2023 # DD/MM/YYYY format
+#  Fronted2 Version: 1.0.253.0    07/08/2023 # DD/MM/YYYY format
 # ---------------------------------------------------------------------------
 ## ----- When changing this file do NOT change the order in which sections occur        ----- ##
 ## ----- Changes should only be made between the section blocks that identify where     ----- ##
@@ -58,9 +58,9 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "36")
+set(VERSION_PATCH "37")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "16/06/2023")  # DD/MM/YYYY format
+set(VERSION_DATE "09/08/2023")  # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
