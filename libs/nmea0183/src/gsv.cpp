@@ -127,14 +127,12 @@ Where:
     MessageNumber = sentence.Integer( 2 );
     SatsInView = sentence.Integer( 3 );
 
-    for (int idx = 0; idx < satInfoCnt; idx++)
-    {
-        SatInfo[idx].SatNumber = sentence.Integer( idx*4+4 );
-        SatInfo[idx].ElevationDegrees = sentence.Integer( idx*4+5 );
-        SatInfo[idx].AzimuthDegreesTrue = sentence.Integer( idx*4+6 );
-        SatInfo[idx].SignalToNoiseRatio = sentence.Integer( idx*4+7 );
+    for (int idx = 0; idx < satInfoCnt; idx++) {
+      SatInfo[idx].SatNumber = sentence.Integer(idx * 4 + 4);
+      SatInfo[idx].ElevationDegrees = sentence.Integer(idx * 4 + 5);
+      SatInfo[idx].AzimuthDegreesTrue = sentence.Integer(idx * 4 + 6);
+      SatInfo[idx].SignalToNoiseRatio = sentence.Integer(idx * 4 + 7);
     }
-
     return( TRUE );
 }
 
