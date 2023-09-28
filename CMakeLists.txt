@@ -55,7 +55,7 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "39")
+set(VERSION_PATCH "40")
 set(VERSION_TWEAK "0")
 set(VERSION_DATE  "27/09/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
@@ -65,6 +65,7 @@ set(OCPN_API_VERSION_MINOR "16")
 set(TP_COMMENT "  * Release using CI")
 
 set(PARENT "opencpn")
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 #Use to set up a local webserver with git installed.
 #Default is github.com. Now set in pluginconfigure.cmake
@@ -238,6 +239,12 @@ if(NOT OCPN_FLATPAK_CONFIG)
 
     add_subdirectory(opencpn-libs/plugingl)
     target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
+    
+#   add_subdirectory(opencpn-libs/glu)
+#   target_link_libraries(${PACKAGE_NAME} ocpn::glu)
+
+    add_subdirectory(opencpn-libs/glu)
+    target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
 
     add_subdirectory(opencpn-libs/nmea0183)
     target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
