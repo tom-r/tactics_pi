@@ -55,9 +55,9 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "40")
+set(VERSION_PATCH "41")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE  "27/09/2023")#DD/MM/YYYY format
+set(VERSION_DATE  "28/09/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 
 set(OCPN_API_VERSION_MAJOR "1")
@@ -206,11 +206,7 @@ SET(SRC ${SRCS} ${HDRS} )
 ## Modify/configure 'Include' Directories below for the Plugin
 ##=============================================================
 
-#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
 
-#  Original nmea0183 Library - Leave in place until known. 
-#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/nmea0183/src)
-#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/src/nmea0183)
 
 
 ## Change target_sources to match your project needs.
@@ -240,19 +236,15 @@ if(NOT OCPN_FLATPAK_CONFIG)
     add_subdirectory(opencpn-libs/plugingl)
     target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
     
-#   add_subdirectory(opencpn-libs/glu)
-#   target_link_libraries(${PACKAGE_NAME} ocpn::glu)
-
     add_subdirectory(opencpn-libs/glu)
     target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
+	
+#   Using the Dashboard_Tactics nmea0183 version in libs subdirectory
+    add_subdirectory(libs/nmea0183dtactics)
+    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183dtactics)	
 
-    add_subdirectory(opencpn-libs/nmea0183)
-    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
-
-#    Original nmea0183 Library - Leave in place until known.    
-#    add_subdirectory(libs/nmea0183)
+#    add_subdirectory(opencpn-libs/nmea0183)
 #    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
-
 
 endif(NOT OCPN_FLATPAK_CONFIG)
 
