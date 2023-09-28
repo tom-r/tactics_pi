@@ -365,6 +365,9 @@ Polar::Polar(TacticsInstrument_PerformanceSingle* parent)
 	wxString stdPath = std_path.GetUserConfigDir();   // should be ~/Library/Preferences
 	stdPath += s + _T("opencpn");
 #endif
+#ifdef __OCPN__ANDROID__
+    wxString stdPath = std_path.GetUserDataDir();
+#endif
 
 	wxString basePath = stdPath + s + _T("plugins") + s + _T("tactics_pi") + s + _T("data") + s;
 	logbookDataPath = basePath;
