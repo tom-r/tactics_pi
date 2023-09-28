@@ -240,11 +240,11 @@ if(NOT OCPN_FLATPAK_CONFIG)
     target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
 	
 #   Using the Dashboard_Tactics nmea0183 version in libs subdirectory
-    add_subdirectory(libs/nmea0183dtactics)
-    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183dtactics)	
+#    add_subdirectory(libs/nmea0183dtactics)
+#    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183dtactics)
 
-#    add_subdirectory(opencpn-libs/nmea0183)
-#    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
+    add_subdirectory(opencpn-libs/nmea0183)
+    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
 
 endif(NOT OCPN_FLATPAK_CONFIG)
 
