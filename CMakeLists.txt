@@ -55,7 +55,7 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "41")
+set(VERSION_PATCH "42")
 set(VERSION_TWEAK "0")
 set(VERSION_DATE  "28/09/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
@@ -242,6 +242,8 @@ if(NOT OCPN_FLATPAK_CONFIG)
 #   Using the Dashboard_Tactics nmea0183 version in libs subdirectory
 #    add_subdirectory(libs/nmea0183dtactics)
 #    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183dtactics)
+#  NOTE I get errors when this lib is used with Tactics.
+#  Perhaps Tactics and Dashboard_tactics have different nmea0183 libs.
 
     add_subdirectory(opencpn-libs/nmea0183)
     target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
