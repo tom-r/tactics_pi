@@ -18,7 +18,7 @@
 ## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,                                       *
 ## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
 #-----------------------------------------------------------------------------
-# Frontend2 Author: Jon Gough 
+# Frontend2 Author: Jon Gough
 # Testplugn(TP) v1.0.256.0 17/09/2023 DD/MM/YYYY format
 # buildCI:yes useODAPI:no validateJSON:no
 # ---------------------------------------------------------------------------
@@ -55,9 +55,9 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "42")
+set(VERSION_PATCH "43")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE  "28/09/2023")#DD/MM/YYYY format
+set(VERSION_DATE  "29/09/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 
 set(OCPN_API_VERSION_MAJOR "1")
@@ -217,7 +217,7 @@ target_sources(${PACKAGE_NAME} PUBLIC ${SRC} )
 ##==============================================================
 
 if(NOT OCPN_FLATPAK_CONFIG)
-    # Build environment not available when flatpak is being configured 
+    # Build environment not available when flatpak is being configured
 	# so following statements will not work
     message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
 
@@ -235,18 +235,18 @@ if(NOT OCPN_FLATPAK_CONFIG)
 
     add_subdirectory(opencpn-libs/plugingl)
     target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
-    
+
     add_subdirectory(opencpn-libs/glu)
     target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
-	
-#   Using the Dashboard_Tactics nmea0183 version in libs subdirectory
-#    add_subdirectory(libs/nmea0183dtactics)
-#    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183dtactics)
-#  NOTE I get errors when this lib is used with Tactics.
-#  Perhaps Tactics and Dashboard_tactics have different nmea0183 libs.
 
     add_subdirectory(opencpn-libs/nmea0183)
     target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
+
+#  Tactics has been converted to use opencpn-libs/nmea0183
+#  This is original Dashboard_Tactics nmea0183 version
+#  Keep this private version around for awhile as it may be useful.
+#    add_subdirectory(libs/nmea0183dtactics)
+#    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183dtactics)
 
 endif(NOT OCPN_FLATPAK_CONFIG)
 
