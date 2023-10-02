@@ -120,7 +120,7 @@ WX_DEFINE_ARRAY(TacticsInstrumentContainer *, wxArrayOfInstrument);
 //----------------------------------------------------------------------------------------------------------
 
 
-class tactics_pi : public wxTimer, opencpn_plugin_116
+class tactics_pi : public wxTimer, opencpn_plugin_117
 {
 public:
       tactics_pi(void *ppimgr);
@@ -136,6 +136,9 @@ public:
       int GetAPIVersionMinor();
       int GetPlugInVersionMajor();
       int GetPlugInVersionMinor();
+      int GetPlugInVersionPatch();
+      int GetPlugInVersionPost();
+	  
       wxBitmap *GetPlugInBitmap();
       wxString GetCommonName();
       wxString GetShortDescription();

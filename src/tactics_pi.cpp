@@ -44,8 +44,6 @@
 #include <GL/glu.h>
 #else
 #ifndef __OCPN__ANDROID__
-//#include <GL/gl.h>
-//#include <GL/glu.h>
 #else
 #include "qopengl.h"                  // this gives us the qt runtime gles2.h
 #include "GL/gl_private.h"
@@ -448,7 +446,7 @@ wxString GetUUID(void)
 //---------------------------------------------------------------------------------------------------------
 
 tactics_pi::tactics_pi(void *ppimgr) :
-wxTimer(this), opencpn_plugin_116(ppimgr)
+wxTimer(this), opencpn_plugin_117(ppimgr)
 {
 	// Create the PlugIn icons
 	initialize_images();
@@ -788,7 +786,16 @@ int tactics_pi::GetPlugInVersionMinor()
     return PLUGIN_VERSION_MINOR;
 }
 //*********************************************************************************
-
+int tactics_pi::GetPlugInVersionPatch()
+{
+    return PLUGIN_VERSION_PATCH;
+}
+//*********************************************************************************
+int tactics_pi::GetPlugInVersionPost()
+{
+    return PLUGIN_VERSION_TWEAK;
+}
+//*********************************************************************************
 
 //wxBitmap *tactics_pi::GetPlugInBitmap()
 //{

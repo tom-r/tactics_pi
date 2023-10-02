@@ -18,8 +18,8 @@
 ## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,                                       *
 ## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
 #-----------------------------------------------------------------------------
-# Frontend2 Author: Jon Gough
-# Testplugn(TP) v1.0.256.0 17/09/2023 DD/MM/YYYY format
+# Frontend2 Author: Jon Gough 
+# Testplugin(TP) v1.0.259.0 01/10/2023 DD/MM/YYYY format
 # buildCI:yes useODAPI:no validateJSON:no
 # ---------------------------------------------------------------------------
 ## -- When changing this file do NOT change the order of the sections.    -- ##
@@ -55,13 +55,13 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "43")
+set(VERSION_PATCH "44")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE  "29/09/2023")#DD/MM/YYYY format
+set(VERSION_DATE  "02/10/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 
 set(OCPN_API_VERSION_MAJOR "1")
-set(OCPN_API_VERSION_MINOR "16")
+set(OCPN_API_VERSION_MINOR "17")
 set(TP_COMMENT "  * Release using CI")
 
 set(PARENT "opencpn")
@@ -224,7 +224,7 @@ if(NOT OCPN_FLATPAK_CONFIG)
     add_subdirectory(opencpn-libs/WindowsHeaders)
     target_link_libraries(${PACKAGE_NAME} windows::headers)
 
-    add_subdirectory(opencpn-libs/api-16)
+    add_subdirectory(opencpn-libs/api-17)
     target_link_libraries(${PACKAGE_NAME} ocpn::api)
 
     add_subdirectory(opencpn-libs/tinyxml)
