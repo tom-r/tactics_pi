@@ -55,9 +55,9 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "46")
+set(VERSION_PATCH "50")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE  "09/10/2023")#DD/MM/YYYY format
+set(VERSION_DATE  "10/10/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 
 set(OCPN_API_VERSION_MAJOR "1")
@@ -98,7 +98,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 # Use local version of GLU library
 # requires libs/glu directory
-set(USE_LOCAL_GLU FALSE)  # Don't use GLU library
+set(USE_LOCAL_GLU TRUE)  # Use local GLU library
 # Prefer libGL.so to libOpenGL.so, see CMP0072
 set(OpenGL_GL_PREFERENCE "LEGACY")   #not operational
 
