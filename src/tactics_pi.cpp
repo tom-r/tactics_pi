@@ -37,8 +37,8 @@
 #include <typeinfo>
 #include "tactics_pi.h"
 #include "icons.h"
-#include "jsonreader.h"
-#include "jsonwriter.h"
+#include "wx/jsonreader.h"
+#include "wx/jsonwriter.h"
 #ifdef __WXMSW__
 #include "GL/gl.h"            // Windows
 #include <GL/glu.h>
