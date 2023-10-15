@@ -33,15 +33,9 @@
 #ifndef  WX_PRECOMP
   #include "wx/wx.h"
 #endif //precompiled headers
-/*
-#define     PLUGIN_VERSION_MAJOR    1
-#define     PLUGIN_VERSION_MINOR    0
-#define     PLUGIN_VERSION_PATCH    11
-*/
-#define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    12
 
-#include "../include/version.h"
+
+#include "version.h"
 
 #include <wx/notebook.h>
 #include <wx/fileconf.h>
@@ -54,7 +48,8 @@
 //wx2.9 #include <wx/wrapsizer.h>
 
 #include "ocpn_plugin.h"
-#include "nmea0183/nmea0183.h"
+//#include "nmea0183/nmea0183.h"
+#include "nmea0183.h"
 #include "instrument.h"
 #include "speedometer.h"
 #include "compass.h"
@@ -125,7 +120,7 @@ WX_DEFINE_ARRAY(TacticsInstrumentContainer *, wxArrayOfInstrument);
 //----------------------------------------------------------------------------------------------------------
 
 
-class tactics_pi : public wxTimer, opencpn_plugin_112
+class tactics_pi : public wxTimer, opencpn_plugin_117
 {
 public:
       tactics_pi(void *ppimgr);
@@ -141,10 +136,15 @@ public:
       int GetAPIVersionMinor();
       int GetPlugInVersionMajor();
       int GetPlugInVersionMinor();
+      int GetPlugInVersionPatch();
+      int GetPlugInVersionPost();
+	  
       wxBitmap *GetPlugInBitmap();
       wxString GetCommonName();
       wxString GetShortDescription();
       wxString GetLongDescription();
+	  // from shipdriver to read listing panel bitmap png
+	  wxBitmap m_panelBitmap; 
 
 //    The optional method overrides
       void SetNMEASentence(wxString &sentence);
@@ -251,7 +251,7 @@ private:
       //double exp.smoothing of predicted Cog for Tactics WP laylines
       double               m_ExpSmcur_tacklinedir, m_ExpSmtarget_tacklinedir,m_ExpSmoothSincur_tacklinedir, m_ExpSmoothCoscur_tacklinedir, m_ExpSmoothSintarget_tacklinedir, m_ExpSmoothCostarget_tacklinedir; //TR20190623
       //Performance Variables
-      double               mPolarTargetSpeed, mPredictedHdG, mPredictedCoG, mPredictedSoG, mPercentTargetVMGupwind, mPercentTargetVMGdownwind;
+      double               mPolarTargetSpeed, mPredictedHdG, mPredictedCoG, mPredictedSoG, mPercentTargetVMGupwind, mPercentTargetVMGdownwind, mPercentUserTargetSpeed;
       TargetxMG tvmg,tcmg;
       double               mVMGGain, mCMGGain, mVMGoptAngle, mCMGoptAngle,mBRG;
 	  wxDC            *m_pdc;

@@ -38,7 +38,9 @@
 #include <wx/progdlg.h>
 #include <wx/gdicmn.h>
 #include <wx/fileconf.h>
-#include "nmea0183/nmea0183.h"
+
+//#include "nmea0183/nmea0183.h"
+#include "nmea0183.h"
 
 #include "performance.h"
 #include <map>
@@ -363,6 +365,9 @@ Polar::Polar(TacticsInstrument_PerformanceSingle* parent)
 	wxString stdPath = std_path.GetUserConfigDir();   // should be ~/Library/Preferences
 	stdPath += s + _T("opencpn");
 #endif
+#ifdef __OCPN__ANDROID__
+    wxString stdPath = std_path.GetUserDataDir();
+#endif
 
 	wxString basePath = stdPath + s + _T("plugins") + s + _T("tactics_pi") + s + _T("data") + s;
 	logbookDataPath = basePath;
@@ -391,6 +396,9 @@ Polar::Polar(tactics_pi* parent)
 #ifdef __WXOSX__
   wxString stdPath = std_path.GetUserConfigDir();   // should be ~/Library/Preferences
   stdPath += s + _T("opencpn");
+#endif
+#ifdef __OCPN__ANDROID__
+    wxString stdPath = std_path.GetUserDataDir();
 #endif
 
   wxString basePath = stdPath + s + _T("plugins") + s + _T("tactics_pi") + s + _T("data") + s;
@@ -746,8 +754,8 @@ void Polar::CalculateRowAverages(int i, int min, int max)
 }
 /***********************************************************************************
 Return the polar speed with averaging of wind speed.
-We're still roúnding the TWA, as this is a calculated value anyway and I doubt
-it will have an accuracy < 1°.
+We're still roï¿½nding the TWA, as this is a calculated value anyway and I doubt
+it will have an accuracy < 1ï¿½.
 With this simplified approach of averaging only TWS we can reduce some load ...
 ************************************************************************************/
 double Polar::GetPolarSpeed(double twa, double tws)
@@ -760,7 +768,7 @@ double Polar::GetPolarSpeed(double twa, double tws)
 //wxLogMessage("-- GetPolarSpeed() - twa=%f tws=%f", twa, tws);
   if (wxIsNaN(twa) || wxIsNaN(tws))
       return NAN;
-  // to do : limits to be checked (0°, 180°, etc.)
+  // to do : limits to be checked (0ï¿½, 180ï¿½, etc.)
   i_twa = wxRound(twa); //the next lower full true wind angle value of the polar array
   twsmin = (int)tws; //the next lower full true wind speed value of the polar array
   fws = tws - twsmin; // factor tws (how much are we above twsmin)
@@ -773,7 +781,7 @@ double Polar::GetPolarSpeed(double twa, double tws)
 }
 /***********************************************************************************
 Get the polar speed with full averaging of the input data of both TWA and TWS.
-The polar is stored as a lookup table (2dim array) in steps of 1 kt / 1°.
+The polar is stored as a lookup table (2dim array) in steps of 1 kt / 1ï¿½.
 Instead of rounding up/down to the next full value as done in original GetPolarSpeed() we're
 averaging both TWA & TWS.
 Currently not used ...
@@ -783,7 +791,7 @@ double Polar::GetAvgPolarSpeed(double twa, double tws)
   double fangle, fws,  avspd1, avspd2, av_Spd;
   int twsmin, twamin;
 
-  // to do : limits to be checked (0°, 180°, etc.)
+  // to do : limits to be checked (0ï¿½, 180ï¿½, etc.)
   twamin = (int)twa; //the next lower full true wind angle value of the polar array
   twsmin = (int)tws; //the next lower full true wind speed value of the polar array
   fangle = twa - twamin; //factor twa (how much are we above twamin)
@@ -875,7 +883,7 @@ Calculate opt. CMG (angle & speed) for up- and downwind courses with bearing to 
   As this is not (easily) possible (or I don't know how to do), I use another approach :
   The procedure is to determine the diff-angle btw. TWD and BRG. Then we "rotate" the polar
   by this diff-angle. For the given windspeed, we can now query all boatspeeds from the polar
-  in a range of -90°..diff-angle..+90° around the new vertical point (diff-angle), and find the max speed 
+  in a range of -90ï¿½..diff-angle..+90ï¿½ around the new vertical point (diff-angle), and find the max speed 
   with "boatspeed * cos (angle)"; the returned angle is the TWA-angle for opt. CMG
   with reference to TWD
 */
@@ -940,7 +948,7 @@ TWD     : True Wind Direction
 
 boat_speed = boat_speed at target-hdg = speed from polar
 
-As the polar is rotated now (polar-0° is in TWD direction)--> hdg = polarangle + diffangle
+As the polar is rotated now (polar-0ï¿½ is in TWD direction)--> hdg = polarangle + diffangle
 with diffangle = angle btw.TWD and BRG
 
                 ^
@@ -1042,7 +1050,7 @@ void Polar::Calc_TargetCMG2(double TWS, double TWD, double BRG, TargetxMG *TCMGM
 }
 /*
 test, doesn't work ...
-/*
+
 TargetxMG Polar::Calc_TargetCMG2(double TWS, double TWD, double BRG, TargetxMG *cmg2)
 {
   TargetxMG TCMG, *TCMG2;
@@ -1421,7 +1429,7 @@ if (!wxIsNaN(m_STW) && !wxIsNaN(m_TWA) && !wxIsNaN(m_TWS)){
         //show smoothed average percentage instead of "overall max percentage" which is not really useful, especially if it uses the unsmoothed values ...
         m_AvgSpdPercent = mExpSmAvgSpdPercent->GetSmoothVal(m_PolarSpeedPercent);
 
-        // output of everything above 100%, TWA > 30° and >=2 kts
+        // output of everything above 100%, TWA > 30ï¿½ and >=2 kts
         //
         m_AvgTWA = mExpSmAvgTWA->GetSmoothVal(m_TWA);
         m_AvgTWS = mExpSmAvgTWS->GetSmoothVal(m_TWS);

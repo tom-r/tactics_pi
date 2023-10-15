@@ -7,6 +7,9 @@
 #	include <wx/wx.h>
 #endif
 
+#include <wx/filename.h>
+#include <wx/mstream.h>
+
 extern void initialize_images(void);
 
 extern wxBitmap *_img_tactics_pi;
@@ -15,5 +18,17 @@ extern wxBitmap *_img_dial;
 extern wxBitmap *_img_instrument;
 extern wxBitmap *_img_minus;
 extern wxBitmap *_img_plus;
+
+#ifdef PLUGIN_USE_SVG
+extern wxString _svg_tactics;
+extern wxString _svg_tactics_rollover;
+extern wxString _svg_tactics_toggled;
+extern wxString _svg_tactics_pi;
+extern wxString _svg_dial;
+extern wxString _svg_instrument;
+extern wxString _svg_minus;
+extern wxString _svg_plus;
+#endif
+
 
 #endif /* ICONS_H */

@@ -1,0 +1,6 @@
+
+With this version we are switching to the standard libs/nmea0183/ library.
+The original library is still in src/OLD/nmea0183
+Please note that there are 5 files that are different in various ways.
+One file clarifies a missing nema field.
+If there is some problem with nmea we will have to go back to the original files and look, we may have to start using those files, so keep them around.

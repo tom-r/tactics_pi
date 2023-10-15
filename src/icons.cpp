@@ -13,6 +13,18 @@ wxBitmap *_img_instrument;
 wxBitmap *_img_minus;
 wxBitmap *_img_plus;
 
+#ifdef PLUGIN_USE_SVG
+#include "ocpn_plugin.h"
+wxString _svg_tactics_pi;
+wxString _svg_tactics;
+wxString _svg_tactics_rollover;
+wxString _svg_tactics_toggled;
+wxString _svg_dial;
+wxString _svg_instrument;
+wxString _svg_minus;
+wxString _svg_plus;
+#endif //  PLUGIN_USE_SVG
+
 void initialize_images(void)
 {
   { 
@@ -39,5 +51,18 @@ void initialize_images(void)
 		wxMemoryInputStream sm("\211PNG\r\n\032\n\000\000\000\rIHDR\000\000\000\024\000\000\000\024\b\006\000\000\000\215\211\035\r\000\000\000\004sBIT\b\b\b\b|\bd\210\000\000\000\011pHYs\000\000\000x\000\000\000x\001\352\362j\366\000\000\000\031tEXtSoftware\000www.inkscape.org\233\356<\032\000\000\001IIDAT8\215\255\2241N\303@\020E\377\037\271L\201Ca_\301\222#\241\024\0215\261r\003\356\300\261\270\002=9@$\272D\251(#\244H \247\266\227\035\no\034\033\341u\204\275\315\026\273\363\366k\366\377\241\252\242k%\313du\274=>\203\260 \014\225&\372\214\236\366\353\375kWM\320I\003\240\324i~\223\207 \n\020%\210\"\372\212B_\215\370\016\011\252\003\2255\264gy\201PhC]\351\200\335=\352\005\022h\251#\212a\300\nz\201\011J\202\336\353\327\366\260\200\324\n\275+H\226\311J\251S\202\352zV\303\304\312}\013F\224be\221f\251\005P\365\270\3618\2259\303\307\360\303Y\243\335\253\337\312\272\316\033{|\210'\342L;\030\346v# \276G\201U\037f\204\312r\014\030\210\202J\313\344!\311@\234\343\244\000\364l\r\261\262\330\335\355\346\315\342\331\333\354]E7\356.\334g\002\004hy\n|AO\263\324\202H\233\212Tt\263]o_\376\345C\347\207\021\223\322\316\362\b\303\341\017\205\004\ag\271\355\002/\356\272,_\306\227\240\350\231\r\376\211Me\036\037\342\011\000C\322Piiy\362\325\374\000\377\020\332G\325\323\327\311\000\000\000\000IEND\256B`\202", 460);
 		_img_plus = new wxBitmap(wxImage(sm));
 	}
+	
+#ifdef PLUGIN_USE_SVG
+    wxFileName fn;
+    fn.SetPath(GetPluginDataDir("tactics_pi"));
+    fn.AppendDir(_T("data"));
+    fn.SetFullName(_T("tactics_pi.svg"));
+    _svg_tactics = fn.GetFullPath();
+    wxLogMessage(_T("Loading toolbar icon: ") + _svg_tactics); 
+    fn.SetFullName(_T("tactics_pi_rollover.svg"));
+    _svg_tactics_rollover = fn.GetFullPath();
+    fn.SetFullName(_T("tactics_pi_toggled.svg"));
+    _svg_tactics_toggled = fn.GetFullPath();
+#endif //  PLUGIN_USE_SVG					   
 	return;
 }

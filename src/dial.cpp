@@ -95,12 +95,13 @@ void TacticsInstrument_Dial::SetData(int st, double data, wxString unit)
 {
   // Filter out undefined data, normally comes through as "999".
   // Test value must be greater than 360 to enable some compass-type displays.
+  // Set line 104 Extravalue  back to 1200 to display barometer too
   if ((st == m_MainValueCap) && (data < 400.0))
   {
     m_MainValue = data;
     m_MainValueUnit = unit;
   }
-  else if ((st == m_ExtraValueCap) && (data < 400.0))
+  else if ((st == m_ExtraValueCap) && (data < 1200.0))
   {
     m_ExtraValue = data;
     m_ExtraValueUnit = unit;
