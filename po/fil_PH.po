@@ -1,28 +1,29 @@
-#: src\tactics_pi.cpp:3362 src\tactics_pi.cpp:3383 src\tactics_pi.cpp:3579
-#: src\tactics_pi.cpp:4635 src\tactics_pi.cpp:4667
+#: src\tactics_pi.cpp:3411 src\tactics_pi.cpp:3432 src\tactics_pi.cpp:3628
+#: src\tactics_pi.cpp:4690 src\tactics_pi.cpp:4722
 msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-08 17:45+0100\n"
-"PO-Revision-Date: 2018-03-11 10:37-0400\n"
-"Last-Translator: nohal <pavel@kalian.cz>\n"
+"POT-Creation-Date: 2018-03-11 15:58+0100\n"
+"PO-Revision-Date: 2023-10-04 18:33\n"
+"Last-Translator: \n"
 "Language-Team: Filipino\n"
 "Language: fil_PH\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Project-ID: 49843\n"
 "X-Crowdin-Language: fil\n"
 "X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
+"X-Crowdin-File-ID: 201\n"
 
-#: src\baro_history.cpp:288 src\performance.cpp:1593 src\wind_history.cpp:647
+#: src\baro_history.cpp:288 src\performance.cpp:1596 src\wind_history.cpp:647
 msgid "Max"
 msgstr "Pinakamataas"
 
-#: src\baro_history.cpp:289 src\performance.cpp:1594 src\wind_history.cpp:648
+#: src\baro_history.cpp:289 src\performance.cpp:1597 src\wind_history.cpp:648
 msgid "since"
 msgstr "mula pa"
 
@@ -34,11 +35,11 @@ msgstr "Pangkalahatang Pinakamataas"
 msgid "Min"
 msgstr "Pinakamababa"
 
-#: src\bearingcompass.cpp:797 src\polarcompass.cpp:711
+#: src\bearingcompass.cpp:801 src\polarcompass.cpp:727
 msgid "R"
 msgstr "R"
 
-#: src\bearingcompass.cpp:802 src\polarcompass.cpp:716
+#: src\bearingcompass.cpp:806 src\polarcompass.cpp:732
 msgid "L"
 msgstr "L"
 
@@ -83,395 +84,379 @@ msgstr " tunay"
 msgid " mag"
 msgstr " mag"
 
-#: src\performance.cpp:394
+#: src\performance.cpp:392
 msgid "tactics_pi: Select a Polar-File"
 msgstr "tactics_pi: Pumili ng Taklasang-Polar"
 
-#: src\performance.cpp:462
+#: src\performance.cpp:460
 msgid "Format in this file not recognised"
 msgstr "Ang pormat na nasa taklasan ay hindi kinikilala"
 
-#: src\performance.cpp:1595 src\wind_history.cpp:649
+#: src\performance.cpp:1598 src\wind_history.cpp:649
 msgid "Overall"
 msgstr "Pangkalahatan"
 
-#: src\tactics_pi.cpp:187
+#: src\tactics_pi.cpp:188
 msgid "Position"
 msgstr "Posisyon"
 
-#: src\tactics_pi.cpp:189
+#: src\tactics_pi.cpp:190
 msgid "SOG"
 msgstr "SOG"
 
-#: src\tactics_pi.cpp:191
+#: src\tactics_pi.cpp:192
 msgid "Speedometer"
 msgstr "Kilometrahe"
 
-#: src\tactics_pi.cpp:193
+#: src\tactics_pi.cpp:194
 msgid "COG"
 msgstr "COG"
 
-#: src\tactics_pi.cpp:195
+#: src\tactics_pi.cpp:196
 msgid "Mag COG"
 msgstr "Mag ng COG"
 
-#: src\tactics_pi.cpp:197
+#: src\tactics_pi.cpp:198
 msgid "GPS Compass"
 msgstr "Kompas na GPS"
 
-#: src\tactics_pi.cpp:199
+#: src\tactics_pi.cpp:200
 msgid "True Compass"
 msgstr "Tunay na Kompas"
 
-#: src\tactics_pi.cpp:201
+#: src\tactics_pi.cpp:202
 msgid "STW"
 msgstr "STW"
 
-#: src\tactics_pi.cpp:203
+#: src\tactics_pi.cpp:204
 msgid "True HDG"
 msgstr "Tunay na HDG"
 
-#: src\tactics_pi.cpp:205
+#: src\tactics_pi.cpp:206
 msgid "Mag HDG"
 msgstr "Mag ng HDG"
 
-#: src\tactics_pi.cpp:208
+#: src\tactics_pi.cpp:209
 msgid "App. Wind Angle & Speed"
 msgstr "Kasalalukuyang Anggulo at Bilis ng Hangin"
 
-#: src\tactics_pi.cpp:210
+#: src\tactics_pi.cpp:211
 msgid "App & True Wind Angle"
 msgstr "Kasalukuyan at Tunay na Anggulo ng Hangin"
 
-#: src\tactics_pi.cpp:212 src\tactics_pi.cpp:214
+#: src\tactics_pi.cpp:213 src\tactics_pi.cpp:215
 msgid "App. Wind Speed"
 msgstr "Kasalalukuyang Bilis ng Hangin"
 
-#: src\tactics_pi.cpp:216
+#: src\tactics_pi.cpp:217
 msgid "True Wind Angle & Speed"
 msgstr "Tunay na Anggulo at Bilis ng Hangin"
 
-#: src\tactics_pi.cpp:218 src\tactics_pi.cpp:220
+#: src\tactics_pi.cpp:219 src\tactics_pi.cpp:221
 msgid "Depth"
 msgstr "Lalim"
 
-#: src\tactics_pi.cpp:222 src\tactics_pi.cpp:224
+#: src\tactics_pi.cpp:223 src\tactics_pi.cpp:225
 msgid "Barometric pressure"
 msgstr "Barometrong presyon"
 
-#: src\tactics_pi.cpp:226
+#: src\tactics_pi.cpp:227
 msgid "Water Temp."
 msgstr "Temperatura ng Tubig."
 
-#: src\tactics_pi.cpp:228
+#: src\tactics_pi.cpp:229
 msgid "Air Temp."
 msgstr "Temperatura ng Hangin."
 
-#: src\tactics_pi.cpp:230
+#: src\tactics_pi.cpp:231
 msgid "App. Wind Angle"
 msgstr "Kasalukuyang Anggulo ng Hangin"
 
-#: src\tactics_pi.cpp:232
+#: src\tactics_pi.cpp:233
 msgid "True Wind Angle"
 msgstr "Tunay na Hangin"
 
-#: src\tactics_pi.cpp:234
+#: src\tactics_pi.cpp:235
 msgid "True Wind Direction"
 msgstr "Tunay na Direksyon ng Hangin"
 
-#: src\tactics_pi.cpp:236
+#: src\tactics_pi.cpp:237
 msgid "True Wind Speed"
 msgstr "Tunay na Bilis ng Hangin"
 
-#: src\tactics_pi.cpp:238
+#: src\tactics_pi.cpp:239
 msgid "True Wind Dir. & Speed"
 msgstr "Tunay na Direksyong & Bilis ng Hangin"
 
-#: src\tactics_pi.cpp:240 src\tactics_pi.cpp:242
-msgid "VMG"
-msgstr "VMG"
-
-#: src\tactics_pi.cpp:254
+#: src\tactics_pi.cpp:257
 msgid "Clock"
 msgstr "Orasan"
 
-#: src\tactics_pi.cpp:256
+#: src\tactics_pi.cpp:259
 msgid "Sunrise/Sunset"
 msgstr "Pagsikat/Paglubog ng Araw"
 
-#: src\tactics_pi.cpp:260
+#: src\tactics_pi.cpp:263
 msgid "Wind history"
 msgstr "Kasaysayan ng Hangin"
 
-#: src\tactics_pi.cpp:262
+#: src\tactics_pi.cpp:265
 msgid "Barometric history"
 msgstr "Kasaysayang Barometro"
 
-#: src\tactics_pi.cpp:268
+#: src\tactics_pi.cpp:271
 msgid "TWA to Waypoint"
 msgstr "TWA sa Waypoint"
 
-#: src\tactics_pi.cpp:270
+#: src\tactics_pi.cpp:273
 msgid "From Ownship"
 msgstr "Mula sa Sariling Barko"
 
-#: src\tactics_pi.cpp:272
+#: src\tactics_pi.cpp:275
 msgid "Pitch"
 msgstr "Tarik"
 
-#: src\tactics_pi.cpp:274 src\tactics_pi.cpp:3386
+#: src\tactics_pi.cpp:277 src\tactics_pi.cpp:3435
 msgid "Heel"
 msgstr "Heel"
 
-#: src\tactics_pi.cpp:276 src\tactics_pi.cpp:3340
+#: src\tactics_pi.cpp:279 src\tactics_pi.cpp:3389
 msgid "Leeway"
 msgstr "Kaluwagan"
 
-#: src\tactics_pi.cpp:278
+#: src\tactics_pi.cpp:281
 msgid "Current Direction"
 msgstr "Direksyon ng Alon"
 
-#: src\tactics_pi.cpp:280
+#: src\tactics_pi.cpp:283
 msgid "Current Speed"
 msgstr "Bilis ng Alon"
 
-#: src\tactics_pi.cpp:282
+#: src\tactics_pi.cpp:285
 msgid "Bearing Compass"
 msgstr "Kompas na Bearing"
 
-#: src\tactics_pi.cpp:284
+#: src\tactics_pi.cpp:287
 msgid "Polar Speed"
 msgstr "Bilis na Polar"
 
-#: src\tactics_pi.cpp:286
-msgid "Actual VMG"
-msgstr "Aktwal na VMG"
+#: src\tactics_pi.cpp:290 src\tactics_pi.cpp:299
+msgid "Actual "
+msgstr ""
 
-#: src\tactics_pi.cpp:288
-msgid "Target VMG"
-msgstr "Target na VMG"
+#: src\tactics_pi.cpp:293 src\tactics_pi.cpp:296 src\tactics_pi.cpp:302
+#: src\tactics_pi.cpp:305
+msgid "Target "
+msgstr ""
 
-#: src\tactics_pi.cpp:290
-msgid "Target VMG-Angle"
-msgstr "Target na Anggulo ng VMG"
+#: src\tactics_pi.cpp:296 src\tactics_pi.cpp:305
+msgid "-Angle"
+msgstr ""
 
-#: src\tactics_pi.cpp:292
-msgid "Actual CMG"
-msgstr "Aktwal na CMG"
-
-#: src\tactics_pi.cpp:294
-msgid "Target CMG"
-msgstr "Target na CMG"
-
-#: src\tactics_pi.cpp:296
-msgid "Target CMG-Angle"
-msgstr "Target na Anggulo ng CMG"
-
-#: src\tactics_pi.cpp:298
+#: src\tactics_pi.cpp:307
 msgid "Polar Performance"
 msgstr "Pagganap ng Polar"
 
-#: src\tactics_pi.cpp:300
+#: src\tactics_pi.cpp:309
 msgid "Average Wind"
 msgstr "Karaniwang Hangin"
 
-#: src\tactics_pi.cpp:302
+#: src\tactics_pi.cpp:311
 msgid "Polar Compass"
 msgstr "Kompas na Polar"
 
-#: src\tactics_pi.cpp:565 src\tactics_pi.cpp:721 src\tactics_pi.cpp:2825
-#: src\tactics_pi.cpp:2835 src\tactics_pi.cpp:3064 src\tactics_pi.cpp:3103
-#: src\tactics_pi.cpp:3818
+#: src\tactics_pi.cpp:577 src\tactics_pi.cpp:739 src\tactics_pi.cpp:2867
+#: src\tactics_pi.cpp:2878 src\tactics_pi.cpp:3113 src\tactics_pi.cpp:3152
+#: src\tactics_pi.cpp:3870
 msgid "Tactics"
 msgstr "Mga Taktika"
 
-#: src\tactics_pi.cpp:726
+#: src\tactics_pi.cpp:744
 msgid "Tactics PlugIn for OpenCPN"
 msgstr "Plugin ng mga Taktika para sa OpnCPN"
 
-#: src\tactics_pi.cpp:731
+#: src\tactics_pi.cpp:749
 msgid "Tactics PlugIn for OpenCPN\n"
-"Provides performance data & instrument display from NMEA source and polar file."
-msgstr "Plugin na Taktika para sa OpenCPN\n"
-"Nagbibigay ng datos ng paggana & displey ng intrumento mula sa pinagkukunan at taklasang polar na NMEA."
+"\t\t\t Provides performance data & instrument display from NMEA source and polar file."
+msgstr ""
 
-#: src\tactics_pi.cpp:1737
+#: src\tactics_pi.cpp:1763
 msgid "You have to turn on OpenGL to use chart overlay "
 msgstr "Kailangan mong i-on ang OpenGL para magamit ng kalupkop ng tsart "
 
-#: src\tactics_pi.cpp:2397
+#: src\tactics_pi.cpp:2433
 msgid "° Bow up"
 msgstr "° Pataas ang Proa"
 
-#: src\tactics_pi.cpp:2400
+#: src\tactics_pi.cpp:2436
 msgid "° Bow down"
 msgstr "° Pababa ang proa"
 
-#: src\tactics_pi.cpp:3039
+#: src\tactics_pi.cpp:3088
 msgid "Tactics preferences"
 msgstr "Mga preperensiya sa mga Taktika"
 
-#: src\tactics_pi.cpp:3110
+#: src\tactics_pi.cpp:3159
 msgid "show this tactics"
 msgstr "ipakita ang mga taktika"
 
-#: src\tactics_pi.cpp:3116
+#: src\tactics_pi.cpp:3165
 msgid "Caption:"
 msgstr "Titulo:"
 
-#: src\tactics_pi.cpp:3124
+#: src\tactics_pi.cpp:3173
 msgid "Orientation:"
 msgstr "Pag-aangkop:"
 
-#: src\tactics_pi.cpp:3128 src\tactics_pi.cpp:4011
+#: src\tactics_pi.cpp:3177 src\tactics_pi.cpp:4063
 msgid "Vertical"
 msgstr "Bertikal"
 
-#: src\tactics_pi.cpp:3129 src\tactics_pi.cpp:4013
+#: src\tactics_pi.cpp:3178 src\tactics_pi.cpp:4065
 msgid "Horizontal"
 msgstr "Pahalang"
 
-#: src\tactics_pi.cpp:3136 src\tactics_pi.cpp:3144 src\tactics_pi.cpp:3937
+#: src\tactics_pi.cpp:3185 src\tactics_pi.cpp:3193 src\tactics_pi.cpp:3989
 msgid "Instruments"
 msgstr "Mga Instrumento"
 
-#: src\tactics_pi.cpp:3152
+#: src\tactics_pi.cpp:3201
 msgid "Add"
 msgstr "Magdagdag"
 
-#: src\tactics_pi.cpp:3165
+#: src\tactics_pi.cpp:3214
 msgid "Delete"
 msgstr "Magtanggal"
 
-#: src\tactics_pi.cpp:3171
+#: src\tactics_pi.cpp:3220
 msgid "Up"
 msgstr "Taas"
 
-#: src\tactics_pi.cpp:3176
+#: src\tactics_pi.cpp:3225
 msgid "Down"
 msgstr "Baba"
 
-#: src\tactics_pi.cpp:3186
+#: src\tactics_pi.cpp:3235
 msgid "Appearance"
 msgstr "Hitsura"
 
-#: src\tactics_pi.cpp:3188
+#: src\tactics_pi.cpp:3237
 msgid "Fonts"
 msgstr "Mga Font"
 
-#: src\tactics_pi.cpp:3194
+#: src\tactics_pi.cpp:3243
 msgid "Title:"
 msgstr "Titulo:"
 
-#: src\tactics_pi.cpp:3200
+#: src\tactics_pi.cpp:3249
 msgid "Data:"
 msgstr "Datos:"
 
-#: src\tactics_pi.cpp:3206
+#: src\tactics_pi.cpp:3255
 msgid "Label:"
 msgstr "Tatak:"
 
-#: src\tactics_pi.cpp:3212
+#: src\tactics_pi.cpp:3261
 msgid "Small:"
 msgstr "Maliit:"
 
-#: src\tactics_pi.cpp:3220
+#: src\tactics_pi.cpp:3269
 msgid "Units, Ranges, Formats"
 msgstr "Mga Yunit, Saklaw, Pormat"
 
-#: src\tactics_pi.cpp:3226
+#: src\tactics_pi.cpp:3275
 msgid "Speedometer max value:"
 msgstr "Pinakamalaking halaga sa Kilometrahe:"
 
-#: src\tactics_pi.cpp:3232
+#: src\tactics_pi.cpp:3281
 msgid "Speed Over Ground Damping Factor:"
 msgstr "Paktor ng Pamamasa sa Bilis sa Ibabaw ng Lupa:"
 
-#: src\tactics_pi.cpp:3238
+#: src\tactics_pi.cpp:3287
 msgid "COG Damping Factor:"
 msgstr "Paktor ng Pamamasa sa COG:"
 
-#: src\tactics_pi.cpp:3244
+#: src\tactics_pi.cpp:3293
 msgid "Boat speed units:"
 msgstr "Mga yunit sa bilis ng barko:"
 
-#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3265
+#: src\tactics_pi.cpp:3296 src\tactics_pi.cpp:3314
 msgid "Honor OpenCPN settings"
 msgstr "Kilalalin ang mga pagkakatakda sa OpenCPN"
 
-#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
+#: src\tactics_pi.cpp:3296 src\tactics_pi.cpp:3323
 msgid "Kts"
 msgstr "Kts"
 
-#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
+#: src\tactics_pi.cpp:3296 src\tactics_pi.cpp:3323
 msgid "mph"
 msgstr "mph"
 
-#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
+#: src\tactics_pi.cpp:3296 src\tactics_pi.cpp:3323
 msgid "km/h"
 msgstr "km/h"
 
-#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
+#: src\tactics_pi.cpp:3296 src\tactics_pi.cpp:3323
 msgid "m/s"
 msgstr "m/s"
 
-#: src\tactics_pi.cpp:3253
+#: src\tactics_pi.cpp:3302
 msgid "Depth units:"
 msgstr "Mga yunit ng lalim:"
 
-#: src\tactics_pi.cpp:3256 src\tactics_pi.cpp:3265
+#: src\tactics_pi.cpp:3305 src\tactics_pi.cpp:3314
 msgid "Meters"
 msgstr "Metro"
 
-#: src\tactics_pi.cpp:3256
+#: src\tactics_pi.cpp:3305
 msgid "Feet"
 msgstr "Piye"
 
-#: src\tactics_pi.cpp:3256
+#: src\tactics_pi.cpp:3305
 msgid "Fathoms"
 msgstr "Fathom"
 
-#: src\tactics_pi.cpp:3256
+#: src\tactics_pi.cpp:3305
 msgid "Centimeters"
 msgstr "Sentimetro"
 
-#: src\tactics_pi.cpp:3256
+#: src\tactics_pi.cpp:3305
 msgid "Inches"
 msgstr "Pulgada"
 
-#: src\tactics_pi.cpp:3262
+#: src\tactics_pi.cpp:3311
 msgid "Distance units:"
 msgstr "Mga yunit ng distansya:"
 
-#: src\tactics_pi.cpp:3265
+#: src\tactics_pi.cpp:3314
 msgid "Nautical miles"
 msgstr "Nauukol sa dagat na milya"
 
-#: src\tactics_pi.cpp:3265
+#: src\tactics_pi.cpp:3314
 msgid "Statute miles"
 msgstr "Statute na milya"
 
-#: src\tactics_pi.cpp:3265
+#: src\tactics_pi.cpp:3314
 msgid "Kilometers"
 msgstr "Kilometro"
 
-#: src\tactics_pi.cpp:3271
+#: src\tactics_pi.cpp:3320
 msgid "Wind speed units:"
 msgstr "Mga yunit ng bilis ng hangin:"
 
-#: src\tactics_pi.cpp:3292
+#: src\tactics_pi.cpp:3341
 msgid "Performance Parameters"
 msgstr "Mga Parametro ng Pagganap"
 
-#: src\tactics_pi.cpp:3294
+#: src\tactics_pi.cpp:3343
 msgid "Laylines"
 msgstr "Mga Layline"
 
-#: src\tactics_pi.cpp:3303
+#: src\tactics_pi.cpp:3352
 msgid "Layline width damping factor [0.025-1]:  "
 msgstr "Lapad ng paktor ng pamamasa sa layline [0.025-1]:  "
 
-#: src\tactics_pi.cpp:3305
+#: src\tactics_pi.cpp:3354
 msgid "The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
 "The idea is to display the COG range where you're sailing to.\n"
 " Low values mean high damping."
@@ -479,7 +464,7 @@ msgstr "Ang lapad ng mga layline ng barko ay batay sa paglihis ng barko (bertika
 "Ang ideya ay ang pag-displey sa angkop na COG kung saan ka maglalayag.\n"
 " Mga mababang halaga ay nangangahulugang mataas ang pamamasa."
 
-#: src\tactics_pi.cpp:3310
+#: src\tactics_pi.cpp:3359
 msgid "Width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
 "The idea is to display the range where you're sailing to.\n"
 " Low values mean high damping."
@@ -487,35 +472,35 @@ msgstr "Ang lapad ng mga layline ng barko ay batay sa paglihis ng barko (bertika
 "Ang ideya ay ang pag-displey ang kaangkopan kung saan ka maglalayag.\n"
 " Mga mababang halaga ay nangangahulugang mataas ang pamamasa."
 
-#: src\tactics_pi.cpp:3313
+#: src\tactics_pi.cpp:3362
 msgid "Layline length on Chart [nm]:  "
 msgstr "Haba ng layline sa Chart [nm]:  "
 
-#: src\tactics_pi.cpp:3315 src\tactics_pi.cpp:3321
+#: src\tactics_pi.cpp:3364 src\tactics_pi.cpp:3370
 msgid "Length of the boat laylines in [nm]"
 msgstr "Haba ng mga layline ng barko [nm]"
 
-#: src\tactics_pi.cpp:3323
+#: src\tactics_pi.cpp:3372
 msgid "Min. Layline Width [°]:"
 msgstr "Pinakamaliit na Lapad ng Layline [°]:"
 
-#: src\tactics_pi.cpp:3325 src\tactics_pi.cpp:3328
+#: src\tactics_pi.cpp:3374 src\tactics_pi.cpp:3377
 msgid "Min. width of boat laylines in degrees."
 msgstr "Pinakamaliit na lapad ng mga layline ng barko na naka-digri."
 
-#: src\tactics_pi.cpp:3332
+#: src\tactics_pi.cpp:3381
 msgid "Max. Layline Width [°]:"
 msgstr "Pinakamalaking Lapad ng Layline [°]:"
 
-#: src\tactics_pi.cpp:3334 src\tactics_pi.cpp:3337
+#: src\tactics_pi.cpp:3383 src\tactics_pi.cpp:3386
 msgid "Max. width of boat laylines in degrees."
 msgstr "Pinakamalaking lapad ng mga layline ng barko na naka-digri."
 
-#: src\tactics_pi.cpp:3349
+#: src\tactics_pi.cpp:3398
 msgid "Boat's Leeway factor [0-20]:  "
 msgstr "Paktor ng Kaluwagan sa Barko [0-20]:  "
 
-#: src\tactics_pi.cpp:3350 src\tactics_pi.cpp:3353
+#: src\tactics_pi.cpp:3399 src\tactics_pi.cpp:3402
 msgid "Leeway='Drift' of boat due to heel/wind influence\n"
 "Low values mean high performance of hull\n"
 "Leeway = (LeewayFactor * Heel) / STW²;"
@@ -523,21 +508,21 @@ msgstr "Kaluwagan='Takbo' ng barko dahil sa impluwensiya ng heel/hangin\n"
 "Mga mababang halaga ay nangangahulugang mataas ang pagganap ng hull\n"
 "Kaluwagan = (PaktorngKaluwagan * Heel) / STW²;"
 
-#: src\tactics_pi.cpp:3358
+#: src\tactics_pi.cpp:3407
 msgid "Use Heel Sensor"
 msgstr "Gumamit ng Sensor sa Heel"
 
-#: src\tactics_pi.cpp:3361
+#: src\tactics_pi.cpp:3410
 msgid "Use the internal heel sensor if available\n"
 "Important for the correct calculation of the surface current."
 msgstr "Gumamit ng panloob na sensor ng heel kung maaari\n"
 "Importante sa wastong pagkalkulas ng pang-ibabaw na alon."
 
-#: src\tactics_pi.cpp:3365
+#: src\tactics_pi.cpp:3414
 msgid "fixed/max Leeway [°]:"
 msgstr "nakapirmi/pinakamataas na Kaluwagan [°]:"
 
-#: src\tactics_pi.cpp:3368
+#: src\tactics_pi.cpp:3417
 msgid "Dual purpose !\n"
 "If Radiobutton is NOT set, then it's used to limit Leeway to a max value.\n"
 " If Radiobutton is set, then it fixes Leeway to this constant value."
@@ -545,11 +530,11 @@ msgstr "Dalawahang Layunin \n"
 "Kapag ang Radiobutton ay HINDI naitakda, kung gayon ito ay ginamit upang limitahan ang Kaluwagan sa pinakamataas na halaga.\n"
 " Kapag ang Radiobutton ay naitakda, kung gayon inaayos nito ang Kaluwagan sa parehong halaga nito."
 
-#: src\tactics_pi.cpp:3376
+#: src\tactics_pi.cpp:3425
 msgid "manual Heel input:"
 msgstr "input para sa manwal na Heel:"
 
-#: src\tactics_pi.cpp:3379
+#: src\tactics_pi.cpp:3428
 msgid "If no heel sensor is available, you can create a manual 'heel polar' here.\n"
 "Just read/enter the data from a mechanical heel sensor (e.g. on compass).\n"
 "Use True Wind Speed & Angle only !\n"
@@ -559,73 +544,73 @@ msgstr "Kung walang sensor ng heel na maaaring gamitin, maaari kang lumikha ng m
 "Gumamit lamang ng Tunay na Bilis & Anggulo ng Hangin !\n"
 "Mag-ingat: ang pagmomotor na walang mga layag/heel ay magbibigay ng maling datos ng alon !!!"
 
-#: src\tactics_pi.cpp:3393
+#: src\tactics_pi.cpp:3442
 msgid "TWS/TWA "
 msgstr "TWS/TWA "
 
-#: src\tactics_pi.cpp:3395
+#: src\tactics_pi.cpp:3444
 msgid " 45°"
 msgstr " 45°"
 
-#: src\tactics_pi.cpp:3397
+#: src\tactics_pi.cpp:3446
 msgid " 90°"
 msgstr " 90°"
 
-#: src\tactics_pi.cpp:3399
+#: src\tactics_pi.cpp:3448
 msgid "135°"
 msgstr "135°"
 
-#: src\tactics_pi.cpp:3402
+#: src\tactics_pi.cpp:3451
 msgid "5 kn"
 msgstr "5 na kn"
 
-#: src\tactics_pi.cpp:3416
+#: src\tactics_pi.cpp:3465
 msgid "10 kn"
 msgstr "10 na kn"
 
-#: src\tactics_pi.cpp:3430
+#: src\tactics_pi.cpp:3479
 msgid "15 kn"
 msgstr "15 na kn"
 
-#: src\tactics_pi.cpp:3445
+#: src\tactics_pi.cpp:3494
 msgid "20 kn"
 msgstr "20 na kn"
 
-#: src\tactics_pi.cpp:3459
+#: src\tactics_pi.cpp:3508
 msgid "25 kn"
 msgstr "25 na kn"
 
-#: src\tactics_pi.cpp:3474
+#: src\tactics_pi.cpp:3523
 msgid "Current"
 msgstr "Alon"
 
-#: src\tactics_pi.cpp:3489
+#: src\tactics_pi.cpp:3538
 msgid "Current damping factor [1-400]:  "
 msgstr "Paktor ng Pamamasa ng Alon [1-400]:  "
 
-#: src\tactics_pi.cpp:3490 src\tactics_pi.cpp:3495
+#: src\tactics_pi.cpp:3539 src\tactics_pi.cpp:3544
 msgid "Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\n"
 "Low values mean high damping"
 msgstr "Nagpapatatag sa pang-ibabaw na palaso ng alon na nasa kalupkop ng tsart, sa kompas na bearing at sa mga instrmentong numero rin\n"
 "Ang mga mabababang halaga ay nangangahulugang mataas na pamamasa"
 
-#: src\tactics_pi.cpp:3503
+#: src\tactics_pi.cpp:3552
 msgid "Display Current on Chart (OpenGL)"
 msgstr "I-displey ang Alon sa Tsart (OpenGL)"
 
-#: src\tactics_pi.cpp:3506 src\tactics_pi.cpp:3542 src\tactics_pi.cpp:3565
+#: src\tactics_pi.cpp:3555 src\tactics_pi.cpp:3591 src\tactics_pi.cpp:3614
 msgid "The default on program startup"
 msgstr "Ang naka-default sa panimula ng program"
 
-#: src\tactics_pi.cpp:3508
+#: src\tactics_pi.cpp:3557
 msgid "True Wind"
 msgstr "Tunay na Hangin"
 
-#: src\tactics_pi.cpp:3516
+#: src\tactics_pi.cpp:3565
 msgid "Correct STW with Leeway"
 msgstr "Wastong STW kasama ang Kaluwagan"
 
-#: src\tactics_pi.cpp:3519
+#: src\tactics_pi.cpp:3568
 msgid "Apply a correction to your log speed throughout the plugin based on the calculated Leeway (via the heel sensor).\n"
 "Only makes sense with a real heel sensor.\n"
 "Make sure your instruments do not already apply this correction !"
@@ -633,129 +618,137 @@ msgstr "Maglapat ng pagwawasto sa iyong talaan ng bilis sa buong plugin na nakab
 "Magkakaroon lamang ng kahulugan sa tunay na sensor ng heel.\n"
 "Siguraduhin ang iyong mga instrumento ay hindi pa naglapat ng ganitong pagwawasto !"
 
-#: src\tactics_pi.cpp:3521
+#: src\tactics_pi.cpp:3570
 msgid "Correct AWS/AWA with Heel"
 msgstr "Wastong AWS/AWA kasama ang Heel"
 
-#: src\tactics_pi.cpp:3524
+#: src\tactics_pi.cpp:3573
 msgid "Use with care, this is normally done by the instruments themselves as soon as you have an integrated, original equipment heel sensor"
 msgstr "Gamitin nang may pangangalaga. ito ay karaniwang ginagawa ng mga instrumento sa kanilang sarili sa panahon na meron ka nang na-integrate, orihinal na kagamitang sensor sa heel"
 
-#: src\tactics_pi.cpp:3528
+#: src\tactics_pi.cpp:3577
 msgid "Force True Wind Calculation"
 msgstr "Pagkalkula sa Puwersa ng Tunay na Hangin"
 
-#: src\tactics_pi.cpp:3531
+#: src\tactics_pi.cpp:3580
 msgid "Internally calculates True Wind data (TWS,TWA,TWD) and uses it within the whole plugin even if there is True Wind data available via NMEA."
 msgstr "Nagkakalkula sa loob sa datos ng Tunay na Hangin (TWS,TWA,TWD) at ginagamit ito sa loob ng buong plugin kahit na mayroong maaaring magamit na datos ng Tunay na Hangon gamit ang NMEA."
 
-#: src\tactics_pi.cpp:3534
+#: src\tactics_pi.cpp:3583
 msgid "Use SOG instead of STW for True Wind Calc."
 msgstr "Gamitin ang SOG sa halip na STW para sa Pagkakula ng Tunay na Hangin."
 
-#: src\tactics_pi.cpp:3537
+#: src\tactics_pi.cpp:3586
 msgid "Recommended. As True Wind blows over the earth surface, we should calc. it with Speed Over Ground.\n"
 "Eliminates the influence of currents."
 msgstr "Inirekomenda. Kapag ang Tunay na Hangin ay humihip sa ibabaw ng balat ng lupa, dapat natin ikalkula ito kasama ang Speed Over Ground.\n"
 "Tinatanggal ang impluwensiya ng mga alon."
 
-#: src\tactics_pi.cpp:3539
+#: src\tactics_pi.cpp:3588
 msgid "Show Wind Barb on Chart (OpenGL)"
 msgstr "Ipakita ang Barb ng Hangin sa Tsart (OpenGL)"
 
-#: src\tactics_pi.cpp:3545
+#: src\tactics_pi.cpp:3594
 msgid "Polar"
 msgstr "Polar"
 
-#: src\tactics_pi.cpp:3552
+#: src\tactics_pi.cpp:3601
 msgid "Polar :"
 msgstr "Polar :"
 
-#: src\tactics_pi.cpp:3558
+#: src\tactics_pi.cpp:3607
 msgid "Load"
 msgstr "Ikarga"
 
-#: src\tactics_pi.cpp:3562
+#: src\tactics_pi.cpp:3611
 msgid "Show Polar on Chart (OpenGL)"
 msgstr "Ipakita ang Polar sa Tsart (OpenGL)"
 
-#: src\tactics_pi.cpp:3567
+#: src\tactics_pi.cpp:3616
 msgid "Export NMEA Performance Data"
 msgstr "Iluwas ang Datos ng Pagganap ng NMEA"
 
-#: src\tactics_pi.cpp:3574
+#: src\tactics_pi.cpp:3623
 msgid "NKE format ($PNKEP)"
 msgstr "NKE na pormat ($PNKEP)"
 
-#: src\tactics_pi.cpp:3577
+#: src\tactics_pi.cpp:3626
 msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
 "Read the manual how to set up the interface connection !"
 msgstr "Kasalukuyang nagtatakda lamang sa mga instrumento na NKE. Nagluluwas ng mga paunang natukoy na mga pangkat na hanggang sa 5 rekord na NMEA na 'kilala' ng mga instrumento na NKE at maaaring i-displey doon.\n"
 "Basahin ang manwal sa kung paano itakda ang koneksyon sa interface !"
 
-#: src\tactics_pi.cpp:3583
+#: src\tactics_pi.cpp:3632
 msgid "Target Polar Speed"
 msgstr "Target na Bilis ng Polar"
 
-#: src\tactics_pi.cpp:3587
+#: src\tactics_pi.cpp:3636
 msgid "CoG on other Tack"
 msgstr "CoG na nasa ibang Tack"
 
-#: src\tactics_pi.cpp:3591
-msgid "Target-VMG angle + Perf. %"
-msgstr "Anggulo ng Target-VMG + Perpektong %"
+#: src\tactics_pi.cpp:3641
+msgid "Target-"
+msgstr ""
 
-#: src\tactics_pi.cpp:3595
-msgid "Diff. angle to Target-VMG/-CMG + corresp. gain"
-msgstr "Agwat ng anggulo sa Target-VMG/-CMG + katumbas na tubo"
+#: src\tactics_pi.cpp:3641
+msgid " angle + Perf. %"
+msgstr ""
 
-#: src\tactics_pi.cpp:3599
+#: src\tactics_pi.cpp:3646
+msgid "Diff. angle to Target-"
+msgstr ""
+
+#: src\tactics_pi.cpp:3646
+msgid " + corresp.gain"
+msgstr ""
+
+#: src\tactics_pi.cpp:3650
 msgid "Current Direction + Speed"
 msgstr "Direksyon + Speed ng Alon"
 
-#: src\tactics_pi.cpp:3654
+#: src\tactics_pi.cpp:3705
 msgid "This option makes only sense with a real heel sensor."
 msgstr "Ang pagpipiliang ito ay mapapakinabangan laman sa tunay na sensor ng heel."
 
-#: src\tactics_pi.cpp:3660
+#: src\tactics_pi.cpp:3711
 msgid "Make sure your instruments do not internally correct AWS / AWA with heel.\n"
 "This may result in wrong wind data."
 msgstr "Siguraduhin na ang iyong mga instrumento ay hindi nagwawasto sa loob nito ng AWS / AWA kasama ang heel.\n"
 "Ito ay maaaring magresulta sa maling datos ng hangin."
 
-#: src\tactics_pi.cpp:3668
+#: src\tactics_pi.cpp:3719
 msgid "This will also disable the AWA/AWS correction."
 msgstr "Babaldahin din nito ang mga pagwawasto sa AWA/AWS."
 
-#: src\tactics_pi.cpp:3683
+#: src\tactics_pi.cpp:3734
 msgid "Select a Polar-File"
 msgstr "Pumili ng Talaksang-Polar"
 
-#: src\tactics_pi.cpp:3920
+#: src\tactics_pi.cpp:3972
 msgid "Add instrument"
 msgstr "Magdagdag ng instrumento"
 
-#: src\tactics_pi.cpp:3926
+#: src\tactics_pi.cpp:3978
 msgid "Select instrument to add:"
 msgstr "Pumili ng instrumentong ida-dagdag:"
 
-#: src\tactics_pi.cpp:4020
+#: src\tactics_pi.cpp:4072
 msgid "Preferences..."
 msgstr "Mga Preperinsya..."
 
-#: src\tactics_pi.cpp:4022
+#: src\tactics_pi.cpp:4074
 msgid "Show Laylines"
 msgstr "Ipakita ang mga Layline"
 
-#: src\tactics_pi.cpp:4025
+#: src\tactics_pi.cpp:4077
 msgid "Show Current"
 msgstr "Ipakita ang Alon"
 
-#: src\tactics_pi.cpp:4028
+#: src\tactics_pi.cpp:4080
 msgid "Show Windbarb"
 msgstr "Ipakita ang Windbard"
 
-#: src\tactics_pi.cpp:4031
+#: src\tactics_pi.cpp:4083
 msgid "Show Polar"
 msgstr "Ipakita ang Polar"
 

@@ -1,28 +1,29 @@
-#: src\tactics_pi.cpp:3362 src\tactics_pi.cpp:3383 src\tactics_pi.cpp:3579
-#: src\tactics_pi.cpp:4635 src\tactics_pi.cpp:4667
+#: src\tactics_pi.cpp:3411 src\tactics_pi.cpp:3432 src\tactics_pi.cpp:3628
+#: src\tactics_pi.cpp:4690 src\tactics_pi.cpp:4722
 msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-08 17:45+0100\n"
-"PO-Revision-Date: 2018-03-11 10:37-0400\n"
-"Last-Translator: nohal <pavel@kalian.cz>\n"
+"POT-Creation-Date: 2018-03-11 15:58+0100\n"
+"PO-Revision-Date: 2023-10-04 18:32\n"
+"Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Project-ID: 49843\n"
 "X-Crowdin-Language: nl\n"
 "X-Crowdin-File: /plugins/Tactics_pi/po/tactics_pi.pot\n"
+"X-Crowdin-File-ID: 201\n"
 
-#: src\baro_history.cpp:288 src\performance.cpp:1593 src\wind_history.cpp:647
+#: src\baro_history.cpp:288 src\performance.cpp:1596 src\wind_history.cpp:647
 msgid "Max"
 msgstr "Max."
 
-#: src\baro_history.cpp:289 src\performance.cpp:1594 src\wind_history.cpp:648
+#: src\baro_history.cpp:289 src\performance.cpp:1597 src\wind_history.cpp:648
 msgid "since"
 msgstr "sinds"
 
@@ -34,11 +35,11 @@ msgstr "Totaal max."
 msgid "Min"
 msgstr "Min."
 
-#: src\bearingcompass.cpp:797 src\polarcompass.cpp:711
+#: src\bearingcompass.cpp:801 src\polarcompass.cpp:727
 msgid "R"
 msgstr "R"
 
-#: src\bearingcompass.cpp:802 src\polarcompass.cpp:716
+#: src\bearingcompass.cpp:806 src\polarcompass.cpp:732
 msgid "L"
 msgstr "L"
 
@@ -83,215 +84,200 @@ msgstr "waar"
 msgid " mag"
 msgstr " M"
 
-#: src\performance.cpp:394
+#: src\performance.cpp:392
 msgid "tactics_pi: Select a Polar-File"
 msgstr "tactics_pi: Selecteer een polair-bestand"
 
-#: src\performance.cpp:462
+#: src\performance.cpp:460
 msgid "Format in this file not recognised"
 msgstr "Opmaak van dit bestand niet herkend"
 
-#: src\performance.cpp:1595 src\wind_history.cpp:649
+#: src\performance.cpp:1598 src\wind_history.cpp:649
 msgid "Overall"
 msgstr "Totaal"
 
-#: src\tactics_pi.cpp:187
+#: src\tactics_pi.cpp:188
 msgid "Position"
 msgstr "Positie"
 
-#: src\tactics_pi.cpp:189
+#: src\tactics_pi.cpp:190
 msgid "SOG"
 msgstr "Grondvaart (Vgr)"
 
-#: src\tactics_pi.cpp:191
+#: src\tactics_pi.cpp:192
 msgid "Speedometer"
 msgstr "Vaart en verheid"
 
-#: src\tactics_pi.cpp:193
+#: src\tactics_pi.cpp:194
 msgid "COG"
 msgstr "Grondkoers"
 
-#: src\tactics_pi.cpp:195
+#: src\tactics_pi.cpp:196
 msgid "Mag COG"
 msgstr "Grondkoers (M)"
 
-#: src\tactics_pi.cpp:197
+#: src\tactics_pi.cpp:198
 msgid "GPS Compass"
 msgstr "GPS-kompas (GrK)"
 
-#: src\tactics_pi.cpp:199
+#: src\tactics_pi.cpp:200
 msgid "True Compass"
 msgstr "Stuurkompas (WK)"
 
-#: src\tactics_pi.cpp:201
+#: src\tactics_pi.cpp:202
 msgid "STW"
 msgstr "Vaart door water"
 
-#: src\tactics_pi.cpp:203
+#: src\tactics_pi.cpp:204
 msgid "True HDG"
 msgstr "Voorliggende koers (W)"
 
-#: src\tactics_pi.cpp:205
+#: src\tactics_pi.cpp:206
 msgid "Mag HDG"
 msgstr "Voorliggende koers (M) "
 
-#: src\tactics_pi.cpp:208
+#: src\tactics_pi.cpp:209
 msgid "App. Wind Angle & Speed"
 msgstr "Schijnbare windhoek en -snelheid"
 
-#: src\tactics_pi.cpp:210
+#: src\tactics_pi.cpp:211
 msgid "App & True Wind Angle"
 msgstr "Sch. & Ware windhoek"
 
-#: src\tactics_pi.cpp:212 src\tactics_pi.cpp:214
+#: src\tactics_pi.cpp:213 src\tactics_pi.cpp:215
 msgid "App. Wind Speed"
 msgstr "Schijnb. windsnelheid"
 
-#: src\tactics_pi.cpp:216
+#: src\tactics_pi.cpp:217
 msgid "True Wind Angle & Speed"
 msgstr "Ware windhoek en -snelheid"
 
-#: src\tactics_pi.cpp:218 src\tactics_pi.cpp:220
+#: src\tactics_pi.cpp:219 src\tactics_pi.cpp:221
 msgid "Depth"
 msgstr "Diepte"
 
-#: src\tactics_pi.cpp:222 src\tactics_pi.cpp:224
+#: src\tactics_pi.cpp:223 src\tactics_pi.cpp:225
 msgid "Barometric pressure"
 msgstr "Luchtdruk"
 
-#: src\tactics_pi.cpp:226
+#: src\tactics_pi.cpp:227
 msgid "Water Temp."
 msgstr "Watertemperatuur"
 
-#: src\tactics_pi.cpp:228
+#: src\tactics_pi.cpp:229
 msgid "Air Temp."
 msgstr "Luchttemperatuur"
 
-#: src\tactics_pi.cpp:230
+#: src\tactics_pi.cpp:231
 msgid "App. Wind Angle"
 msgstr "Schijnb. windhoek"
 
-#: src\tactics_pi.cpp:232
+#: src\tactics_pi.cpp:233
 msgid "True Wind Angle"
 msgstr "Ware windhoek"
 
-#: src\tactics_pi.cpp:234
+#: src\tactics_pi.cpp:235
 msgid "True Wind Direction"
 msgstr "Ware windrichting"
 
-#: src\tactics_pi.cpp:236
+#: src\tactics_pi.cpp:237
 msgid "True Wind Speed"
 msgstr "Ware windsnelheid"
 
-#: src\tactics_pi.cpp:238
+#: src\tactics_pi.cpp:239
 msgid "True Wind Dir. & Speed"
 msgstr "Ware wind"
 
-#: src\tactics_pi.cpp:240 src\tactics_pi.cpp:242
-msgid "VMG"
-msgstr "Grondvaart"
-
-#: src\tactics_pi.cpp:254
+#: src\tactics_pi.cpp:257
 msgid "Clock"
 msgstr "Tijd"
 
-#: src\tactics_pi.cpp:256
+#: src\tactics_pi.cpp:259
 msgid "Sunrise/Sunset"
 msgstr "Zon op/onder"
 
-#: src\tactics_pi.cpp:260
+#: src\tactics_pi.cpp:263
 msgid "Wind history"
 msgstr "Windhistorie"
 
-#: src\tactics_pi.cpp:262
+#: src\tactics_pi.cpp:265
 msgid "Barometric history"
 msgstr "Luchtdrukhistorie"
 
-#: src\tactics_pi.cpp:268
+#: src\tactics_pi.cpp:271
 msgid "TWA to Waypoint"
 msgstr "TWA naar WPT"
 
-#: src\tactics_pi.cpp:270
+#: src\tactics_pi.cpp:273
 msgid "From Ownship"
 msgstr "Vanaf eigen vaartuig"
 
-#: src\tactics_pi.cpp:272
+#: src\tactics_pi.cpp:275
 msgid "Pitch"
 msgstr "Stamphoek"
 
-#: src\tactics_pi.cpp:274 src\tactics_pi.cpp:3386
+#: src\tactics_pi.cpp:277 src\tactics_pi.cpp:3435
 msgid "Heel"
 msgstr "Helling"
 
-#: src\tactics_pi.cpp:276 src\tactics_pi.cpp:3340
+#: src\tactics_pi.cpp:279 src\tactics_pi.cpp:3389
 msgid "Leeway"
 msgstr "Drifthoek"
 
-#: src\tactics_pi.cpp:278
+#: src\tactics_pi.cpp:281
 msgid "Current Direction"
 msgstr "Stroomrichting"
 
-#: src\tactics_pi.cpp:280
+#: src\tactics_pi.cpp:283
 msgid "Current Speed"
 msgstr "Stroomsnelheid"
 
-#: src\tactics_pi.cpp:282
+#: src\tactics_pi.cpp:285
 msgid "Bearing Compass"
 msgstr "Peilkompas"
 
-#: src\tactics_pi.cpp:284
+#: src\tactics_pi.cpp:287
 msgid "Polar Speed"
 msgstr "Polair-diagram snelheid"
 
-#: src\tactics_pi.cpp:286
-msgid "Actual VMG"
-msgstr "Snelheid_inwind"
+#: src\tactics_pi.cpp:290 src\tactics_pi.cpp:299
+msgid "Actual "
+msgstr "Huidig "
 
-#: src\tactics_pi.cpp:288
-msgid "Target VMG"
-msgstr "Streefsnelh_inwind"
+#: src\tactics_pi.cpp:293 src\tactics_pi.cpp:296 src\tactics_pi.cpp:302
+#: src\tactics_pi.cpp:305
+msgid "Target "
+msgstr "Bestemming"
 
-#: src\tactics_pi.cpp:290
-msgid "Target VMG-Angle"
-msgstr "Streef TWA"
+#: src\tactics_pi.cpp:296 src\tactics_pi.cpp:305
+msgid "-Angle"
+msgstr "-hoek"
 
-#: src\tactics_pi.cpp:292
-msgid "Actual CMG"
-msgstr "Naderingsnelh_WPT"
-
-#: src\tactics_pi.cpp:294
-msgid "Target CMG"
-msgstr "Streefsnelh_WPT"
-
-#: src\tactics_pi.cpp:296
-msgid "Target CMG-Angle"
-msgstr "Streef TWA_WPT"
-
-#: src\tactics_pi.cpp:298
+#: src\tactics_pi.cpp:307
 msgid "Polar Performance"
 msgstr "Polair-diagram prestatie"
 
-#: src\tactics_pi.cpp:300
+#: src\tactics_pi.cpp:309
 msgid "Average Wind"
 msgstr "Gemiddelde wind"
 
-#: src\tactics_pi.cpp:302
+#: src\tactics_pi.cpp:311
 msgid "Polar Compass"
 msgstr "Polairkompas"
 
-#: src\tactics_pi.cpp:565 src\tactics_pi.cpp:721 src\tactics_pi.cpp:2825
-#: src\tactics_pi.cpp:2835 src\tactics_pi.cpp:3064 src\tactics_pi.cpp:3103
-#: src\tactics_pi.cpp:3818
+#: src\tactics_pi.cpp:577 src\tactics_pi.cpp:739 src\tactics_pi.cpp:2867
+#: src\tactics_pi.cpp:2878 src\tactics_pi.cpp:3113 src\tactics_pi.cpp:3152
+#: src\tactics_pi.cpp:3870
 msgid "Tactics"
 msgstr "Tactisch instrumentenpaneel"
 
-#: src\tactics_pi.cpp:726
+#: src\tactics_pi.cpp:744
 msgid "Tactics PlugIn for OpenCPN"
 msgstr "Tactische PlugIn voor OpenCPN"
 
-#: src\tactics_pi.cpp:731
+#: src\tactics_pi.cpp:749
 msgid "Tactics PlugIn for OpenCPN\n"
-"Provides performance data & instrument display from NMEA source and polar file."
+"\t\t\t Provides performance data & instrument display from NMEA source and polar file."
 msgstr "Zeil-tactische PlugIn voor OpenCPN. Toont prestatiegegevens en instrumentweergaven, vanuit NMEA-bron \n"
 "en polair-diagram.\n"
 "\n"
@@ -311,183 +297,183 @@ msgstr "Zeil-tactische PlugIn voor OpenCPN. Toont prestatiegegevens en instrumen
 "\n"
 "Zie ook de Engelse handleiding van deze PlugIn."
 
-#: src\tactics_pi.cpp:1737
+#: src\tactics_pi.cpp:1763
 msgid "You have to turn on OpenGL to use chart overlay "
 msgstr "Gebruik OpenGL voor het tonen van kaartoverlays "
 
-#: src\tactics_pi.cpp:2397
+#: src\tactics_pi.cpp:2433
 msgid "° Bow up"
 msgstr "° Omhoog"
 
-#: src\tactics_pi.cpp:2400
+#: src\tactics_pi.cpp:2436
 msgid "° Bow down"
 msgstr "° Omlaag"
 
-#: src\tactics_pi.cpp:3039
+#: src\tactics_pi.cpp:3088
 msgid "Tactics preferences"
 msgstr "Tactische voorkeuren"
 
-#: src\tactics_pi.cpp:3110
+#: src\tactics_pi.cpp:3159
 msgid "show this tactics"
 msgstr "Toon dit tactisch paneel"
 
-#: src\tactics_pi.cpp:3116
+#: src\tactics_pi.cpp:3165
 msgid "Caption:"
 msgstr "Naam:"
 
-#: src\tactics_pi.cpp:3124
+#: src\tactics_pi.cpp:3173
 msgid "Orientation:"
 msgstr "Oriëntatie:"
 
-#: src\tactics_pi.cpp:3128 src\tactics_pi.cpp:4011
+#: src\tactics_pi.cpp:3177 src\tactics_pi.cpp:4063
 msgid "Vertical"
 msgstr "Verticaal"
 
-#: src\tactics_pi.cpp:3129 src\tactics_pi.cpp:4013
+#: src\tactics_pi.cpp:3178 src\tactics_pi.cpp:4065
 msgid "Horizontal"
 msgstr "Horizontaal"
 
-#: src\tactics_pi.cpp:3136 src\tactics_pi.cpp:3144 src\tactics_pi.cpp:3937
+#: src\tactics_pi.cpp:3185 src\tactics_pi.cpp:3193 src\tactics_pi.cpp:3989
 msgid "Instruments"
 msgstr "Instrumenten"
 
-#: src\tactics_pi.cpp:3152
+#: src\tactics_pi.cpp:3201
 msgid "Add"
 msgstr "Toevoegen"
 
-#: src\tactics_pi.cpp:3165
+#: src\tactics_pi.cpp:3214
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: src\tactics_pi.cpp:3171
+#: src\tactics_pi.cpp:3220
 msgid "Up"
 msgstr "Omhoog"
 
-#: src\tactics_pi.cpp:3176
+#: src\tactics_pi.cpp:3225
 msgid "Down"
 msgstr "Omlaag"
 
-#: src\tactics_pi.cpp:3186
+#: src\tactics_pi.cpp:3235
 msgid "Appearance"
 msgstr "Lettertypes"
 
-#: src\tactics_pi.cpp:3188
+#: src\tactics_pi.cpp:3237
 msgid "Fonts"
 msgstr "Lettertypes"
 
-#: src\tactics_pi.cpp:3194
+#: src\tactics_pi.cpp:3243
 msgid "Title:"
 msgstr "Naam:"
 
-#: src\tactics_pi.cpp:3200
+#: src\tactics_pi.cpp:3249
 msgid "Data:"
 msgstr "Gegevens:"
 
-#: src\tactics_pi.cpp:3206
+#: src\tactics_pi.cpp:3255
 msgid "Label:"
 msgstr "Label:"
 
-#: src\tactics_pi.cpp:3212
+#: src\tactics_pi.cpp:3261
 msgid "Small:"
 msgstr "Klein:"
 
-#: src\tactics_pi.cpp:3220
+#: src\tactics_pi.cpp:3269
 msgid "Units, Ranges, Formats"
 msgstr "Eenheden etc."
 
-#: src\tactics_pi.cpp:3226
+#: src\tactics_pi.cpp:3275
 msgid "Speedometer max value:"
 msgstr "Max. vaartindicatie log:"
 
-#: src\tactics_pi.cpp:3232
+#: src\tactics_pi.cpp:3281
 msgid "Speed Over Ground Damping Factor:"
 msgstr "Dempingsfactor voor GrV:"
 
-#: src\tactics_pi.cpp:3238
+#: src\tactics_pi.cpp:3287
 msgid "COG Damping Factor:"
 msgstr "Dempingsfactor voor GrK:"
 
-#: src\tactics_pi.cpp:3244
+#: src\tactics_pi.cpp:3293
 msgid "Boat speed units:"
 msgstr "Eenheid voor vaart:"
 
-#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3265
+#: src\tactics_pi.cpp:3296 src\tactics_pi.cpp:3314
 msgid "Honor OpenCPN settings"
 msgstr "Volg OpenCPN-instellingen"
 
-#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
+#: src\tactics_pi.cpp:3296 src\tactics_pi.cpp:3323
 msgid "Kts"
 msgstr "kn"
 
-#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
+#: src\tactics_pi.cpp:3296 src\tactics_pi.cpp:3323
 msgid "mph"
 msgstr "mph"
 
-#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
+#: src\tactics_pi.cpp:3296 src\tactics_pi.cpp:3323
 msgid "km/h"
 msgstr "km/u"
 
-#: src\tactics_pi.cpp:3247 src\tactics_pi.cpp:3274
+#: src\tactics_pi.cpp:3296 src\tactics_pi.cpp:3323
 msgid "m/s"
 msgstr "m/s"
 
-#: src\tactics_pi.cpp:3253
+#: src\tactics_pi.cpp:3302
 msgid "Depth units:"
 msgstr "Eenheid voor diepte:"
 
-#: src\tactics_pi.cpp:3256 src\tactics_pi.cpp:3265
+#: src\tactics_pi.cpp:3305 src\tactics_pi.cpp:3314
 msgid "Meters"
 msgstr "meter"
 
-#: src\tactics_pi.cpp:3256
+#: src\tactics_pi.cpp:3305
 msgid "Feet"
 msgstr "voet"
 
-#: src\tactics_pi.cpp:3256
+#: src\tactics_pi.cpp:3305
 msgid "Fathoms"
 msgstr "vadem"
 
-#: src\tactics_pi.cpp:3256
+#: src\tactics_pi.cpp:3305
 msgid "Centimeters"
 msgstr "cm"
 
-#: src\tactics_pi.cpp:3256
+#: src\tactics_pi.cpp:3305
 msgid "Inches"
 msgstr "inch"
 
-#: src\tactics_pi.cpp:3262
+#: src\tactics_pi.cpp:3311
 msgid "Distance units:"
 msgstr "Eenheid voor afstand:"
 
-#: src\tactics_pi.cpp:3265
+#: src\tactics_pi.cpp:3314
 msgid "Nautical miles"
 msgstr "zeemijl"
 
-#: src\tactics_pi.cpp:3265
+#: src\tactics_pi.cpp:3314
 msgid "Statute miles"
 msgstr "landmijl"
 
-#: src\tactics_pi.cpp:3265
+#: src\tactics_pi.cpp:3314
 msgid "Kilometers"
 msgstr "kIlometer"
 
-#: src\tactics_pi.cpp:3271
+#: src\tactics_pi.cpp:3320
 msgid "Wind speed units:"
 msgstr "Eenheid voor windsnelheid:"
 
-#: src\tactics_pi.cpp:3292
+#: src\tactics_pi.cpp:3341
 msgid "Performance Parameters"
 msgstr "Prestatieparameters"
 
-#: src\tactics_pi.cpp:3294
+#: src\tactics_pi.cpp:3343
 msgid "Laylines"
 msgstr "Laylines"
 
-#: src\tactics_pi.cpp:3303
+#: src\tactics_pi.cpp:3352
 msgid "Layline width damping factor [0.025-1]:  "
 msgstr "Dempingsfactor voor layline-sector [0.025-1]:  "
 
-#: src\tactics_pi.cpp:3305
+#: src\tactics_pi.cpp:3354
 msgid "The width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
 "The idea is to display the COG range where you're sailing to.\n"
 " Low values mean high damping."
@@ -495,7 +481,7 @@ msgstr "De layline-sectors zijn gebaseerd op de mate van gieren (rotatie om de v
 "Het idee is te tonen waar u ongeveer naar toe zeilt.\n"
 "Een lage waarde betekent een hoge demping."
 
-#: src\tactics_pi.cpp:3310
+#: src\tactics_pi.cpp:3359
 msgid "Width of the boat laylines is based on the yawing of the boat (vertical axis), i.e. your COG changes.\n"
 "The idea is to display the range where you're sailing to.\n"
 " Low values mean high damping."
@@ -503,35 +489,35 @@ msgstr "De layline-sectorhoeken zijn gebaseerd op de mate van gieren (rotatie om
 "Het idee is te tonen waar je ongeveer naar toe zeilt.\n"
 "Een lage waarde betekent een hoge demping."
 
-#: src\tactics_pi.cpp:3313
+#: src\tactics_pi.cpp:3362
 msgid "Layline length on Chart [nm]:  "
 msgstr "Layline-lengte op kaart [nm]:  "
 
-#: src\tactics_pi.cpp:3315 src\tactics_pi.cpp:3321
+#: src\tactics_pi.cpp:3364 src\tactics_pi.cpp:3370
 msgid "Length of the boat laylines in [nm]"
 msgstr "Lengte van de laylines is [nm]"
 
-#: src\tactics_pi.cpp:3323
+#: src\tactics_pi.cpp:3372
 msgid "Min. Layline Width [°]:"
 msgstr "Min. layline-sectorhoek [°]:"
 
-#: src\tactics_pi.cpp:3325 src\tactics_pi.cpp:3328
+#: src\tactics_pi.cpp:3374 src\tactics_pi.cpp:3377
 msgid "Min. width of boat laylines in degrees."
 msgstr "Min. hoek tussen de laylines in graden."
 
-#: src\tactics_pi.cpp:3332
+#: src\tactics_pi.cpp:3381
 msgid "Max. Layline Width [°]:"
 msgstr "Max. layline-sectorhoek [°]:"
 
-#: src\tactics_pi.cpp:3334 src\tactics_pi.cpp:3337
+#: src\tactics_pi.cpp:3383 src\tactics_pi.cpp:3386
 msgid "Max. width of boat laylines in degrees."
 msgstr "Max. hoek tussen de laylines in graden."
 
-#: src\tactics_pi.cpp:3349
+#: src\tactics_pi.cpp:3398
 msgid "Boat's Leeway factor [0-20]:  "
 msgstr "Driftfactor [0-20]:  "
 
-#: src\tactics_pi.cpp:3350 src\tactics_pi.cpp:3353
+#: src\tactics_pi.cpp:3399 src\tactics_pi.cpp:3402
 msgid "Leeway='Drift' of boat due to heel/wind influence\n"
 "Low values mean high performance of hull\n"
 "Leeway = (LeewayFactor * Heel) / STW²;"
@@ -539,21 +525,21 @@ msgstr "Drift ontstaat als gevolg van wind.\n"
 "Een lage waarde betekent een goede prestatie van de romp.\n"
 "Drifthoek =(driftfactor * helling) / V²;"
 
-#: src\tactics_pi.cpp:3358
+#: src\tactics_pi.cpp:3407
 msgid "Use Heel Sensor"
 msgstr "Gebruik hellingsensor"
 
-#: src\tactics_pi.cpp:3361
+#: src\tactics_pi.cpp:3410
 msgid "Use the internal heel sensor if available\n"
 "Important for the correct calculation of the surface current."
 msgstr "Gebruik een interne hellingsensor, indien beschikbaar.\n"
 "Dit is van belang voor een juiste berekening van de oppervlaktestroom."
 
-#: src\tactics_pi.cpp:3365
+#: src\tactics_pi.cpp:3414
 msgid "fixed/max Leeway [°]:"
 msgstr "Vaste (keuzeveld aan) of Max. waarde drifthoek [°]:"
 
-#: src\tactics_pi.cpp:3368
+#: src\tactics_pi.cpp:3417
 msgid "Dual purpose !\n"
 "If Radiobutton is NOT set, then it's used to limit Leeway to a max value.\n"
 " If Radiobutton is set, then it fixes Leeway to this constant value."
@@ -561,11 +547,11 @@ msgstr "Tweeledig!\n"
 "Als keuzeveld niet is geselecteerd: gebruikt om drifthoek te beperken tot een maximale waarde.\n"
 "Als keuzeveld wel is geselecteerd: zet drifthoek vast op een constante waarde."
 
-#: src\tactics_pi.cpp:3376
+#: src\tactics_pi.cpp:3425
 msgid "manual Heel input:"
 msgstr "Handmatige hellinginvoer:"
 
-#: src\tactics_pi.cpp:3379
+#: src\tactics_pi.cpp:3428
 msgid "If no heel sensor is available, you can create a manual 'heel polar' here.\n"
 "Just read/enter the data from a mechanical heel sensor (e.g. on compass).\n"
 "Use True Wind Speed & Angle only !\n"
@@ -575,73 +561,73 @@ msgstr "Als geen hellingsensor beschikbaar is, kunt u hier handmatig een helling
 "Gebruik alleen de ware windsnelheid en ware windhoek!\n"
 " Let op : varen op de motor zonder zeilvoering, en slagzij (helling), zal foute stroomgegevens opleveren!"
 
-#: src\tactics_pi.cpp:3393
+#: src\tactics_pi.cpp:3442
 msgid "TWS/TWA "
 msgstr "TWS/TWA "
 
-#: src\tactics_pi.cpp:3395
+#: src\tactics_pi.cpp:3444
 msgid " 45°"
 msgstr " 45°"
 
-#: src\tactics_pi.cpp:3397
+#: src\tactics_pi.cpp:3446
 msgid " 90°"
 msgstr " 90°"
 
-#: src\tactics_pi.cpp:3399
+#: src\tactics_pi.cpp:3448
 msgid "135°"
 msgstr "135°"
 
-#: src\tactics_pi.cpp:3402
+#: src\tactics_pi.cpp:3451
 msgid "5 kn"
 msgstr "5 kn"
 
-#: src\tactics_pi.cpp:3416
+#: src\tactics_pi.cpp:3465
 msgid "10 kn"
 msgstr "10 kn"
 
-#: src\tactics_pi.cpp:3430
+#: src\tactics_pi.cpp:3479
 msgid "15 kn"
 msgstr "15 kn"
 
-#: src\tactics_pi.cpp:3445
+#: src\tactics_pi.cpp:3494
 msgid "20 kn"
 msgstr "20 kn"
 
-#: src\tactics_pi.cpp:3459
+#: src\tactics_pi.cpp:3508
 msgid "25 kn"
 msgstr "25 kn"
 
-#: src\tactics_pi.cpp:3474
+#: src\tactics_pi.cpp:3523
 msgid "Current"
 msgstr "Stroom"
 
-#: src\tactics_pi.cpp:3489
+#: src\tactics_pi.cpp:3538
 msgid "Current damping factor [1-400]:  "
 msgstr "Dempingsfactor voor stroom [1-400]:  "
 
-#: src\tactics_pi.cpp:3490 src\tactics_pi.cpp:3495
+#: src\tactics_pi.cpp:3539 src\tactics_pi.cpp:3544
 msgid "Stabilizes the surface current 'arrow' in the chart overlay, bearing compass and also the numerical instruments\n"
 "Low values mean high damping"
 msgstr "Stabiliseert de weergave van de oppervlaktestroompijl op kaart, peilkompas en numerieke instrumenten.\n"
 "Een lage waarde betekent een hoge demping."
 
-#: src\tactics_pi.cpp:3503
+#: src\tactics_pi.cpp:3552
 msgid "Display Current on Chart (OpenGL)"
 msgstr "Toon stroom op kaart (OpenGL)"
 
-#: src\tactics_pi.cpp:3506 src\tactics_pi.cpp:3542 src\tactics_pi.cpp:3565
+#: src\tactics_pi.cpp:3555 src\tactics_pi.cpp:3591 src\tactics_pi.cpp:3614
 msgid "The default on program startup"
 msgstr "Standaardwaarde bij starten van programma"
 
-#: src\tactics_pi.cpp:3508
+#: src\tactics_pi.cpp:3557
 msgid "True Wind"
 msgstr "Ware wind"
 
-#: src\tactics_pi.cpp:3516
+#: src\tactics_pi.cpp:3565
 msgid "Correct STW with Leeway"
 msgstr "Corrigeer vaart voor drift"
 
-#: src\tactics_pi.cpp:3519
+#: src\tactics_pi.cpp:3568
 msgid "Apply a correction to your log speed throughout the plugin based on the calculated Leeway (via the heel sensor).\n"
 "Only makes sense with a real heel sensor.\n"
 "Make sure your instruments do not already apply this correction !"
@@ -649,129 +635,137 @@ msgstr "Pas een correctie toe op uw logvaart (V) op basis van de berekende drift
 "Dit is alleen zinvol bij gebruik van een echte hellingsensor. \n"
 "Stel zeker dat andere instrumenten deze correctie niet al toepassen!"
 
-#: src\tactics_pi.cpp:3521
+#: src\tactics_pi.cpp:3570
 msgid "Correct AWS/AWA with Heel"
 msgstr "Corrigeer AWS/AWA voor helling"
 
-#: src\tactics_pi.cpp:3524
+#: src\tactics_pi.cpp:3573
 msgid "Use with care, this is normally done by the instruments themselves as soon as you have an integrated, original equipment heel sensor"
 msgstr "Voorzichtig gebruiken! Gewoonlijk wordt dit al gedaan door de instrumenten zelf, zodra u een geïntegreerde hellingsensor gebruikt."
 
-#: src\tactics_pi.cpp:3528
+#: src\tactics_pi.cpp:3577
 msgid "Force True Wind Calculation"
 msgstr "Altijd berekenen van ware wind"
 
-#: src\tactics_pi.cpp:3531
+#: src\tactics_pi.cpp:3580
 msgid "Internally calculates True Wind data (TWS,TWA,TWD) and uses it within the whole plugin even if there is True Wind data available via NMEA."
 msgstr "Berekent intern de ware windgegevens (TWS, TWD, TWA) en gebruikt deze in de PlugIn, zelfs als er ware wind gegevens beschikbaar zijn via NMEA."
 
-#: src\tactics_pi.cpp:3534
+#: src\tactics_pi.cpp:3583
 msgid "Use SOG instead of STW for True Wind Calc."
 msgstr "Gebruik GrV ipv vaart voor berekening ware wind"
 
-#: src\tactics_pi.cpp:3537
+#: src\tactics_pi.cpp:3586
 msgid "Recommended. As True Wind blows over the earth surface, we should calc. it with Speed Over Ground.\n"
 "Eliminates the influence of currents."
 msgstr "Aanbevolen. Omdat de ware wind waait over het aardoppervlak, moeten we deze berekenen met de vaart over de grond.\n"
 "Dit elimineert de invloed van stroom."
 
-#: src\tactics_pi.cpp:3539
+#: src\tactics_pi.cpp:3588
 msgid "Show Wind Barb on Chart (OpenGL)"
 msgstr "Toon windpijl op kaart (OpenGL)"
 
-#: src\tactics_pi.cpp:3545
+#: src\tactics_pi.cpp:3594
 msgid "Polar"
 msgstr "Polair-bestand"
 
-#: src\tactics_pi.cpp:3552
+#: src\tactics_pi.cpp:3601
 msgid "Polar :"
 msgstr "Polair-bestand :"
 
-#: src\tactics_pi.cpp:3558
+#: src\tactics_pi.cpp:3607
 msgid "Load"
 msgstr "Laden"
 
-#: src\tactics_pi.cpp:3562
+#: src\tactics_pi.cpp:3611
 msgid "Show Polar on Chart (OpenGL)"
 msgstr "Toon polair-diagram op kaart (OpenGL)"
 
-#: src\tactics_pi.cpp:3567
+#: src\tactics_pi.cpp:3616
 msgid "Export NMEA Performance Data"
 msgstr "NMEA-prestatiegegevens exporteren"
 
-#: src\tactics_pi.cpp:3574
+#: src\tactics_pi.cpp:3623
 msgid "NKE format ($PNKEP)"
 msgstr "NKE formaat ($PNKEP)"
 
-#: src\tactics_pi.cpp:3577
+#: src\tactics_pi.cpp:3626
 msgid "Currently only set up for NKE instruments. Exports a predefined set of up to 5 NMEA records which are 'known' by NKE instruments and can be displayed there.\n"
 "Read the manual how to set up the interface connection !"
 msgstr "Momenteel slechts in te stellen voor NKE-instrumenten. Geeft output van een vooraf gedefinieerde set van maximaal 5 NMEA-records die 'bekend' zijn bij NKE-instrumenten en daarop kunnen worden weergegeven. \n"
 "Lees de handleiding om de interface-verbinding in te stellen!"
 
-#: src\tactics_pi.cpp:3583
+#: src\tactics_pi.cpp:3632
 msgid "Target Polar Speed"
 msgstr "Streefsnelh. polair-diagram"
 
-#: src\tactics_pi.cpp:3587
+#: src\tactics_pi.cpp:3636
 msgid "CoG on other Tack"
 msgstr "GrK op andere kruisrichting"
 
-#: src\tactics_pi.cpp:3591
-msgid "Target-VMG angle + Perf. %"
-msgstr "Streef TWA | Vaartprestatie %"
+#: src\tactics_pi.cpp:3641
+msgid "Target-"
+msgstr "Bestemming-"
 
-#: src\tactics_pi.cpp:3595
-msgid "Diff. angle to Target-VMG/-CMG + corresp. gain"
-msgstr "Delta-TWA | Vaartwinst"
+#: src\tactics_pi.cpp:3641
+msgid " angle + Perf. %"
+msgstr " hoek + perf. %"
 
-#: src\tactics_pi.cpp:3599
+#: src\tactics_pi.cpp:3646
+msgid "Diff. angle to Target-"
+msgstr "Verschilhoek naar bestemming-"
+
+#: src\tactics_pi.cpp:3646
+msgid " + corresp.gain"
+msgstr " + overeenkomende winst"
+
+#: src\tactics_pi.cpp:3650
 msgid "Current Direction + Speed"
 msgstr "Stroomrichting en -snelheid"
 
-#: src\tactics_pi.cpp:3654
+#: src\tactics_pi.cpp:3705
 msgid "This option makes only sense with a real heel sensor."
 msgstr "Deze optie heeft alleen zin als een echte hellingsensor wordt gebruikt."
 
-#: src\tactics_pi.cpp:3660
+#: src\tactics_pi.cpp:3711
 msgid "Make sure your instruments do not internally correct AWS / AWA with heel.\n"
 "This may result in wrong wind data."
 msgstr "Zorg ervoor dat uw instrumenten niet intern AWS en AWA corrigeren voor helling. \n"
 "Dit kan leiden tot foute windgegevens."
 
-#: src\tactics_pi.cpp:3668
+#: src\tactics_pi.cpp:3719
 msgid "This will also disable the AWA/AWS correction."
 msgstr "Dit zal ook de AWA/AWS-correctie uitschakelen."
 
-#: src\tactics_pi.cpp:3683
+#: src\tactics_pi.cpp:3734
 msgid "Select a Polar-File"
 msgstr "Selecteer een polair-bestand"
 
-#: src\tactics_pi.cpp:3920
+#: src\tactics_pi.cpp:3972
 msgid "Add instrument"
 msgstr "Instrument toevoegen"
 
-#: src\tactics_pi.cpp:3926
+#: src\tactics_pi.cpp:3978
 msgid "Select instrument to add:"
 msgstr "Kies toe te voegen instrument:"
 
-#: src\tactics_pi.cpp:4020
+#: src\tactics_pi.cpp:4072
 msgid "Preferences..."
 msgstr "Voorkeuren ..."
 
-#: src\tactics_pi.cpp:4022
+#: src\tactics_pi.cpp:4074
 msgid "Show Laylines"
 msgstr "Toon laylines"
 
-#: src\tactics_pi.cpp:4025
+#: src\tactics_pi.cpp:4077
 msgid "Show Current"
 msgstr "Toon stroom"
 
-#: src\tactics_pi.cpp:4028
+#: src\tactics_pi.cpp:4080
 msgid "Show Windbarb"
 msgstr "Toon windpijl"
 
-#: src\tactics_pi.cpp:4031
+#: src\tactics_pi.cpp:4083
 msgid "Show Polar"
 msgstr "Toon polair-diagram"
 
