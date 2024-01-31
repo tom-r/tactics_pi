@@ -55,9 +55,9 @@ set(LONG_DESCRIPTION "Tactics PlugIn for OpenCPN Provides performance data and i
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "81")
+set(VERSION_PATCH "82")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE  "27/12/2023")#DD/MM/YYYY format
+set(VERSION_DATE  "30/12/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 
 set(OCPN_API_VERSION_MAJOR "1")
@@ -216,10 +216,10 @@ if(NOT OCPN_FLATPAK_CONFIG)
 	# so following statements will not work
     message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
 
-    if(WIN32)
+    if (WIN32)
         add_subdirectory(opencpn-libs/WindowsHeaders)
         target_link_libraries(${PACKAGE_NAME} windows::headers)
-    endif()
+    endif (WIN32)
 
     add_subdirectory(opencpn-libs/api-17)
     target_link_libraries(${PACKAGE_NAME} ocpn::api)
